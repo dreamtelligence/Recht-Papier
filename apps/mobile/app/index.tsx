@@ -360,7 +360,7 @@ export default function Welcome() {
           {[
             { label: "Schildern", detail: "Sachverhalt und Dokumente" },
             { label: "Einordnen", detail: "Abgleich mit Gesetzen und Urteilen" },
-            { label: "Weitergehen", detail: "Nächste Schritte und Handlungsmöglichkeiten" },
+            { label: "Reagieren", detail: "Nächste Schritte und Handlungsmöglichkeiten" },
           ].map((entry, i) => (
             <View
               key={entry.label}
