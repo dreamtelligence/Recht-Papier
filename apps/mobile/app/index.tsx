@@ -87,7 +87,6 @@ export default function Welcome() {
             resizeMode="contain"
             accessibilityLabel="Handgezeichneter Heißluftballon, der einen Mann im Anzug vom Boden abhebt"
           />
-          <Text style={styles.figureCaption}>Ein wenig Last abgeben.</Text>
         </View>
 
         <View style={styles.copy}>
@@ -221,19 +220,6 @@ const styles = StyleSheet.create({
 
   hero: { height: 214, marginTop: 10, alignItems: "center", justifyContent: "center" },
   heroImage: { width: 152, height: 212, opacity: 0.94 },
-  figureCaption: {
-    position: "absolute",
-    right: 4,
-    bottom: 18,
-    fontFamily: fonts.serif,
-    fontStyle: "italic",
-    fontSize: 11,
-    color: colors.inkSoft,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.line,
-    paddingBottom: 3,
-  },
-
   copy: { gap: 11 },
 
   steps: { marginTop: 26, gap: 13 },
@@ -247,7 +233,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  stepNumber: { fontFamily: fonts.serif, fontSize: 11, color: colors.accentDark },
+  stepNumber: {
+    fontFamily: fonts.serif,
+    fontSize: 11,
+    textAlign: "center",
+    color: colors.accentDark,
+    includeFontPadding: false,
+    // Georgias Ziffern sitzen in der Zeilenbox eine Spur zu tief.
+    marginTop: -1,
+  },
   stepLabel: { flex: 1, fontSize: 13, lineHeight: 19, color: colors.inkSoft },
   headline: {
     fontFamily: fonts.serif,
