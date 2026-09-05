@@ -34,6 +34,22 @@ const balloon = require("../assets/brand/balloon-relief.png");
 
 const MAX_DOCUMENT_BYTES = 20 * 1024 * 1024;
 
+// Supabase antwortet englisch. Diese Texte stehen im Sheet direkt neben der
+// deutschen Oberflaeche, deshalb werden sie hier uebersetzt statt durchgereicht.
+function beschreibeFehler(error: unknown): string {
+  const message = error instanceof Error ? error.message : "";
+  if (/rate limit|after \d+ seconds?/i.test(message)) {
+    return "Zu viele Anfragen. Bitte einen Moment warten.";
+  }
+  if (/expired|invalid|token/i.test(message)) {
+    return "Der Code stimmt nicht oder ist abgelaufen.";
+  }
+  if (/email/i.test(message)) {
+    return "Mit dieser E-Mail-Adresse hat es nicht geklappt.";
+  }
+  return "Das hat nicht geklappt. Bitte erneut versuchen.";
+}
+
 export default function Welcome() {
   const insets = useSafeAreaInsets();
   const sheetRef = useRef<BottomSheet>(null);
@@ -44,6 +60,12 @@ export default function Welcome() {
   const [authReady, setAuthReady] = useState(!isSupabaseConfigured);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // Der E-Mail-Code ist der Hauptweg; Passwort bleibt als Zweitweg fuer
+  // Bestandskonten erreichbar, wird aber nicht mehr angeboten.
+  const [authMode, setAuthMode] = useState<"code" | "password">("code");
+  const [code, setCode] = useState("");
+  const [codeSent, setCodeSent] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
   const [latestCase, setLatestCase] = useState<CaseSummary | null>(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
@@ -104,6 +126,15 @@ export default function Welcome() {
     transform: [{ translateY: restRise.value }],
   }));
 
+  // Sperrfrist zwischen zwei Code-Anforderungen. Supabase drosselt ohnehin
+  // serverseitig; das hier verhindert nur, dass die Oberflaeche zu einer
+  // Anforderung einlaedt, die abgelehnt wuerde.
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = setInterval(() => setCooldown((v) => (v <= 1 ? 0 : v - 1)), 1000);
+    return () => clearInterval(timer);
+  }, [cooldown]);
+
   // Erst wenn dieser Bildschirm sein Bild hat, gibt der Splash frei.
   const revealApp = useCallback(() => {
     SplashScreen.hideAsync().catch(() => {});
@@ -134,30 +165,93 @@ export default function Welcome() {
   }, []);
 
   const canSubmit = description.trim().length >= 8 && attachment !== null && session && !busy;
-  const canAuthenticate = email.includes("@") && password.length >= 8 && !busy;
+  const emailLooksValid = /\S+@\S+\.\S+/.test(email.trim());
+  const canRequestCode = emailLooksValid && !busy && cooldown === 0;
+  const canVerifyCode = code.trim().length === 6 && !busy;
+  const canAuthenticate = emailLooksValid && password.length >= 8 && !busy;
 
+  // Nur noch Anmeldung, keine Registrierung: neue Konten entstehen ausschliesslich
+  // ueber den Code-Weg, damit niemand mehr ein Passwort setzen muss. Bestehende
+  // Passwoerter funktionieren weiter.
   const authenticate = useCallback(
-    async (mode: "sign-in" | "sign-up") => {
+    async () => {
       if (!canAuthenticate || !isSupabaseConfigured) return;
       setBusy(true);
       setMessage("");
       try {
-        const result =
-          mode === "sign-in"
-            ? await supabase.auth.signInWithPassword({ email: email.trim(), password })
-            : await supabase.auth.signUp({ email: email.trim(), password });
-        if (result.error) throw result.error;
-        if (mode === "sign-up" && !result.data.session) {
-          setMessage("Bitte bestätigen Sie die E-Mail und melden Sie sich danach an.");
-        }
+        const { error } = await supabase.auth.signInWithPassword({
+          email: email.trim().toLowerCase(),
+          password,
+        });
+        if (error) throw error;
       } catch (error) {
-        setMessage(error instanceof Error ? error.message : "Anmeldung fehlgeschlagen.");
+        setMessage(beschreibeFehler(error));
       } finally {
         setBusy(false);
       }
     },
     [canAuthenticate, email, password],
   );
+
+  const normalizedEmail = useCallback(() => email.trim().toLowerCase(), [email]);
+
+  const requestCode = useCallback(async () => {
+    if (!canRequestCode || !isSupabaseConfigured) return;
+    setBusy(true);
+    setMessage("");
+    try {
+      const { error } = await supabase.auth.signInWithOtp({
+        email: normalizedEmail(),
+        // Bewusst true: bekannte und unbekannte Adressen bekommen dieselbe
+        // Antwort. Mit false verriete die Fehlermeldung, zu welcher Adresse ein
+        // Konto existiert - bei einer Rechtsakte ist schon das eine Auskunft.
+        options: { shouldCreateUser: true },
+      });
+      if (error) throw error;
+      setCodeSent(true);
+      setCooldown(60);
+      setMessage("Wenn die Adresse nutzbar ist, liegt gleich ein sechsstelliger Code im Postfach.");
+    } catch (error) {
+      // Supabase nennt die Restzeit im Text; die uebernehmen wir als Countdown.
+      const wartezeit = Number(
+        (error instanceof Error ? error.message : "").match(/after (\d+) seconds?/)?.[1] ?? 0,
+      );
+      if (wartezeit > 0) {
+        setCooldown(wartezeit);
+        // Entscheidend: trotzdem auf die Codeeingabe wechseln. Wer in die Sperre
+        // laeuft, hat meist schon eine Mail bekommen - ohne diesen Zweig sieht er
+        // den gueltigen Code im Postfach und hat kein Feld, um ihn einzugeben.
+        setCodeSent(true);
+        setMessage(`Ein Code ist bereits unterwegs. Neuer Code in ${wartezeit} Sekunden.`);
+      } else {
+        setMessage(beschreibeFehler(error));
+      }
+    } finally {
+      setBusy(false);
+    }
+  }, [canRequestCode, normalizedEmail]);
+
+  const submitCode = useCallback(async () => {
+    if (!canVerifyCode || !isSupabaseConfigured) return;
+    setBusy(true);
+    setMessage("");
+    try {
+      // Dieselbe normalisierte Adresse wie beim Anfordern - sonst findet
+      // Supabase den Code nicht.
+      const { error } = await supabase.auth.verifyOtp({
+        email: normalizedEmail(),
+        token: code.trim(),
+        type: "email",
+      });
+      if (error) throw error;
+      setCode("");
+      setCodeSent(false);
+    } catch (error) {
+      setMessage(beschreibeFehler(error));
+    } finally {
+      setBusy(false);
+    }
+  }, [canVerifyCode, code, normalizedEmail]);
 
   const beginCase = useCallback(async () => {
     if (!canSubmit || !attachment || !session) return;
@@ -309,33 +403,121 @@ export default function Welcome() {
                 keyboardType="email-address"
                 placeholder="name@beispiel.de"
                 placeholderTextColor={colors.inkSoft}
+                editable={!codeSent}
               />
-              <Text style={styles.fieldLabel}>Passwort</Text>
-              <BottomSheetTextInput
-                style={styles.input}
-                value={password}
-                onChangeText={setPassword}
-                autoCapitalize="none"
-                autoComplete="password"
-                secureTextEntry
-                placeholder="Mindestens 8 Zeichen"
-                placeholderTextColor={colors.inkSoft}
-              />
-              <Pressable onPress={() => authenticate("sign-in")} disabled={!canAuthenticate}>
-                <View style={[styles.primaryAction, !canAuthenticate && styles.disabled]}>
-                  <Image source={paper} style={styles.primaryActionGrain} resizeMode="cover" />
-                  <Text style={styles.primaryActionLabel}>{busy ? "Bitte warten …" : "Anmelden"}</Text>
-                </View>
-              </Pressable>
-              <Pressable
-                accessibilityRole="button"
-                onPress={() => authenticate("sign-up")}
-                disabled={!canAuthenticate}
-              >
-                <Text style={[styles.secondaryAction, !canAuthenticate && styles.disabled]}>
-                  Neues Konto anlegen
-                </Text>
-              </Pressable>
+
+              {authMode === "code" ? (
+                <>
+                  {codeSent ? (
+                    <>
+                      <Text style={styles.fieldLabel}>Code aus der E-Mail</Text>
+                      <BottomSheetTextInput
+                        style={[styles.input, styles.codeInput]}
+                        value={code}
+                        onChangeText={(v) => setCode(v.replace(/[^0-9]/g, "").slice(0, 6))}
+                        keyboardType="number-pad"
+                        maxLength={6}
+                        // Damit iOS den Code aus der Mail direkt ueber der
+                        // Tastatur anbietet, statt ihn abtippen zu lassen.
+                        textContentType="oneTimeCode"
+                        autoComplete="one-time-code"
+                        placeholder="000000"
+                        placeholderTextColor={colors.inkSoft}
+                      />
+                      <Pressable onPress={submitCode} disabled={!canVerifyCode}>
+                        <View style={[styles.primaryAction, !canVerifyCode && styles.disabled]}>
+                          <Image source={paper} style={styles.primaryActionGrain} resizeMode="cover" />
+                          <Text style={styles.primaryActionLabel}>
+                            {busy ? "Bitte warten …" : "Anmelden"}
+                          </Text>
+                        </View>
+                      </Pressable>
+                      <Pressable
+                        accessibilityRole="button"
+                        onPress={requestCode}
+                        disabled={!canRequestCode}
+                      >
+                        <Text style={[styles.secondaryAction, !canRequestCode && styles.disabled]}>
+                          {cooldown > 0 ? `Neuen Code in ${cooldown}s` : "Neuen Code senden"}
+                        </Text>
+                      </Pressable>
+                      <Pressable
+                        accessibilityRole="button"
+                        onPress={() => {
+                          setCodeSent(false);
+                          setCode("");
+                          setMessage("");
+                        }}
+                      >
+                        <Text style={styles.secondaryAction}>Andere E-Mail verwenden</Text>
+                      </Pressable>
+                    </>
+                  ) : (
+                    <>
+                      <Pressable onPress={requestCode} disabled={!canRequestCode}>
+                        <View style={[styles.primaryAction, !canRequestCode && styles.disabled]}>
+                          <Image source={paper} style={styles.primaryActionGrain} resizeMode="cover" />
+                          <Text style={styles.primaryActionLabel}>
+                            {busy ? "Bitte warten …" : "Code anfordern"}
+                          </Text>
+                        </View>
+                      </Pressable>
+                      <Text style={styles.hint}>
+                        Kein Passwort noetig. Wir schicken Ihnen einen sechsstelligen Code.
+                      </Text>
+                      <Pressable
+                        accessibilityRole="button"
+                        onPress={() => {
+                          setCodeSent(true);
+                          setMessage("");
+                        }}
+                        disabled={!emailLooksValid}
+                      >
+                        <Text style={[styles.secondaryAction, !emailLooksValid && styles.disabled]}>
+                          Ich habe schon einen Code
+                        </Text>
+                      </Pressable>
+                      <Pressable accessibilityRole="button" onPress={() => setAuthMode("password")}>
+                        <Text style={styles.secondaryAction}>Ich habe ein Passwort</Text>
+                      </Pressable>
+                    </>
+                  )}
+                </>
+              ) : (
+                <>
+                  <Text style={styles.fieldLabel}>Passwort</Text>
+                  <BottomSheetTextInput
+                    style={styles.input}
+                    value={password}
+                    onChangeText={setPassword}
+                    autoCapitalize="none"
+                    autoComplete="password"
+                    secureTextEntry
+                    placeholder="Mindestens 8 Zeichen"
+                    placeholderTextColor={colors.inkSoft}
+                  />
+                  <Pressable onPress={authenticate} disabled={!canAuthenticate}>
+                    <View style={[styles.primaryAction, !canAuthenticate && styles.disabled]}>
+                      <Image source={paper} style={styles.primaryActionGrain} resizeMode="cover" />
+                      <Text style={styles.primaryActionLabel}>
+                        {busy ? "Bitte warten …" : "Anmelden"}
+                      </Text>
+                    </View>
+                  </Pressable>
+                  {/* Kein "Konto anlegen" mehr: neue Konten entstehen ueber den
+                      Code-Weg, damit niemand mehr ein Passwort setzen muss. */}
+                  <Pressable
+                    accessibilityRole="button"
+                    onPress={() => {
+                      setAuthMode("code");
+                      setPassword("");
+                      setMessage("");
+                    }}
+                  >
+                    <Text style={styles.secondaryAction}>Lieber Code per E-Mail</Text>
+                  </Pressable>
+                </>
+              )}
             </>
           ) : (
             <>
@@ -572,6 +754,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 14,
+  },
+  codeInput: {
+    fontSize: 22,
+    letterSpacing: 8,
+    textAlign: "center",
+    fontFamily: fonts.serif,
+    includeFontPadding: false,
   },
   attachmentLabel: { fontSize: 13, fontWeight: "600", color: colors.accentDark },
   hint: { fontSize: 11, color: colors.inkSoft },
