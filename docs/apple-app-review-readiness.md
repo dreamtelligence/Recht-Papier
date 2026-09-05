@@ -103,6 +103,11 @@ Play-Console-Formular hinterlegt
 Apple verlangt nur den In-App-Weg. Für den Android-Start braucht es also eine erreichbare
 Löschseite, und sie gehört zum selben Arbeitspaket wie die In-App-Löschung.
 
+Die Seite ist geschrieben und liegt in `web/kontoloeschung/index.html`, bewusst noch unveröffentlicht.
+Vor der Einreichung sind drei Schritte nötig, die alle außerhalb des Repositories liegen: die Seite
+unter `dreamtelligence.de` ausliefern, ihre URL im Play-Console-Formular eintragen und die in der
+Fußzeile verlinkten Seiten `/impressum` und `/datenschutz` anlegen.
+
 ## AI-, Inhalts- und Legal-Review-Risiken
 
 ### AI-Ausgaben

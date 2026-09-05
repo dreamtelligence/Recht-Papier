@@ -130,6 +130,17 @@ Zwei Details, die man beim Ändern nicht kaputt machen sollte:
 - **Bei Storage-Fehlern wird abgebrochen**, bevor das Konto fällt. Ein noch bestehendes Konto ist das
   kleinere Übel gegenüber verwaisten Falldokumenten.
 
+Für Google Play liegt zusätzlich eine öffentliche Löschseite in `web/kontoloeschung/index.html` —
+eine einzelne Datei ohne Build und ohne externe Requests. Sie ist bewusst noch **nicht
+veröffentlicht**: Sie gehört zum Launch, nicht zur Entwicklung. Drei Schritte stehen dafür aus, alle
+außerhalb dieses Repositories:
+
+1. Seite unter `dreamtelligence.de` ausliefern (`recht-und-papier.de` ist nicht registriert).
+2. Die URL im Play-Console-Formular eintragen — ohne diesen Eintrag zählt die Seite für Play nicht.
+3. `/impressum` und `/datenschutz` anlegen; die Fußzeile verlinkt beide bereits. Der Anbietername
+   lautet dort **Klein Digital Solutions**, nicht Dreamtelligence — die Umbenennung ist rechtlich
+   nicht vollzogen.
+
 Geprüft wird das mit `python3 supabase/tests/test_account_deletion.py`. Der Test legt ein
 Wegwerfkonto mit Fall und Dokument an, löscht über denselben Weg wie die App und sucht anschließend
 mit `service_role`, also ohne RLS, nach jeder Spur einzeln. Ein Test, der vorher nichts anlegt,
