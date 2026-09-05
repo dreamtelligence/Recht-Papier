@@ -2,6 +2,7 @@ node_modules/
 dist/
 build/
 .DS_Store
+.firecrawl/
 *.log
 
 # Zugangsdaten gehören nie ins Repository
