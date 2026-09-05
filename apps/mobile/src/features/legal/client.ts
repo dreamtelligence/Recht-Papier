@@ -1,121 +1,86 @@
 import { supabase } from "@/lib/supabase";
-import type {
-  EnhancedAskResponse,
-  EngineStats,
-  SearchResponse,
-} from "./typen";
+import type { Citation } from "./typen";
 
 /**
- * Der Zugang zur Legal-Engine — und die Regel, wer wohin sprechen darf.
+ * Der Zugang zu Gesetzen und Urteilen — ausschließlich über unser Backend.
  *
- * Es gibt hier zwei getrennte Wege, und die Trennung ist der eigentliche
- * Inhalt dieser Datei:
+ * **Diese Datei sah einmal anders aus.** Sie hatte einen zweiten, direkten Weg:
+ * öffentliches Recht durfte das Gerät bei der Engine selbst abfragen, weil
+ * Gesetzestext öffentlich ist und kein Sachverhalt darin steckt. Die
+ * Überlegung war richtig und die Schlussfolgerung trotzdem falsch.
  *
- * 1. **Öffentliches Recht, direkt.** Gesetzestext und Urteile sind öffentlich.
- *    Eine Suche danach enthält keinen Sachverhalt, also darf das Gerät die
- *    Engine direkt fragen. Das ist der Weg für Nachschlagen und Vorschau.
+ * Was dabei übersehen wurde: Juras API hatte keinerlei Authentifizierung. Ein
+ * Abruf von `/api/legal/stats` gegen den veröffentlichten Modal-Endpunkt
+ * antwortete jedem im Netz mit HTTP 200 — nachgemessen, nicht vermutet. Und
+ * `/api/legal/ask` startet dabei einen kostenpflichtigen LLM-Aufruf.
  *
- * 2. **Falltext, niemals direkt.** Der Sachverhalt ist ein hochsensibles
- *    personenbezogenes Datum. Er geht ausschließlich über eine Supabase Edge
- *    Function an die Engine — dort wird das Nutzertoken geprüft, die
- *    Eigentümerschaft am Fall aufgelöst und das Ergebnis in `case_analyses`
- *    und `case_sources` geschrieben. Zwei Gründe, warum das nicht verhandelbar
- *    ist: die Engine hat keine eigene Authentifizierung, und aus Entscheidung
- *    `d150e31f` folgt, dass der Abfragepfad mit Falltext im EU-Container
- *    landen muss und nie auf US-GPU-Compute.
+ * Ein Schlüssel in der App hätte das nicht geheilt: ein Geheimnis in einem
+ * Mobile-Bundle ist keines, es lässt sich in Minuten herauslösen. Sobald die
+ * Engine also einen Schlüssel verlangt — und sie verlangt jetzt einen —, kann
+ * das Gerät sie nicht mehr direkt fragen, ohne genau diesen Schlüssel
+ * preiszugeben.
  *
- * Zu Modal: Modal bleibt, aber für den **Indexaufbau**, nicht für diesen Pfad.
- * Wer `EXPO_PUBLIC_LEGAL_ENGINE_URL` in der Entwicklung auf die Modal-URL
- * zeigen lässt, tut das für öffentliches Recht — für Falltext ist es der
- * falsche Endpunkt, unabhängig davon, ob es technisch funktioniert.
+ * Deshalb gilt ohne Ausnahme: **die App kennt die Adresse der Engine nicht.**
+ * Jede Anfrage läuft über unser Backend, das das Nutzertoken prüft, die
+ * Berechtigung auflöst und den Engine-Schlüssel besitzt. Das kostet einen
+ * Netzwerksprung und spart eine offene Rechnung.
  */
 
-const BASIS = process.env.EXPO_PUBLIC_LEGAL_ENGINE_URL?.replace(/\/+$/, "") ?? "";
+/**
+ * Was beim Nachschlagen zurückkommt.
+ *
+ * Bewusst schmaler als die Antwort der Engine: `retrieval_plan` und
+ * `source_audit` sind interne Diagnose und werden von der Edge Function
+ * abgeschnitten. Vom Audit bleibt nur, was die Oberfläche wirklich braucht —
+ * ob die Antwort unbelegte Aussagen enthält. Eine Antwort mit hoher
+ * Beanstandung darf nicht aussehen wie eine geprüfte.
+ */
+export type RechtAntwort = {
+  answer: string;
+  citations: Citation[];
+  model: string;
+  rechtsgebiet: string | null;
+  audit: { status: string; high_severity_count: number };
+};
 
-export const isEngineConfigured = BASIS.length > 0;
-
-/** Nach 20 Sekunden ist keine Antwort mehr nützlich, nur noch eine hängende Ansicht. */
-const ZEITLIMIT_MS = 20_000;
-
-class EngineFehler extends Error {
-  constructor(
-    message: string,
-    readonly status?: number,
-  ) {
+class RechtFehler extends Error {
+  constructor(message: string) {
     super(message);
-    this.name = "EngineFehler";
+    this.name = "RechtFehler";
   }
-}
-
-async function hole<T>(pfad: string, params: Record<string, string | number | undefined>): Promise<T> {
-  if (!isEngineConfigured) {
-    throw new EngineFehler("EXPO_PUBLIC_LEGAL_ENGINE_URL ist nicht gesetzt");
-  }
-
-  const suche = new URLSearchParams();
-  for (const [name, wert] of Object.entries(params)) {
-    if (wert !== undefined && wert !== "") suche.set(name, String(wert));
-  }
-
-  const abbruch = new AbortController();
-  const uhr = setTimeout(() => abbruch.abort(), ZEITLIMIT_MS);
-  try {
-    const antwort = await fetch(`${BASIS}${pfad}?${suche}`, {
-      headers: { Accept: "application/json" },
-      signal: abbruch.signal,
-    });
-    if (!antwort.ok) {
-      throw new EngineFehler(`Engine antwortete mit ${antwort.status}`, antwort.status);
-    }
-    return (await antwort.json()) as T;
-  } finally {
-    clearTimeout(uhr);
-  }
-}
-
-/** Hybride Suche im Rechtskorpus. Kein Falltext. */
-export function sucheRecht(
-  frage: string,
-  optionen: { topK?: number; rechtsgebiet?: string; gesetz?: string } = {},
-): Promise<SearchResponse> {
-  return hole<SearchResponse>("/api/legal/search", {
-    q: frage,
-    top_k: optionen.topK ?? 10,
-    rechtsgebiet: optionen.rechtsgebiet,
-    gesetz: optionen.gesetz,
-  });
 }
 
 /**
- * Allgemeine Rechtsfrage mit belegter Antwort. Kein Falltext.
+ * Allgemeine Rechtsfrage nachschlagen. Kein Falltext.
  *
- * `enhanced` statt `ask`: der Endpunkt schreibt die Frage zusätzlich um,
- * führt mehrere Suchen zusammen und liefert das erkannte Rechtsgebiet mit —
- * für MVP 1 mit nur zwei Rechtsgebieten ist genau das die nützliche Auskunft.
+ * Für Fragen, die keinen Sachverhalt tragen — „Wie lang ist die Kündigungsfrist
+ * nach zehn Jahren?". Läuft trotzdem über das Backend, weil die App den
+ * Engine-Schlüssel nicht halten kann.
  */
-export function frageRecht(frage: string, topK = 5): Promise<EnhancedAskResponse> {
-  return hole<EnhancedAskResponse>("/api/legal/ask/enhanced", { q: frage, top_k: topK });
-}
-
-export function engineStatistik(): Promise<EngineStats> {
-  return hole<EngineStats>("/api/legal/stats", {});
+export async function rechtNachschlagen(frage: string): Promise<RechtAntwort> {
+  const { data, error } = await supabase.functions.invoke("recht-nachschlagen", {
+    body: { frage },
+  });
+  if (error) throw new RechtFehler("Das Nachschlagen ist zurzeit nicht möglich.");
+  return data as RechtAntwort;
 }
 
 /**
  * Die rechtliche Einordnung eines konkreten Falls.
  *
- * Der Falltext verlässt das Gerät hier ausdrücklich **nicht** in Richtung
- * Engine, sondern in Richtung Supabase: die Edge Function `fall-einordnen`
- * kennt die Engine-Adresse, prüft das Nutzertoken, löst den Fall auf und legt
- * Analyse und Fundstellen in der Akte ab. Der Client schickt nur die ID.
+ * Der Client schickt nur die Fall-ID. Alles Weitere — Token prüfen,
+ * Eigentümerschaft auflösen, Falltext pseudonymisieren, Engine und Modell
+ * befragen, Analyse und Fundstellen in die Akte schreiben — passiert
+ * serverseitig. Der Sachverhalt verlässt das Gerät nur in Richtung Supabase,
+ * nie in Richtung Engine oder Modellanbieter.
  *
- * Die Funktion ist noch nicht deployt — dieser Aufruf ist die Naht, an der sie
- * andockt. Bis dahin meldet Supabase einen Fehler, und der Bildschirm zeigt
- * ihn als "noch nicht angeschlossen" statt eine Analyse vorzutäuschen.
+ * Die Gegenstelle ist noch nicht deployt; dieser Aufruf ist die Naht, an der
+ * sie andockt. Bis dahin meldet der Bildschirm „noch nicht angeschlossen",
+ * statt eine Analyse vorzutäuschen.
  */
 export async function fallEinordnen(caseId: string): Promise<void> {
   const { error } = await supabase.functions.invoke("fall-einordnen", {
     body: { case_id: caseId },
   });
-  if (error) throw new EngineFehler("Die Einordnung ist noch nicht angeschlossen.");
+  if (error) throw new RechtFehler("Die Einordnung ist noch nicht angeschlossen.");
 }

@@ -33,6 +33,9 @@ export default function AppLayout() {
           von unten und geht dorthin zurück, wo man war. */}
       <Stack.Screen name="fall/neu" options={{ presentation: "modal" }} />
       <Stack.Screen name="konto" options={{ presentation: "modal" }} />
+      {/* Nachschlagen ist eine Unterbrechung wie das Konto: man kommt
+          zurück, wo man war, statt tiefer in einen Stapel zu laufen. */}
+      <Stack.Screen name="nachschlagen" options={{ presentation: "modal" }} />
     </Stack>
   );
 }

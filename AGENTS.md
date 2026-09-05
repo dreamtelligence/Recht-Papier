@@ -156,6 +156,38 @@ aus `modal_deploy.py` gelöst ist (Entscheidung `32399c8c`), wird der Client aus
 OpenAPI-Schema generiert. Bis dahin gilt — **jede Änderung an Juras Routen muss dort
 nachgezogen werden, der Compiler merkt es nicht.**
 
+### Der angeschlossene Weg: Recht nachschlagen
+
+`recht-nachschlagen` ist die erste Edge Function, die wirklich an der Engine hängt, und
+zugleich die Vorlage für alle weiteren. Der Weg ist:
+
+```
+App → Edge Function recht-nachschlagen → Jura /api/legal/ask/enhanced → Gemini → Belege
+```
+
+**Die App kennt die Adresse der Engine nicht.** Das ist eine Korrektur gegenüber dem
+ursprünglichen Entwurf, der direkte Abfragen für öffentliches Recht erlauben wollte. Die
+Engine verlangt seit dem Zugangsschutz einen Schlüssel, und ein Schlüssel in einem
+Mobile-Bundle ist keiner. Nachgemessen am 05.09.2026: vor dem Zugangsschutz antwortete
+`/api/legal/stats` jedem im Netz mit HTTP 200, und `/api/legal/ask` startete dabei einen
+kostenpflichtigen LLM-Aufruf.
+
+Drei Umgebungen brauchen denselben Schlüssel: die Wurzel-`.env`, das Modal-Secret
+`legal-engine-key` und die Supabase-Secrets der Edge Functions.
+
+```
+KEY=$(openssl rand -hex 32)
+modal secret create legal-engine-key LEGAL_ENGINE_API_KEY=$KEY     # in ~/Jura
+supabase secrets set LEGAL_ENGINE_URL=<engine> LEGAL_ENGINE_API_KEY=$KEY
+supabase functions deploy recht-nachschlagen
+```
+
+Zwei Dinge, die beim ersten Test auffallen und keine Fehler sind: Der erste Aufruf dauert
+über eine Minute, weil die Modal-Instanz Einbettungsmodell und 211-MB-Index lädt. Und der
+`answer_audit` steht auf `fail`, solange es für die Frage kein Prüfprofil gibt — die
+Oberfläche zeigt das als Hinweis, statt eine unbelegte Antwort wie eine geprüfte aussehen
+zu lassen.
+
 Die Edge Function `fall-einordnen` ist noch nicht geschrieben. `fallEinordnen()` ist die
 Naht, an der sie andockt.
 

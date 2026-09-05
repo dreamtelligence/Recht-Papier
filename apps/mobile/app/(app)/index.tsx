@@ -25,6 +25,7 @@ import {
   Muted,
   PaperScreen,
   PrimaryAction,
+  SecondaryAction,
   Waiting,
   ZEILE,
 } from "@/ui";
@@ -194,6 +195,13 @@ export default function Fallübersicht() {
         <PrimaryAction
           label={faelle.length ? "Weiteren Fall beginnen" : "Fall beginnen"}
           onPress={() => router.push("/fall/neu")}
+        />
+        {/* Bewusst leise und unter der Primäraktion: Nachschlagen ist der
+            kleinere Weg. Wer ein Problem hat, legt einen Fall an; wer nur
+            wissen will, wie die Rechtslage ist, fragt hier. */}
+        <SecondaryAction
+          label="Recht nachschlagen"
+          onPress={() => router.push("/nachschlagen")}
         />
       </View>
     </PaperScreen>
