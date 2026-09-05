@@ -1,3 +1,8 @@
+> **Aufzeichnung aus der Mockup-Phase.** Dokumentiert die Design-QA des Vite-Prototyps im
+> simulierten Geräterahmen. Die absoluten Pfade unten sind nicht mehr gültig; die Screenshots
+> liegen im Tag `mockup-prototype`. Die Design-Absicht gilt weiter und wird in den Expo-Client
+> übernommen.
+
 # Design QA
 
 **Source visual truth**

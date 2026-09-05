@@ -1,85 +1,112 @@
-# Mobile Prototype Agent Guide
+# Recht & Papier — Agent Guide
 
-## Prototype Instructions
+## Was hier gebaut wird
 
-## Recht & Papier Design Direction
+Recht & Papier ist das erste eigene EMBER-Produkt: eine Consumer-App, die einen Rechtsfall
+strukturiert aufnimmt, ihn gegen geprüfte Gesetzes- und Urteilsquellen einordnet und
+verständliche nächste Schritte zeigt. MVP 1 bleibt bewusst auf **Arbeitsrecht und Mietrecht**
+begrenzt.
 
-- The first screen should feel like warm, calm paper or an e-reader page rather than a conventional SaaS dashboard.
-- Use the supplied hand-drawn balloon illustration as the main visual metaphor: the product lifts some of the user's burden.
-- Keep the palette restrained and ink-like with warm ivory paper, charcoal type, muted blue-grey accents, and only very light modern gradients.
-- The product is a structured legal case file with chat as one surface. Do not position it as an AI lawyer.
-- The first primary action is `Fall beginnen`.
-- Keep the hero, heading, and intro in place; anchor the primary action and trust note together near the bottom safe area with restrained bottom padding.
-- Center the `Fall beginnen` label and arrow together as one compact group inside the primary button.
-- The first case step collects a short description and requires the user's letter as an immediate file attachment, exposed through a paperclip action rather than deferred-document copy.
-- The case sheet opens quietly: the simulated keyboard stays down until the user deliberately taps into the text field. Radix moves focus into the sheet on mount, so that first programmatic focus is suppressed in `Prototype.tsx`.
+Zwei Sätze, die alles andere bestimmen:
 
-In ChatGPT Work Mode, run `sites-preview start "$PWD"`, open `http://terminal.local:4173/` in the cloud browser, and verify the rendered app and its primary interactions. Keep that preview open and tell the user to inspect it in the cloud browser; do not present the local URL as a user-facing chat link. In Codex Desktop, run the local server yourself, open the preview in the in-app browser, and provide the clickable local URL. Do not deploy to Sites unless the user explicitly asks to share, publish, or deploy. Do not give the user server-start instructions when you can run it.
+- **Die Fallakte ist die Datenstruktur, der Chat ist nur eine Oberfläche.**
+- **Schreiben entstehen aus strukturierten, freigegebenen Falldaten — nicht aus dem Chatverlauf.**
 
-For testing on ozgur's physically connected iPhone 14 Pro Max, run `npm run dev:device` (optionally with a port). It reuses an already running dev server, resolves the Mac's LAN address from the default-route interface, and prints the URL the phone should open. The phone must be on the same network; the cable is only used for Safari's Web Inspector. Address the server by IP, not by `<host>.local` - `vite.config.ts` restricts `allowedHosts` and is a protected runtime file.
+Das Produkt ist keine KI-Anwältin. Formulierungen und Funktionsumfang folgen dem
+fachanwaltlich bestätigten Leistungsbild.
 
-Before planning or implementing any mobile-app change, read this `AGENTS.md` in full. It is the source of truth for the template's runtime and component guidance.
+## Vor jeder nicht-trivialen Änderung: Semantica
 
-Before making substantial visual changes, use the Product Design plugin's `get-context` skill when the visual source is unclear or no longer matches the current goal. When the user gives durable prototype-specific design feedback, preferences, or decisions, record them in `AGENTS.md`.
+Projektwissen liegt im Semantica-MCP und ist dort verbindlich. Relevante Knoten:
 
-When implementing from a selected generated mock, treat that image as the source of truth for layout, component anatomy, density, spacing, color, typography, visible content, and hierarchy.
+| Knoten | Inhalt |
+|---|---|
+| `product:recht-und-papier` | Produktwurzel |
+| `domain-model:legal-case-file` | Fallakte, 13 Entitäten, Chat-ist-Oberfläche-Regel |
+| `architecture:recht-und-papier-core` | Pipeline und Invarianten der Legal-Engine |
+| `roadmap:recht-und-papier-mvp1` | Funktionsumfang und Qualitätsvoraussetzungen |
+| `compliance:recht-und-papier` | RDG, DSGVO, AI Act, Store-Regeln — Launch-Gate |
+| `stack:recht-und-papier` | Zielstack |
+| `coding-principles` | Benennung, kleine Bausteine, keine Secrets, Tests |
+| `vibe-coding-observability` | Absicherung über Logs, Metriken, Traces und Checks |
 
-## Editing Boundary
+Neue Erkenntnisse und Architekturentscheidungen werden dort festgehalten, veraltetes Wissen
+wird korrigiert statt ergänzt.
 
-- Build app-specific UI in `src/Prototype.tsx` and `src/prototype.css`.
-- Treat `src/App.tsx`, `src/main.tsx`, `src/styles.css`, `src/mobile/`, `public/assets/iphone/`, `public/assets/android/`, `public/assets/status/`, `vite.config.ts`, `worker/index.js`, and `scripts/prepare-sites-build.mjs` as protected runtime files. Do not edit, replace, remove, or recreate them unless the user explicitly asks to change the mobile runtime itself. For an explicit runtime change, update the affected lock hashes only after verifying the new runtime behavior.
-- Run `npm run check:runtime` before preview or handoff. If it fails, restore the protected runtime instead of weakening or bypassing the check.
-- `npm run build` preserves the mobile runtime and prepares the static Cloudflare Worker output required by Sites. Before a Sites handoff, confirm `dist/client/index.html`, `dist/server/index.js`, `dist/.openai/hosting.json`, and source `.openai/hosting.json` exist, then run `npm run test:sites`. Do not replace this project with a Vinext starter.
+## Architektur
 
-## Runtime Contract
+### Client
 
-- Preserve the mobile device runtime unless the user's task explicitly asks otherwise. Do not replace it with a standalone page. Visual fidelity applies to app-owned content inside the device screen, not to template-owned device chrome.
-- Keep `App` composed around `PhoneFrame` -> `KeyboardProvider`, with `StatusBar`, app content, `HomeIndicator`, and `KeyboardDock` mounted inside the phone frame. `StatusBar` and the iOS home indicator are overlaid device chrome. When the Android keyboard is closed, the app viewport reserves the protected navigation-bar region instead of painting behind it. When the Android keyboard is open, preserve the current full-screen keyboard layout: its asset includes the IME navigation strip and the separate black navigation bar is hidden. iOS screens continue to paint behind the home-indicator area and own their safe-area content padding.
-- Preserve the `iPhone` / `Pixel 10` device picker and both calibrated device presets. The Pixel screen is `427 x 952`; its `32 x 32` camera circle and `public/assets/android/navigation-bar.svg` bottom navigation bar are protected device chrome, not app content.
-- Preserve the device picker's intentionally lightweight Codex styling in the top-right corner: its trigger wrapper is borderless and transparent, its trigger sizes to content, and its right-aligned menu uses the compact 3px inset plus the specified hairline and elevation shadow layers. Keep the prototype root and default app screen white.
-- Preserve `StatusBar` as live device chrome, including its platform-specific typography, source status-icon assets, and spacing. Pixel 10 uses Roboto, Android indicators, and 32px top, left, and right padding. iPhone uses its iOS indicators, system typography, and calibrated spacing. Do not hardcode screenshot times like `9:41` into the status bar, replace its real-time clock, or move status bar content into app markup unless the user explicitly asks for a fixed/mock device time.
-- `PhoneFrame` owns the calibrated device frame, screen portal, device picker, camera cutout, and custom cursor. Keep device assets in `public/assets/iphone/` and `public/assets/android/`; if an asset fails to load, repair the asset path or restore the asset instead of removing the frame, keyboard, or image render.
-- Use `MobileScroll` directly for simple single-screen prototypes. Use `FlowStack` for conventional multi-screen flows whose routes can own their fixed header and footer; when using it, define each route as a `FlowScreen`: `{ id, header?, headerHeight?, footer?, footerHeight?, render }`, and use `flow.push(screen)`, `flow.pop()`, and `flow.replace(screen)` from `FlowStack` render callbacks or `useFlow()` instead of introducing another router.
-- Use `Carousel` for a carousel, horizontal rail, swipeable cards, image or media strip, horizontally scrollable cards, chip rail, or other horizontal collection.
-- For a layered app shell—such as a persistent composer, independently presented sheet, pushed/peek sidebar, or app-wide transition—compose directly in `Prototype.tsx` rather than forcing it through `FlowStack`. Keep app-owned fixed chrome as sibling layers outside `MobileScroll`.
-- When using `FlowScreen`, put route-owned fixed headers or footers in `FlowScreen.header` or `FlowScreen.footer`. Set `headerHeight` to the visible app-toolbar height; `FlowStack` adds the device's top safe-area/status-bar inset automatically. Do not include `StatusBar` or its height in the header. Set `footerHeight` to the full app-footer height. `FlowScreen.footer` is an overlay, not reserved layout space; screens using it must add their own bottom content padding such as `padding-bottom: calc(var(--flow-footer-height) + var(--mobile-safe-area-height) + 24px)` so final content can scroll above the footer while still painting behind it.
-- Render only scrollable content inside `MobileScroll`; it is for content that should move with scroll and rubber-band overscroll. Keep app-owned headers, nav bars, tabs, composers, and overlays outside it. This keeps scroll physics, safe areas, keyboard insets, scrollbars, and drag click suppression active without letting content paint under fixed chrome.
-- Buttons, links, cards, and images inside `MobileScroll` should still allow drag scrolling when the pointer moves beyond tap slop. Use `data-scroll-drag="ignore"` only for rare controls that must own the drag gesture themselves.
-- Do not add `var(--keyboard-height)` to ordinary screen/content padding inside `MobileScroll`; the scroll viewport already shrinks above the simulated keyboard. For custom fixed composers, search bars, or toast chrome, use `useKeyboardInsets().bottomInset`. It is relative to the app viewport: Android returns `0` while the closed-keyboard viewport already reserves navigation, then returns the keyboard height while open; iOS continues to clear the home indicator while closed and ride directly above the keyboard while open. Do not pin custom bottom chrome to `bottom: 0` or only `keyboardHeight`.
-- Use `KeyboardInput`, `KeyboardTextarea`, or `MobileTextField` for every text-entry control. A raw `input` or `textarea` disconnects focus, keyboard animation, safe-area insets, and attached surfaces.
-- Use `BottomSheet` for phone-scoped sheets. Its props are `open`, `onOpenChange`, `title`, optional `description`, optional `snap`, and `children`; it renders through the phone screen portal and dismisses the keyboard before opening.
+**Expo mit Expo Router** für iOS und Android (Entscheidungen `08357e6d`, bestätigt durch
+`2a9ae9a0`). Begründung: Apple-Richtlinie 4.2 zielt auf dünne WebView-Wrapper und ein
+Verbraucher-Rechtsprodukt steht ohnehin unter erhöhter Prüfung; Abos brauchen auf iOS IAP;
+EAS liefert reproduzierbare signierte Builds für beide Stores.
 
-## Horizontal Carousels
+### Backend — Trennung nach Datensensibilität
 
-- Use `Carousel` for horizontally draggable cards, images, media, chips, or other horizontal collections. Do not recreate these with `overflow-x`, custom pointer handlers, or a generic div.
-- `Carousel` can be nested directly inside `MobileScroll`. It owns horizontal gestures and automatically yields vertical gestures to the parent.
-- Never put `data-scroll-drag="ignore"` on or around a `Carousel`; doing so prevents vertical parent scrolling when a gesture begins inside it.
-- Do not add CSS scroll snapping to `Carousel`; its runtime owns momentum and release motion.
-- Use `data-scroll-drag="ignore"` only when a control must prevent parent scrolling in every drag direction.
+Die Leitlinie, aus der alles folgt: **Falldaten und Rechtskorpus werden nie vermischt.**
 
-See `src/mobile/COMPONENTS.md` for the full component and gesture contract.
+| Schicht | Wahl |
+|---|---|
+| Auth, Fallakte, Dokumente | Supabase, EU-Region Frankfurt, Row Level Security |
+| Legal-Engine | `dreamtelligence/Jura` als eigener containerisierter FastAPI-Dienst |
+| Vektorsuche | Qdrant, self-hosted im selben EU-Netz |
+| Online-Pfad (Abfrage) | CPU, EU-Container — **kein Falltext durch US-GPU-Compute** |
+| Offline-Pfad (Index) | Modal-GPU — sieht ausschließlich öffentliches Recht |
+| Scraping | lokal, manche Rechtsquellen blocken Rechenzentrums-IPs |
 
-## Keyboard Rule
+Modal bleibt also, aber nur für den Indexaufbau. Das löst die heikelste DSGVO-Frage
+strukturell statt vertraglich. Details in Entscheidung `d150e31f`.
 
-The simulated keyboard is a separate top-layer component. Before presenting anything that behaves like iOS navigation or modal UI, dismiss it first.
+### Lokale Entwicklung
 
-Call `keyboard.hide()` before:
+**Docker Desktop auf macOS erreicht die Apple-GPU nicht** — Container laufen in einer Linux-VM
+ohne Metal. Daraus folgt die Aufteilung (Entscheidung `8d0d91c0`):
 
-- pushing, popping, or replacing FlowStack routes
-- opening bottom sheets, action sheets, dialogs, menus, or navigation sheets
-- starting transitions where the destination should not inherit text-input focus
+- **Im Container:** Qdrant, Jura-API mit CPU-Modellen, Supabase-Lokalstack.
+- **Nicht im Container:** Neuindizierung und Ingestion — nativ auf dem Mac oder auf Modal.
 
-`FlowStack` already hides the keyboard for `push`, `pop`, and `replace`. `BottomSheet` already hides it before opening. If you add new modal/sheet/navigation primitives, follow the same rule.
+## Repo-Aufbau
 
-When a composer, search surface, or other keyboard-attached component closes, call `keyboard.hide()` in the same event before changing that component's open state. Position attached surfaces from `useKeyboardInsets()` rather than a separate timer or visibility flag so both dismiss together.
+Ordner entstehen, wenn sie echten Inhalt haben — keine leeren Platzhalter.
 
-When any text-entry control loses focus, dismiss the simulated keyboard. If the control is custom or does not use the runtime's keyboard-aware fields, handle its blur event and call `keyboard.hide()` explicitly. Keep the keyboard open only when focus is moving directly to another text-entry control that should share the same keyboard session.
+```
+assets/brand/     Ballonillustration, Papiertextur, App-Icon
+docs/             Design- und QA-Aufzeichnungen
+infra/            docker-compose für den lokalen Stack        (Schritt 3)
+packages/shared/  Typen und generierter Engine-Client         (Schritt 4)
+supabase/         Migrationen und RLS-Policies                (Schritt 6)
+apps/mobile/      Expo-Client                                 (Schritt 7)
+```
 
-## Interaction Rules
+## Frühere Stände
 
-- Do not trigger buttons or inputs after a pointer has become a drag. Preserve the drag suppression behavior in `MobileScroll`.
-- Do not allow native browser image/file dragging inside the phone frame. Preserve the phone-level `dragstart` suppression and non-draggable image styles so scroll drags that begin on images still scroll the prototype.
-- Use `KeyboardInput`, `KeyboardTextarea`, or `MobileTextField` for text entry so the simulated keyboard and safe-area insets stay connected.
-- Fixed phone chrome should not animate with pushed screens. Screen content can animate; the status bar, camera cutout, and preview chrome should stay put.
-- Keep the keyboard below the home indicator/safe area layer in z-index, and above ordinary app UI while visible.
-- Keep the home indicator as the topmost safe-area layer in the z-index above everything else in the prototype.
+Nichts wurde gelöscht, beides ist als Tag erreichbar:
+
+- `mockup-prototype` — Vite-Prototyp im simulierten Geräterahmen
+- `capacitor-spike` — daraus gebaute Capacitor-iOS-App, lief auf dem Gerät
+
+Aus dem Spike zu übernehmen sind Konzepte, nicht Code: die Papier-Designsprache in
+`src/prototype.css`, das Verhalten des Fall-Sheets (ruhig öffnen, Tastatur erst beim Tippen ins
+Feld, Sheet fährt mit der Tastatur statt zu springen) und die Safe-Area-Verankerung der
+Primäraktion.
+
+## Vor Umsetzung an Primärquellen prüfen
+
+`stack:recht-und-papier` verlangt das ausdrücklich. Nicht aus dem Gedächtnis entscheiden:
+
+- **LLM-Wahl und EU-Datenresidenz.** Semantica notiert GPT-5.6, Jura nutzt real Gemini 2.5
+  Flash-Lite. Größte DSGVO-Exposition, braucht AVV und EU-Verarbeitung.
+- **Modal-Regionen** für den Ingestion-Pfad.
+- **Apple-IAP-Pflicht** und Store-Regeln für Rechtsauskunft.
+- **RDG-Leistungsbild** — fachanwaltlich, bevor Funktionen öffentlich angeboten werden.
+
+## Arbeitsregeln
+
+- Keine Secrets im Repository. Zugangsdaten gehören in `.env`, Platzhalter in `.env.example`.
+- Änderungen werden über beobachtbares Verhalten und überprüfbare Checks abgesichert.
+  Request-ID vom Client bis in die Engine, strukturierte Logs, Traces.
+- Die `regression_guard`-Fälle aus Juras `evals/kanzlei_core.json` sind ein blockierendes Gate.
+- Die Invarianten aus `architecture:recht-und-papier-core` sind nicht verhandelbar: rechtliche
+  Aussagen nur aus dem validierten Evidence Set, Rechtsstand und Quellenlage sichtbar, **keine
+  unbelegten Prozentangaben zu Prozesschancen**.

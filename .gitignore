@@ -1,12 +1,31 @@
 node_modules/
 dist/
-test-results/
-playwright-report/
+build/
 .DS_Store
 *.log
 
-# Capacitor / iOS build output
-ios/App/Pods/
-ios/App/App/public/
-ios/App/build/
-DerivedData/
+# Zugangsdaten gehören nie ins Repository
+.env
+.env.*
+!.env.example
+
+# Test- und Build-Artefakte
+test-results/
+playwright-report/
+coverage/
+
+# Expo / EAS
+.expo/
+*.ipa
+*.apk
+*.aab
+
+# Native Projekte werden generiert
+ios/
+android/
+
+# Lokaler Stack
+supabase/.branches/
+supabase/.temp/
+qdrant_storage/
+legal_rag_storage/
