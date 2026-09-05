@@ -17,6 +17,11 @@ export const colors = {
   accent: "#53666c",
   accentDark: "#34494f",
   line: "rgba(49, 48, 40, 0.14)",
+  // Die Lineatur des Notizblocks. Deutlich leiser als `line`: die trennt zwei
+  // Dinge und muss dafür gesehen werden, diese zeigt nur, dass die Seite
+  // weitergeht. Auf derselben Stärke gelesen, sähe jede leere Zeile aus wie ein
+  // Eintrag, der fehlt.
+  lineSoft: "rgba(49, 48, 40, 0.13)",
   onAccent: "#fbf8f0",
   success: "#455b52",
 } as const;
@@ -51,4 +56,20 @@ export const radius = {
   // Haarlinien im Register. Die Eingabefelder behalten bewusst die weicheren 8.
   action: 4,
   sheet: 22,
+} as const;
+
+/**
+ * Die Abstände, die die Oberfläche wirklich benutzt.
+ *
+ * Bewusst keine 4er-Skala von 4 bis 64: eine Skala, die mehr anbietet als
+ * gebraucht wird, wird zur Auswahl statt zur Regel, und dann steht am Ende doch
+ * überall eine andere Zahl. Hier steht nur, was mehrfach vorkommt — der
+ * Seitenrand, der Abstand zwischen zwei Blöcken, der Abstand innerhalb eines
+ * Blocks. Einzelwerte bleiben Einzelwerte und stehen dort, wo sie gelten.
+ */
+export const spacing = {
+  /** Seitenrand aller Bildschirme. Papier hat einen Rand, keine Kante. */
+  page: 28,
+  block: 22,
+  row: 10,
 } as const;

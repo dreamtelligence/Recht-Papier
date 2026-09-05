@@ -90,6 +90,75 @@ supabase/         Migrationen und RLS-Policies                (Schritt 6)
 apps/mobile/      Expo-Client mit Expo Router
 ```
 
+### Client-Aufbau
+
+`app/` enthält **nur Routen**, alles andere liegt unter `src/` und wird über den Alias
+`@/` importiert (`tsconfig.json`, von Metro und TypeScript gleichermaßen aufgelöst).
+
+```
+app/_layout.tsx         SessionProvider, Splash-Freigabe, die eine Weiche
+app/start.tsx           Startbildschirm — nur Start
+app/anmelden.tsx        Anmeldung (Code, Passwort als Zweitweg)
+app/+not-found.tsx      Deep Link ins Leere → Start oder App
+app/(app)/              alles hinter der Anmeldung
+  index.tsx             Fallübersicht (Startseite der App)
+  fall/[id].tsx         Fallakte
+  fall/neu.tsx          Fall anlegen (modal)
+  konto.tsx             Abmelden, Konto löschen (modal)
+
+src/theme/              Farben, Schriften, Radien, Abstände
+src/ui/                 Papier-Bausteine (PaperScreen, PrimaryAction, Field, …)
+src/lib/                supabase, Fehlertexte, Formatierung
+src/features/auth/      SessionProvider, Anmelde-Ablauf, Konto-Funktionen
+src/features/faelle/    Typen, Datenzugriff, Lade-Hooks
+src/features/legal/     typisierter Client für die Jura-Engine
+```
+
+### Start und App sind getrennt
+
+Der Startbildschirm zeigt **ausschließlich** das Versprechen: Ballonmotiv, "Recht
+verstehen. Besser reagieren.", das Register aus Schildern/Einordnen/Reagieren und einen Weg
+hinein. Keine Fallakte, kein Anlegen, kein Abmelden, keine Kontolöschung. Alles davon lebt
+hinter der Anmeldung.
+
+Die Grenze zieht `Stack.Protected` in `app/_layout.tsx` — an genau einer Stelle, nicht in
+jedem Layout. Zwei Eigenschaften daran sind der Grund für diese Wahl:
+
+- **Kein Aufblitzen.** Ein `Redirect` im Layout baut den Bildschirm erst auf und leitet dann
+  weg. Der Guard lässt die Gruppe gar nicht erst entstehen.
+- **Kein Zurück nach dem Abmelden.** Fällt ein Guard auf `false`, entfernt Expo Router die
+  Route samt ihrer Historie. Auf einem geteilten Gerät ist das der Unterschied zwischen
+  abgemeldet und abgemeldet aussehend.
+
+Kein Bildschirm navigiert nach einer Anmeldung oder Abmeldung von Hand. Der
+`SessionProvider` meldet die Änderung, der Guard entscheidet — eine Navigation daneben wäre
+eine zweite Wahrheit.
+
+Kein Tab-Bar: MVP 1 hat genau ein echtes Objekt, die Fallakte.
+
+### Anschluss an die Legal-Engine
+
+`src/features/legal/client.ts` kennt **zwei getrennte Wege**, und die Trennung ist der
+eigentliche Inhalt der Datei:
+
+| Weg | Inhalt | Ziel |
+|---|---|---|
+| direkt (`EXPO_PUBLIC_LEGAL_ENGINE_URL`) | öffentliches Recht, kein Sachverhalt | Jura-API |
+| über Edge Function `fall-einordnen` | Falltext | Supabase → Jura im EU-Netz |
+
+Der Sachverhalt verlässt das Gerät nie in Richtung Engine. Die Engine hat keine eigene
+Authentifizierung, und aus Entscheidung `d150e31f` folgt, dass der Abfragepfad mit Falltext
+im EU-Container landen muss. **Modal bleibt für den Indexaufbau, nicht für diesen Pfad.**
+
+Die Typen in `src/features/legal/typen.ts` sind von Hand aus Juras `modal_deploy.py` und
+`src/api/answering.py` nachgezeichnet. Das ist der Zwischenschritt: sobald die Serving-Schicht
+aus `modal_deploy.py` gelöst ist (Entscheidung `32399c8c`), wird der Client aus dem
+OpenAPI-Schema generiert. Bis dahin gilt — **jede Änderung an Juras Routen muss dort
+nachgezogen werden, der Compiler merkt es nicht.**
+
+Die Edge Function `fall-einordnen` ist noch nicht geschrieben. `fallEinordnen()` ist die
+Naht, an der sie andockt.
+
 ### Lokaler Stack starten
 
 ```
