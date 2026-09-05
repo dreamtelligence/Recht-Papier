@@ -2,7 +2,8 @@
 
 ## Was hier gebaut wird
 
-Recht & Papier ist das erste eigene EMBER-Produkt: eine Consumer-App, die einen Rechtsfall
+Recht & Papier ist das erste eigene Produkt von **Klein Digital Solutions** (geplante
+Umbenennung: **Dreamtelligence**): eine Consumer-App, die einen Rechtsfall
 strukturiert aufnimmt, ihn gegen geprüfte Gesetzes- und Urteilsquellen einordnet und
 verständliche nächste Schritte zeigt. MVP 1 bleibt bewusst auf **Arbeitsrecht und Mietrecht**
 begrenzt.
@@ -70,10 +71,10 @@ ohne Metal. Daraus folgt die Aufteilung (Entscheidung `8d0d91c0`):
 ### Apple App Review
 
 Der Expo-Weg ist technisch App-Store-fähig, der aktuelle Starter aber nicht einreichbar. Vor
-dem ersten Review sind insbesondere das von Apple bestätigte Einreichungsmodell für EMBER als
-Einzelunternehmen, StoreKit-IAP, vollständige In-App-Kontolöschung, der offengelegte und
-eingewilligte LLM-Datenfluss, Privacy Labels/Manifeste sowie ein dauerhaft erreichbarer
-Review-Zugang verbindliche Gates. Vollständige Primärquellen und Checkliste:
+dem ersten Review sind insbesondere das von Apple bestätigte Einreichungsmodell für Klein
+Digital Solutions als Einzelunternehmen, StoreKit-IAP, vollständige In-App-Kontolöschung, der
+offengelegte und eingewilligte LLM-Datenfluss, Privacy Labels/Manifeste sowie ein dauerhaft
+erreichbarer Review-Zugang verbindliche Gates. Vollständige Primärquellen und Checkliste:
 [`docs/apple-app-review-readiness.md`](docs/apple-app-review-readiness.md).
 
 ## Repo-Aufbau

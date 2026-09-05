@@ -126,15 +126,21 @@ Individual Developer
 Rechtsfallakte regelmäßig vertrauliche und teils hochsensible Inhalte enthält, sollte ein
 **von Apple bestätigtes Einreichungsmodell als Release-Gate** behandelt werden.
 
-Für EMBER besteht dabei ein konkreter Klärungspunkt: Apple weist Einzelunternehmen ausdrücklich
-dem Individual-Account zu; für einen Organization-Account verlangt Apple eine eigenständige
-Legal Entity und D-U-N-S-Prüfung ([Apple Program Enrollment](https://developer.apple.com/help/account/membership/program-enrollment)).
+Für **Klein Digital Solutions** besteht dabei ein konkreter Klärungspunkt: Apple weist
+Einzelunternehmen ausdrücklich dem Individual-Account zu; für einen Organization-Account
+verlangt Apple eine eigenständige Legal Entity und D-U-N-S-Prüfung
+([Apple Program Enrollment](https://developer.apple.com/help/account/membership/program-enrollment)).
 Das kollidiert mit Apples Empfehlung für Apps mit sensiblen Daten. Vor der Implementierung des
 Store-Releasepfads sollte deshalb ein 30-minütiger
 [App-Review-Termin](https://developer.apple.com/app-store/review/) genau diese Konstellation
 klären. Falls Apple einen Organization-Account verlangt, muss die tatsächlich verantwortliche
 Anbieterin eine von Apple akzeptierte Rechtsform haben oder der Dienst von einer geeigneten
 Partner-Entität eingereicht und verantwortet werden.
+
+Die geplante Umbenennung in **Dreamtelligence** ändert diese Einstufung erst, wenn der rechtliche
+Name beziehungsweise die Rechtsform tatsächlich geändert und von Apple übernommen wurde. Bis
+dahin müssen Developer Account, Verkäufername, Datenschutztexte und Review-Unterlagen Klein
+Digital Solutions als aktuelle Anbieterin führen.
 
 Apples Regeln enthalten keine spezielle Legal-AI-Lizenz. Sie verlangen aber die Einhaltung aller
 lokalen Gesetze in jedem Vertriebsgebiet ([Guideline 5](https://developer.apple.com/app-store/review/guidelines/)).
