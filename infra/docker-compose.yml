@@ -1,0 +1,41 @@
+# Lokaler Entwicklungs-Stack.
+#
+# Was hier bewusst NICHT läuft:
+#   - Neuindizierung und Ingestion. Docker Desktop auf macOS erreicht die Apple-GPU nicht
+#     (Linux-VM ohne Metal), und der VM stehen hier nur rund 7,7 GiB zur Verfügung.
+#     Indexaufbau läuft nativ auf dem Mac oder auf Modal. Siehe Semantica 8d0d91c0.
+#   - Supabase. Das bringt eine eigene CLI mit eigenen Containern mit (`supabase start`).
+#
+# Health-Checks stehen absichtlich nicht im Container: das Qdrant-Image enthält weder
+# curl noch wget. `infra/stack.sh status` prüft die Bereitschaft vom Host aus.
+
+name: recht-und-papier
+
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: rup-qdrant
+    restart: unless-stopped
+    ports:
+      - "${QDRANT_HTTP_PORT:-6333}:6333"
+      - "${QDRANT_GRPC_PORT:-6334}:6334"
+    volumes:
+      - qdrant-storage:/qdrant/storage
+    environment:
+      QDRANT__SERVICE__HTTP_PORT: 6333
+      QDRANT__LOG_LEVEL: ${QDRANT_LOG_LEVEL:-INFO}
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+
+  # legal-engine: kommt in Schritt 4.
+  #
+  # Voraussetzung: Die Serving-Schicht steckt derzeit in `modal_deploy.py` des Jura-Repos
+  # und ist dort mit der Modal-Verpackung verwoben (Volume-Mount des Index, GPU-Klasse,
+  # Routen, LLM-Fallback, Citation-Verification, Answer-Audit in einer Datei).
+  # Sie muss erst in eine hostbare FastAPI-App gelöst werden, die Modal und Docker
+  # gleichermaßen betreiben können. Erst dann ist ein Service-Eintrag hier ehrlich.
+
+volumes:
+  qdrant-storage:

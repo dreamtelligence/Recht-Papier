@@ -73,11 +73,24 @@ Ordner entstehen, wenn sie echten Inhalt haben — keine leeren Platzhalter.
 ```
 assets/brand/     Ballonillustration, Papiertextur, App-Icon
 docs/             Design- und QA-Aufzeichnungen
-infra/            docker-compose für den lokalen Stack        (Schritt 3)
+infra/            docker-compose und stack.sh für den lokalen Stack
 packages/shared/  Typen und generierter Engine-Client         (Schritt 4)
 supabase/         Migrationen und RLS-Policies                (Schritt 6)
 apps/mobile/      Expo-Client                                 (Schritt 7)
 ```
+
+### Lokaler Stack starten
+
+```
+cp .env.example .env      # ausfüllen, .env bleibt außerhalb des Repositories
+npm run stack:up          # startet Qdrant, prüft Bereitschaft vom Host aus
+npm run stack:status
+npm run stack:down        # stack:reset verwirft zusätzlich die Volumes
+```
+
+Der Docker-VM stehen auf diesem Rechner rund **7,7 GiB** zur Verfügung. bge-m3 und der
+Reranker zusammen mit Qdrant passen dort nur knapp — ein Grund mehr, Ingestion außerhalb
+des Containers zu halten.
 
 ## Frühere Stände
 

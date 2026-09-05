@@ -1,0 +1,12 @@
+{
+  "name": "recht-und-papier",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Recht & Papier - strukturierte Rechtsfallakte fuer Verbraucher",
+  "scripts": {
+    "stack:up": "infra/stack.sh up",
+    "stack:down": "infra/stack.sh down",
+    "stack:reset": "infra/stack.sh reset",
+    "stack:status": "infra/stack.sh status"
+  }
+}
