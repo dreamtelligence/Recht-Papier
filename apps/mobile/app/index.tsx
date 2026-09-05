@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
+  Alert,
   ImageBackground,
   Image,
   Pressable,
@@ -253,6 +254,46 @@ export default function Welcome() {
     }
   }, [canVerifyCode, code, normalizedEmail]);
 
+  // Apple verlangt die vollstaendige Loeschung aus der App heraus, sobald sie
+  // Konten anlegt (Guideline 5.1.1(v)). Die eigentliche Arbeit macht die Edge
+  // Function - sie braucht den service_role-Schluessel, der nie auf ein Geraet
+  // gehoert. Der Client schickt nur sein normales Nutzertoken mit.
+  const deleteAccount = useCallback(async () => {
+    setBusy(true);
+    setMessage("");
+    try {
+      const { data, error } = await supabase.functions.invoke("delete-account");
+      if (error) throw error;
+      if (!data?.deleted) throw new Error("unerwartete Antwort");
+      // Das Konto existiert nicht mehr; ein serverseitiges Abmelden liefe ins
+      // Leere. Nur die lokale Sitzung raeumen.
+      await supabase.auth.signOut({ scope: "local" });
+      setLatestCase(null);
+      setDescription("");
+      setAttachment(null);
+      setEmail("");
+      setCode("");
+      setCodeSent(false);
+      closeSheet();
+    } catch {
+      setMessage("Das Konto konnte nicht gelöscht werden. Bitte später erneut versuchen.");
+    } finally {
+      setBusy(false);
+    }
+  }, [closeSheet]);
+
+  const confirmDeleteAccount = useCallback(() => {
+    Alert.alert(
+      "Konto und Fallakte löschen?",
+      "Ihre Fallakte, alle hochgeladenen Dokumente und Ihr Konto werden dauerhaft gelöscht. "
+        + "Das lässt sich nicht rückgängig machen.",
+      [
+        { text: "Abbrechen", style: "cancel" },
+        { text: "Endgültig löschen", style: "destructive", onPress: deleteAccount },
+      ],
+    );
+  }, [deleteAccount]);
+
   const beginCase = useCallback(async () => {
     if (!canSubmit || !attachment || !session) return;
     setBusy(true);
@@ -319,7 +360,7 @@ export default function Welcome() {
           {[
             { label: "Schildern", detail: "Sachverhalt und Dokumente" },
             { label: "Einordnen", detail: "Abgleich mit Gesetzen und Urteilen" },
-            { label: "Weitergehen", detail: "Nächste Schritte und Rechtsstand" },
+            { label: "Weitergehen", detail: "Nächste Schritte und Handlungsmöglichkeiten" },
           ].map((entry, i) => (
             <View
               key={entry.label}
@@ -350,15 +391,29 @@ export default function Welcome() {
               </Text>
             </View>
           </Pressable>
-          {/* Konkret statt unbestimmt: die Falldaten liegen in Frankfurt
-              (Supabase eu-central-1). "Keine Speicherung" waere falsch - die
+          {/* Deutschland statt Frankfurt: die Falldaten liegen zwar real in
+              Frankfurt (Supabase eu-central-1), aber der Ortsname wirft beim
+              Leser eine Frage auf, statt eine zu beantworten. Das Land ist die
+              Aussage, die traegt. "Keine Speicherung" waere falsch - die
               Fallakte ist ausdruecklich dauerhaft. */}
-          <Text style={styles.privacyNote}>Fallakte in Frankfurt gespeichert · Quellen werden sichtbar</Text>
+          <Text style={styles.privacyNote}>Fallakte in Deutschland gespeichert · Quellen werden sichtbar</Text>
           <Text style={styles.legalNote}>Ersetzt keine Rechtsberatung.</Text>
           {session ? (
-            <Pressable accessibilityRole="button" onPress={() => supabase.auth.signOut()}>
-              <Text style={styles.signOut}>Abmelden</Text>
-            </Pressable>
+            <View style={styles.accountRow}>
+              <Pressable accessibilityRole="button" onPress={() => supabase.auth.signOut()}>
+                <Text style={styles.signOut}>Abmelden</Text>
+              </Pressable>
+              <Text style={styles.accountSeparator}>·</Text>
+              {/* Nicht versteckt: Apple verlangt, dass die Loeschung in der App
+                  auffindbar ist, nicht nur auf Nachfrage beim Support. */}
+              <Pressable
+                accessibilityRole="button"
+                onPress={confirmDeleteAccount}
+                disabled={busy}
+              >
+                <Text style={[styles.signOut, busy && styles.disabled]}>Konto löschen</Text>
+              </Pressable>
+            </View>
           ) : null}
         </Animated.View>
       </View>
@@ -378,6 +433,18 @@ export default function Welcome() {
         android_keyboardInputMode="adjustResize"
       >
         <BottomSheetView style={[styles.sheetBody, { paddingBottom: insets.bottom + 20 }]}>
+          {/* Ein sichtbarer Weg zurueck. Nur auf die Wischgeste zu setzen laesst
+              Leute im Sheet festsitzen, die sie nicht kennen - und wer hier
+              zoegert, will oft genau das: erstmal wieder raus. */}
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Schließen"
+            hitSlop={12}
+            onPress={closeSheet}
+            style={styles.sheetClose}
+          >
+            <Text style={styles.sheetCloseGlyph}>×</Text>
+          </Pressable>
           {!authReady ? (
             <Text style={styles.sheetDescription}>Sichere Sitzung wird geladen …</Text>
           ) : !isSupabaseConfigured ? (
@@ -695,8 +762,11 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: colors.inkSoft,
   },
+  // Der Hinweis bleibt vollstaendig lesbar - kleiner zu setzen waere bei einem
+  // Rechtsprodukt das falsche Signal. Nur der Abstand rueckt zusammen, damit
+  // Fussnote und Hinweis als ein Block wirken statt als Warnung unter der Aktion.
   legalNote: {
-    marginTop: 5,
+    marginTop: 2,
     textAlign: "center",
     fontSize: 11,
     color: colors.inkSoft,
@@ -710,9 +780,33 @@ const styles = StyleSheet.create({
     color: colors.inkSoft,
   },
 
+  accountRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 8,
+  },
+  accountSeparator: { fontSize: 11, color: colors.inkSoft },
+
   sheetBackground: { backgroundColor: colors.paper, borderRadius: radius.sheet },
   sheetHandle: { backgroundColor: "rgba(57, 55, 46, 0.24)", width: 42, height: 5 },
   sheetBody: { paddingHorizontal: 22, gap: 11 },
+  sheetClose: {
+    position: "absolute",
+    right: 16,
+    top: 0,
+    width: 32,
+    height: 32,
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 2,
+  },
+  sheetCloseGlyph: {
+    fontSize: 26,
+    lineHeight: 30,
+    color: colors.inkSoft,
+    includeFontPadding: false,
+  },
   sheetTitle: {
     fontFamily: fonts.serif,
     fontSize: 24,
