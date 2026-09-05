@@ -123,11 +123,6 @@ export default function Anmelden() {
                 />
                 <Muted>Kein Passwort nötig. Wir schicken Ihnen einen sechsstelligen Code.</Muted>
                 <SecondaryAction
-                  label="Ich habe schon einen Code"
-                  onPress={() => a.zuSchritt("code")}
-                  disabled={!a.emailPlausibel}
-                />
-                <SecondaryAction
                   label="Ich habe ein Passwort"
                   onPress={() => a.zuSchritt("passwort")}
                 />
