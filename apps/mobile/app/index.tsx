@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ImageBackground,
   Image,
@@ -7,6 +7,15 @@ import {
   Text,
   View,
 } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useReducedMotion,
+  useSharedValue,
+  withDelay,
+  withSpring,
+  withTiming,
+} from "react-native-reanimated";
+import * as SplashScreen from "expo-splash-screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import * as DocumentPicker from "expo-document-picker";
@@ -30,6 +39,38 @@ export default function Welcome() {
   const [description, setDescription] = useState("");
   const [attachment, setAttachment] = useState<Attachment | null>(null);
   const [caseStarted, setCaseStarted] = useState(false);
+
+  // Ankunft: der Ballon steigt federnd an seinen Platz, danach blendet der Rest
+  // gestaffelt auf. Der native Startbildschirm ist reines Papier und damit das
+  // erste Bild dieser Bewegung - so gibt es keinen sichtbaren Wechsel.
+  const reduceMotion = useReducedMotion();
+  const balloonRise = useSharedValue(reduceMotion ? 0 : 130);
+  const balloonFade = useSharedValue(reduceMotion ? 1 : 0);
+  const restFade = useSharedValue(reduceMotion ? 1 : 0);
+  const restRise = useSharedValue(reduceMotion ? 0 : 14);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    balloonFade.value = withTiming(1, { duration: 220 });
+    // Leichtes Ueberschwingen laesst ihn ankommen statt einrasten.
+    balloonRise.value = withSpring(0, { damping: 13, stiffness: 85, mass: 0.9 });
+    restFade.value = withDelay(380, withTiming(1, { duration: 340 }));
+    restRise.value = withDelay(380, withTiming(0, { duration: 340 }));
+  }, [reduceMotion]);
+
+  const balloonStyle = useAnimatedStyle(() => ({
+    opacity: balloonFade.value,
+    transform: [{ translateY: balloonRise.value }],
+  }));
+  const restStyle = useAnimatedStyle(() => ({
+    opacity: restFade.value,
+    transform: [{ translateY: restRise.value }],
+  }));
+
+  // Erst wenn dieser Bildschirm sein Bild hat, gibt der Splash frei.
+  const revealApp = useCallback(() => {
+    SplashScreen.hideAsync().catch(() => {});
+  }, []);
 
   const snapPoints = useMemo(() => ["76%"], []);
 
@@ -63,7 +104,7 @@ export default function Welcome() {
   );
 
   return (
-    <ImageBackground source={paper} resizeMode="cover" style={styles.screen}>
+    <ImageBackground source={paper} resizeMode="cover" style={styles.screen} onLayout={revealApp}>
       <View
         style={[
           styles.content,
@@ -72,7 +113,7 @@ export default function Welcome() {
           { paddingTop: insets.top + 22, paddingBottom: insets.bottom + 8 },
         ]}
       >
-        <View style={styles.brandLine}>
+        <Animated.View style={[styles.brandLine, restStyle]}>
           <View style={styles.brandMark}>
             <Text style={styles.brandMarkText}>R&amp;P</Text>
           </View>
@@ -80,25 +121,25 @@ export default function Welcome() {
             <Text style={styles.brandName}>RECHT &amp; PAPIER</Text>
             <Text style={styles.brandClaim}>Digitale Rechtsassistenz</Text>
           </View>
-        </View>
+        </Animated.View>
 
         <View style={styles.hero}>
-          <Image
+          <Animated.Image
             source={balloon}
-            style={styles.heroImage}
+            style={[styles.heroImage, balloonStyle]}
             resizeMode="contain"
             accessibilityLabel="Handgezeichneter Heißluftballon, der einen Mann im Anzug vom Boden abhebt"
           />
         </View>
 
-        <View style={styles.copy}>
+        <Animated.View style={[styles.copy, restStyle]}>
           <Text style={styles.headline}>Recht verstehen.{"\n"}Leichter weitergehen.</Text>
           <Text style={styles.intro}>Schildern Sie, was passiert ist — wir ordnen den Rest.</Text>
-        </View>
+        </Animated.View>
 
         {/* Fuellt die Leere zwischen Absatz und Aktion mit Substanz und zeigt,
             dass die Seite hier nicht zu Ende ist. */}
-        <View style={styles.steps}>
+        <Animated.View style={[styles.steps, restStyle]}>
           {[
             "Sachverhalt schildern und Anschreiben hinzufügen",
             "Wir ordnen den Fall und prüfen Gesetze und Urteile",
@@ -111,7 +152,7 @@ export default function Welcome() {
               <Text style={styles.stepLabel}>{label}</Text>
             </View>
           ))}
-        </View>
+        </Animated.View>
 
         {caseStarted ? (
           <View style={styles.caseCreated} accessibilityLiveRegion="polite">
@@ -122,7 +163,7 @@ export default function Welcome() {
           </View>
         ) : null}
 
-        <View style={styles.actions}>
+        <Animated.View style={[styles.actions, restStyle]}>
           <Pressable onPress={openSheet} style={({ pressed }) => [pressed && styles.pressed]}>
             <LinearGradient
               colors={[colors.accentDark, colors.accent]}
@@ -141,7 +182,7 @@ export default function Welcome() {
               Fallakte ist ausdruecklich dauerhaft. */}
           <Text style={styles.privacyNote}>Ihre Daten bleiben in Deutschland · Quellen werden sichtbar</Text>
           <Text style={styles.legalNote}>Ersetzt keine Rechtsberatung.</Text>
-        </View>
+        </Animated.View>
       </View>
 
       <BottomSheet
@@ -222,7 +263,9 @@ const styles = StyleSheet.create({
 
   hero: { height: 214, marginTop: 10, alignItems: "center", justifyContent: "center" },
   heroImage: { width: 152, height: 212, opacity: 0.94 },
-  copy: { gap: 11 },
+  // Luft unter der Zeichnung: der Ballonmann bekommt Raum nach unten, und der
+  // Textblock samt Schritten rueckt als Ganzes nach.
+  copy: { marginTop: 30, gap: 11 },
 
   steps: { marginTop: 26, gap: 13 },
   step: { flexDirection: "row", alignItems: "center", gap: 11 },
