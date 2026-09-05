@@ -17,7 +17,6 @@ import Animated, {
 } from "react-native-reanimated";
 import * as SplashScreen from "expo-splash-screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { LinearGradient } from "expo-linear-gradient";
 import * as DocumentPicker from "expo-document-picker";
 import BottomSheet, {
   BottomSheetBackdrop,
@@ -137,19 +136,22 @@ export default function Welcome() {
           <Text style={styles.intro}>Schildern Sie, was passiert ist — wir ordnen den Rest.</Text>
         </Animated.View>
 
-        {/* Fuellt die Leere zwischen Absatz und Aktion mit Substanz und zeigt,
-            dass die Seite hier nicht zu Ende ist. */}
-        <Animated.View style={[styles.steps, restStyle]}>
+        {/* Ein Aktenregister, keine Produkt-Tour: Kapitaelchen-Label links, die
+            Zusage rechts, dazwischen Haarlinien. Nummerierte Kreise waren
+            Onboarding-Vokabular und standen quer zum Papiercharakter; die
+            Reihenfolge traegt jetzt die Leserichtung statt einer Ziffer. */}
+        <Animated.View style={[styles.register, restStyle]}>
           {[
-            "Sachverhalt schildern und Anschreiben hinzufügen",
-            "Wir ordnen den Fall und prüfen Gesetze und Urteile",
-            "Sie sehen nächste Schritte — mit Quelle und Rechtsstand",
-          ].map((label, i) => (
-            <View key={label} style={styles.step}>
-              <View style={styles.stepMarker}>
-                <Text style={styles.stepNumber}>{i + 1}</Text>
-              </View>
-              <Text style={styles.stepLabel}>{label}</Text>
+            { label: "Schildern", detail: "Sachverhalt und Dokumente" },
+            { label: "Einordnen", detail: "Abgleich mit Gesetzen und Urteilen" },
+            { label: "Weitergehen", detail: "Nächste Schritte und Rechtsstand" },
+          ].map((entry, i) => (
+            <View
+              key={entry.label}
+              style={[styles.registerRow, i > 0 && styles.registerRowDivided]}
+            >
+              <Text style={styles.registerLabel}>{entry.label}</Text>
+              <Text style={styles.registerDetail}>{entry.detail}</Text>
             </View>
           ))}
         </Animated.View>
@@ -165,22 +167,17 @@ export default function Welcome() {
 
         <Animated.View style={[styles.actions, restStyle]}>
           <Pressable onPress={openSheet} style={({ pressed }) => [pressed && styles.pressed]}>
-            <LinearGradient
-              colors={[colors.accentDark, colors.accent]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.primaryAction}
-            >
+            <View style={styles.primaryAction}>
+              <Image source={paper} style={styles.primaryActionGrain} resizeMode="cover" />
               <Text style={styles.primaryActionLabel}>
                 {caseStarted ? "Fall ergänzen" : "Fall beginnen"}
               </Text>
-              <Text style={styles.primaryActionArrow}>→</Text>
-            </LinearGradient>
+            </View>
           </Pressable>
           {/* Konkret statt unbestimmt: die Falldaten liegen in Frankfurt
               (Supabase eu-central-1). "Keine Speicherung" waere falsch - die
               Fallakte ist ausdruecklich dauerhaft. */}
-          <Text style={styles.privacyNote}>Ihre Daten bleiben in Deutschland · Quellen werden sichtbar</Text>
+          <Text style={styles.privacyNote}>Fallakte in Frankfurt gespeichert · Quellen werden sichtbar</Text>
           <Text style={styles.legalNote}>Ersetzt keine Rechtsberatung.</Text>
         </Animated.View>
       </View>
@@ -227,15 +224,10 @@ export default function Welcome() {
           <Text style={styles.hint}>PDF, DOCX oder Bild · vertraulich verarbeitet</Text>
 
           <Pressable onPress={beginCase} disabled={!canSubmit}>
-            <LinearGradient
-              colors={[colors.accentDark, colors.accent]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={[styles.primaryAction, !canSubmit && styles.disabled]}
-            >
+            <View style={[styles.primaryAction, !canSubmit && styles.disabled]}>
+              <Image source={paper} style={styles.primaryActionGrain} resizeMode="cover" />
               <Text style={styles.primaryActionLabel}>Fall anlegen</Text>
-              <Text style={styles.primaryActionArrow}>→</Text>
-            </LinearGradient>
+            </View>
           </Pressable>
         </BottomSheetView>
       </BottomSheet>
@@ -257,8 +249,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  brandMarkText: { fontFamily: fonts.serif, fontSize: 12, fontWeight: "700", color: colors.ink },
-  brandName: { fontFamily: fonts.serif, fontSize: 13, letterSpacing: 1.5, color: colors.ink },
+  brandMarkText: {
+    fontFamily: fonts.serifBold,
+    fontSize: 12,
+    color: colors.ink,
+    includeFontPadding: false,
+  },
+  brandName: {
+    fontFamily: fonts.serif,
+    fontSize: 13,
+    letterSpacing: 1.5,
+    color: colors.ink,
+    includeFontPadding: false,
+  },
   brandClaim: { fontSize: 10, letterSpacing: 0.4, color: colors.inkSoft, marginTop: 3 },
 
   hero: { height: 214, marginTop: 10, alignItems: "center", justifyContent: "center" },
@@ -267,33 +270,34 @@ const styles = StyleSheet.create({
   // Textblock samt Schritten rueckt als Ganzes nach.
   copy: { marginTop: 30, gap: 11 },
 
-  steps: { marginTop: 26, gap: 13 },
-  step: { flexDirection: "row", alignItems: "center", gap: 11 },
-  stepMarker: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    borderWidth: 1,
-    borderColor: "rgba(52, 73, 79, 0.35)",
-    alignItems: "center",
-    justifyContent: "center",
+  register: { marginTop: 24 },
+  registerRow: { flexDirection: "row", alignItems: "flex-start", gap: 14, paddingVertical: 11 },
+  // Die Linie trennt, statt zu umranden: kein Kasten, nur der Registerschnitt.
+  registerRowDivided: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: colors.line,
   },
-  stepNumber: {
+  registerLabel: {
+    // Feste Spaltenbreite, damit die rechte Spalte ueber alle Zeilen fluchtet.
+    // 98 statt 84: "WEITERGEHEN" ist das laengste Label und wuerde sonst umbrechen.
+    width: 98,
     fontFamily: fonts.serif,
     fontSize: 11,
-    textAlign: "center",
+    letterSpacing: 1.3,
+    textTransform: "uppercase",
     color: colors.accentDark,
+    // Gleiche Zeilenhoehe wie rechts, sonst sitzt das Label eine Spur zu hoch.
+    lineHeight: 19,
     includeFontPadding: false,
-    // Georgias Ziffern sitzen in der Zeilenbox eine Spur zu tief.
-    marginTop: -1,
   },
-  stepLabel: { flex: 1, fontSize: 13, lineHeight: 19, color: colors.inkSoft },
+  registerDetail: { flex: 1, fontSize: 13, lineHeight: 19, color: colors.inkSoft },
   headline: {
     fontFamily: fonts.serif,
     fontSize: 35,
-    lineHeight: 37,
-    letterSpacing: -1,
+    lineHeight: 40,
+    letterSpacing: -0.6,
     color: colors.ink,
+    includeFontPadding: false,
   },
   intro: { fontSize: 14, lineHeight: 22, color: colors.inkSoft, maxWidth: 320 },
 
@@ -311,17 +315,43 @@ const styles = StyleSheet.create({
 
   // Bleibt unten am sicheren Rand, ohne feste Bildschirmhöhe anzunehmen.
   actions: { marginTop: "auto", paddingTop: 28 },
+  // 48 statt 54: die gefuellte Flaeche ist das einzige Massiv auf einem Screen
+  // aus Linien und Text und zog vorher mehr Blick als die Headline. 48 bleibt
+  // deutlich ueber Apples 44pt-Mindestziel fuer Tap-Flaechen.
+  //
+  // Flache Tinte statt Verlauf: ein diagonaler Gradient ist App-Vokabular,
+  // gedruckte Farbe hat keinen. overflow versteckt das Korn hinter dem Radius.
   primaryAction: {
-    minHeight: 54,
-    borderRadius: radius.control,
+    minHeight: 48,
+    borderRadius: radius.action,
+    backgroundColor: colors.accentDark,
+    overflow: "hidden",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 9,
     paddingHorizontal: 21,
   },
-  primaryActionLabel: { color: colors.onAccent, fontSize: 15, fontWeight: "600" },
-  primaryActionArrow: { color: colors.onAccent, fontSize: 17 },
+  // Dieselbe Papierstruktur wie der Hintergrund, schwach ueber die Farbe gelegt:
+  // so wirkt die Flaeche wie auf das Blatt gedruckt statt darueber schwebend.
+  primaryActionGrain: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    opacity: 0.1,
+  },
+  // Gesetzt wie die Wortmarke und die Registerlabels: Georgia, Versalien,
+  // gesperrt. Der Pfeil ist entfallen - er kam aus der Systemschrift und passte
+  // zu keiner der beiden Schriften; "Fall beginnen" sagt die Richtung selbst.
+  primaryActionLabel: {
+    color: colors.onAccent,
+    fontFamily: fonts.serif,
+    fontSize: 13,
+    letterSpacing: 1.4,
+    textTransform: "uppercase",
+    includeFontPadding: false,
+  },
   disabled: { opacity: 0.42 },
   pressed: { transform: [{ translateY: 1 }] },
   privacyNote: {
@@ -341,7 +371,13 @@ const styles = StyleSheet.create({
   sheetBackground: { backgroundColor: colors.paper, borderRadius: radius.sheet },
   sheetHandle: { backgroundColor: "rgba(57, 55, 46, 0.24)", width: 42, height: 5 },
   sheetBody: { paddingHorizontal: 22, gap: 11 },
-  sheetTitle: { fontFamily: fonts.serif, fontSize: 24, color: colors.ink, letterSpacing: -0.5 },
+  sheetTitle: {
+    fontFamily: fonts.serif,
+    fontSize: 24,
+    color: colors.ink,
+    letterSpacing: -0.5,
+    includeFontPadding: false,
+  },
   sheetDescription: { fontSize: 13, lineHeight: 19, color: colors.inkSoft, marginBottom: 3 },
   fieldLabel: { fontSize: 12, fontWeight: "700", color: colors.ink },
   textArea: {

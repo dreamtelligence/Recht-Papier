@@ -22,18 +22,33 @@ export const colors = {
 } as const;
 
 /**
- * Die Serifenschrift trägt den Papiercharakter.
+ * Die Serifenschrift trägt den Papiercharakter — und wird mitgeliefert.
  *
- * Bekannte Lücke: Georgia liegt auf iOS bereit, auf Android nicht — dort fällt
- * das System auf eine Grotesk zurück und die Anmutung bricht. Vor dem
- * Android-Build gehört hier eine mitgelieferte Serifenschrift hin.
+ * Vorher stand hier Georgia: auf iOS zufällig vorhanden, auf Android nicht, und
+ * lizenzrechtlich ohnehin nicht auslieferbar (Microsoft-Schrift). Source Serif 4
+ * steht unter der OFL, liegt unter `assets/fonts/` und wird vom
+ * `expo-font`-Config-Plugin zur Buildzeit eingebettet. Deshalb kein
+ * `Platform.select` mehr: beide Plattformen setzen dieselbe Schrift.
+ *
+ * Die beiden Schnitte sind bewusst getrennte Familien. Die SemiBold-Datei meldet
+ * sich intern als eigene Familie, nicht als Gewicht 600 von "Source Serif 4" —
+ * `fontWeight` würde auf iOS deshalb ins Leere greifen. Wer halbfett braucht,
+ * nimmt `serifBold` statt eines Gewichts.
+ *
+ * Die Grotesk bleibt bewusst die des Systems: Plattform-Chrome darf sich nativ
+ * anfühlen, identisch sein muss die Markenschicht.
  */
 export const fonts = {
-  serif: Platform.select({ ios: "Georgia", default: "serif" }) as string,
+  serif: "Source Serif 4",
+  serifBold: "Source Serif 4 SemiBold",
   sans: Platform.select({ ios: "System", default: "sans-serif" }) as string,
 };
 
 export const radius = {
   control: 8,
+  // Die Aktionsflaeche ist geschnitten, nicht abgerundet: 8 ist der Default-Look
+  // jeder App, 4 liest sich als gedruckter Block und passt zum Papierschnitt der
+  // Haarlinien im Register. Die Eingabefelder behalten bewusst die weicheren 8.
+  action: 4,
   sheet: 22,
 } as const;
