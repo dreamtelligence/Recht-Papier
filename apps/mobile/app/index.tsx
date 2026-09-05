@@ -91,12 +91,25 @@ export default function Welcome() {
         </View>
 
         <View style={styles.copy}>
-          <Text style={styles.kicker}>IHR ANLIEGEN. KLAR GEORDNET.</Text>
           <Text style={styles.headline}>Recht verstehen.{"\n"}Leichter weitergehen.</Text>
-          <Text style={styles.intro}>
-            Schildern Sie, was passiert ist. Wir ordnen Ihren Fall, prüfen Quellen und zeigen
-            verständliche nächste Schritte.
-          </Text>
+          <Text style={styles.intro}>Schildern Sie, was passiert ist — wir ordnen den Rest.</Text>
+        </View>
+
+        {/* Fuellt die Leere zwischen Absatz und Aktion mit Substanz und zeigt,
+            dass die Seite hier nicht zu Ende ist. */}
+        <View style={styles.steps}>
+          {[
+            "Sachverhalt schildern und Anschreiben hinzufügen",
+            "Wir ordnen den Fall und prüfen Gesetze und Urteile",
+            "Sie sehen nächste Schritte — mit Quelle und Rechtsstand",
+          ].map((label, i) => (
+            <View key={label} style={styles.step}>
+              <View style={styles.stepMarker}>
+                <Text style={styles.stepNumber}>{i + 1}</Text>
+              </View>
+              <Text style={styles.stepLabel}>{label}</Text>
+            </View>
+          ))}
         </View>
 
         {caseStarted ? (
@@ -122,7 +135,11 @@ export default function Welcome() {
               <Text style={styles.primaryActionArrow}>→</Text>
             </LinearGradient>
           </Pressable>
-          <Text style={styles.privacyNote}>Vertraulich behandelt · Quellen werden sichtbar</Text>
+          {/* Konkret statt unbestimmt: die Falldaten liegen in Frankfurt
+              (Supabase eu-central-1). "Keine Speicherung" waere falsch - die
+              Fallakte ist ausdruecklich dauerhaft. */}
+          <Text style={styles.privacyNote}>Ihre Daten bleiben in Deutschland · Quellen werden sichtbar</Text>
+          <Text style={styles.legalNote}>Ersetzt keine Rechtsberatung.</Text>
         </View>
       </View>
 
@@ -202,8 +219,8 @@ const styles = StyleSheet.create({
   brandName: { fontFamily: fonts.serif, fontSize: 13, letterSpacing: 1.5, color: colors.ink },
   brandClaim: { fontSize: 10, letterSpacing: 0.4, color: colors.inkSoft, marginTop: 3 },
 
-  hero: { height: 306, marginTop: 14, alignItems: "center", justifyContent: "center" },
-  heroImage: { width: 212, height: 296, opacity: 0.94 },
+  hero: { height: 214, marginTop: 10, alignItems: "center", justifyContent: "center" },
+  heroImage: { width: 152, height: 212, opacity: 0.94 },
   figureCaption: {
     position: "absolute",
     right: 4,
@@ -218,12 +235,20 @@ const styles = StyleSheet.create({
   },
 
   copy: { gap: 11 },
-  kicker: {
-    fontSize: 11,
-    fontWeight: "700",
-    letterSpacing: 1.3,
-    color: colors.accentDark,
+
+  steps: { marginTop: 26, gap: 13 },
+  step: { flexDirection: "row", alignItems: "center", gap: 11 },
+  stepMarker: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    borderWidth: 1,
+    borderColor: "rgba(52, 73, 79, 0.35)",
+    alignItems: "center",
+    justifyContent: "center",
   },
+  stepNumber: { fontFamily: fonts.serif, fontSize: 11, color: colors.accentDark },
+  stepLabel: { flex: 1, fontSize: 13, lineHeight: 19, color: colors.inkSoft },
   headline: {
     fontFamily: fonts.serif,
     fontSize: 35,
@@ -265,6 +290,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 11,
     fontWeight: "500",
+    color: colors.inkSoft,
+  },
+  legalNote: {
+    marginTop: 5,
+    textAlign: "center",
+    fontSize: 11,
     color: colors.inkSoft,
   },
 
