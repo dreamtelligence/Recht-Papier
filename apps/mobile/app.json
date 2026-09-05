@@ -64,7 +64,8 @@
             ]
           }
         }
-      ]
+      ],
+      "expo-sqlite"
     ],
     "scheme": "rechtundpapier",
     "backgroundColor": "#f4efe3"

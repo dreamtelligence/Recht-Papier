@@ -4,7 +4,8 @@ Eine Fallakte enthält den Sachverhalt eines Menschen. Dass niemand die Akte
 eines anderen sieht, darf kein Vertrauen in korrekt geschriebenen Client-Code
 sein, sondern muss in der Datenbank durchgesetzt werden. Dieser Test greift
 deshalb mit echten Nutzer-Tokens über die REST-Schnittstelle zu, nicht mit dem
-Service-Role-Schlüssel, der RLS ohnehin umgeht.
+Service-Role-Schlüssel, der RLS ohnehin umgeht. Er prüft außerdem den privaten
+Storage-Bucket samt Upload, Download und Löschung.
 
 Aufruf:
     python supabase/tests/test_rls_isolation.py
@@ -44,12 +45,15 @@ def load_env() -> dict[str, str]:
 
 
 def request(method: str, url: str, *, headers: dict, body=None) -> tuple[int, object]:
-    data = json.dumps(body).encode() if body is not None else None
+    data = body if isinstance(body, bytes) else json.dumps(body).encode() if body is not None else None
     req = urllib.request.Request(url, method=method, data=data, headers=headers)
     try:
         with urllib.request.urlopen(req, timeout=60) as resp:
             raw = resp.read().decode() or "null"
-            return resp.status, json.loads(raw)
+            try:
+                return resp.status, json.loads(raw)
+            except json.JSONDecodeError:
+                return resp.status, raw
     except urllib.error.HTTPError as exc:
         raw = exc.read().decode() or "null"
         try:
@@ -111,6 +115,12 @@ class Supabase:
             headers["Prefer"] = prefer
         return request(method, f"{self.url}/rest/v1/{path}", headers=headers, body=body)
 
+    def storage(self, method: str, path: str, token: str, *, body=None, content_type: str | None = None):
+        headers = {"apikey": self.anon, "Authorization": f"Bearer {token}"}
+        if content_type:
+            headers["Content-Type"] = content_type
+        return request(method, f"{self.url}/storage/v1/object/{path}", headers=headers, body=body)
+
 
 def main() -> int:
     env = load_env()
@@ -124,6 +134,8 @@ def main() -> int:
     alice_id = sb.create_user(alice_mail, password)
     bob_id = sb.create_user(bob_mail, password)
     failures: list[str] = []
+    alice = ""
+    storage_path = ""
 
     try:
         alice = sb.sign_in(alice_mail, password)
@@ -191,6 +203,55 @@ def main() -> int:
         )
         check("Bob hängt keine Aussage an", status not in (200, 201), f"{status} {rows}")
 
+        print("\nPrivates Dokument")
+        storage_path = f"case-documents/{alice_id}/{case_id}/anschreiben.pdf"
+        status, uploaded = sb.storage(
+            "POST",
+            storage_path,
+            alice,
+            body=b"%PDF-1.4\nRLS-Test\n",
+            content_type="application/pdf",
+        )
+        check("Alice lädt ihr Dokument hoch", status == 200, f"{status} {uploaded}")
+
+        status, own_file = sb.storage("GET", storage_path, alice)
+        check("Alice liest ihr Dokument", status == 200 and isinstance(own_file, str), f"{status} {own_file}")
+
+        status, foreign_file = sb.storage("GET", storage_path, bob)
+        check("Bob liest Alices Dokument nicht", status not in (200, 201), f"{status} {foreign_file}")
+
+        status, foreign_upload = sb.storage(
+            "POST",
+            f"case-documents/{alice_id}/{case_id}/fremd.pdf",
+            bob,
+            body=b"%PDF-1.4\nFremd\n",
+            content_type="application/pdf",
+        )
+        check("Bob lädt nichts in Alices Ordner", status not in (200, 201), f"{status} {foreign_upload}")
+
+        status, document = sb.rest(
+            "POST",
+            "case_documents",
+            alice,
+            body={
+                "case_id": case_id,
+                "kind": "anschreiben",
+                "file_name": "anschreiben.pdf",
+                "storage_path": storage_path.removeprefix("case-documents/"),
+                "mime_type": "application/pdf",
+                "byte_size": 18,
+            },
+            prefer="return=representation",
+        )
+        check("Alice verknüpft Dokument und Fall", status == 201, f"{status} {document}")
+
+        status, foreign_documents = sb.rest("GET", f"case_documents?case_id=eq.{case_id}", bob)
+        check(
+            "Bob sieht Alices Dokumentmetadaten nicht",
+            status == 200 and foreign_documents == [],
+            f"{status} {foreign_documents}",
+        )
+
         status, rows = sb.rest(
             "POST",
             "cases",
@@ -205,7 +266,14 @@ def main() -> int:
         unchanged = status == 200 and len(after) == 1 and after[0]["title"] == "Kündigung erhalten"
         check("Titel unverändert, Fall existiert", unchanged, f"{status} {after}")
 
+        status, removed = sb.storage("DELETE", storage_path, alice)
+        check("Alice entfernt ihr Dokument wieder", status in (200, 204), f"{status} {removed}")
+        if status in (200, 204):
+            storage_path = ""
+
     finally:
+        if alice and storage_path:
+            sb.storage("DELETE", storage_path, alice)
         sb.delete_user(alice_id)
         sb.delete_user(bob_id)
         print("\nTestnutzer entfernt.")

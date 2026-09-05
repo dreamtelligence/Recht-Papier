@@ -7,6 +7,7 @@ import {
   Text,
   View,
 } from "react-native";
+import type { Session } from "@supabase/supabase-js";
 import Animated, {
   useAnimatedStyle,
   useReducedMotion,
@@ -25,19 +26,56 @@ import BottomSheet, {
 } from "@gorhom/bottom-sheet";
 
 import { colors, fonts, radius } from "../theme";
+import { createCase, loadLatestCase, type CaseSummary } from "../lib/cases";
+import { isSupabaseConfigured, supabase } from "../lib/supabase";
 
 const paper = require("../assets/brand/paper-texture.png");
 const balloon = require("../assets/brand/balloon-relief.png");
 
-type Attachment = { name: string; uri: string; mimeType?: string; size?: number };
+const MAX_DOCUMENT_BYTES = 20 * 1024 * 1024;
 
 export default function Welcome() {
   const insets = useSafeAreaInsets();
   const sheetRef = useRef<BottomSheet>(null);
 
   const [description, setDescription] = useState("");
-  const [attachment, setAttachment] = useState<Attachment | null>(null);
-  const [caseStarted, setCaseStarted] = useState(false);
+  const [attachment, setAttachment] = useState<DocumentPicker.DocumentPickerAsset | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+  const [authReady, setAuthReady] = useState(!isSupabaseConfigured);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [latestCase, setLatestCase] = useState<CaseSummary | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    if (!isSupabaseConfigured) return;
+
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setAuthReady(true);
+    });
+    const { data } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      setSession(nextSession);
+      setAuthReady(true);
+    });
+    return () => data.subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (!session) {
+      setLatestCase(null);
+      return;
+    }
+
+    let active = true;
+    loadLatestCase(session.user.id)
+      .then((value) => active && setLatestCase(value))
+      .catch(() => active && setMessage("Die Fallakte konnte nicht geladen werden."));
+    return () => {
+      active = false;
+    };
+  }, [session]);
 
   // Ankunft: der Ballon steigt federnd an seinen Platz, danach blendet der Rest
   // gestaffelt auf. Der native Startbildschirm ist reines Papier und damit das
@@ -73,7 +111,10 @@ export default function Welcome() {
 
   const snapPoints = useMemo(() => ["76%"], []);
 
-  const openSheet = useCallback(() => sheetRef.current?.snapToIndex(0), []);
+  const openSheet = useCallback(() => {
+    setMessage("");
+    sheetRef.current?.snapToIndex(0);
+  }, []);
   const closeSheet = useCallback(() => sheetRef.current?.close(), []);
 
   const pickDocument = useCallback(async () => {
@@ -84,16 +125,56 @@ export default function Welcome() {
     });
     if (result.canceled) return;
     const file = result.assets[0];
-    setAttachment({ name: file.name, uri: file.uri, mimeType: file.mimeType, size: file.size });
+    if (file.size && file.size > MAX_DOCUMENT_BYTES) {
+      setMessage("Das Dokument darf höchstens 20 MB groß sein.");
+      return;
+    }
+    setMessage("");
+    setAttachment(file);
   }, []);
 
-  const canSubmit = description.trim().length >= 8 && attachment !== null;
+  const canSubmit = description.trim().length >= 8 && attachment !== null && session && !busy;
+  const canAuthenticate = email.includes("@") && password.length >= 8 && !busy;
 
-  const beginCase = useCallback(() => {
-    if (!canSubmit) return;
-    setCaseStarted(true);
-    closeSheet();
-  }, [canSubmit, closeSheet]);
+  const authenticate = useCallback(
+    async (mode: "sign-in" | "sign-up") => {
+      if (!canAuthenticate || !isSupabaseConfigured) return;
+      setBusy(true);
+      setMessage("");
+      try {
+        const result =
+          mode === "sign-in"
+            ? await supabase.auth.signInWithPassword({ email: email.trim(), password })
+            : await supabase.auth.signUp({ email: email.trim(), password });
+        if (result.error) throw result.error;
+        if (mode === "sign-up" && !result.data.session) {
+          setMessage("Bitte bestätigen Sie die E-Mail und melden Sie sich danach an.");
+        }
+      } catch (error) {
+        setMessage(error instanceof Error ? error.message : "Anmeldung fehlgeschlagen.");
+      } finally {
+        setBusy(false);
+      }
+    },
+    [canAuthenticate, email, password],
+  );
+
+  const beginCase = useCallback(async () => {
+    if (!canSubmit || !attachment || !session) return;
+    setBusy(true);
+    setMessage("");
+    try {
+      const created = await createCase(session.user.id, description, attachment);
+      setLatestCase(created);
+      setDescription("");
+      setAttachment(null);
+      closeSheet();
+    } catch {
+      setMessage("Der Fall konnte nicht sicher gespeichert werden. Bitte versuchen Sie es erneut.");
+    } finally {
+      setBusy(false);
+    }
+  }, [attachment, canSubmit, closeSheet, description, session]);
 
   const renderBackdrop = useCallback(
     (props: any) => (
@@ -156,12 +237,13 @@ export default function Welcome() {
           ))}
         </Animated.View>
 
-        {caseStarted ? (
+        {latestCase ? (
           <View style={styles.caseCreated} accessibilityLiveRegion="polite">
-            <Text style={styles.caseCreatedTitle}>Ihr Fall ist angelegt</Text>
+            <Text style={styles.caseCreatedTitle}>Ihre Fallakte</Text>
             <Text style={styles.caseCreatedDetail} numberOfLines={1}>
-              {attachment?.name ?? description}
+              {latestCase.title}
             </Text>
+            <Text style={styles.caseCreatedMeta}>Entwurf · dauerhaft gespeichert</Text>
           </View>
         ) : null}
 
@@ -170,7 +252,7 @@ export default function Welcome() {
             <View style={styles.primaryAction}>
               <Image source={paper} style={styles.primaryActionGrain} resizeMode="cover" />
               <Text style={styles.primaryActionLabel}>
-                {caseStarted ? "Fall ergänzen" : "Fall beginnen"}
+                {latestCase ? "Weiteren Fall beginnen" : "Fall beginnen"}
               </Text>
             </View>
           </Pressable>
@@ -179,6 +261,11 @@ export default function Welcome() {
               Fallakte ist ausdruecklich dauerhaft. */}
           <Text style={styles.privacyNote}>Fallakte in Frankfurt gespeichert · Quellen werden sichtbar</Text>
           <Text style={styles.legalNote}>Ersetzt keine Rechtsberatung.</Text>
+          {session ? (
+            <Pressable accessibilityRole="button" onPress={() => supabase.auth.signOut()}>
+              <Text style={styles.signOut}>Abmelden</Text>
+            </Pressable>
+          ) : null}
         </Animated.View>
       </View>
 
@@ -197,38 +284,102 @@ export default function Welcome() {
         android_keyboardInputMode="adjustResize"
       >
         <BottomSheetView style={[styles.sheetBody, { paddingBottom: insets.bottom + 20 }]}>
-          <Text style={styles.sheetTitle}>Worum geht es?</Text>
-          <Text style={styles.sheetDescription}>
-            Beschreiben Sie kurz Ihren Fall und fügen Sie Ihr Anschreiben direkt hinzu.
-          </Text>
+          {!authReady ? (
+            <Text style={styles.sheetDescription}>Sichere Sitzung wird geladen …</Text>
+          ) : !isSupabaseConfigured ? (
+            <>
+              <Text style={styles.sheetTitle}>Verbindung fehlt</Text>
+              <Text style={styles.sheetDescription}>
+                Hinterlegen Sie die beiden EXPO_PUBLIC_SUPABASE-Werte in apps/mobile/.env.local.
+              </Text>
+            </>
+          ) : !session ? (
+            <>
+              <Text style={styles.sheetTitle}>Sicher anmelden</Text>
+              <Text style={styles.sheetDescription}>
+                Ihre Fallakte ist privat und nur nach der Anmeldung erreichbar.
+              </Text>
+              <Text style={styles.fieldLabel}>E-Mail</Text>
+              <BottomSheetTextInput
+                style={styles.input}
+                value={email}
+                onChangeText={setEmail}
+                autoCapitalize="none"
+                autoComplete="email"
+                keyboardType="email-address"
+                placeholder="name@beispiel.de"
+                placeholderTextColor={colors.inkSoft}
+              />
+              <Text style={styles.fieldLabel}>Passwort</Text>
+              <BottomSheetTextInput
+                style={styles.input}
+                value={password}
+                onChangeText={setPassword}
+                autoCapitalize="none"
+                autoComplete="password"
+                secureTextEntry
+                placeholder="Mindestens 8 Zeichen"
+                placeholderTextColor={colors.inkSoft}
+              />
+              <Pressable onPress={() => authenticate("sign-in")} disabled={!canAuthenticate}>
+                <View style={[styles.primaryAction, !canAuthenticate && styles.disabled]}>
+                  <Image source={paper} style={styles.primaryActionGrain} resizeMode="cover" />
+                  <Text style={styles.primaryActionLabel}>{busy ? "Bitte warten …" : "Anmelden"}</Text>
+                </View>
+              </Pressable>
+              <Pressable
+                accessibilityRole="button"
+                onPress={() => authenticate("sign-up")}
+                disabled={!canAuthenticate}
+              >
+                <Text style={[styles.secondaryAction, !canAuthenticate && styles.disabled]}>
+                  Neues Konto anlegen
+                </Text>
+              </Pressable>
+            </>
+          ) : (
+            <>
+              <Text style={styles.sheetTitle}>Worum geht es?</Text>
+              <Text style={styles.sheetDescription}>
+                Beschreiben Sie kurz Ihren Fall und fügen Sie Ihr Anschreiben direkt hinzu.
+              </Text>
 
-          <Text style={styles.fieldLabel}>Was ist passiert?</Text>
-          <BottomSheetTextInput
-            style={styles.textArea}
-            value={description}
-            onChangeText={setDescription}
-            placeholder="Zum Beispiel: Ich habe gestern eine Kündigung erhalten …"
-            placeholderTextColor={colors.inkSoft}
-            multiline
-            textAlignVertical="top"
-          />
+              <Text style={styles.fieldLabel}>Was ist passiert?</Text>
+              <BottomSheetTextInput
+                style={styles.textArea}
+                value={description}
+                onChangeText={setDescription}
+                placeholder="Zum Beispiel: Ich habe gestern eine Kündigung erhalten …"
+                placeholderTextColor={colors.inkSoft}
+                multiline
+                textAlignVertical="top"
+              />
 
-          <Pressable
-            onPress={pickDocument}
-            style={({ pressed }) => [styles.attachmentButton, pressed && styles.pressed]}
-          >
-            <Text style={styles.attachmentLabel} numberOfLines={1}>
-              {attachment?.name ?? "Anschreiben hinzufügen"}
+              <Pressable
+                onPress={pickDocument}
+                style={({ pressed }) => [styles.attachmentButton, pressed && styles.pressed]}
+              >
+                <Text style={styles.attachmentLabel} numberOfLines={1}>
+                  {attachment?.name ?? "Anschreiben hinzufügen"}
+                </Text>
+              </Pressable>
+              <Text style={styles.hint}>PDF, DOCX oder Bild · maximal 20 MB</Text>
+
+              <Pressable onPress={beginCase} disabled={!canSubmit}>
+                <View style={[styles.primaryAction, !canSubmit && styles.disabled]}>
+                  <Image source={paper} style={styles.primaryActionGrain} resizeMode="cover" />
+                  <Text style={styles.primaryActionLabel}>
+                    {busy ? "Wird gespeichert …" : "Fall anlegen"}
+                  </Text>
+                </View>
+              </Pressable>
+            </>
+          )}
+          {message ? (
+            <Text style={styles.message} accessibilityLiveRegion="polite">
+              {message}
             </Text>
-          </Pressable>
-          <Text style={styles.hint}>PDF, DOCX oder Bild · vertraulich verarbeitet</Text>
-
-          <Pressable onPress={beginCase} disabled={!canSubmit}>
-            <View style={[styles.primaryAction, !canSubmit && styles.disabled]}>
-              <Image source={paper} style={styles.primaryActionGrain} resizeMode="cover" />
-              <Text style={styles.primaryActionLabel}>Fall anlegen</Text>
-            </View>
-          </Pressable>
+          ) : null}
         </BottomSheetView>
       </BottomSheet>
     </ImageBackground>
@@ -312,6 +463,7 @@ const styles = StyleSheet.create({
   },
   caseCreatedTitle: { fontSize: 13, fontWeight: "700", color: colors.success },
   caseCreatedDetail: { fontSize: 12, color: "#5f665e" },
+  caseCreatedMeta: { fontSize: 11, color: colors.inkSoft },
 
   // Bleibt unten am sicheren Rand, ohne feste Bildschirmhöhe anzunehmen.
   actions: { marginTop: "auto", paddingTop: 28 },
@@ -367,6 +519,14 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: colors.inkSoft,
   },
+  signOut: {
+    marginTop: 7,
+    minHeight: 24,
+    textAlign: "center",
+    fontSize: 11,
+    textDecorationLine: "underline",
+    color: colors.inkSoft,
+  },
 
   sheetBackground: { backgroundColor: colors.paper, borderRadius: radius.sheet },
   sheetHandle: { backgroundColor: "rgba(57, 55, 46, 0.24)", width: 42, height: 5 },
@@ -380,6 +540,16 @@ const styles = StyleSheet.create({
   },
   sheetDescription: { fontSize: 13, lineHeight: 19, color: colors.inkSoft, marginBottom: 3 },
   fieldLabel: { fontSize: 12, fontWeight: "700", color: colors.ink },
+  input: {
+    minHeight: 48,
+    borderWidth: 1,
+    borderColor: "rgba(49, 48, 40, 0.18)",
+    borderRadius: radius.control,
+    backgroundColor: "rgba(255, 253, 247, 0.64)",
+    paddingHorizontal: 13,
+    fontSize: 16,
+    color: colors.ink,
+  },
   textArea: {
     minHeight: 118,
     borderWidth: 1,
@@ -405,4 +575,13 @@ const styles = StyleSheet.create({
   },
   attachmentLabel: { fontSize: 13, fontWeight: "600", color: colors.accentDark },
   hint: { fontSize: 11, color: colors.inkSoft },
+  secondaryAction: {
+    minHeight: 44,
+    paddingTop: 13,
+    textAlign: "center",
+    fontSize: 13,
+    color: colors.accentDark,
+    textDecorationLine: "underline",
+  },
+  message: { fontSize: 12, lineHeight: 18, color: colors.accentDark },
 });

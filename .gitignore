@@ -4,6 +4,7 @@ build/
 .DS_Store
 .firecrawl/
 *.log
+__pycache__/
 
 # Zugangsdaten gehören nie ins Repository
 .env
