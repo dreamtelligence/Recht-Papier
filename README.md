@@ -8,15 +8,17 @@ Die Fallakte ist die Datenstruktur — der Chat ist nur eine Oberfläche darauf.
 
 ## Stand
 
-Das Fundament wird gerade gelegt. Der Repo-Inhalt wächst schrittweise:
+Der technische Unterbau ist vorhanden; die Produktoberfläche ist der nächste Schritt. Der
+belegte Detailstand steht in [`docs/implementation-status.md`](docs/implementation-status.md).
 
 | | Status |
 |---|---|
 | Architekturentscheidungen | steht (siehe `AGENTS.md`) |
-| Lokaler Docker-Stack | in Arbeit |
-| Legal-Engine als Dienst | offen |
-| Datenmodell in Supabase | offen |
-| Expo-Client | offen |
+| Lokaler Docker-Stack | Qdrant und Stack-Steuerung vorhanden; aktuell nicht gestartet |
+| Legal-Engine als Dienst | hostbare FastAPI-Schicht im Jura-Branch `qdrant-server-mode` |
+| Qdrant-Serverindex | 17.024 Punkte ohne Neueinbettung migriert |
+| Datenmodell in Supabase | sechs Fallakten-Tabellen mit RLS; Isolationstest vorhanden und zuvor bestanden |
+| Expo-Client | unverändertes Expo-Standardgerüst lokal erzeugt, noch uncommittet |
 
 Zwei frühere Stände sind als Tags erhalten: `mockup-prototype` (Vite-Prototyp im simulierten
 Geräterahmen) und `capacitor-spike` (native iOS-App via Capacitor, lief auf dem Gerät). Beide

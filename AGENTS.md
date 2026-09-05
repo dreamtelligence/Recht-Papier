@@ -26,6 +26,7 @@ Projektwissen liegt im Semantica-MCP und ist dort verbindlich. Relevante Knoten:
 | `architecture:recht-und-papier-core` | Pipeline und Invarianten der Legal-Engine |
 | `roadmap:recht-und-papier-mvp1` | Funktionsumfang und Qualitätsvoraussetzungen |
 | `compliance:recht-und-papier` | RDG, DSGVO, AI Act, Store-Regeln — Launch-Gate |
+| `research:apple-app-review-recht-und-papier-2026-09-05` | Apple-Review-Primärquellen und technische Release-Gates |
 | `stack:recht-und-papier` | Zielstack |
 | `coding-principles` | Benennung, kleine Bausteine, keine Secrets, Tests |
 | `vibe-coding-observability` | Absicherung über Logs, Metriken, Traces und Checks |
@@ -66,6 +67,15 @@ ohne Metal. Daraus folgt die Aufteilung (Entscheidung `8d0d91c0`):
 - **Im Container:** Qdrant, Jura-API mit CPU-Modellen, Supabase-Lokalstack.
 - **Nicht im Container:** Neuindizierung und Ingestion — nativ auf dem Mac oder auf Modal.
 
+### Apple App Review
+
+Der Expo-Weg ist technisch App-Store-fähig, der aktuelle Starter aber nicht einreichbar. Vor
+dem ersten Review sind insbesondere das von Apple bestätigte Einreichungsmodell für EMBER als
+Einzelunternehmen, StoreKit-IAP, vollständige In-App-Kontolöschung, der offengelegte und
+eingewilligte LLM-Datenfluss, Privacy Labels/Manifeste sowie ein dauerhaft erreichbarer
+Review-Zugang verbindliche Gates. Vollständige Primärquellen und Checkliste:
+[`docs/apple-app-review-readiness.md`](docs/apple-app-review-readiness.md).
+
 ## Repo-Aufbau
 
 Ordner entstehen, wenn sie echten Inhalt haben — keine leeren Platzhalter.
@@ -76,7 +86,7 @@ docs/             Design- und QA-Aufzeichnungen
 infra/            docker-compose und stack.sh für den lokalen Stack
 packages/shared/  Typen und generierter Engine-Client         (Schritt 4)
 supabase/         Migrationen und RLS-Policies                (Schritt 6)
-apps/mobile/      Expo-Client                                 (Schritt 7)
+apps/mobile/      Expo-Client mit Expo Router
 ```
 
 ### Lokaler Stack starten
@@ -91,6 +101,22 @@ npm run stack:down        # stack:reset verwirft zusätzlich die Volumes
 Der Docker-VM stehen auf diesem Rechner rund **7,7 GiB** zur Verfügung. bge-m3 und der
 Reranker zusammen mit Qdrant passen dort nur knapp — ein Grund mehr, Ingestion außerhalb
 des Containers zu halten.
+
+### Client starten
+
+```
+cd apps/mobile
+npx expo start --ios      # Simulator über Expo Go
+```
+
+Für das echte Gerät mit eigener Bundle-ID und nativen Modulen braucht es einen
+Dev-Build (`npx expo run:ios` oder EAS), nicht Expo Go.
+
+**Vor Änderungen am Client gilt `apps/mobile/AGENTS.md`: erst die versionierten
+SDK-57-Dokumente lesen.** Zwei Fallen, die dort bereits zugeschlagen haben: ein
+top-level `splash`-Block in `app.json` ist seit SDK 52 wirkungslos, native Splash
+läuft über den `expo-splash-screen`-Plugin; und eine selbst angelegte
+`babel.config.js` bringt Metro zum Absturz — Expo konfiguriert Babel selbst.
 
 ## Frühere Stände
 
@@ -111,7 +137,8 @@ Primäraktion.
 - **LLM-Wahl und EU-Datenresidenz.** Semantica notiert GPT-5.6, Jura nutzt real Gemini 2.5
   Flash-Lite. Größte DSGVO-Exposition, braucht AVV und EU-Verarbeitung.
 - **Modal-Regionen** für den Ingestion-Pfad.
-- **Apple-IAP-Pflicht** und Store-Regeln für Rechtsauskunft.
+- **Apple-Regeln erneut vor Submission prüfen.** Der verifizierte Stand vom 05.09.2026 liegt in
+  `docs/apple-app-review-readiness.md`; Apples Guidelines sind ein lebendes Dokument.
 - **RDG-Leistungsbild** — fachanwaltlich, bevor Funktionen öffentlich angeboten werden.
 
 ## Arbeitsregeln

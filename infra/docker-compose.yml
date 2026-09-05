@@ -29,13 +29,10 @@ services:
         limits:
           memory: 2g
 
-  # legal-engine: kommt in Schritt 4.
+  # legal-engine: wird ergänzt, sobald der Reranker lokal vollständig vorliegt und gemessen ist.
   #
-  # Voraussetzung: Die Serving-Schicht steckt derzeit in `modal_deploy.py` des Jura-Repos
-  # und ist dort mit der Modal-Verpackung verwoben (Volume-Mount des Index, GPU-Klasse,
-  # Routen, LLM-Fallback, Citation-Verification, Answer-Audit in einer Datei).
-  # Sie muss erst in eine hostbare FastAPI-App gelöst werden, die Modal und Docker
-  # gleichermaßen betreiben können. Erst dann ist ein Service-Eintrag hier ehrlich.
+  # Die hostbare FastAPI-Schicht liegt im Jura-Branch `qdrant-server-mode`. Noch offen sind
+  # Container-Build, Modellbereitstellung und die CPU-Messung mit aktivem Cross-Encoder.
 
 volumes:
   qdrant-storage:
