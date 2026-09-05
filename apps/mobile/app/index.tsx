@@ -348,7 +348,7 @@ export default function Welcome() {
         </View>
 
         <Animated.View style={[styles.copy, restStyle]}>
-          <Text style={styles.headline}>Recht verstehen.{"\n"}Leichter weitergehen.</Text>
+          <Text style={styles.headline}>Recht verstehen.{"\n"}Besser reagieren.</Text>
           <Text style={styles.intro}>Schildern Sie, was passiert ist — wir ordnen den Rest.</Text>
         </Animated.View>
 
