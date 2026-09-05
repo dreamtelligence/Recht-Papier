@@ -174,7 +174,7 @@ Erst einreichen, wenn alle folgenden Punkte mit dem tatsächlichen Release-Archi
 - [ ] iPad vollständig unterstützt oder `supportsTablet` bewusst deaktiviert
 - [ ] StoreKit-Abo samt Restore, geräteübergreifendem Entitlement und klaren Konditionen
 - [x] Eigener passwortloser E-Mail-Code-Login (Social Login zieht Sign in with Apple nach sich, siehe 4.8)
-- [ ] Öffentlich erreichbare Löschseite außerhalb der App — Google-Play-Pflicht zusätzlich zum In-App-Weg
+- [ ] Öffentlich erreichbare Löschseite veröffentlichen und URL in der Play Console eintragen (Seite liegt in `web/kontoloeschung/`)
 - [x] In-App-Löschung für Auth-Konto, Datenbank und Storage-Objekte (`delete-account`, mit Test)
 - [ ] Löschung nachgelagerter Kopien: Logs, Backups und alles, was an Jura oder LLM-Anbieter ging
 - [ ] Privacy Policy in App und Store; vollständige Privacy Labels
