@@ -13,17 +13,16 @@ Supabase in Frankfurt und eine getrennte Jura-API sind für sich keine Ablehnung
 
 **Der heutige Build ist aber noch nicht einreichbar.** Der erste native Fallaktenpfad mit
 passwortlosem E-Mail-Code-Login, privatem Dokumentimport und dauerhaftem Fall ist umgesetzt. Es fehlen
-insbesondere Jura-Analyse und Quellenansicht, StoreKit, Kontolöschung, Datenschutzoberflächen
-und ein geprüfter Release-Build. Der Weg ist damit grün, die aktuelle Submission Readiness rot.
+insbesondere Jura-Analyse und Quellenansicht, StoreKit, Datenschutzoberflächen und ein geprüfter
+Release-Build. Der Weg ist damit grün, die aktuelle Submission Readiness rot.
 
 Die größten Ablehnungsrisiken sind:
 
 1. ein Verbraucherabo außerhalb von In-App Purchase,
-2. fehlende vollständige Kontolöschung in der App,
-3. Falldaten, die ohne konkrete Offenlegung und Einwilligung an externe LLM-Anbieter gehen,
-4. Einreichung über einen Individual- statt Organization-Developer-Account,
-5. unvollständige Privacy-Angaben oder Privacy-Manifeste,
-6. ein für den Reviewer nicht erreichbares Backend.
+2. Falldaten, die ohne konkrete Offenlegung und Einwilligung an externe LLM-Anbieter gehen,
+3. Einreichung über einen Individual- statt Organization-Developer-Account,
+4. unvollständige Privacy-Angaben oder Privacy-Manifeste,
+5. ein für den Reviewer nicht erreichbares Backend.
 
 ## Harte technische Launch-Gates
 
@@ -34,7 +33,7 @@ Die größten Ablehnungsrisiken sind:
 | Geräteumfang | In `app.json` ist `supportsTablet: false` gesetzt. Damit ist die erste Version bewusst auf iPhone begrenzt; die unterstützten iPhone-Größen müssen trotzdem vollständig getestet werden. | iPhone festgelegt; Gerätetest offen |
 | StoreKit-Abo | Automatisierte Rechtsanalyse und Cloud-Fallakte sind digitale, in der App verbrauchte Leistungen. Das Verbraucherabo muss daher als In-App Purchase/StoreKit-Abo angeboten werden; die Reader- und Enterprise-Ausnahmen passen nicht. Das Abo braucht laufenden Wert, mindestens sieben Tage Laufzeit, geräteübergreifenden Zugang, klare Leistung/Preise und Wiederherstellung ([Guidelines 3.1.1–3.1.3](https://developer.apple.com/app-store/review/guidelines/)). Der einfachste sichere Start ist IAP ohne Web-Checkout-Links. | Nicht vorhanden |
 | Login | Solange die App **ausschließlich das eigene Anmeldesystem** nutzt, greift die 4.8-Ausnahme und Sign in with Apple ist nicht nötig. Sobald Google, Facebook oder ein anderer Social Login den Primäraccount anlegt, muss eine gleichwertige Option angeboten werden, die drei Bedingungen erfüllt: nur Name und E-Mail erheben, **die E-Mail-Adresse privat halten lassen** und Interaktionen nicht ohne Einwilligung für Werbung auswerten ([Guideline 4.8](https://developer.apple.com/app-store/review/guidelines/), Wortlaut geprüft am 05.09.2026). Der eigene E-Mail-Code erfüllt die zweite Bedingung **nicht** — er verlangt die echte Adresse. Ein Google-Button zieht deshalb zwingend Sign in with Apple nach sich. | Passwortloser E-Mail-Code implementiert; 4.8-Ausnahme greift |
-| Kontolöschung | Wer in der App Konten anlegen kann, muss dort die vollständige Löschung initiieren können. Deaktivierung allein reicht nicht. Zu löschen sind Auth-Konto, Profil, Fälle, Dokumentobjekte, Fakten, Analysen und Quellen sowie nach der erklärten Frist Logs/Backups, soweit keine gesetzliche Aufbewahrung greift. Bei aktivem Abo muss die App auf Apples fortlaufende Abrechnung und Aboverwaltung hinweisen, darf aber eine sofortige Löschung anbieten ([Apple Account Deletion](https://developer.apple.com/support/offering-account-deletion-in-your-app/)). Die SQL-Cascades helfen, ein Storage-/Auth-Löschpfad fehlt noch. | Nicht vorhanden |
+| Kontolöschung | Wer in der App Konten anlegen kann, muss dort die vollständige Löschung initiieren können. Deaktivierung allein reicht nicht. Zu löschen sind Auth-Konto, Profil, Fälle, Dokumentobjekte, Fakten, Analysen und Quellen sowie nach der erklärten Frist Logs/Backups, soweit keine gesetzliche Aufbewahrung greift. Bei aktivem Abo muss die App auf Apples fortlaufende Abrechnung und Aboverwaltung hinweisen, darf aber eine sofortige Löschung anbieten ([Apple Account Deletion](https://developer.apple.com/support/offering-account-deletion-in-your-app/)). Umgesetzt über die Edge Function `delete-account`: Sie löst die Identität aus dem Nutzertoken auf, entfernt zuerst rekursiv alle Storage-Objekte unter der Auth-UUID und dann das Auth-Konto, an dem Profil, Fälle, Dokumentzeilen, Fakten, Analysen und Quellen per Fremdschlüssel hängen. Der `service_role`-Schlüssel bleibt serverseitig. `supabase/tests/test_account_deletion.py` sucht danach jede Spur einzeln ohne RLS. | In App umgesetzt und geprüft; Logs, Backups und Weitergabe an Jura/LLM offen |
 | Review-Zugang | Apple braucht ein dauerhaft gültiges Demo-Konto oder einen vollständigen Demo-Modus, alle nötigen Hinweise und ein während des Reviews erreichbares Backend. IAPs müssen sichtbar und funktionsfähig sein ([Guideline 2.1 und Before You Submit](https://developer.apple.com/app-store/review/guidelines/)). Ein sinnvoller Review-Fall enthält anonymisierte Beispieldokumente, bestätigte Fakten und eine fertige Analyse. | Nicht vorhanden |
 | Netzwerk | Supabase und Jura müssen über öffentlich gültiges HTTPS erreichbar sein; keine pauschale ATS-Ausnahme. App Transport Security blockiert unsichere Verbindungen, Ausnahmen können zusätzliche Prüfung auslösen ([Apple: Preventing Insecure Network Connections](https://developer.apple.com/documentation/security/preventing-insecure-network-connections)). Außerdem verlangt Apple Funktion auf IPv6-only-Netzen ([Guideline 2.5.5](https://developer.apple.com/app-store/review/guidelines/)). | Produktionsendpunkte offen |
 | Dateiimport | Der Import soll den System-Dateiauswahldialog verwenden und Dateien/iCloud einbeziehen, statt pauschalen Foto- oder Dateizugriff anzufordern. Apple verlangt Datenminimierung und bevorzugt Out-of-Process-Picker; Dateiauswahl soll Files/iCloud unterstützen ([Guidelines 5.1.1(iii) und 2.5.15](https://developer.apple.com/app-store/review/guidelines/)). | System-Picker und privater Upload implementiert; Gerätetest offen |
@@ -176,7 +175,8 @@ Erst einreichen, wenn alle folgenden Punkte mit dem tatsächlichen Release-Archi
 - [ ] StoreKit-Abo samt Restore, geräteübergreifendem Entitlement und klaren Konditionen
 - [x] Eigener passwortloser E-Mail-Code-Login (Social Login zieht Sign in with Apple nach sich, siehe 4.8)
 - [ ] Öffentlich erreichbare Löschseite außerhalb der App — Google-Play-Pflicht zusätzlich zum In-App-Weg
-- [ ] In-App-Löschung für Auth, Datenbank, Storage und nachgelagerte Kopien
+- [x] In-App-Löschung für Auth-Konto, Datenbank und Storage-Objekte (`delete-account`, mit Test)
+- [ ] Löschung nachgelagerter Kopien: Logs, Backups und alles, was an Jura oder LLM-Anbieter ging
 - [ ] Privacy Policy in App und Store; vollständige Privacy Labels
 - [ ] Explizite Einwilligung vor jedem externen AI-Datenfluss; keine undisclosed Fallbacks
 - [ ] Valide SDK-/App-Privacy-Manifeste und Required-Reason-Erklärungen im Archive

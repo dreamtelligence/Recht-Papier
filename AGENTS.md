@@ -111,6 +111,30 @@ cp .env.example .env.local # URL und publishable key eintragen
 npm run ios               # nativer Dev-Build im Simulator
 ```
 
+### Kontolöschung
+
+`supabase/functions/delete-account` löscht Konto, Fallakte und Dokumente vollständig. Apple verlangt
+das in der App, sobald Konten angelegt werden können; Play verlangt zusätzlich einen Weg außerhalb
+der App, der noch fehlt.
+
+Warum das eine Edge Function ist und keine Client-Funktion: `auth.admin.deleteUser` braucht den
+`service_role`-Schlüssel. Der umgeht jede Row Level Security und darf nie auf ein Gerät. Die Funktion
+nimmt deshalb das normale Nutzertoken entgegen und löst die Identität daraus auf — **niemals aus dem
+Request-Body**, das wäre eine Einladung, fremde Konten zu löschen.
+
+Zwei Details, die man beim Ändern nicht kaputt machen sollte:
+
+- **Erst die Dateien, dann das Konto.** `storage.objects` hängt an keinem Fremdschlüssel und
+  überlebt jede Cascade. Ohne den expliziten Schritt bleiben die Originaldokumente im Bucket liegen,
+  während das Konto verschwunden ist — und sind dann niemandem mehr zuzuordnen.
+- **Bei Storage-Fehlern wird abgebrochen**, bevor das Konto fällt. Ein noch bestehendes Konto ist das
+  kleinere Übel gegenüber verwaisten Falldokumenten.
+
+Geprüft wird das mit `python3 supabase/tests/test_account_deletion.py`. Der Test legt ein
+Wegwerfkonto mit Fall und Dokument an, löscht über denselben Weg wie die App und sucht anschließend
+mit `service_role`, also ohne RLS, nach jeder Spur einzeln. Ein Test, der vorher nichts anlegt,
+beweist beim Löschen nichts — der Upload muss also wirklich durchgehen.
+
 ### Anmeldung und Mailversand
 
 Der Login ist passwortlos: E-Mail eintragen, sechsstelligen Code aus der Mail eingeben. Bestehende
