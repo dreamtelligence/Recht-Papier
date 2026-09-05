@@ -67,7 +67,9 @@ export default function Welcome() {
       <View
         style={[
           styles.content,
-          { paddingTop: insets.top + 22, paddingBottom: insets.bottom + 26 },
+          // Der Fussblock sitzt direkt ueber dem Home-Indikator: nur die
+          // Safe-Area des Geraets plus ein schmaler Atemabstand, kein fester Rand.
+          { paddingTop: insets.top + 22, paddingBottom: insets.bottom + 8 },
         ]}
       >
         <View style={styles.brandLine}>
@@ -280,7 +282,7 @@ const styles = StyleSheet.create({
   disabled: { opacity: 0.42 },
   pressed: { transform: [{ translateY: 1 }] },
   privacyNote: {
-    marginTop: 13,
+    marginTop: 12,
     textAlign: "center",
     fontSize: 11,
     fontWeight: "500",
