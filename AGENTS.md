@@ -107,8 +107,13 @@ des Containers zu halten.
 
 ```
 cd apps/mobile
-npx expo start --ios      # Simulator über Expo Go
+cp .env.example .env.local # URL und publishable key eintragen
+npm run ios               # nativer Dev-Build im Simulator
 ```
+
+Expo Go funktioniert für dieses Projekt nicht mehr: `expo-font` und `expo-sqlite` bringen
+nativen Code über Config-Plugins mit, der in einen eigenen Dev-Build gehört. Nach jeder
+Plugin-Änderung `npx expo prebuild -p ios` und neu bauen — Fast Refresh reicht dafür nicht.
 
 Für das echte Gerät mit eigener Bundle-ID und nativen Modulen braucht es einen
 Dev-Build (`npx expo run:ios` oder EAS), nicht Expo Go.

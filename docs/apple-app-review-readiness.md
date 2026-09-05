@@ -11,10 +11,10 @@ Client mit Fallakte, Dokumentimport, bestätigbaren Fakten, Analyse und Quellen 
 WebView und bietet voraussichtlich genügend eigenständigen Nutzen für Guideline 4.2. Expo,
 Supabase in Frankfurt und eine getrennte Jura-API sind für sich keine Ablehnungsgründe.
 
-**Der heutige Build ist aber noch nicht einreichbar.** Unter `apps/mobile` liegt erst das
-Expo-Gerüst: Es fehlen Produktoberfläche, Bundle-ID, produktive Auth-/API-Anbindung, StoreKit,
-Kontolöschung, Datenschutzoberflächen und ein prüfbarer Release-Build. Der Weg ist damit grün,
-die aktuelle Submission Readiness rot.
+**Der heutige Build ist aber noch nicht einreichbar.** Der erste native Fallaktenpfad mit
+E-Mail-/Passwort-Login, privatem Dokumentimport und dauerhaftem Fall ist umgesetzt. Es fehlen
+insbesondere Jura-Analyse und Quellenansicht, StoreKit, Kontolöschung, Datenschutzoberflächen
+und ein geprüfter Release-Build. Der Weg ist damit grün, die aktuelle Submission Readiness rot.
 
 Die größten Ablehnungsrisiken sind:
 
@@ -29,15 +29,15 @@ Die größten Ablehnungsrisiken sind:
 
 | Gate | Was für Recht & Papier vor der Einreichung gelten muss | Stand |
 |---|---|---|
-| Nativer Produktumfang | Die App muss deutlich mehr als eine verpackte Website liefern. Der geplante native Fallakten-Flow erfüllt das plausibel; eine WebView des alten Prototyps nicht. Apple verlangt eigenständigen Nutzen und eine „app-like“ Oberfläche ([Guideline 4.2](https://developer.apple.com/app-store/review/guidelines/)). | Noch nicht implementiert |
+| Nativer Produktumfang | Die App muss deutlich mehr als eine verpackte Website liefern. Der geplante native Fallakten-Flow erfüllt das plausibel; eine WebView des alten Prototyps nicht. Apple verlangt eigenständigen Nutzen und eine „app-like“ Oberfläche ([Guideline 4.2](https://developer.apple.com/app-store/review/guidelines/)). | Erster Fall-/Dokumentpfad implementiert; Analyse offen |
 | Vollständiger Release-Build | Keine Platzhalter, Abstürze oder unfertigen Funktionen. Seit 28. April 2026 müssen Uploads mit Xcode 26 oder neuer und iOS-26-SDK oder neuer gebaut sein ([Apple Upcoming Requirements](https://developer.apple.com/news/upcoming-requirements/)). Die EAS-Build-Umgebung muss dies nachweislich verwenden. | Offen |
-| Geräteumfang | In `app.json` steht derzeit `supportsTablet: true`. Dann muss die App auch auf iPad vollständig und sauber funktionieren. Andernfalls vor der ersten Einreichung bewusst auf iPhone begrenzen. | Entscheidung/Test offen |
+| Geräteumfang | In `app.json` ist `supportsTablet: false` gesetzt. Damit ist die erste Version bewusst auf iPhone begrenzt; die unterstützten iPhone-Größen müssen trotzdem vollständig getestet werden. | iPhone festgelegt; Gerätetest offen |
 | StoreKit-Abo | Automatisierte Rechtsanalyse und Cloud-Fallakte sind digitale, in der App verbrauchte Leistungen. Das Verbraucherabo muss daher als In-App Purchase/StoreKit-Abo angeboten werden; die Reader- und Enterprise-Ausnahmen passen nicht. Das Abo braucht laufenden Wert, mindestens sieben Tage Laufzeit, geräteübergreifenden Zugang, klare Leistung/Preise und Wiederherstellung ([Guidelines 3.1.1–3.1.3](https://developer.apple.com/app-store/review/guidelines/)). Der einfachste sichere Start ist IAP ohne Web-Checkout-Links. | Nicht vorhanden |
-| Login | Nur eigenes Supabase-E-Mail-/Passwort-Login benötigt kein Sign in with Apple. Sobald Google, Facebook oder ein anderer Social Login den Primäraccount anlegt, muss eine gleichwertige datensparsame Login-Option angeboten werden; Sign in with Apple ist dafür der sichere Standard ([Guideline 4.8](https://developer.apple.com/app-store/review/guidelines/)). | Auth-UI fehlt |
+| Login | Nur eigenes Supabase-E-Mail-/Passwort-Login benötigt kein Sign in with Apple. Sobald Google, Facebook oder ein anderer Social Login den Primäraccount anlegt, muss eine gleichwertige datensparsame Login-Option angeboten werden; Sign in with Apple ist dafür der sichere Standard ([Guideline 4.8](https://developer.apple.com/app-store/review/guidelines/)). | E-Mail-/Passwort-Login implementiert |
 | Kontolöschung | Wer in der App Konten anlegen kann, muss dort die vollständige Löschung initiieren können. Deaktivierung allein reicht nicht. Zu löschen sind Auth-Konto, Profil, Fälle, Dokumentobjekte, Fakten, Analysen und Quellen sowie nach der erklärten Frist Logs/Backups, soweit keine gesetzliche Aufbewahrung greift. Bei aktivem Abo muss die App auf Apples fortlaufende Abrechnung und Aboverwaltung hinweisen, darf aber eine sofortige Löschung anbieten ([Apple Account Deletion](https://developer.apple.com/support/offering-account-deletion-in-your-app/)). Die SQL-Cascades helfen, ein Storage-/Auth-Löschpfad fehlt noch. | Nicht vorhanden |
 | Review-Zugang | Apple braucht ein dauerhaft gültiges Demo-Konto oder einen vollständigen Demo-Modus, alle nötigen Hinweise und ein während des Reviews erreichbares Backend. IAPs müssen sichtbar und funktionsfähig sein ([Guideline 2.1 und Before You Submit](https://developer.apple.com/app-store/review/guidelines/)). Ein sinnvoller Review-Fall enthält anonymisierte Beispieldokumente, bestätigte Fakten und eine fertige Analyse. | Nicht vorhanden |
 | Netzwerk | Supabase und Jura müssen über öffentlich gültiges HTTPS erreichbar sein; keine pauschale ATS-Ausnahme. App Transport Security blockiert unsichere Verbindungen, Ausnahmen können zusätzliche Prüfung auslösen ([Apple: Preventing Insecure Network Connections](https://developer.apple.com/documentation/security/preventing-insecure-network-connections)). Außerdem verlangt Apple Funktion auf IPv6-only-Netzen ([Guideline 2.5.5](https://developer.apple.com/app-store/review/guidelines/)). | Produktionsendpunkte offen |
-| Dateiimport | Der Import soll den System-Dateiauswahldialog verwenden und Dateien/iCloud einbeziehen, statt pauschalen Foto- oder Dateizugriff anzufordern. Apple verlangt Datenminimierung und bevorzugt Out-of-Process-Picker; Dateiauswahl soll Files/iCloud unterstützen ([Guidelines 5.1.1(iii) und 2.5.15](https://developer.apple.com/app-store/review/guidelines/)). | Paket und Flow fehlen |
+| Dateiimport | Der Import soll den System-Dateiauswahldialog verwenden und Dateien/iCloud einbeziehen, statt pauschalen Foto- oder Dateizugriff anzufordern. Apple verlangt Datenminimierung und bevorzugt Out-of-Process-Picker; Dateiauswahl soll Files/iCloud unterstützen ([Guidelines 5.1.1(iii) und 2.5.15](https://developer.apple.com/app-store/review/guidelines/)). | System-Picker und privater Upload implementiert; Gerätetest offen |
 | Privacy-Manifeste | Der finale Archive-Build muss gültige `PrivacyInfo.xcprivacy`-Dateien und genehmigte Gründe für alle Required-Reason-APIs enthalten. Ungültige Manifeste beziehungsweise nicht erklärte Required-Reason-APIs blockieren den Upload. Apple führt Hermes ausdrücklich als SDK mit Manifest-/Signaturpflicht ([Third-party SDK requirements](https://developer.apple.com/support/third-party-SDK-requirements/), [Privacy manifests](https://developer.apple.com/documentation/bundleresources/privacy-manifest-files), [Required-reason APIs](https://developer.apple.com/documentation/bundleresources/describing-use-of-required-reason-api)). Vor Release deshalb den Xcode-Privacy-Report des tatsächlichen EAS-Artefakts prüfen. | Erst am Release-Archive prüfbar |
 | Export Compliance | Wegen HTTPS und System-Kryptografie müssen die Export-Compliance-Fragen in App Store Connect korrekt beantwortet werden. `ITSAppUsesNonExemptEncryption=false` darf nur gesetzt werden, wenn nach Prüfung aller nativen Libraries tatsächlich ausschließlich ausgenommene Kryptografie verwendet wird ([Apple Export Compliance](https://developer.apple.com/help/app-store-connect/manage-app-information/overview-of-export-compliance)). | Offen |
 | EU-Traderstatus | Für einen gewerblichen Verbraucher-Abodienst ist „Trader“ sehr wahrscheinlich. Apple verlangt die Erklärung und Verifizierung; Adresse, Telefon und E-Mail werden auf der EU-Produktseite veröffentlicht. Zahlungsdaten und die Bestätigung der EU-Rechtskonformität gehören ebenfalls dazu ([Apple DSA Trader Requirements](https://developer.apple.com/help/app-store-connect/manage-compliance-information/manage-european-union-digital-services-act-trader-requirements)). | Offen |
@@ -90,9 +90,9 @@ Zusätzlich sind als Mindestschutz sinnvoll und mit Apples allgemeinem Security-
 - durchgängige Löschung von Datenkopien entlang Supabase → Storage → Jura/LLM-Logs/Backups.
 
 Apple verlangt angemessene Maßnahmen gegen unbefugte Nutzung, Offenlegung und Zugriff
-([Guideline 1.6](https://developer.apple.com/app-store/review/guidelines/)). Der vorhandene echte
-RLS-Isolationstest ist dafür ein guter Baustein, deckt Jura, Storage, Logs und Backups aber noch
-nicht ab.
+([Guideline 1.6](https://developer.apple.com/app-store/review/guidelines/)). Der echte
+Zwei-Nutzer-Test deckt Datenbank und privaten Storage inzwischen einschließlich fremdem Lesen,
+Schreiben und Löschen ab. Jura-Autorisierung, Logs, Backups und Löschweitergabe sind weiter offen.
 
 ## AI-, Inhalts- und Legal-Review-Risiken
 
@@ -164,7 +164,7 @@ Erst einreichen, wenn alle folgenden Punkte mit dem tatsächlichen Release-Archi
 - [ ] Xcode 26+/iOS-26-SDK+, stabile Bundle-ID, Signierung und On-Device-Test
 - [ ] iPad vollständig unterstützt oder `supportsTablet` bewusst deaktiviert
 - [ ] StoreKit-Abo samt Restore, geräteübergreifendem Entitlement und klaren Konditionen
-- [ ] Eigener Login oder Social Login plus Sign in with Apple
+- [x] Eigener E-Mail-/Passwort-Login (bei späterem Social Login Guideline 4.8 neu prüfen)
 - [ ] In-App-Löschung für Auth, Datenbank, Storage und nachgelagerte Kopien
 - [ ] Privacy Policy in App und Store; vollständige Privacy Labels
 - [ ] Explizite Einwilligung vor jedem externen AI-Datenfluss; keine undisclosed Fallbacks
@@ -177,6 +177,6 @@ Erst einreichen, wenn alle folgenden Punkte mit dem tatsächlichen Release-Archi
 - [ ] Fachanwaltliche RDG-Freigabe des tatsächlich ausgelieferten Funktionsumfangs
 
 **Gesamturteil:** Technisch kann dieser Weg erfolgreich durch Apple Review gehen. Kein
-Architekturwechsel ist nötig. Vor dem App-Client sollte aber der verbindliche Produktions-
-Datenfluss Supabase → Jura → LLM entschieden werden; er bestimmt Einwilligung, Privacy Label,
+Architekturwechsel ist nötig. Als nächstes muss der verbindliche Produktions-Datenfluss
+Supabase → Jura → LLM entschieden und umgesetzt werden; er bestimmt Einwilligung, Privacy Label,
 Policy, Anbieteraccount und einen erheblichen Teil des Review-Risikos.
