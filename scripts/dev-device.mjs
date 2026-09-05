@@ -1,36 +1,10 @@
 // Starts (or reuses) the Vite dev server and prints the address the phone can
 // reach it on. Vite already binds 0.0.0.0 via vite.config.ts, so the only thing
 // missing for real-device testing was knowing where to point the phone.
-import { spawn } from "node:child_process";
-import { networkInterfaces } from "node:os";
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawn } from "node:child_process";
+import { lanAddress } from "./lan-address.mjs";
 
 const port = Number(process.argv[2] ?? process.env.PORT ?? 4173);
-
-function lanAddress() {
-  const candidates = [];
-
-  for (const [name, entries] of Object.entries(networkInterfaces())) {
-    for (const entry of entries ?? []) {
-      if (entry.family !== "IPv4" || entry.internal) continue;
-      // Thunderbolt/bridge interfaces answer but are not on the phone's network.
-      if (name.startsWith("bridge") || name.startsWith("utun") || name.startsWith("llw")) continue;
-      candidates.push({ name, address: entry.address });
-    }
-  }
-
-  // Prefer the interface holding the default route.
-  try {
-    const route = execFileSync("route", ["-n", "get", "default"], { encoding: "utf8" });
-    const iface = route.match(/interface:\s*(\S+)/)?.[1];
-    const preferred = candidates.find((candidate) => candidate.name === iface);
-    if (preferred) return preferred.address;
-  } catch {
-    // No default route (offline); fall through to the first candidate.
-  }
-
-  return candidates[0]?.address ?? null;
-}
 
 async function isServing(url) {
   try {

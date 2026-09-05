@@ -1,4 +1,30 @@
-# Mobile Prototype Agent Guide
+# Recht & Papier Agent Guide
+
+## Current Architecture (read this first)
+
+Recht & Papier is a **native iOS app** built from this web app with Capacitor. It is no longer
+presented inside the simulated device mockup that this template originally shipped with.
+
+- `src/App.tsx` renders `Prototype` directly. It no longer wraps it in `MobileRuntime`.
+- `src/Prototype.tsx` and `src/prototype.css` are built on real web primitives: real scrolling,
+  a Radix dialog sheet, a real `textarea` driving the system keyboard, and `env(safe-area-inset-*)`
+  for the notch and home indicator. The system keyboard's height is published as the
+  `--keyboard-inset` CSS variable from `visualViewport`, which is what lifts the sheet.
+- `index.html` carries `viewport-fit=cover`; without it the safe-area variables stay zero.
+- The `src/mobile/` runtime, `src/styles.css` and `tests/mobile-runtime.spec.ts` are **dormant**:
+  still present, still integrity-checked, but no longer rendered. Keep them until the native app
+  has proven itself on device, then they can be removed in one deliberate commit.
+- Native project lives in `ios/`. Bundle id `de.edwit.rechtundpapier`, display name `Recht & Papier`.
+
+### Commands
+
+- `npm run dev` / `npm run dev:device` - web dev server; `dev:device` also prints the LAN URL for the phone.
+- `npm run ios` - build, sync into the native project, open Xcode.
+- `npm run ios:live` - point the installed app at the Mac's dev server for hot reload on device.
+- `npm run ios:bundled` - put the self-contained build back into the app.
+- `npm run test:runtime` - Playwright. `tests/case-flow.spec.ts` covers the app at iPhone 14 Pro Max size.
+
+Running on the device needs a signing team selected in Xcode; that is a manual, human step.
 
 ## Prototype Instructions
 
@@ -61,19 +87,13 @@ See `src/mobile/COMPONENTS.md` for the full component and gesture contract.
 
 ## Keyboard Rule
 
-The simulated keyboard is a separate top-layer component. Before presenting anything that behaves like iOS navigation or modal UI, dismiss it first.
+This section described the *simulated* keyboard and applies only to the dormant mockup runtime.
+In the native app the system keyboard is real. What still holds:
 
-Call `keyboard.hide()` before:
-
-- pushing, popping, or replacing FlowStack routes
-- opening bottom sheets, action sheets, dialogs, menus, or navigation sheets
-- starting transitions where the destination should not inherit text-input focus
-
-`FlowStack` already hides the keyboard for `push`, `pop`, and `replace`. `BottomSheet` already hides it before opening. If you add new modal/sheet/navigation primitives, follow the same rule.
-
-When a composer, search surface, or other keyboard-attached component closes, call `keyboard.hide()` in the same event before changing that component's open state. Position attached surfaces from `useKeyboardInsets()` rather than a separate timer or visibility flag so both dismiss together.
-
-When any text-entry control loses focus, dismiss the simulated keyboard. If the control is custom or does not use the runtime's keyboard-aware fields, handle its blur event and call `keyboard.hide()` explicitly. Keep the keyboard open only when focus is moving directly to another text-entry control that should share the same keyboard session.
+- The case sheet opens quietly: `Dialog.Content` prevents Radix's mount auto-focus, so the keyboard
+  only appears when the user deliberately taps the field.
+- Position keyboard-attached chrome from `--keyboard-inset`, never from a fixed height or a timer.
+- Keep the text field at `font-size: 16px` or larger, otherwise iOS zooms the viewport on focus.
 
 ## Interaction Rules
 
