@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "Recht & Papier",
+    "slug": "recht-und-papier",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/brand/app-icon-1024.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "de.edwit.rechtundpapier",
+      "infoPlist": {
+        "UIViewControllerBasedStatusBarAppearance": true
+      }
+    },
+    "android": {
+      "package": "de.edwit.rechtundpapier",
+      "adaptiveIcon": {
+        "backgroundColor": "#f4efe3",
+        "foregroundImage": "./assets/brand/app-icon-1024.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#f4efe3",
+          "image": "./assets/brand/app-icon-1024.png",
+          "imageWidth": 180,
+          "resizeMode": "contain"
+        }
+      ]
+    ],
+    "scheme": "rechtundpapier",
+    "backgroundColor": "#f4efe3"
+  }
+}
