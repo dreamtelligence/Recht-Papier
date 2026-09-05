@@ -42,8 +42,9 @@ export function Lineatur({
 
   return (
     <View
-      pointerEvents="none"
-      style={StyleSheet.absoluteFill}
+      // `pointerEvents` als Prop ist seit React Native 0.76 abgekündigt und
+      // meldet sich in jedem Dev-Lauf. Im Style bedeutet es dasselbe.
+      style={[StyleSheet.absoluteFill, styles.durchlaessig]}
       // Für VoiceOver ist eine Linie kein Inhalt. Ohne das wandert der Fokus
       // durch zwölf leere Elemente, bevor er den nächsten Fall erreicht.
       accessibilityElementsHidden
@@ -68,6 +69,7 @@ export function Lineatur({
 }
 
 const styles = StyleSheet.create({
+  durchlaessig: { pointerEvents: "none" },
   linie: {
     position: "absolute",
     left: 0,
