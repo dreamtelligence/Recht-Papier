@@ -1,0 +1,12 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+.DS_Store
+*.log
+
+# Capacitor / iOS build output
+ios/App/Pods/
+ios/App/App/public/
+ios/App/build/
+DerivedData/

@@ -1,0 +1,329 @@
+:root {
+  --paper: #f4efe3;
+  --paper-deep: #e8dfcf;
+  --ink: #24251f;
+  --ink-soft: #666458;
+  --accent: #53666c;
+  --accent-dark: #34494f;
+  --line: rgba(49, 48, 40, 0.14);
+}
+
+.app-screen.paper-screen {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.28), rgba(159, 171, 167, 0.08)),
+    url("/assets/recht-und-papier/paper-texture.png");
+  background-position: center;
+  background-size: cover;
+  color: var(--ink);
+}
+
+.paper-screen .mobile-scroll-content {
+  min-height: 100%;
+}
+
+.welcome-screen {
+  position: relative;
+  min-height: 100%;
+  padding: 68px 28px calc(var(--mobile-safe-area-height) + 26px);
+}
+
+.brand-line {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.brand-mark {
+  display: grid;
+  width: 39px;
+  height: 39px;
+  place-items: center;
+  border: 1px solid rgba(36, 37, 31, 0.72);
+  border-radius: 50%;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.brand-line div {
+  display: grid;
+  gap: 3px;
+}
+
+.brand-line strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+}
+
+.brand-line div span {
+  color: var(--ink-soft);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
+.hero-art {
+  position: relative;
+  display: grid;
+  height: 306px;
+  margin: 14px -4px 3px;
+  place-items: center;
+}
+
+.hero-glow {
+  position: absolute;
+  width: 246px;
+  height: 246px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(159, 176, 174, 0.18), rgba(244, 239, 227, 0) 68%);
+}
+
+.hero-art img {
+  position: relative;
+  z-index: 1;
+  width: 212px;
+  height: 296px;
+  object-fit: contain;
+  filter: contrast(0.88) sepia(0.08);
+  opacity: 0.94;
+}
+
+.figure-caption {
+  position: absolute;
+  right: 4px;
+  bottom: 18px;
+  z-index: 2;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 11px;
+  font-style: italic;
+}
+
+.welcome-copy {
+  display: grid;
+  gap: 11px;
+}
+
+.kicker {
+  color: var(--accent-dark);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.welcome-copy h1 {
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 35px;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+
+.intro {
+  max-width: 320px;
+  color: var(--ink-soft);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.primary-action,
+.sheet-action {
+  width: 100%;
+  min-height: 54px;
+  border: 0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+  box-shadow: 0 8px 24px rgba(52, 73, 79, 0.15);
+  color: #fbf8f0;
+  font: 650 15px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+}
+
+.welcome-actions {
+  position: absolute;
+  right: 28px;
+  bottom: calc(var(--mobile-safe-area-height) + 26px);
+  left: 28px;
+}
+
+.primary-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 21px;
+}
+
+.primary-action:active,
+.sheet-action:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 14px rgba(52, 73, 79, 0.14);
+}
+
+.privacy-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 13px;
+  color: var(--ink-soft);
+  font: 500 11px/1.3 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.case-created {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 10px;
+  margin-top: 18px;
+  padding: 13px 14px;
+  border: 1px solid rgba(69, 91, 82, 0.22);
+  border-radius: 8px;
+  background: rgba(236, 240, 231, 0.72);
+  color: #455b52;
+}
+
+.case-created div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.case-created strong {
+  font: 700 13px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.case-created span {
+  overflow: hidden;
+  color: #5f665e;
+  font: 400 12px/1.35 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bottom-sheet {
+  /* Ride up with the keyboard instead of snapping. Mirrors the runtime's own
+     keyboard timing in src/mobile/Keyboard.tsx (0.26s, same easing). */
+  transition:
+    bottom 0.26s cubic-bezier(0.2, 0.8, 0.2, 1),
+    max-height 0.26s cubic-bezier(0.2, 0.8, 0.2, 1);
+  border: 1px solid rgba(57, 55, 46, 0.12);
+  background-color: var(--paper);
+  background-image: url("/assets/recht-und-papier/paper-texture.png");
+  background-size: cover;
+  box-shadow: 0 -18px 52px rgba(36, 37, 31, 0.22);
+}
+
+:root[data-keyboard-dragging="true"] .bottom-sheet {
+  transition: none;
+}
+
+.sheet-title {
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.sheet-description {
+  color: var(--ink-soft);
+  font: 400 13px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.case-sheet-form {
+  display: grid;
+  gap: 11px;
+}
+
+.case-sheet-form label {
+  color: var(--ink);
+  font: 700 12px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.case-sheet-form textarea {
+  width: 100%;
+  min-height: 118px;
+  resize: none;
+  border: 1px solid rgba(49, 48, 40, 0.18);
+  border-radius: 8px;
+  outline: none;
+  background: rgba(255, 253, 247, 0.64);
+  color: var(--ink);
+  padding: 13px;
+  font: 400 14px/1.45 Georgia, "Times New Roman", serif;
+}
+
+.case-sheet-form textarea:focus {
+  border-color: rgba(52, 73, 79, 0.5);
+  box-shadow: 0 0 0 3px rgba(83, 102, 108, 0.09);
+}
+
+.attachment-input {
+  display: none;
+}
+
+.attachment-button {
+  display: flex;
+  width: 100%;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  overflow: hidden;
+  border: 1px solid rgba(52, 73, 79, 0.28);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.5);
+  color: var(--accent-dark);
+  font: 650 13px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  cursor: pointer;
+}
+
+.attachment-button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.case-sheet-form p {
+  color: var(--ink-soft);
+  font: 400 11px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.sheet-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 5px;
+}
+
+.sheet-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+@media (max-height: 760px) {
+  .hero-art {
+    height: 252px;
+  }
+
+  .hero-art img {
+    width: 174px;
+    height: 243px;
+  }
+
+  .welcome-copy h1 {
+    font-size: 31px;
+  }
+}
