@@ -10,7 +10,8 @@
       "supportsTablet": false,
       "bundleIdentifier": "de.edwit.rechtundpapier",
       "infoPlist": {
-        "UIViewControllerBasedStatusBarAppearance": false
+        "UIViewControllerBasedStatusBarAppearance": false,
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
