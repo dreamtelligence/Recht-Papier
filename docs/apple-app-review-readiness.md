@@ -12,7 +12,7 @@ WebView und bietet voraussichtlich genügend eigenständigen Nutzen für Guideli
 Supabase in Frankfurt und eine getrennte Jura-API sind für sich keine Ablehnungsgründe.
 
 **Der heutige Build ist aber noch nicht einreichbar.** Der erste native Fallaktenpfad mit
-E-Mail-/Passwort-Login, privatem Dokumentimport und dauerhaftem Fall ist umgesetzt. Es fehlen
+passwortlosem E-Mail-Code-Login, privatem Dokumentimport und dauerhaftem Fall ist umgesetzt. Es fehlen
 insbesondere Jura-Analyse und Quellenansicht, StoreKit, Kontolöschung, Datenschutzoberflächen
 und ein geprüfter Release-Build. Der Weg ist damit grün, die aktuelle Submission Readiness rot.
 
@@ -33,7 +33,7 @@ Die größten Ablehnungsrisiken sind:
 | Vollständiger Release-Build | Keine Platzhalter, Abstürze oder unfertigen Funktionen. Seit 28. April 2026 müssen Uploads mit Xcode 26 oder neuer und iOS-26-SDK oder neuer gebaut sein ([Apple Upcoming Requirements](https://developer.apple.com/news/upcoming-requirements/)). Die EAS-Build-Umgebung muss dies nachweislich verwenden. | Offen |
 | Geräteumfang | In `app.json` ist `supportsTablet: false` gesetzt. Damit ist die erste Version bewusst auf iPhone begrenzt; die unterstützten iPhone-Größen müssen trotzdem vollständig getestet werden. | iPhone festgelegt; Gerätetest offen |
 | StoreKit-Abo | Automatisierte Rechtsanalyse und Cloud-Fallakte sind digitale, in der App verbrauchte Leistungen. Das Verbraucherabo muss daher als In-App Purchase/StoreKit-Abo angeboten werden; die Reader- und Enterprise-Ausnahmen passen nicht. Das Abo braucht laufenden Wert, mindestens sieben Tage Laufzeit, geräteübergreifenden Zugang, klare Leistung/Preise und Wiederherstellung ([Guidelines 3.1.1–3.1.3](https://developer.apple.com/app-store/review/guidelines/)). Der einfachste sichere Start ist IAP ohne Web-Checkout-Links. | Nicht vorhanden |
-| Login | Nur eigenes Supabase-E-Mail-/Passwort-Login benötigt kein Sign in with Apple. Sobald Google, Facebook oder ein anderer Social Login den Primäraccount anlegt, muss eine gleichwertige datensparsame Login-Option angeboten werden; Sign in with Apple ist dafür der sichere Standard ([Guideline 4.8](https://developer.apple.com/app-store/review/guidelines/)). | E-Mail-/Passwort-Login implementiert |
+| Login | Solange die App **ausschließlich das eigene Anmeldesystem** nutzt, greift die 4.8-Ausnahme und Sign in with Apple ist nicht nötig. Sobald Google, Facebook oder ein anderer Social Login den Primäraccount anlegt, muss eine gleichwertige Option angeboten werden, die drei Bedingungen erfüllt: nur Name und E-Mail erheben, **die E-Mail-Adresse privat halten lassen** und Interaktionen nicht ohne Einwilligung für Werbung auswerten ([Guideline 4.8](https://developer.apple.com/app-store/review/guidelines/), Wortlaut geprüft am 05.09.2026). Der eigene E-Mail-Code erfüllt die zweite Bedingung **nicht** — er verlangt die echte Adresse. Ein Google-Button zieht deshalb zwingend Sign in with Apple nach sich. | Passwortloser E-Mail-Code implementiert; 4.8-Ausnahme greift |
 | Kontolöschung | Wer in der App Konten anlegen kann, muss dort die vollständige Löschung initiieren können. Deaktivierung allein reicht nicht. Zu löschen sind Auth-Konto, Profil, Fälle, Dokumentobjekte, Fakten, Analysen und Quellen sowie nach der erklärten Frist Logs/Backups, soweit keine gesetzliche Aufbewahrung greift. Bei aktivem Abo muss die App auf Apples fortlaufende Abrechnung und Aboverwaltung hinweisen, darf aber eine sofortige Löschung anbieten ([Apple Account Deletion](https://developer.apple.com/support/offering-account-deletion-in-your-app/)). Die SQL-Cascades helfen, ein Storage-/Auth-Löschpfad fehlt noch. | Nicht vorhanden |
 | Review-Zugang | Apple braucht ein dauerhaft gültiges Demo-Konto oder einen vollständigen Demo-Modus, alle nötigen Hinweise und ein während des Reviews erreichbares Backend. IAPs müssen sichtbar und funktionsfähig sein ([Guideline 2.1 und Before You Submit](https://developer.apple.com/app-store/review/guidelines/)). Ein sinnvoller Review-Fall enthält anonymisierte Beispieldokumente, bestätigte Fakten und eine fertige Analyse. | Nicht vorhanden |
 | Netzwerk | Supabase und Jura müssen über öffentlich gültiges HTTPS erreichbar sein; keine pauschale ATS-Ausnahme. App Transport Security blockiert unsichere Verbindungen, Ausnahmen können zusätzliche Prüfung auslösen ([Apple: Preventing Insecure Network Connections](https://developer.apple.com/documentation/security/preventing-insecure-network-connections)). Außerdem verlangt Apple Funktion auf IPv6-only-Netzen ([Guideline 2.5.5](https://developer.apple.com/app-store/review/guidelines/)). | Produktionsendpunkte offen |
@@ -93,6 +93,16 @@ Apple verlangt angemessene Maßnahmen gegen unbefugte Nutzung, Offenlegung und Z
 ([Guideline 1.6](https://developer.apple.com/app-store/review/guidelines/)). Der echte
 Zwei-Nutzer-Test deckt Datenbank und privaten Storage inzwischen einschließlich fremdem Lesen,
 Schreiben und Löschen ab. Jura-Autorisierung, Logs, Backups und Löschweitergabe sind weiter offen.
+
+## Google Play: zweigeteilte Löschpflicht
+
+Play verlangt bei Konten **zwei** Wege, nicht einen: einen In-App-Pfad zur Löschung von Konto und
+zugehörigen Daten und zusätzlich eine **öffentlich erreichbare Webseite**, über die eine Löschung
+beantragt werden kann — für Menschen, die die App bereits deinstalliert haben. Der Link wird im
+Play-Console-Formular hinterlegt
+([Play: Datenlöschung](https://support.google.com/googleplay/android-developer/answer/13327111)).
+Apple verlangt nur den In-App-Weg. Für den Android-Start braucht es also eine erreichbare
+Löschseite, und sie gehört zum selben Arbeitspaket wie die In-App-Löschung.
 
 ## AI-, Inhalts- und Legal-Review-Risiken
 
@@ -164,7 +174,8 @@ Erst einreichen, wenn alle folgenden Punkte mit dem tatsächlichen Release-Archi
 - [ ] Xcode 26+/iOS-26-SDK+, stabile Bundle-ID, Signierung und On-Device-Test
 - [ ] iPad vollständig unterstützt oder `supportsTablet` bewusst deaktiviert
 - [ ] StoreKit-Abo samt Restore, geräteübergreifendem Entitlement und klaren Konditionen
-- [x] Eigener E-Mail-/Passwort-Login (bei späterem Social Login Guideline 4.8 neu prüfen)
+- [x] Eigener passwortloser E-Mail-Code-Login (Social Login zieht Sign in with Apple nach sich, siehe 4.8)
+- [ ] Öffentlich erreichbare Löschseite außerhalb der App — Google-Play-Pflicht zusätzlich zum In-App-Weg
 - [ ] In-App-Löschung für Auth, Datenbank, Storage und nachgelagerte Kopien
 - [ ] Privacy Policy in App und Store; vollständige Privacy Labels
 - [ ] Explizite Einwilligung vor jedem externen AI-Datenfluss; keine undisclosed Fallbacks

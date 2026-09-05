@@ -111,6 +111,32 @@ cp .env.example .env.local # URL und publishable key eintragen
 npm run ios               # nativer Dev-Build im Simulator
 ```
 
+### Anmeldung und Mailversand
+
+Der Login ist passwortlos: E-Mail eintragen, sechsstelligen Code aus der Mail eingeben. Bestehende
+Passwortkonten funktionieren weiter, neue entstehen nur noch über den Code.
+
+Drei Dinge daran sind nicht offensichtlich:
+
+- **Ohne `{{ .Token }}` in der Supabase-Mailvorlage kommt ein Magic Link statt eines Codes** und der
+  Flow läuft still ins Leere. Betroffen sind *beide* Vorlagen: `magic_link` trifft bestehende
+  Konten, `confirmation` die neu angelegten.
+- **Supabases eingebauter Maildienst kann das nicht.** Er erlaubt keine eigenen Vorlagen und
+  drosselt projektweit auf wenige Mails pro Stunde. Der Versand läuft deshalb über Brevo
+  (`smtp-relay.brevo.com:587`), Zugangsdaten in der Wurzel-`.env` unter `BREVO_*`.
+- **Brevos IP-Freigabe muss für den SMTP-Schlüssel deaktiviert sein.** Supabase versendet von
+  wechselnden Servern ohne veröffentlichte IPs; eine Allowlist kann dort nie vollständig sein und
+  erzeugt sonst `525 5.7.1 Unauthorized IP address`. Die Freigabe für den API-Schlüssel darf an
+  bleiben.
+
+Codelänge und Gültigkeit stehen serverseitig auf sechs Ziffern und zehn Minuten, dazu 60 Sekunden
+Sperrfrist je Adresse und 200 Mails pro Stunde projektweit. Diese Werte gelten im Frankfurter
+Projekt; `supabase/config.toml` bildet sie für den lokalen Stack nach.
+
+**`supabase config push` nicht blind benutzen** — der Befehl überträgt die gesamte Datei, inklusive
+`site_url`, das lokal auf einer 127.0.0.1-Adresse steht. Einzelne Werte gezielt über die Management
+API oder das Dashboard setzen.
+
 Expo Go funktioniert für dieses Projekt nicht mehr: `expo-font` und `expo-sqlite` bringen
 nativen Code über Config-Plugins mit, der in einen eigenen Dev-Build gehört. Nach jeder
 Plugin-Änderung `npx expo prebuild -p ios` und neu bauen — Fast Refresh reicht dafür nicht.
