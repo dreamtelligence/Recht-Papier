@@ -7,8 +7,10 @@ denen die Fallakte auf dem Bildschirm entsteht. Am Ende räumt er in derselben
 Reihenfolge auf wie `deleteCase` — erst Storage, dann Zeile.
 
 Er beantwortet damit die Frage, wo die Sachen landen, mit echten Zeilen statt
-mit einer Behauptung. Und er prüft, was heute noch fehlt: `fall-einordnen` ist
-nicht deployt, also gibt es keine Analyse und keine Quellen.
+mit einer Behauptung. Die Einordnung selbst gehört nicht hierher: sie kostet
+einen Modellaufruf und wird in `test_fall_einordnen.py` geprüft. Hier wird nur
+gemessen, dass `fall-einordnen` erreichbar ist und Unvollständiges ablehnt,
+bevor irgendetwas Kostenpflichtiges beginnt.
 
 Alle Zugriffe laufen mit einem echten Nutzer-Token über REST, nicht mit dem
 Service-Role-Schlüssel — sonst würde der Test an RLS vorbeilaufen und nichts
@@ -232,11 +234,18 @@ def main() -> int:
         print(f"        case_analyses= {len(analysen)}   Abschnitt 'Rechtliche Einordnung'")
         print(f"        case_sources = {len(quellen)}   Abschnitt 'Rechtsgrundlagen'")
 
-        # --- 5. Was noch nicht angeschlossen ist ---------------------------
+        # --- 5. Die angeschlossenen Edge Functions -------------------------
         print("\n5. Edge Functions")
-        status, body = sb.function("fall-einordnen", token, {"case_id": case_id})
-        check("fall-einordnen ist erwartungsgemäß NICHT da (404)", status == 404,
-              f"unerwarteter Status {status}: {str(body)[:200]}")
+        # Dieser Test hielt `fall-einordnen` lange für nicht vorhanden und prüfte
+        # auf 404. Seit die Function deployt ist, prüft er das Gegenteil — aber
+        # nur die Erreichbarkeit: der Lauf selbst kostet einen Modellaufruf und
+        # gehört nach `test_fall_einordnen.py`.
+        #
+        # Ohne Fall-ID muss die Function ablehnen, und zwar bevor irgendetwas
+        # Kostenpflichtiges passiert. Genau das wird hier gemessen.
+        status, body = sb.function("fall-einordnen", token, {})
+        check("fall-einordnen ist erreichbar und weist Unvollständiges ab",
+              status == 400, f"unerwarteter Status {status}: {str(body)[:200]}")
 
         status, body = sb.function("recht-nachschlagen", token,
                                    {"frage": "Wie lang ist die Kündigungsfrist nach neun Jahren im Betrieb?"})

@@ -204,14 +204,31 @@ def main() -> int:
         check("Bob hängt keine Aussage an", status not in (200, 201), f"{status} {rows}")
 
         print("\nAnalyse, Fundstellen und Fristen")
-        # Diese drei sind neu und tragen das Ergebnis der Einordnung. Sie waren
-        # bislang ungeprüft, obwohl in ihnen der Text steht, den ein Modell aus
-        # dem Sachverhalt gemacht hat — also genau das, was am wenigsten in
-        # fremde Hände gehört.
+        # Diese drei tragen das Ergebnis der Einordnung — also genau den Text,
+        # den ein Modell aus dem Sachverhalt gemacht hat, und damit das, was am
+        # wenigsten in fremde Hände gehört.
+        #
+        # Sie entstehen seit `20260906054106` und `20260906060321`
+        # ausschließlich serverseitig. Ein Client, der sein eigenes Ergebnis
+        # eintragen darf, kann sich eine bestandene Prüfung selbst ausstellen;
+        # deshalb wird hier zuerst geprüft, dass Alice das *nicht* kann, und
+        # erst danach mit `service_role` angelegt, was die Edge Function
+        # anlegen würde.
+        for tabelle, koerper in (
+            ("case_analyses", {"case_id": case_id, "question": "Selbst eingetragen?",
+                               "answer": "Gefälschtes Ergebnis.", "model": "keins"}),
+            ("case_sources", {"case_id": case_id, "kind": "gesetz", "reference": "BGB",
+                              "locator": "§ 1"}),
+            ("case_deadlines", {"case_id": case_id, "label": "Selbst gesetzt",
+                                "due_on": "2026-12-31", "basis": "§ 1 BGB"}),
+        ):
+            status, rows = sb.rest("POST", tabelle, alice, body=koerper)
+            check(f"Alice schreibt nicht selbst in {tabelle}", status >= 400, f"{status} {rows}")
+
         status, analyse = sb.rest(
             "POST",
             "case_analyses",
-            alice,
+            sb.service,
             body={
                 "case_id": case_id,
                 "question": "Wie ist dieser Sachverhalt rechtlich einzuordnen?",
@@ -220,13 +237,13 @@ def main() -> int:
             },
             prefer="return=representation",
         )
-        check("Alice legt eine Analyse an", status == 201, f"{status} {analyse}")
+        check("Der Server legt die Analyse an", status == 201, f"{status} {analyse}")
         analysis_id = analyse[0]["id"] if status == 201 else ""
 
         status, quelle = sb.rest(
             "POST",
             "case_sources",
-            alice,
+            sb.service,
             body={
                 "case_id": case_id,
                 "analysis_id": analysis_id,
@@ -237,12 +254,12 @@ def main() -> int:
             },
             prefer="return=representation",
         )
-        check("Alice legt eine Fundstelle an", status == 201, f"{status} {quelle}")
+        check("Der Server legt die Fundstelle an", status == 201, f"{status} {quelle}")
 
         status, frist = sb.rest(
             "POST",
             "case_deadlines",
-            alice,
+            sb.service,
             body={
                 "case_id": case_id,
                 "analysis_id": analysis_id,
@@ -252,7 +269,18 @@ def main() -> int:
             },
             prefer="return=representation",
         )
-        check("Alice legt eine Frist an", status == 201, f"{status} {frist}")
+        check("Der Server legt die Frist an", status == 201, f"{status} {frist}")
+
+        # Bestätigen darf Alice, umschreiben nicht: die Rechtsgrundlage einer
+        # Frist ist eine Aussage des Servers, keine Eingabe des Mandanten.
+        if status == 201:
+            frist_id = frist[0]["id"]
+            check("Alice bestätigt ihre Frist",
+                  sb.rest("PATCH", f"case_deadlines?id=eq.{frist_id}", alice,
+                          body={"confirmed": True})[0] in (200, 204))
+            check("Alice ändert die Rechtsgrundlage nicht",
+                  sb.rest("PATCH", f"case_deadlines?id=eq.{frist_id}", alice,
+                          body={"basis": "§ 999 Fantasie"})[0] >= 400)
 
         for tabelle, was in (
             ("case_analyses", "die Analyse"),
