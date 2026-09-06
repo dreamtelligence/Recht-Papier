@@ -43,7 +43,7 @@ const MAX_SACHVERHALT = 8000;
 // Anbieter wechseln; eine Einwilligung nennt aber einen konkreten Empfaenger,
 // und was nicht offengelegt ist, darf hier nicht in die Akte. Zweite
 // Verteidigungslinie hinter `provider_order()` in Jura.
-const ERLAUBTE_MODELLE = ["gemini-2.5-flash-lite"];
+const ERLAUBTE_MODELLE = ["Qwen/Qwen3.8-27B-FP8"];
 
 // Die Engine kennt ein gutes Dutzend Rechtsgebiete, `legal_area` genau zwei.
 // Alles andere bleibt `null` — lieber kein Etikett als ein falsches.
@@ -244,6 +244,7 @@ Deno.serve(async (req) => {
     return json({ error: "Ungueltige Anfrage." }, 400);
   }
   if (!caseId) return json({ error: "case_id fehlt." }, 400);
+  if (!/^[0-9a-f-]{36}$/i.test(caseId)) return json({ error: "Ungueltige Fall-ID." }, 400);
 
   // Row Level Security beantwortet die Eigentumsfrage.
   const { data: fall, error: fallFehler } = await asUser
@@ -258,16 +259,27 @@ Deno.serve(async (req) => {
   // Jeder Lauf ist ein kostenpflichtiger Modellaufruf. Ein Doppeltipp darf
   // keinen zweiten ausloesen, und zwei parallele Laeufe wuerden zwei Analysen
   // an dieselbe Akte haengen.
-  if (fall.status === "in_pruefung") {
-    return json({ status: "laeuft_bereits", case_id: caseId }, 409);
+  const worker = createClient(url, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+  const requestId = crypto.randomUUID();
+  const lauf = { p_case: caseId, p_owner: userData.user.id, p_run: requestId };
+  const { data: snapshot, error: startFehler } = await worker.rpc("start_case_analysis", lauf);
+  if (startFehler) return json({ error: "Die Prüfung konnte nicht gestartet werden." }, 500);
+  if (!snapshot) return json({ status: "laeuft_bereits", case_id: caseId }, 409);
+
+  async function gescheitert(grund: string, status = 502) {
+    await worker.rpc("fail_case_analysis", lauf);
+    return json({ error: grund, request_id: requestId }, status);
   }
 
-  const [{ data: dokumente }, { data: fakten }] = await Promise.all([
-    asUser.from("case_documents").select("file_name,extracted_text").eq("case_id", caseId),
-    asUser.from("case_facts").select("statement,occurred_on").eq("case_id", caseId).eq("confirmed", true),
-  ]);
-
-  const abschnitte = [fall.description.trim()];
+  const dokumente = snapshot.documents ?? [];
+  const fakten = snapshot.facts ?? [];
+  if (dokumente.some((d: { extracted_text?: string; processing_error?: string }) =>
+    !d.extracted_text?.trim() || d.processing_error)) {
+    return await gescheitert("Mindestens ein Dokument wurde noch nicht vollständig gelesen. Bitte prüfen Sie die Dokumente.", 422);
+  }
+  const abschnitte = [snapshot.description.trim()];
   for (const fakt of fakten ?? []) {
     abschnitte.push(fakt.occurred_on ? `${fakt.occurred_on}: ${fakt.statement}` : fakt.statement);
   }
@@ -277,14 +289,9 @@ Deno.serve(async (req) => {
     }
   }
 
-  const sachverhalt = pseudonymisieren(abschnitte.join("\n\n")).slice(0, MAX_SACHVERHALT);
-  const requestId = crypto.randomUUID();
-
-  await asUser.from("cases").update({ status: "in_pruefung" }).eq("id", caseId);
-
-  async function gescheitert(grund: string, status = 502) {
-    await asUser.from("cases").update({ status: "fehlgeschlagen" }).eq("id", caseId);
-    return json({ error: grund, request_id: requestId }, status);
+  const sachverhalt = pseudonymisieren(abschnitte.join("\n\n"));
+  if (sachverhalt.length > MAX_SACHVERHALT) {
+    return await gescheitert(`Der Fall umfasst mehr als ${MAX_SACHVERHALT} Zeichen. Es wurde nichts abgeschnitten. Bitte grenzen Sie die Unterlagen ein.`, 413);
   }
 
   const abbruch = new AbortController();
@@ -368,38 +375,16 @@ Deno.serve(async (req) => {
   const antworttext = String(daten.answer ?? "").trim();
   if (!antworttext) return await gescheitert("Die Einordnung kam ohne Text zurueck.");
 
-  const { data: analyse, error: analyseFehler } = await asUser
-    .from("case_analyses")
-    .insert({
-      case_id: caseId,
-      // Die Tabelle verlangt eine Frage. Der Client stellt keine — dies ist die
-      // Frage, die die Einordnung tatsaechlich beantwortet hat.
-      question: "Wie ist dieser Sachverhalt rechtlich einzuordnen?",
-      answer: antworttext,
-      model: modell,
-      // Unveraendert, wie die Migration es verlangt. `recht-nachschlagen`
-      // beschneidet das Audit fuer die Oberflaeche; hier waere das ein
-      // Beweisverlust — nur das vollstaendige Audit sagt, was beanstandet wurde.
-      answer_audit: daten.answer_audit ?? null,
-      request_id: requestId,
-    })
-    .select("id")
-    .single();
-
-  if (analyseFehler || !analyse) return await gescheitert("Die Analyse konnte nicht gespeichert werden.", 500);
-
-  // Fundstellen. Urteile kommen heute mit leerem `gesetz` zurueck, weil die
-  // Engine ihren Kontext nur ueber Abkuerzung und Paragraph aufbaut — solche
-  // Zeilen waeren in der Akte ein Beleg ohne Angabe, und `reference` ist
-  // ohnehin `not null`. Sie werden uebersprungen statt erfunden.
   const zitate = Array.isArray(daten.citations) ? (daten.citations as Record<string, unknown>[]) : [];
-  const belegbar = zitate.filter((z) => String(z.gesetz ?? "").trim());
+  const belegbar = zitate.filter((z) => String(z.reference ?? z.gesetz ?? "").trim());
+  if (belegbar.length !== zitate.length) {
+    return await gescheitert("Mindestens eine Fundstelle ist unvollständig. Die Analyse wurde nicht übernommen.", 422);
+  }
   const quellen = belegbar.map((z) => ({
-    case_id: caseId,
-    analysis_id: analyse.id,
-    kind: "gesetz",
-    reference: String(z.gesetz).trim(),
-    locator: String(z.paragraph ?? "").trim() || null,
+    kind: z.kind === "urteil" ? "urteil" : "gesetz",
+    citation_id: String(z.id ?? "").replace(/[^\d]/g, ""),
+    reference: String(z.reference ?? z.gesetz).trim(),
+    locator: String(z.locator ?? z.paragraph ?? "").trim() || null,
     title: String(z.titel ?? "").trim() || null,
     url: String(z.url ?? "").trim() || null,
     valid_as_of: String(z.stand ?? "").trim() || null,
@@ -410,36 +395,25 @@ Deno.serve(async (req) => {
   // Die IDs kommen zurueck, damit eine Frist auf die Zeile zeigen kann, die sie
   // belegt. `insert` liefert sie in der Reihenfolge der Eingabe.
   const belege = new Map<string, Fundstelle>();
-  if (quellen.length) {
-    const { data: geschrieben } = await asUser.from("case_sources").insert(quellen).select("id");
-    belegbar.forEach((zitat, i) => {
-      // Die Engine markiert mit "[3]", die Klammern gehoeren nicht zur ID.
-      const marke = String(zitat.id ?? "").replace(/[^\d]/g, "");
-      if (!marke) return;
-      belege.set(marke, {
-        reference: quellen[i].reference,
-        locator: quellen[i].locator,
-        id: geschrieben?.[i]?.id,
-      });
-    });
-  }
+  quellen.forEach((q) => belege.set(q.citation_id, {
+    reference: q.reference, locator: q.locator, id: q.citation_id,
+  }));
 
   const fristen = fristenAusAntwort(antworttext, belege).map((frist) => ({
-    case_id: caseId,
-    analysis_id: analyse.id,
     ...frist,
-    origin: "analyse",
+    citation_id: frist.source_id,
   }));
-  if (fristen.length) await asUser.from("case_deadlines").insert(fristen);
-
   const erkannt = String(daten.rechtsgebiet ?? "").trim().toLowerCase();
-  await asUser
-    .from("cases")
-    .update({
-      status: "analysiert",
-      ...(RECHTSGEBIETE[erkannt] && !fall.legal_area ? { legal_area: RECHTSGEBIETE[erkannt] } : {}),
-    })
-    .eq("id", caseId);
+  const { data: gespeichert, error: speicherFehler } = await worker.rpc("finish_case_analysis", {
+    ...lauf, p_snapshot: snapshot, p_answer: antworttext, p_model: modell,
+    p_audit: daten.answer_audit ?? null, p_source_audit: daten.source_audit ?? null,
+    p_sources: quellen, p_deadlines: fristen, p_area: RECHTSGEBIETE[erkannt] ?? null,
+  });
+  if (speicherFehler) return await gescheitert("Die Analyse konnte nicht vollständig gespeichert werden oder der Fall wurde zwischenzeitlich geändert.", 409);
+  if (!gespeichert?.released) return json({
+    error: "Die Einordnung hat die Quellenprüfung nicht bestanden. Sie bleibt ungeprüft und kann nicht exportiert werden.",
+    request_id: requestId,
+  }, 422);
 
   return json({
     status: "analysiert",
