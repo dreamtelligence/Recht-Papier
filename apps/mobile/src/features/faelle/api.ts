@@ -35,11 +35,11 @@ export async function loadCases(userId: string): Promise<CaseSummary[]> {
 /**
  * Alles, was die Fallübersicht zeigt, in einem Rutsch.
  *
- * Bewusst parallel: die fünf Abfragen hängen nicht voneinander ab, und
+ * Bewusst parallel: die sechs Abfragen hängen nicht voneinander ab, und
  * nacheinander würden sich ihre Laufzeiten auf einer Mobilverbindung addieren.
  */
 export async function loadCaseOverview(caseId: string): Promise<CaseOverview> {
-  const [caseResult, documents, facts, analyses, sources] = await Promise.all([
+  const [caseResult, documents, facts, analyses, sources, deadlines] = await Promise.all([
     supabase
       .from("cases")
       .select("id,title,status,created_at,updated_at,description,legal_area")
@@ -47,7 +47,7 @@ export async function loadCaseOverview(caseId: string): Promise<CaseOverview> {
       .maybeSingle(),
     supabase
       .from("case_documents")
-      .select("id,file_name,kind,mime_type,byte_size,created_at")
+      .select("id,file_name,kind,mime_type,byte_size,created_at,storage_path,processed_at,processing_error")
       .eq("case_id", caseId)
       .order("created_at", { ascending: true }),
     supabase
@@ -66,6 +66,14 @@ export async function loadCaseOverview(caseId: string): Promise<CaseOverview> {
       .select("id,kind,reference,locator,title,valid_as_of")
       .eq("case_id", caseId)
       .order("created_at", { ascending: false }),
+    supabase
+      .from("case_deadlines")
+      .select("id,label,due_on,basis,confirmed,origin,note")
+      .eq("case_id", caseId)
+      // Die nächste zuerst. Eine Frist, die schon abgelaufen ist, steht unten,
+      // aber sie verschwindet nicht — dass sie verstrichen ist, ist selbst
+      // eine Auskunft.
+      .order("due_on", { ascending: true }),
   ]);
 
   if (caseResult.error) throw caseResult.error;
@@ -77,6 +85,7 @@ export async function loadCaseOverview(caseId: string): Promise<CaseOverview> {
     fakten: (facts.data ?? []) as CaseOverview["fakten"],
     analyse: ((analyses.data ?? [])[0] ?? null) as CaseOverview["analyse"],
     quellen: (sources.data ?? []) as CaseOverview["quellen"],
+    fristen: (deadlines.data ?? []) as CaseOverview["fristen"],
   };
 }
 
@@ -116,15 +125,25 @@ export async function createCase(
     if (uploadError) throw uploadError;
     uploaded = true;
 
-    const { error: documentError } = await supabase.from("case_documents").insert({
-      case_id: newCase.id,
-      kind: "anschreiben",
-      file_name: attachment.name,
-      storage_path: storagePath,
-      mime_type: attachment.mimeType,
-      byte_size: attachment.size,
-    });
+    const { data: dokument, error: documentError } = await supabase
+      .from("case_documents")
+      .insert({
+        case_id: newCase.id,
+        kind: "anschreiben",
+        file_name: attachment.name,
+        storage_path: storagePath,
+        mime_type: attachment.mimeType,
+        byte_size: attachment.size,
+      })
+      .select("id")
+      .single();
     if (documentError) throw documentError;
+
+    // Das Anschreiben lesen lassen, aber nicht darauf warten. Ein Scan ohne
+    // Textebene oder eine zickige Datei darf das Anlegen des Falls nicht
+    // aufhalten — die Akte steht auch ohne gelesenen Text. Was dabei
+    // herauskommt, holt sich die Fallakte beim nächsten Laden.
+    void dokumentLesen(dokument.id).catch(() => {});
 
     return newCase as CaseSummary;
   } catch (error) {
@@ -132,6 +151,35 @@ export async function createCase(
     await supabase.from("cases").delete().eq("id", newCase.id);
     throw error;
   }
+}
+
+/**
+ * Das Anschreiben lesen lassen.
+ *
+ * Serverseitig, weil die Datei den privaten Bucket nicht verlassen muss, um
+ * gelesen zu werden — und weil ein PDF-Parser im Bundle das Gerät für etwas
+ * zahlen ließe, das einmal pro Dokument anfällt.
+ */
+export async function dokumentLesen(documentId: string): Promise<void> {
+  const { error } = await supabase.functions.invoke("dokument-lesen", {
+    body: { document_id: documentId },
+  });
+  if (error) throw error;
+}
+
+/**
+ * Eine kurzlebige Adresse, unter der das Dokument sich ansehen lässt.
+ *
+ * Kurzlebig ist hier keine Vorsicht, sondern Vorgabe: ein Falldokument in
+ * einer dauerhaft gültigen URL wäre eine Fallakte, die jeder mit dem Link
+ * öffnet. Fünf Minuten reichen zum Anschauen und überleben kein Teilen.
+ */
+export async function dokumentAdresse(storagePath: string): Promise<string> {
+  const { data, error } = await supabase.storage
+    .from(BUCKET)
+    .createSignedUrl(storagePath, 300);
+  if (error || !data?.signedUrl) throw error ?? new Error("Keine Adresse erhalten");
+  return data.signedUrl;
 }
 
 /**

@@ -15,6 +15,7 @@ export type CaseStatus =
   | "entwurf"
   | "in_pruefung"
   | "analysiert"
+  | "fehlgeschlagen"
   | "abgeschlossen"
   | "archiviert";
 
@@ -41,6 +42,15 @@ export type CaseDocument = {
   mime_type: string | null;
   byte_size: number | null;
   created_at: string;
+  // Ohne den Pfad kann die Akte ihr eigenes Dokument nicht öffnen. Er stand
+  // lange nicht in der Abfrage, und deshalb war ein hochgeladenes Anschreiben
+  // aus der App heraus unerreichbar.
+  storage_path: string;
+  // Gefüllt von der Edge Function `dokument-lesen`. `null` heißt "noch nicht
+  // gelesen", ein gesetztes `processed_at` mit leerem Text heißt "gelesen,
+  // aber da war nichts" — meist ein Scan ohne Textebene.
+  processed_at: string | null;
+  processing_error: string | null;
 };
 
 export type CaseFact = {
@@ -58,6 +68,23 @@ export type CaseAnalysis = {
   created_at: string;
 };
 
+/**
+ * Eine Frist, die die Analyse genannt hat.
+ *
+ * `confirmed` ist der ganze Unterschied zwischen einem Hinweis und einer
+ * Zusage. Eine vom Modell aus dem Sachverhalt gerechnete Frist ist ein
+ * Vorschlag — dieselbe Regel wie bei `CaseFact`.
+ */
+export type CaseDeadline = {
+  id: string;
+  label: string;
+  due_on: string;
+  basis: string;
+  confirmed: boolean;
+  origin: string;
+  note: string | null;
+};
+
 export type CaseSource = {
   id: string;
   kind: string;
@@ -73,11 +100,13 @@ export type CaseOverview = {
   fakten: CaseFact[];
   analyse: CaseAnalysis | null;
   quellen: CaseSource[];
+  fristen: CaseDeadline[];
 };
 
 export const STATUS_TEXT: Record<CaseStatus, string> = {
   entwurf: "Entwurf",
   in_pruefung: "Wird geprüft",
+  fehlgeschlagen: "Prüfung fehlgeschlagen",
   analysiert: "Analysiert",
   abgeschlossen: "Abgeschlossen",
   archiviert: "Archiviert",

@@ -43,13 +43,23 @@ export default function NeuerFall() {
   const kannAnlegen = schilderung.trim().length >= 8 && anlage !== null && !beschaeftigt;
 
   const dokumentWaehlen = useCallback(async () => {
-    const ergebnis = await DocumentPicker.getDocumentAsync({
-      type: ERLAUBTE_TYPEN,
-      copyToCacheDirectory: true,
-    });
+    let ergebnis: DocumentPicker.DocumentPickerResult;
+    try {
+      ergebnis = await DocumentPicker.getDocumentAsync({
+        type: ERLAUBTE_TYPEN,
+        copyToCacheDirectory: true,
+      });
+    } catch {
+      // Der Picker wirft, wenn eine iCloud-Datei nicht verfügbar ist oder der
+      // Anbieter abbricht. Ohne diesen Zweig war das eine unbehandelte
+      // Rejection: der Nutzer tippt, nichts passiert, nichts erklärt es.
+      setMeldung("Die Datei ließ sich nicht öffnen. Bitte erneut versuchen.");
+      return;
+    }
     if (ergebnis.canceled) return;
 
     const datei = ergebnis.assets[0];
+    if (!datei) return;
     if (datei.size && datei.size > MAX_DOKUMENT_BYTES) {
       setMeldung("Das Dokument darf höchstens 20 MB groß sein.");
       return;

@@ -13,8 +13,24 @@
  * - **Nie die Rohmeldung zeigen.** Sie nennt Tabellen, Policies und Spalten.
  */
 
+/**
+ * Kein Netz ist etwas anderes als ein abgewiesener Zugriff.
+ *
+ * `fetch` meldet einen Ausfall als `TypeError: Network request failed` — eine
+ * Meldung, die keinen der inhaltlichen Zweige unten trifft und deshalb im
+ * Auffangsatz landete. Wer ohne Empfang „Das hat nicht geklappt" liest, sucht
+ * den Fehler bei sich oder bei uns, statt beim Funkloch.
+ */
+export function istNetzfehler(fehler: unknown): boolean {
+  const text = fehler instanceof Error ? `${fehler.name}: ${fehler.message}` : String(fehler ?? "");
+  return /network request failed|failed to fetch|network error|typeerror: load failed|timeout|abort/i.test(text);
+}
+
+export const KEIN_NETZ = "Keine Verbindung. Bitte Netz prüfen und erneut versuchen.";
+
 export function beschreibeAuthFehler(fehler: unknown): string {
   const text = fehler instanceof Error ? fehler.message : "";
+  if (istNetzfehler(fehler)) return KEIN_NETZ;
   if (/rate limit|after \d+ seconds?/i.test(text)) {
     return "Zu viele Anfragen. Bitte einen Moment warten.";
   }

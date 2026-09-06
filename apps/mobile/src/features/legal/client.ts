@@ -74,13 +74,38 @@ export async function rechtNachschlagen(frage: string): Promise<RechtAntwort> {
  * serverseitig. Der Sachverhalt verlässt das Gerät nur in Richtung Supabase,
  * nie in Richtung Engine oder Modellanbieter.
  *
- * Die Gegenstelle ist noch nicht deployt; dieser Aufruf ist die Naht, an der
- * sie andockt. Bis dahin meldet der Bildschirm „noch nicht angeschlossen",
- * statt eine Analyse vorzutäuschen.
+ * Der Aufruf dauert lange. Die Engine lädt bei einem Kaltstart ein
+ * Einbettungsmodell und einen 211 MB großen Index; gemessen wurden 48 bis 120
+ * Sekunden, bevor überhaupt das Modell gefragt wird. Der Bildschirm muss das
+ * ansagen, sonst sieht Warten aus wie Hängen.
+ *
+ * Zurück kommt nichts Verwertbares — die Function schreibt selbst in die Akte,
+ * und der Bildschirm lädt sie danach neu. Nur der Fehlerfall trägt
+ * Information, und die wird hier in einen Satz übersetzt, den man jemandem
+ * zeigen kann.
  */
 export async function fallEinordnen(caseId: string): Promise<void> {
   const { error } = await supabase.functions.invoke("fall-einordnen", {
     body: { case_id: caseId },
   });
-  if (error) throw new RechtFehler("Die Einordnung ist noch nicht angeschlossen.");
+  if (!error) return;
+
+  // `FunctionsHttpError` trägt die Antwort mit. Ohne sie wäre jeder Ausgang
+  // derselbe Satz — und „ausgelastet, später erneut" ist etwas anderes als
+  // „hat nicht geklappt".
+  const status = (error as { context?: { status?: number } }).context?.status;
+  if (status === 409) {
+    throw new RechtFehler("Die Einordnung läuft bereits.");
+  }
+  if (status === 503) {
+    throw new RechtFehler(
+      "Die Einordnung ist zurzeit ausgelastet. Bitte später erneut versuchen.",
+    );
+  }
+  if (status === 504) {
+    throw new RechtFehler(
+      "Die Prüfung hat zu lange gedauert. Beim nächsten Versuch geht es meist schneller.",
+    );
+  }
+  throw new RechtFehler("Die Einordnung hat nicht geklappt. Bitte später erneut versuchen.");
 }

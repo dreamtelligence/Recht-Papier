@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { deleteCase, loadCaseOverview, loadCases } from "./api";
+import { KEIN_NETZ, istNetzfehler } from "@/lib/fehler";
 import type { CaseOverview, CaseSummary } from "./typen";
 
 /**
@@ -38,11 +39,15 @@ function useLadeVorgang<T>(laden: () => Promise<T>, fehlertext: string) {
       if (!montiert.current) return;
       setDaten(wert);
       setFehler("");
-    } catch {
+    } catch (ausnahme) {
       // Kein Durchreichen der Rohmeldung: bei einer fremden ID antwortet die
       // Datenbank wegen RLS mit "nicht gefunden", und genau so soll es auch
       // aussehen. Ob es den Datensatz gibt, geht niemanden etwas an.
-      if (montiert.current) setFehler(fehlertext);
+      //
+      // Ein Netzausfall ist davon ausgenommen. "Diese Fallakte ist nicht
+      // verfügbar" liest sich wie gelöscht oder gesperrt; ohne Empfang ist das
+      // schlicht die falsche Auskunft.
+      if (montiert.current) setFehler(istNetzfehler(ausnahme) ? KEIN_NETZ : fehlertext);
     } finally {
       if (montiert.current) {
         setLaedt(false);
