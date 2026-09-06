@@ -80,17 +80,38 @@ und der Fehlerpfad räumt rückwärts wieder auf:
 Die Fallakte zieht danach fünf Abfragen parallel: `cases`, `case_documents`,
 `case_facts`, `case_analyses`, `case_sources`.
 
-**Berichte gibt es heute keine.** `case_facts`, `case_analyses` und `case_sources`
-bleiben leer, weil die Edge Function `fall-einordnen` nicht existiert — weder im
-Repo noch deployt. Die Abschnitte „Bestätigte Angaben", „Rechtliche Einordnung"
-und „Rechtsgrundlagen" zeigen deshalb ihren Leertext. Belegte Antworten liefert
-zurzeit nur **Nachschlagen** über `recht-nachschlagen`, und die schreibt nichts in
-die Akte.
+Nach **Rechtlich einordnen** kommen drei weitere Schritte dazu:
+
+| Schritt | Ziel | Inhalt |
+|---|---|---|
+| 4 | `case_documents.extracted_text` | `dokument-lesen` zieht das PDF aus dem Bucket und schreibt den Text — beim Kündigungsschreiben rund 1.800 Zeichen |
+| 5 | `case_analyses` | Antworttext, Modell, `request_id` und der `answer_audit` **unverändert** |
+| 6 | `case_sources` · `case_deadlines` | eine Zeile je Fundstelle mit Rechtsstand; Fristen nur, wenn die Analyse sie selbst genannt hat |
+
+`case_facts` bleibt leer: es gibt noch keine Oberfläche, mit der jemand eine
+Angabe bestätigt.
+
+**Was der Kündigungsfall im Lauf vom 06.09.2026 lieferte** — elf Fundstellen,
+darunter alle sechs Pflichtnormen des Prüfprofils (BGB § 622, § 623, KSchG § 1,
+§ 4, § 23, BetrVG § 102), Rechtsgebiet `arbeitsrecht` erkannt, und die
+Klagefrist zum **21.09.2026** unter Fristen, unbestätigt und mit § 4 KSchG als
+Grundlage.
+
+**Was noch nicht stimmt:** `answer_audit` steht in jedem bisherigen Lauf auf
+`fail`. Die Stichprobe zeigt überwiegend falsch positive Beanstandungen —
+Begrüßung, Zwischenüberschriften und Sätze, die eine Tatsache aus dem
+Sachverhalt wiedergeben statt eine Rechtsaussage zu treffen. Deshalb sperrt der
+Status heute nichts; die Regel dafür wird erst festgelegt, wenn genug Läufe
+vorliegen (`mess_audit.py`).
 
 Nachprüfen, ohne zu tippen — legt ein Wegwerfkonto an, geht denselben Weg und
 räumt hinterher auf:
 
 ```
-python3 supabase/tests/test_beispielfall.py
-python3 supabase/tests/test_beispielfall.py --behalten   # Fall stehen lassen
+python3 supabase/tests/test_beispielfall.py              # bis zum Dokument
+python3 supabase/tests/test_fall_einordnen.py            # bis zur Einordnung
+python3 supabase/tests/test_fall_einordnen.py --behalten # Fall stehen lassen
 ```
+
+Beide letzten kosten echte Modellaufrufe. Der Gratis-Tarif deckelt bei 20 pro
+Tag und Projekt; danach meldet die App „Die Einordnung ist zurzeit ausgelastet".
