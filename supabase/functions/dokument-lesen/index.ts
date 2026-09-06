@@ -148,13 +148,16 @@ Deno.serve(async (req) => {
     return json({ status: "kein_text", pages: seiten }, 200);
   }
 
-  const gekuerzt = text.length > MAX_TEXT;
+  if (text.length > MAX_TEXT) {
+    await vermerke({ extracted_text: null, processing_error: `Dokument überschreitet ${MAX_TEXT} Zeichen; es wurde nichts gekürzt.` });
+    return json({ error: "Das Dokument ist für die vollständige Verarbeitung zu lang." }, 413);
+  }
   const { error: schreibFehler } = await asUser
     .from("case_documents")
     .update({
-      extracted_text: gekuerzt ? text.slice(0, MAX_TEXT) : text,
+      extracted_text: text,
       processed_at: new Date().toISOString(),
-      processing_error: gekuerzt ? `Text nach ${MAX_TEXT} Zeichen gekuerzt.` : null,
+      processing_error: null,
     })
     .eq("id", dokument.id);
 
@@ -164,7 +167,7 @@ Deno.serve(async (req) => {
     status: "gelesen",
     document_id: dokument.id,
     pages: seiten,
-    characters: gekuerzt ? MAX_TEXT : text.length,
-    truncated: gekuerzt,
+    characters: text.length,
+    truncated: false,
   });
 });
