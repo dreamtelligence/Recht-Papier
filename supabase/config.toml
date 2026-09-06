@@ -195,7 +195,10 @@ password_requirements = ""
 
 [auth.rate_limit]
 # Number of emails that can be sent per hour. Requires auth.email.smtp to be enabled.
-email_sent = 2
+# 2 war der Wert des eingebauten Testversands. Mit eigenem SMTP ist der
+# projektweite Deckel die eigentliche Missbrauchsbremse - zusammen mit
+# max_frequency von 60s je Adresse.
+email_sent = 200
 # Number of SMS messages that can be sent per hour. Requires auth.sms to be enabled.
 sms_sent = 30
 # Number of anonymous sign-ins that can be made per hour per IP address. Requires enable_anonymous_sign_ins = true.
@@ -226,21 +229,44 @@ enable_confirmations = false
 # If enabled, users will need to reauthenticate or have logged in recently to change their password.
 secure_password_change = false
 # Controls the minimum amount of time that must pass before sending another signup confirmation or password reset email.
-max_frequency = "1s"
+# 60s statt 1s: ein Anmeldecode ist ein Vollzugriff, und ohne Sperrfrist laesst
+# sich jede fremde Adresse mit Mails zuschuetten.
+max_frequency = "60s"
 # Number of characters used in the email OTP.
 otp_length = 6
 # Number of seconds before the email OTP expires (defaults to 1 hour).
-otp_expiry = 3600
+# 10 Minuten statt 1 Stunde: der Code oeffnet die vollstaendige Fallakte.
+otp_expiry = 600
 
-# Use a production-ready SMTP server
-# [auth.email.smtp]
-# enabled = true
-# host = "smtp.sendgrid.net"
-# port = 587
-# user = "apikey"
-# pass = "env(SENDGRID_API_KEY)"
-# admin_email = "admin@email.com"
-# sender_name = "Admin"
+# Produktiver Versand laeuft ueber Brevo. Supabases eingebauter Maildienst ist
+# ausdruecklich nur zum Ausprobieren gedacht: er erlaubt keine eigenen Vorlagen
+# und damit keinen Code statt Magic Link, und er drosselt projektweit auf wenige
+# Mails pro Stunde. Bei einem Login, der pro Anmeldung eine Mail ausloest, ist
+# das unbrauchbar.
+#
+# Host, Benutzername und Schluessel stehen in Brevo unter SMTP & API. Der
+# Schluessel ist der SMTP-Key, nicht der API-Key - die beiden sind verschieden.
+# Die Absenderadresse muss auf einer in Brevo per SPF/DKIM authentifizierten
+# Domain liegen, sonst landen Anmeldecodes im Spam oder werden abgewiesen.
+[auth.email.smtp]
+enabled = true
+host = "env(BREVO_SMTP_HOST)"
+port = 587
+user = "env(BREVO_SMTP_USER)"
+pass = "env(BREVO_SMTP_KEY)"
+admin_email = "env(BREVO_SENDER_EMAIL)"
+sender_name = "Recht & Papier"
+
+# Beide Vorlagen muessen {{ .Token }} enthalten, sonst verschickt Supabase einen
+# Magic Link statt eines Codes und der Code-Flow laeuft ins Leere. magic_link
+# trifft bestehende Konten, confirmation die neu angelegten.
+[auth.email.template.magic_link]
+subject = "Ihr Anmeldecode fuer Recht & Papier"
+content_path = "./supabase/templates/magic_link.html"
+
+[auth.email.template.confirmation]
+subject = "Ihr Anmeldecode fuer Recht & Papier"
+content_path = "./supabase/templates/confirmation.html"
 
 # Uncomment to customize email template
 # [auth.email.template.invite]

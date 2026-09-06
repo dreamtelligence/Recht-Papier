@@ -10,7 +10,8 @@
       "supportsTablet": false,
       "bundleIdentifier": "de.edwit.rechtundpapier",
       "infoPlist": {
-        "UIViewControllerBasedStatusBarAppearance": true
+        "UIViewControllerBasedStatusBarAppearance": false,
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -26,9 +27,47 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#f4efe3"
+          "backgroundColor": "#f4efe3",
+          "image": "./assets/brand/splash-paper.png",
+          "imageWidth": 200,
+          "resizeMode": "cover"
         }
-      ]
+      ],
+      [
+        "expo-font",
+        {
+          "android": {
+            "fonts": [
+              {
+                "fontFamily": "Source Serif 4",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/fonts/SourceSerif4-Regular.ttf",
+                    "weight": 400
+                  }
+                ]
+              },
+              {
+                "fontFamily": "Source Serif 4 SemiBold",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/fonts/SourceSerif4-SemiBold.ttf",
+                    "weight": 600
+                  }
+                ]
+              }
+            ]
+          },
+          "ios": {
+            "fonts": [
+              "./assets/fonts/SourceSerif4-Regular.ttf",
+              "./assets/fonts/SourceSerif4-SemiBold.ttf"
+            ]
+          }
+        }
+      ],
+      "expo-sqlite",
+      "expo-sharing"
     ],
     "scheme": "rechtundpapier",
     "backgroundColor": "#f4efe3"
