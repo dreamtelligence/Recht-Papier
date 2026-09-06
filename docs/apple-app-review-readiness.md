@@ -28,13 +28,13 @@ Die größten Ablehnungsrisiken sind:
 
 | Gate | Was für Recht & Papier vor der Einreichung gelten muss | Stand |
 |---|---|---|
-| Nativer Produktumfang | Die App muss deutlich mehr als eine verpackte Website liefern. Der geplante native Fallakten-Flow erfüllt das plausibel; eine WebView des alten Prototyps nicht. Apple verlangt eigenständigen Nutzen und eine „app-like“ Oberfläche ([Guideline 4.2](https://developer.apple.com/app-store/review/guidelines/)). | Erster Fall-/Dokumentpfad implementiert; Analyse offen |
+| Nativer Produktumfang | Die App muss deutlich mehr als eine verpackte Website liefern. Der geplante native Fallakten-Flow erfüllt das plausibel; eine WebView des alten Prototyps nicht. Apple verlangt eigenständigen Nutzen und eine „app-like“ Oberfläche ([Guideline 4.2](https://developer.apple.com/app-store/review/guidelines/)). | Fall, Dokument, Textextraktion und rechtliche Einordnung mit Fundstellen laufen (Stand 06.09.2026) |
 | Vollständiger Release-Build | Keine Platzhalter, Abstürze oder unfertigen Funktionen. Seit 28. April 2026 müssen Uploads mit Xcode 26 oder neuer und iOS-26-SDK oder neuer gebaut sein ([Apple Upcoming Requirements](https://developer.apple.com/news/upcoming-requirements/)). Die EAS-Build-Umgebung muss dies nachweislich verwenden. | Offen |
 | Geräteumfang | In `app.json` ist `supportsTablet: false` gesetzt. Damit ist die erste Version bewusst auf iPhone begrenzt; die unterstützten iPhone-Größen müssen trotzdem vollständig getestet werden. | iPhone festgelegt; Gerätetest offen |
 | StoreKit-Abo | Automatisierte Rechtsanalyse und Cloud-Fallakte sind digitale, in der App verbrauchte Leistungen. Das Verbraucherabo muss daher als In-App Purchase/StoreKit-Abo angeboten werden; die Reader- und Enterprise-Ausnahmen passen nicht. Das Abo braucht laufenden Wert, mindestens sieben Tage Laufzeit, geräteübergreifenden Zugang, klare Leistung/Preise und Wiederherstellung ([Guidelines 3.1.1–3.1.3](https://developer.apple.com/app-store/review/guidelines/)). Der einfachste sichere Start ist IAP ohne Web-Checkout-Links. | Nicht vorhanden |
 | Login | Solange die App **ausschließlich das eigene Anmeldesystem** nutzt, greift die 4.8-Ausnahme und Sign in with Apple ist nicht nötig. Sobald Google, Facebook oder ein anderer Social Login den Primäraccount anlegt, muss eine gleichwertige Option angeboten werden, die drei Bedingungen erfüllt: nur Name und E-Mail erheben, **die E-Mail-Adresse privat halten lassen** und Interaktionen nicht ohne Einwilligung für Werbung auswerten ([Guideline 4.8](https://developer.apple.com/app-store/review/guidelines/), Wortlaut geprüft am 05.09.2026). Der eigene E-Mail-Code erfüllt die zweite Bedingung **nicht** — er verlangt die echte Adresse. Ein Google-Button zieht deshalb zwingend Sign in with Apple nach sich. | Passwortloser E-Mail-Code implementiert; 4.8-Ausnahme greift |
 | Kontolöschung | Wer in der App Konten anlegen kann, muss dort die vollständige Löschung initiieren können. Deaktivierung allein reicht nicht. Zu löschen sind Auth-Konto, Profil, Fälle, Dokumentobjekte, Fakten, Analysen und Quellen sowie nach der erklärten Frist Logs/Backups, soweit keine gesetzliche Aufbewahrung greift. Bei aktivem Abo muss die App auf Apples fortlaufende Abrechnung und Aboverwaltung hinweisen, darf aber eine sofortige Löschung anbieten ([Apple Account Deletion](https://developer.apple.com/support/offering-account-deletion-in-your-app/)). Umgesetzt über die Edge Function `delete-account`: Sie löst die Identität aus dem Nutzertoken auf, entfernt zuerst rekursiv alle Storage-Objekte unter der Auth-UUID und dann das Auth-Konto, an dem Profil, Fälle, Dokumentzeilen, Fakten, Analysen und Quellen per Fremdschlüssel hängen. Der `service_role`-Schlüssel bleibt serverseitig. `supabase/tests/test_account_deletion.py` sucht danach jede Spur einzeln ohne RLS. | In App umgesetzt und geprüft; Logs, Backups und Weitergabe an Jura/LLM offen |
-| Review-Zugang | Apple braucht ein dauerhaft gültiges Demo-Konto oder einen vollständigen Demo-Modus, alle nötigen Hinweise und ein während des Reviews erreichbares Backend. IAPs müssen sichtbar und funktionsfähig sein ([Guideline 2.1 und Before You Submit](https://developer.apple.com/app-store/review/guidelines/)). Ein sinnvoller Review-Fall enthält anonymisierte Beispieldokumente, bestätigte Fakten und eine fertige Analyse. | Nicht vorhanden |
+| Review-Zugang | Apple braucht ein dauerhaft gültiges Demo-Konto oder einen vollständigen Demo-Modus, alle nötigen Hinweise und ein während des Reviews erreichbares Backend. IAPs müssen sichtbar und funktionsfähig sein ([Guideline 2.1 und Before You Submit](https://developer.apple.com/app-store/review/guidelines/)). Ein sinnvoller Review-Fall enthält anonymisierte Beispieldokumente, bestätigte Fakten und eine fertige Analyse. | Beispieldokumente liegen in `docs/beispielfaelle/`; Demo-Konto fehlt. **Neuer Blocker:** der Gemini-Gratis-Tarif deckelt bei 20 Anfragen pro Tag und Projekt — ein Reviewer wäre danach blockiert, und die App meldet „zurzeit ausgelastet". Abrechnung ist damit Teil dieses Gates. |
 | Netzwerk | Supabase und Jura müssen über öffentlich gültiges HTTPS erreichbar sein; keine pauschale ATS-Ausnahme. App Transport Security blockiert unsichere Verbindungen, Ausnahmen können zusätzliche Prüfung auslösen ([Apple: Preventing Insecure Network Connections](https://developer.apple.com/documentation/security/preventing-insecure-network-connections)). Außerdem verlangt Apple Funktion auf IPv6-only-Netzen ([Guideline 2.5.5](https://developer.apple.com/app-store/review/guidelines/)). | Produktionsendpunkte offen |
 | Dateiimport | Der Import soll den System-Dateiauswahldialog verwenden und Dateien/iCloud einbeziehen, statt pauschalen Foto- oder Dateizugriff anzufordern. Apple verlangt Datenminimierung und bevorzugt Out-of-Process-Picker; Dateiauswahl soll Files/iCloud unterstützen ([Guidelines 5.1.1(iii) und 2.5.15](https://developer.apple.com/app-store/review/guidelines/)). | System-Picker und privater Upload implementiert; Gerätetest offen |
 | Privacy-Manifeste | Der finale Archive-Build muss gültige `PrivacyInfo.xcprivacy`-Dateien und genehmigte Gründe für alle Required-Reason-APIs enthalten. Ungültige Manifeste beziehungsweise nicht erklärte Required-Reason-APIs blockieren den Upload. Apple führt Hermes ausdrücklich als SDK mit Manifest-/Signaturpflicht ([Third-party SDK requirements](https://developer.apple.com/support/third-party-SDK-requirements/), [Privacy manifests](https://developer.apple.com/documentation/bundleresources/privacy-manifest-files), [Required-reason APIs](https://developer.apple.com/documentation/bundleresources/describing-use-of-required-reason-api)). Vor Release deshalb den Xcode-Privacy-Report des tatsächlichen EAS-Artefakts prüfen. | Erst am Release-Archive prüfbar |
@@ -91,7 +91,19 @@ Zusätzlich sind als Mindestschutz sinnvoll und mit Apples allgemeinem Security-
 Apple verlangt angemessene Maßnahmen gegen unbefugte Nutzung, Offenlegung und Zugriff
 ([Guideline 1.6](https://developer.apple.com/app-store/review/guidelines/)). Der echte
 Zwei-Nutzer-Test deckt Datenbank und privaten Storage inzwischen einschließlich fremdem Lesen,
-Schreiben und Löschen ab. Jura-Autorisierung, Logs, Backups und Löschweitergabe sind weiter offen.
+Schreiben und Löschen ab. Seit dem 06.09.2026 gilt das auch für `case_analyses`, `case_sources`
+und `case_deadlines` — die Tabellen, die den vom Modell erzeugten Text tragen.
+
+Der Weg zum Modell ist inzwischen festgelegt statt offen: Jura reicht eine Anfrage nur noch an
+**einen** Anbieter, `fall-einordnen` prüft das gelieferte Modell gegen eine Erlaubnisliste und
+verwirft die Antwort bei Abweichung, und der Falltext wird vor dem Verlassen der Edge Function
+pseudonymisiert. Das war vorher anders: bei einem Gemini-Ausfall ging dieselbe Anfrage samt
+Mandantenkontext still an `api.deepseek.com`, und ein nicht offengelegter Empfänger ist nach
+Guideline 5.1.2(i)–(ii) nicht releasefähig.
+
+Jura-Autorisierung ist über `X-Engine-Key` gelöst. **Offen bleiben Logs, Backups und die
+Löschweitergabe** — und der Ort: `LEGAL_ENGINE_URL` zeigt auf Modal ohne gesetzte Region,
+während `AGENTS.md` für den Falltext-Pfad den EU-CPU-Container verlangt.
 
 ## Google Play: zweigeteilte Löschpflicht
 
@@ -173,7 +185,7 @@ fachliche Nachweise gehören knapp und konkret in die App Review Notes.
 
 Erst einreichen, wenn alle folgenden Punkte mit dem tatsächlichen Release-Archive geprüft sind:
 
-- [ ] Echter nativer Ende-zu-Ende-Flow statt Expo-Gerüst oder WebView
+- [x] Echter nativer Ende-zu-Ende-Flow statt Expo-Gerüst oder WebView (Fall → Dokument → Einordnung → Fundstellen und Fristen; gemessen 06.09.2026)
 - [ ] Von Apple bestätigte Einreichungs-Entität; Organization-Account, falls Apple ihn verlangt
 - [ ] Xcode 26+/iOS-26-SDK+, stabile Bundle-ID, Signierung und On-Device-Test
 - [ ] iPad vollständig unterstützt oder `supportsTablet` bewusst deaktiviert
@@ -186,7 +198,7 @@ Erst einreichen, wenn alle folgenden Punkte mit dem tatsächlichen Release-Archi
 - [ ] Explizite Einwilligung vor jedem externen AI-Datenfluss; keine undisclosed Fallbacks
 - [ ] Valide SDK-/App-Privacy-Manifeste und Required-Reason-Erklärungen im Archive
 - [ ] ATS-konformes HTTPS, IPv6-Test und autorisierter Jura-Endpunkt
-- [ ] Demo-Konto mit Beispieldaten; Supabase, Jura und IAP während Review erreichbar
+- [ ] Demo-Konto mit Beispieldaten; Supabase, Jura und IAP während Review erreichbar — dazu gehört ein LLM-Kontingent, das einen Review überlebt
 - [ ] Export-Compliance korrekt beantwortet
 - [ ] EU-Traderstatus verifiziert
 - [ ] Korrektes Age Rating, Safety-/Meldeweg und wahrheitsgemäße Metadaten
