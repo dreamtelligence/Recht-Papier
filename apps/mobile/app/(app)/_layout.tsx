@@ -29,6 +29,9 @@ export default function AppLayout() {
     >
       <Stack.Screen name="index" />
       <Stack.Screen name="fall/[id]" />
+      {/* Die Vorschau auf ein Schreiben blättert weiter statt zu unterbrechen:
+          sie gehört zur Akte, und der Weg zurück führt genau dorthin. */}
+      <Stack.Screen name="schreiben/[id]" />
       {/* Ein neuer Fall ist eine Unterbrechung, kein Weiterblättern: er kommt
           von unten und geht dorthin zurück, wo man war. */}
       <Stack.Screen name="fall/neu" options={{ presentation: "modal" }} />

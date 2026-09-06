@@ -2,7 +2,7 @@ import type { DocumentPickerAsset } from "expo-document-picker";
 import { File } from "expo-file-system";
 
 import { supabase } from "@/lib/supabase";
-import type { CaseOverview, CaseSummary } from "./typen";
+import type { CaseOverview, CaseSummary, GeneratedDocument } from "./typen";
 
 /**
  * Der Zugriff auf die Fallakte. Nur Datenbank, keine Oberfläche.
@@ -39,10 +39,10 @@ export async function loadCases(userId: string): Promise<CaseSummary[]> {
  * nacheinander würden sich ihre Laufzeiten auf einer Mobilverbindung addieren.
  */
 export async function loadCaseOverview(caseId: string): Promise<CaseOverview> {
-  const [caseResult, documents, facts, analyses, sources, deadlines] = await Promise.all([
+  const [caseResult, documents, facts, analyses, sources, deadlines, schreiben] = await Promise.all([
     supabase
       .from("cases")
-      .select("id,title,status,created_at,updated_at,description,legal_area")
+      .select("id,title,status,created_at,updated_at,description,legal_area,input_revision")
       .eq("id", caseId)
       .maybeSingle(),
     supabase
@@ -57,13 +57,13 @@ export async function loadCaseOverview(caseId: string): Promise<CaseOverview> {
       .order("occurred_on", { ascending: true, nullsFirst: false }),
     supabase
       .from("case_analyses")
-      .select("id,question,answer,created_at")
+      .select("id,question,answer,created_at,released,input_revision")
       .eq("case_id", caseId)
       .order("created_at", { ascending: false })
       .limit(1),
     supabase
       .from("case_sources")
-      .select("id,kind,reference,locator,title,valid_as_of")
+      .select("id,kind,reference,locator,title,valid_as_of,citation_id")
       .eq("case_id", caseId)
       .order("created_at", { ascending: false }),
     supabase
@@ -74,6 +74,11 @@ export async function loadCaseOverview(caseId: string): Promise<CaseOverview> {
       // aber sie verschwindet nicht — dass sie verstrichen ist, ist selbst
       // eine Auskunft.
       .order("due_on", { ascending: true }),
+    supabase
+      .from("generated_documents")
+      .select("id,kind,title,body,input_revision,template_version,created_at,approved_at")
+      .eq("case_id", caseId)
+      .order("created_at", { ascending: false }),
   ]);
 
   if (caseResult.error) throw caseResult.error;
@@ -86,7 +91,107 @@ export async function loadCaseOverview(caseId: string): Promise<CaseOverview> {
     analyse: ((analyses.data ?? [])[0] ?? null) as CaseOverview["analyse"],
     quellen: (sources.data ?? []) as CaseOverview["quellen"],
     fristen: (deadlines.data ?? []) as CaseOverview["fristen"],
+    schreiben: (schreiben.data ?? []) as CaseOverview["schreiben"],
   };
+}
+
+/**
+ * Eine Angabe bestätigen oder die Bestätigung zurücknehmen.
+ *
+ * Das ist der Schritt, an dem aus einer aus dem Schreiben gezogenen Aussage
+ * eine Grundlage wird: nur bestätigte Angaben gehen in ein Dokument. Er ist
+ * bewusst umkehrbar — wer etwas versehentlich bestätigt, muss das zurücknehmen
+ * können, bevor es in einem Schreiben steht.
+ *
+ * Jede Änderung hier zählt `cases.input_revision` hoch (Trigger in der
+ * Datenbank). Eine bereits vorliegende Analyse wird damit veraltet, und ein
+ * daraus erzeugtes Dokument lässt sich nicht mehr freigeben. Das ist gewollt:
+ * die Akte hat sich geändert, also gilt die alte Prüfung nicht mehr.
+ */
+export async function faktBestaetigen(faktId: string, bestaetigt: boolean): Promise<void> {
+  const { error } = await supabase
+    .from("case_facts")
+    .update({ confirmed: bestaetigt })
+    .eq("id", faktId);
+  if (error) throw error;
+}
+
+/**
+ * Bericht oder Schreibenvorlage erzeugen lassen.
+ *
+ * Serverseitig, und nicht aus Bequemlichkeit: die Function prüft, dass die
+ * Analyse freigegeben ist, dass sie zum aktuellen Stand der Akte gehört und
+ * dass bestätigte Angaben vorliegen. Würde die App den Text zusammenbauen,
+ * wären das drei Prüfungen, die ein manipulierter Client überspringt.
+ *
+ * Der Client bekommt nur die ID zurück und lädt die Akte neu — der Text steht
+ * dann genau einmal, in der Datenbank.
+ */
+export async function dokumentErstellen(
+  caseId: string,
+  kind: GeneratedDocument["kind"],
+): Promise<void> {
+  const { error } = await supabase.functions.invoke("dokument-erstellen", {
+    body: { case_id: caseId, kind },
+  });
+  if (error) throw uebersetzeDokumentFehler(error);
+}
+
+/**
+ * Das Dokument freigeben.
+ *
+ * Die Freigabe ist die Stelle, an der der Mandant die Verantwortung für den
+ * Text übernimmt. Sie schlägt fehl, wenn sich die Akte seit dem Erzeugen
+ * geändert hat — sonst gäbe jemand einen Text frei, den er in dieser Fassung
+ * nicht gelesen hat.
+ */
+export async function dokumentFreigeben(dokumentId: string): Promise<void> {
+  const { error } = await supabase.functions.invoke("dokument-erstellen", {
+    body: { action: "approve", document_id: dokumentId },
+  });
+  if (error) throw uebersetzeDokumentFehler(error);
+}
+
+/**
+ * Ein einzelnes erzeugtes Dokument, für die Vorschau.
+ *
+ * Die Vorschau lädt neu statt den Text aus der Übersicht mitzunehmen. Der
+ * Grund ist die Freigabe: sie darf nur auf genau der Fassung erteilt werden,
+ * die auf dem Bildschirm steht, und eine mitgereichte Kopie aus einem älteren
+ * Ladevorgang wäre eine andere.
+ */
+export async function loadSchreiben(dokumentId: string): Promise<GeneratedDocument> {
+  const { data, error } = await supabase
+    .from("generated_documents")
+    .select("id,kind,title,body,input_revision,template_version,created_at,approved_at")
+    .eq("id", dokumentId)
+    .maybeSingle();
+  if (error) throw error;
+  if (!data) throw new Error("Dieses Dokument ist nicht verfügbar.");
+  return data as GeneratedDocument;
+}
+
+/**
+ * Der Statuscode der Function in einen Satz, den man jemandem zeigen kann.
+ *
+ * 422 heißt „die Akte ist noch nicht so weit", 409 heißt „sie hat sich
+ * geändert". Das sind zwei verschiedene nächste Schritte, und ein gemeinsamer
+ * Satz würde beide verschweigen.
+ */
+function uebersetzeDokumentFehler(error: unknown): Error {
+  const status = (error as { context?: { status?: number } }).context?.status;
+  if (status === 404 || status === 422) {
+    return new Error(
+      "Dafür fehlt noch eine bestandene Einordnung mit bestätigten Angaben. " +
+        "Bitte Angaben bestätigen und den Fall erneut einordnen.",
+    );
+  }
+  if (status === 409) {
+    return new Error(
+      "Die Akte hat sich seit der Einordnung geändert. Bitte erneut einordnen.",
+    );
+  }
+  return new Error("Das Dokument lässt sich gerade nicht erstellen.");
 }
 
 /**

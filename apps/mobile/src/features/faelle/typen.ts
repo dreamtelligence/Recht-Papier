@@ -33,6 +33,14 @@ export type CaseDetail = CaseSummary & {
   description: string;
   legal_area: LegalArea | null;
   updated_at: string;
+  /**
+   * Der Stand der Eingaben. Jede Änderung an Schilderung, Angaben oder
+   * Dokumenten zählt ihn hoch (Trigger in der Datenbank). Eine Analyse mit
+   * einem anderen Wert gehört zu einer Akte, die es so nicht mehr gibt — und
+   * die Oberfläche muss das sagen, statt ein veraltetes Ergebnis wie ein
+   * aktuelles aussehen zu lassen.
+   */
+  input_revision: number;
 };
 
 export type CaseDocument = {
@@ -66,6 +74,14 @@ export type CaseAnalysis = {
   question: string;
   answer: string | null;
   created_at: string;
+  /** Der Eingabestand, auf den sich diese Prüfung bezieht. */
+  input_revision: number;
+  /**
+   * Ob die Quellenprüfung bestanden wurde. Das entscheidet die Datenbank in
+   * `finish_case_analysis`, nicht der Client — und nur eine freigegebene
+   * Analyse darf ein Schreiben tragen.
+   */
+  released: boolean;
 };
 
 /**
@@ -92,6 +108,37 @@ export type CaseSource = {
   locator: string | null;
   title: string | null;
   valid_as_of: string | null;
+  /** Die Nummer, mit der die Antwort auf diese Fundstelle verweist: „[1]". */
+  citation_id: string | null;
+};
+
+/**
+ * Ein aus der Akte erzeugtes Dokument — Bericht oder Schreibenvorlage.
+ *
+ * Der Text entsteht serverseitig aus bestätigten Angaben und einer
+ * freigegebenen Analyse; die App erzeugt keine Formulierung selbst. `body`
+ * kommt fertig aus der Datenbank, damit exportiertes und angezeigtes Dokument
+ * nicht auseinanderlaufen können.
+ *
+ * `approved_at` ist die Freigabe durch den Mandanten. Ohne sie ist das
+ * Dokument ein Entwurf — teilen lässt sich nur, was freigegeben wurde.
+ * `input_revision` hält fest, auf welchem Stand der Akte es beruht: ändert
+ * sich die Akte danach, ist das Dokument veraltet und das muss sichtbar sein.
+ */
+export type GeneratedDocument = {
+  id: string;
+  kind: "bericht" | "anschreiben";
+  title: string;
+  body: string;
+  input_revision: number;
+  template_version: string;
+  created_at: string;
+  approved_at: string | null;
+};
+
+export const DOKUMENT_TEXT: Record<GeneratedDocument["kind"], string> = {
+  bericht: "Bericht zur Fallakte",
+  anschreiben: "Schreibenvorlage",
 };
 
 export type CaseOverview = {
@@ -101,6 +148,7 @@ export type CaseOverview = {
   analyse: CaseAnalysis | null;
   quellen: CaseSource[];
   fristen: CaseDeadline[];
+  schreiben: GeneratedDocument[];
 };
 
 export const STATUS_TEXT: Record<CaseStatus, string> = {
