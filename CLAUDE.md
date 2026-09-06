@@ -15,7 +15,7 @@ Wurzel:
 ```
 npm run stack:up | stack:status | stack:down | stack:reset   # Qdrant-Container
 supabase db push                                             # Migrationen ins Projekt
-supabase functions deploy delete-account                     # Edge Function
+supabase functions deploy fall-einordnen                     # einzelne Edge Function
 ```
 
 Client (`apps/mobile`):
@@ -34,10 +34,18 @@ echte Projekt. Ein einzelner Test ist ein einzelner Dateiaufruf:
 ```
 python3 supabase/tests/test_rls_isolation.py      # RLS trennt Fallakten wirklich
 python3 supabase/tests/test_account_deletion.py   # Löschung lässt nichts übrig
+python3 supabase/tests/test_beispielfall.py       # Fall anlegen, Dokument hochladen
+python3 supabase/tests/test_fall_einordnen.py     # lesen, einordnen, was in der Akte landet
+python3 supabase/tests/mess_audit.py              # wie oft das Audit beanstandet
 ```
 
-Beide legen Wegwerfkonten samt Fall und Dokument an und prüfen anschließend mit `service_role`,
-also an RLS vorbei, nach. Ein Lauf ohne vorheriges Anlegen beweist nichts.
+Sie legen Wegwerfkonten samt Fall und Dokument an und prüfen anschließend nach. Ein Lauf ohne
+vorheriges Anlegen beweist nichts.
+
+`test_fall_einordnen.py` und `mess_audit.py` kosten echte Modellaufrufe. Der Gratis-Tarif von
+`gemini-2.5-flash-lite` deckelt bei **20 Anfragen pro Tag und Projekt** und greift zusätzlich pro
+Minute — nachgemessen am 05.09.2026. Wer beide mehrfach laufen lässt, verbraucht das Tageskontingent
+und bekommt danach `Die Einordnung ist zurzeit ausgelastet`. Das ist kein Defekt.
 
 ## Aufbau des Clients
 
@@ -72,16 +80,29 @@ Vier Regeln, die den Code zusammenhalten:
 
 `src/features/legal/client.ts` hat zwei getrennte Wege, und die Trennung ist der Punkt:
 öffentliches Recht darf das Gerät direkt bei der Engine abfragen, **Falltext niemals**. Der geht
-ausschließlich über eine Supabase Edge Function, die das Nutzertoken prüft, die Eigentümerschaft
-auflöst und in `case_analyses`/`case_sources` schreibt. Die Engine hat keine eigene
-Authentifizierung. Die dafür vorgesehene Function `fall-einordnen` existiert noch nicht —
-`supabase/functions/` enthält bisher nur `delete-account`.
+ausschließlich über die Edge Function `fall-einordnen`, die das Nutzertoken prüft, die
+Eigentümerschaft über RLS auflöst, den Text pseudonymisiert und in
+`case_analyses`/`case_sources`/`case_deadlines` schreibt. Die Engine hat keine eigene
+Authentifizierung; ihr Schlüssel liegt nur in den Supabase-Secrets.
+
+`supabase/functions/` enthält vier: `delete-account`, `recht-nachschlagen`, `dokument-lesen`
+und `fall-einordnen`. Keine davon benutzt `service_role` außer `delete-account` — alle übrigen
+kommen mit dem Nutzertoken aus, weil RLS dieselbe Grenze zieht.
+
+**Der Sachverhalt passt nicht in eine Suchanfrage.** Juras `?q=` nimmt 500 Zeichen. Deshalb gibt
+es `POST /api/legal/analyze`: gesucht wird mit einer verdichteten Anfrage, die die
+Trigger-Substrings der Prüfprofile wörtlich erhält, geantwortet auf den vollständigen Text.
+Verschwindet „ordentliche Kündigung" beim Verdichten, greift kein Profil mehr und `answer_audit`
+meldet `pass`, weil es nichts zu prüfen hatte.
 
 ## Datenmodell
 
 `supabase/migrations/20260905095138_case_file.sql` legt `profiles`, `cases`, `case_documents`,
 `case_facts`, `case_analyses` und `case_sources` an — alle sechs mit erzwungener RLS und einer
-Owner-Policy. Dokumente liegen in einem privaten Bucket mit eigenen Storage-Policies
+Owner-Policy. `20260905214025_analyse_und_fristen.sql` ergänzt `case_deadlines`, den Status
+`fehlgeschlagen`, `case_documents.processed_at`/`processing_error` und setzt
+`case_sources.analysis_id` auf `not null` — ein Beleg ohne die Aussage, zu der er gehört, ist
+keiner. Dokumente liegen in einem privaten Bucket mit eigenen Storage-Policies
 (`20260905130446_private_case_documents.sql`); `storage.objects` hängt an keinem Fremdschlüssel und
 überlebt jede Cascade.
 

@@ -203,6 +203,88 @@ def main() -> int:
         )
         check("Bob hängt keine Aussage an", status not in (200, 201), f"{status} {rows}")
 
+        print("\nAnalyse, Fundstellen und Fristen")
+        # Diese drei sind neu und tragen das Ergebnis der Einordnung. Sie waren
+        # bislang ungeprüft, obwohl in ihnen der Text steht, den ein Modell aus
+        # dem Sachverhalt gemacht hat — also genau das, was am wenigsten in
+        # fremde Hände gehört.
+        status, analyse = sb.rest(
+            "POST",
+            "case_analyses",
+            alice,
+            body={
+                "case_id": case_id,
+                "question": "Wie ist dieser Sachverhalt rechtlich einzuordnen?",
+                "answer": "Vertraulicher Analysetext.",
+                "model": "gemini-2.5-flash-lite",
+            },
+            prefer="return=representation",
+        )
+        check("Alice legt eine Analyse an", status == 201, f"{status} {analyse}")
+        analysis_id = analyse[0]["id"] if status == 201 else ""
+
+        status, quelle = sb.rest(
+            "POST",
+            "case_sources",
+            alice,
+            body={
+                "case_id": case_id,
+                "analysis_id": analysis_id,
+                "kind": "gesetz",
+                "reference": "KSchG",
+                "locator": "§ 4",
+                "valid_as_of": "2026-05-08",
+            },
+            prefer="return=representation",
+        )
+        check("Alice legt eine Fundstelle an", status == 201, f"{status} {quelle}")
+
+        status, frist = sb.rest(
+            "POST",
+            "case_deadlines",
+            alice,
+            body={
+                "case_id": case_id,
+                "analysis_id": analysis_id,
+                "label": "Klagefrist",
+                "due_on": "2026-09-21",
+                "basis": "§ 4 KSchG",
+            },
+            prefer="return=representation",
+        )
+        check("Alice legt eine Frist an", status == 201, f"{status} {frist}")
+
+        for tabelle, was in (
+            ("case_analyses", "die Analyse"),
+            ("case_sources", "die Fundstellen"),
+            ("case_deadlines", "die Fristen"),
+        ):
+            status, rows = sb.rest("GET", f"{tabelle}?case_id=eq.{case_id}", bob)
+            check(f"Bob liest {was} nicht", status == 200 and rows == [], f"{status} {rows}")
+
+        status, rows = sb.rest(
+            "POST",
+            "case_deadlines",
+            bob,
+            body={"case_id": case_id, "label": "Untergeschoben", "due_on": "2026-01-01",
+                  "basis": "§ 1 BGB"},
+            prefer="return=representation",
+        )
+        check("Bob hängt keine Frist an", status not in (200, 201), f"{status} {rows}")
+
+        # Eine Fundstelle ohne ihre Analyse wäre ein Beleg ohne Aussage. Die
+        # Migration verbietet das seit `20260905214025`; ohne diesen Test würde
+        # ein späteres `alter column drop not null` unbemerkt durchgehen.
+        status, verwaist = sb.rest(
+            "POST",
+            "case_sources",
+            alice,
+            body={"case_id": case_id, "kind": "gesetz", "reference": "BGB"},
+            prefer="return=representation",
+        )
+        check("Eine Fundstelle ohne Analyse wird abgewiesen", status not in (200, 201),
+              f"{status} {verwaist}")
+
         print("\nPrivates Dokument")
         storage_path = f"case-documents/{alice_id}/{case_id}/anschreiben.pdf"
         status, uploaded = sb.storage(

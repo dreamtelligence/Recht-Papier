@@ -188,8 +188,32 @@ Zwei Dinge, die beim ersten Test auffallen und keine Fehler sind: Der erste Aufr
 Oberfläche zeigt das als Hinweis, statt eine unbelegte Antwort wie eine geprüfte aussehen
 zu lassen.
 
-Die Edge Function `fall-einordnen` ist noch nicht geschrieben. `fallEinordnen()` ist die
-Naht, an der sie andockt.
+### Der zweite angeschlossene Weg: Fall einordnen
+
+```
+App → dokument-lesen → extracted_text
+App → fall-einordnen → Jura POST /api/legal/analyze → Gemini → case_analyses/-sources/-deadlines
+```
+
+Drei Dinge daran sind nicht offensichtlich:
+
+- **Der Sachverhalt passt nicht in `?q=`.** Juras Suchanfrage nimmt 500 Zeichen. `analyze`
+  trennt deshalb Suche und Antwort: gesucht wird mit einer verdichteten Anfrage, geantwortet auf
+  den vollständigen Text. Die Verdichtung erhält die Trigger-Substrings der Prüfprofile wörtlich
+  — fällt „ordentliche Kündigung" weg, greift kein Profil, `required_norms` bleibt leer und
+  `answer_audit` meldet `pass`, weil es nichts zu prüfen hatte.
+- **Nur ein Modell darf antworten.** `fall-einordnen` prüft `model` gegen eine Erlaubnisliste und
+  **verwirft** die Antwort bei Abweichung. Eine Einwilligung nennt einen konkreten Empfänger;
+  was nicht offengelegt ist, gehört nicht in eine Fallakte, auch keine richtige Antwort.
+- **Eine Frist wird nur übernommen, wenn die Analyse sie selbst genannt hat** — Datum hinter dem
+  Wort „Frist", Fristablauf ausgesprochen, Paragraph oder Quellen-ID im Satz. Sie kommt
+  unbestätigt in die Akte. Der Grund steht im Code: „Da Ihnen die Kündigung am 31.08.2026
+  zugegangen ist, läuft die Frist am 21.09.2026 ab" würde sonst das Zugangsdatum speichern.
+
+**Das Kontingent ist heute die engste Stelle.** `gemini-2.5-flash-lite` deckelt im Gratis-Tarif
+bei 20 Anfragen pro Tag und Projekt und zusätzlich pro Minute. Seit der Anbieterwechsel in Jura
+gesperrt ist, wird das sichtbar statt still nach DeepSeek umgeleitet — das ist gewollt, macht
+aber Abrechnung zur Voraussetzung für alles Weitere.
 
 ### Lokaler Stack starten
 
