@@ -1,3 +1,5 @@
+umbau B2B2C statt B2C: Deine Engine nicht direkt an Verbraucher, sondern als Werkzeug an Stellen lizenzieren, die bereits RDG-befugt sind – Mietervereine, Gewerkschaften (die haben Rechtsschutz für Mitglieder), Rechtsschutzversicherer. Die setzen dein Tool intern für die Vorprüfung/Triage ihrer eigenen Berater ein. Das umgeht das RDG-Problem komplett, weil die Rechtsdienstleistung weiterhin von einer befugten Stelle erbracht wird – du lieferst nur die Software. Das könnte bei deiner Zeitlage sogar der schnellere Weg zu echtem Geld sein: ein Pilotprojekt mit einem lokalen Mieterverein ist greifbarer als ein Consumer-Launch mit RDG-Risiko.
+
 # Recht & Papier
 
 Eine Consumer-App, die einen Rechtsfall strukturiert aufnimmt, ihn gegen geprüfte Gesetzes- und
