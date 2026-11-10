@@ -2,7 +2,7 @@ import { createClient } from "jsr:@supabase/supabase-js@2.115.0";
 import {
   type AnalysisJob,
   authorized,
-  buildAnalysisInput,
+  buildWorkerInput,
   failJob,
   json,
   persistAnalysis,
@@ -61,9 +61,7 @@ Deno.serve(async (req) => {
   if (body.action === "load") {
     try {
       return json({
-        sachverhalt: buildAnalysisInput(job.snapshot),
-        frage: null,
-        top_k: 8,
+        ...buildWorkerInput(job.snapshot),
       });
     } catch {
       return await failJob(

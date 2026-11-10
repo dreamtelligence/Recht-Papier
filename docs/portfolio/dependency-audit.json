@@ -1,0 +1,76 @@
+{
+  "vulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 4,
+    "high": 3,
+    "critical": 0,
+    "total": 7
+  },
+  "packages": [
+    {
+      "name": "@expo/fingerprint",
+      "severity": "moderate",
+      "suggested_fix": {
+        "name": "expo",
+        "version": "53.0.11",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "decode-uri-component",
+      "severity": "high",
+      "suggested_fix": {
+        "name": "expo-router",
+        "version": "58.0.30",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "expo",
+      "severity": "moderate",
+      "suggested_fix": {
+        "name": "expo",
+        "version": "53.0.11",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "expo-router",
+      "severity": "high",
+      "suggested_fix": {
+        "name": "expo-router",
+        "version": "58.0.30",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "glob",
+      "severity": "moderate",
+      "suggested_fix": {
+        "name": "expo",
+        "version": "53.0.11",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "minimatch",
+      "severity": "moderate",
+      "suggested_fix": {
+        "name": "expo",
+        "version": "53.0.11",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "query-string",
+      "severity": "high",
+      "suggested_fix": {
+        "name": "expo-router",
+        "version": "58.0.30",
+        "isSemVerMajor": true
+      }
+    }
+  ],
+  "scope": "Remaining findings in Expo native routing and build dependencies; public entry omits expo-router. No claim that the whole native dependency graph is vulnerability-free. No automatic SDK 58 migration."
+}

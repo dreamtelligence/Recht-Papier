@@ -16,8 +16,13 @@ jobs:
           cache: npm
           cache-dependency-path: apps/mobile/package-lock.json
       - run: npm ci
+      - run: python3 ../../scripts/generate-contract.py --check
       - run: npm run typecheck
       - run: npm run test:analysis-status
+      - run: npx expo export --platform web --output-dir dist
+        env:
+          EXPO_NO_DOTENV: '1'
+      - run: python3 ../../scripts/check-public-bundle.py
   edge-checks:
     runs-on: ubuntu-latest
     steps:
@@ -26,4 +31,5 @@ jobs:
         with:
           deno-version: '2.9.8'
       - run: deno check --config supabase/functions/deno.json supabase/functions/fall-einordnen/index.ts supabase/functions/case-analysis-worker/index.ts
-      - run: deno test --config supabase/functions/deno.json supabase/tests/case_analysis_test.ts
+      - run: deno test --allow-read --config supabase/functions/deno.json supabase/tests/case_analysis_test.ts supabase/tests/portfolio_test.ts
+      - run: deno run --allow-read --allow-write --config supabase/functions/deno.json scripts/evaluate-portfolio.ts

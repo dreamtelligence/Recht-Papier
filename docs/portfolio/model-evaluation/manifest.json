@@ -1,0 +1,20 @@
+{
+  "corpus_version": "termination-2026-11-10-e1a8f4ba0853",
+  "models": [
+    "Qwen/Qwen3.8-27B-FP8",
+    "gemini-2.5-flash-lite"
+  ],
+  "planned_calls": 80,
+  "budget_eur": 25,
+  "conservative_reservation_eur": 23.400000000000002,
+  "executed": true,
+  "scope": "Fictional cases only; user replaced Mistral with existing Gemini on 2026-11-10.",
+  "pricing_verified_on": "2026-11-10",
+  "pricing_sources": [
+    "https://modal.com/pricing",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+  ],
+  "cost_limit_basis": "80 calls, 180s HTTP limit, existing one L40S container, CPU/idle/loading contingency; no concurrent eval, no retries.",
+  "actual_billed_cost_eur": null,
+  "billing_reconciliation_required": true
+}

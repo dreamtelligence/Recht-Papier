@@ -1,3 +1,4 @@
+import type { Input } from "@portfolio/contract";
 import type { DocumentPickerAsset } from "expo-document-picker";
 import { File } from "expo-file-system";
 
@@ -42,12 +43,12 @@ export async function loadCaseOverview(caseId: string): Promise<CaseOverview> {
   const [caseResult, documents, facts, analyses, sources, deadlines, schreiben] = await Promise.all([
     supabase
       .from("cases")
-      .select("id,title,status,created_at,updated_at,description,legal_area,input_revision,run_expires_at,analysis_error")
+      .select("id,title,status,created_at,updated_at,description,legal_area,input_revision,run_expires_at,analysis_error,termination_input")
       .eq("id", caseId)
       .maybeSingle(),
     supabase
       .from("case_documents")
-      .select("id,file_name,kind,mime_type,byte_size,created_at,storage_path,processed_at,processing_error")
+      .select("id,file_name,kind,mime_type,byte_size,created_at,storage_path,processed_at,processing_error,extracted_text,extracted_pages")
       .eq("case_id", caseId)
       .order("created_at", { ascending: true }),
     supabase
@@ -57,18 +58,18 @@ export async function loadCaseOverview(caseId: string): Promise<CaseOverview> {
       .order("occurred_on", { ascending: true, nullsFirst: false }),
     supabase
       .from("case_analyses")
-      .select("id,question,answer,created_at,released,input_revision")
+      .select("id,question,answer,created_at,released,input_revision,structured_result")
       .eq("case_id", caseId)
       .order("created_at", { ascending: false })
       .limit(1),
     supabase
       .from("case_sources")
-      .select("id,kind,reference,locator,title,valid_as_of,citation_id")
+      .select("id,analysis_id,kind,reference,locator,title,valid_as_of,citation_id")
       .eq("case_id", caseId)
       .order("created_at", { ascending: false }),
     supabase
       .from("case_deadlines")
-      .select("id,label,due_on,basis,confirmed,origin,note")
+      .select("id,analysis_id,label,due_on,basis,confirmed,origin,note")
       .eq("case_id", caseId)
       // Die nächste zuerst. Eine Frist, die schon abgelaufen ist, steht unten,
       // aber sie verschwindet nicht — dass sie verstrichen ist, ist selbst
@@ -89,8 +90,8 @@ export async function loadCaseOverview(caseId: string): Promise<CaseOverview> {
     dokumente: (documents.data ?? []) as CaseOverview["dokumente"],
     fakten: (facts.data ?? []) as CaseOverview["fakten"],
     analyse: ((analyses.data ?? [])[0] ?? null) as CaseOverview["analyse"],
-    quellen: (sources.data ?? []) as CaseOverview["quellen"],
-    fristen: (deadlines.data ?? []) as CaseOverview["fristen"],
+    quellen: (sources.data ?? []).filter(q => q.analysis_id === analyses.data?.[0]?.id) as CaseOverview["quellen"],
+    fristen: (deadlines.data ?? []).filter(d => analyses.data?.[0]?.released && d.analysis_id === analyses.data[0].id) as CaseOverview["fristen"],
     schreiben: (schreiben.data ?? []) as CaseOverview["schreiben"],
   };
 }
@@ -318,5 +319,10 @@ export async function deleteCase(caseId: string): Promise<void> {
   }
 
   const { error } = await supabase.from("cases").delete().eq("id", caseId);
+  if (error) throw error;
+}
+
+export async function saveTerminationInput(caseId: string, input: Input): Promise<void> {
+  const { error } = await supabase.from("cases").update({ termination_input: input }).eq("id", caseId);
   if (error) throw error;
 }

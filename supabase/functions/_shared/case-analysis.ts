@@ -1,10 +1,16 @@
+import corpus from "../../../packages/shared/corpus/termination-2026-11-10/corpus.json" with {
+  type: "json",
+};
+import { analyzeTermination, modelContradictions } from "../../../packages/shared/termination.ts";
+import { reportText } from "../../../packages/shared/report.ts";
+import type { Input, Result } from "../../../packages/shared/contract.ts";
+import { validateInput, validateResult } from "./portfolio-validation.ts";
 import { timingSafeEqual } from "node:crypto";
 import type { SupabaseClient } from "jsr:@supabase/supabase-js@2.115.0";
 
 export const cors = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, content-type, apikey, x-client-info",
+  "Access-Control-Allow-Headers": "authorization, content-type, apikey, x-client-info",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 export function json(body: unknown, status = 200) {
@@ -20,8 +26,11 @@ export function json(body: unknown, status = 200) {
 export type Snapshot = {
   description: string;
   revision: number;
+  termination_input?: Input | null;
   facts: { statement: string; occurred_on?: string }[];
   documents: {
+    id?: string;
+    extracted_pages?: string[];
     file_name: string;
     extracted_text?: string;
     processing_error?: string;
@@ -34,9 +43,8 @@ export type AnalysisJob = {
   snapshot: Snapshot;
   claim_id: string | null;
 };
-export const UUID =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const ERLAUBTE_MODELLE = ["Qwen/Qwen3.8-27B-FP8"];
+export const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const ERLAUBTE_MODELLE = ["Qwen/Qwen3.8-27B-FP8", "controlled-termination/1.0"];
 const RECHTSGEBIETE: Record<string, string> = {
   arbeitsrecht: "arbeitsrecht",
   mietrecht: "mietrecht",
@@ -105,123 +113,9 @@ export function pseudonymisieren(text: string): string {
 // Fristen aus der Antwort heben
 // ---------------------------------------------------------------------------
 
-const DATUM = /\b(\d{1,2})\.\s?(\d{1,2})\.\s?(\d{4})\b/;
-const PARAGRAPH =
-  /§+\s?\d+[a-z]?(?:\s+Abs\.\s?\d+)?(?:\s+[A-ZÄÖÜ][A-Za-zÄÖÜäöüß]*)?/;
-const ZITAT = /\[(\d+)\]/g;
-
-// Von einer Frist muss ausdruecklich die Rede sein, und sie muss ablaufen.
-// Nachgemessen am 05.09.2026 an echten Antworten: ein Datum neben einem
-// Fristbegriff ist sonst meistens etwas anderes — der Zugang des Schreibens,
-// das Ende des Arbeitsverhaeltnisses, die Dauer der Betriebszugehoerigkeit.
-const FRIST_WORT = /\bfrist(?:en)?\b/i;
-const FRISTABLAUF =
-  /(?:endet|läuft\b[^.]{0,40}\bab\b|abläuft|abgelaufen|spätestens|bis\s+zum|ablauf)/i;
-
-type Fundstelle = { reference: string; locator: string | null; id?: string };
-
-/**
- * Fristen einsammeln — nur solche, die die Analyse selbst genannt hat.
- *
- * Bewusst streng, in drei Stufen: der Satz muss ein konkretes Datum tragen, er
- * muss von einem Fristablauf sprechen, und er muss belegt sein — entweder mit
- * einem Paragraphen im Klartext oder mit einer Quellen-ID. Fehlt eines davon,
- * waere das Rechnen auf eigene Faust, und eine selbst ausgedachte Frist ist
- * schlimmer als gar keine.
- *
- * Die Quellen-ID ist der haeufigere Fall: das Modell schreibt „Die Frist endet
- * am 21.09.2026 [3]" und nicht „§ 4 KSchG". Ueber `[3]` findet die Frist
- * trotzdem zu ihrer Fundstelle — und zu der Zeile in `case_sources`, an der
- * sie dann haengt.
- *
- * Was hier entsteht, ist ein Vorschlag: `confirmed` bleibt `false`, und ohne
- * Bestaetigung darf daraus keine Erinnerung werden. Dieselbe Regel wie bei
- * `case_facts` — unbestaetigte Angaben tragen keine Schreiben.
- */
-export function fristenAusAntwort(
-  antwort: string,
-  belege: Map<string, Fundstelle>,
-): {
-  label: string;
-  due_on: string;
-  basis: string;
-  note: string;
-  source_id: string | null;
-}[] {
-  const gefunden: {
-    label: string;
-    due_on: string;
-    basis: string;
-    note: string;
-    source_id: string | null;
-  }[] = [];
-  const gesehen = new Set<string>();
-
-  // Absatzweise, damit ein Beleg nur von einem Nachbarsatz geerbt wird, der
-  // wirklich danebensteht.
-  for (const absatz of antwort.split(/\n{2,}/)) {
-    const saetze = absatz.split(/(?<=[.!?])\s+|\n+/);
-
-    for (let i = 0; i < saetze.length; i++) {
-      const satz = saetze[i].replace(/[*_`#]/g, "").trim();
-      if (!satz) continue;
-
-      if (!FRIST_WORT.test(satz) || !FRISTABLAUF.test(satz)) continue;
-
-      // Das Datum muss **hinter** dem letzten Wort "Frist" stehen. Sonst
-      // greift der Satz "Da Ihnen die Kuendigung am 31.08.2026 zugegangen
-      // ist, laeuft die Frist am 21.09.2026 ab" das Zugangsdatum ab — und
-      // eine um drei Wochen zu frueh gespeicherte Klagefrist waere schlimmer
-      // als gar keine.
-      const abFrist = satz.slice(satz.toLowerCase().lastIndexOf("frist"));
-      const datum = abFrist.match(DATUM);
-      if (!datum) continue;
-
-      const paragraph = satz.match(PARAGRAPH);
-      const zitiert = [...satz.matchAll(ZITAT)].map((t) => t[1]);
-      let beleg = zitiert.map((id) => belege.get(id)).find(Boolean);
-
-      // Das Modell schreibt die Fundstelle oft in den Satz davor ("… Klage
-      // beim Arbeitsgericht einzureichen [3]. Da Ihnen die Kuendigung … ist,
-      // laeuft die Frist am 21.09.2026 ab."). Ein Beleg aus dem unmittelbar
-      // vorangehenden Satz desselben Absatzes zaehlt deshalb mit — weiter
-      // zurueck nicht, das waere Zuordnen auf Verdacht.
-      if (!paragraph && !beleg && i > 0) {
-        const davor = saetze[i - 1].replace(/[*_`#]/g, "");
-        beleg = [...davor.matchAll(ZITAT)].map((t) => belege.get(t[1])).find(
-          Boolean,
-        );
-      }
-      if (!paragraph && !beleg) continue;
-
-      const basis = paragraph
-        ? paragraph[0].trim()
-        : `${beleg!.reference}${beleg!.locator ? ` ${beleg!.locator}` : ""}`
-          .trim();
-
-      const [, tag, monat, jahr] = datum;
-      const iso = `${jahr}-${monat.padStart(2, "0")}-${tag.padStart(2, "0")}`;
-      const schluessel = `${iso}|${basis}`;
-      if (gesehen.has(schluessel)) continue;
-      gesehen.add(schluessel);
-
-      gefunden.push({
-        label: satz.length > 120 ? `${satz.slice(0, 117)}…` : satz,
-        due_on: iso,
-        basis,
-        note: satz,
-        source_id: beleg?.id ?? null,
-      });
-    }
-  }
-  return gefunden;
-}
-
 export function buildAnalysisInput(snapshot: Snapshot): string {
   if (
-    snapshot.documents.some((d) =>
-      !d.extracted_text?.trim() || d.processing_error
-    )
+    snapshot.documents.some((d) => !d.extracted_text?.trim() || d.processing_error)
   ) {
     throw new Error(
       "Mindestens ein Dokument wurde noch nicht vollständig gelesen. Bitte prüfen Sie die Dokumente.",
@@ -230,9 +124,7 @@ export function buildAnalysisInput(snapshot: Snapshot): string {
   const sections = [snapshot.description.trim()];
   for (const fact of snapshot.facts) {
     sections.push(
-      fact.occurred_on
-        ? `${fact.occurred_on}: ${fact.statement}`
-        : fact.statement,
+      fact.occurred_on ? `${fact.occurred_on}: ${fact.statement}` : fact.statement,
     );
   }
   for (const doc of snapshot.documents) {
@@ -249,6 +141,30 @@ export function buildAnalysisInput(snapshot: Snapshot): string {
     );
   }
   return text;
+}
+
+export function buildPortfolioResult(snapshot: Snapshot): Result {
+  validateInput(snapshot.termination_input);
+  const result = analyzeTermination(
+    snapshot.termination_input,
+    snapshot.documents.map((d) => ({
+      id: d.id ?? "",
+      extracted_text: d.extracted_text ?? "",
+      extracted_pages: d.extracted_pages,
+    })),
+    corpus,
+  );
+  validateResult(result);
+  return result;
+}
+
+export function buildWorkerInput(snapshot: Snapshot): Record<string, unknown> {
+  if (!snapshot.termination_input) {
+    throw new Error("Bitte zuerst die berechnungsrelevanten Angaben mit Dokumentbelegen erfassen.");
+  }
+  buildPortfolioResult(snapshot);
+  // Only a public corpus version goes to the controlled Python worker, no private facts.
+  return { portfolio_version: "1.0", corpus_version: corpus.version };
 }
 
 export async function failJob(
@@ -322,50 +238,73 @@ export async function persistAnalysis(
     );
   }
 
-  const antworttext = String(daten.answer ?? "").trim();
-  if (!antworttext) {
-    return await gescheitert("Die Einordnung kam ohne Text zurueck.");
+  let structured: Result | null = null;
+  if (modell === "controlled-termination/1.0") {
+    try {
+      structured = buildPortfolioResult(snapshot);
+      if (JSON.stringify(daten.corpus) !== JSON.stringify(corpus)) {
+        throw new Error("Corpus mismatch");
+      }
+    } catch {
+      return await gescheitert(
+        "Quellenstand oder bestätigte Belegstellen stimmen nicht mit dem Auftrag überein.",
+        422,
+      );
+    }
   }
-
-  const zitate = Array.isArray(daten.citations)
-    ? (daten.citations as Record<string, unknown>[])
+  const antworttext = structured ? reportText(structured) : String(daten.answer ?? "").trim();
+  if (!antworttext) return await gescheitert("Die Einordnung kam ohne Text zurück.");
+  const quellen = structured
+    ? structured.sources.map((source, i) => ({
+      kind: "gesetz",
+      citation_id: String(i + 1),
+      reference: source.reference,
+      locator: null,
+      title: null,
+      url: source.url,
+      valid_as_of: `abgerufen ${source.retrieved_on}`,
+      excerpt: source.text,
+      relevance: null,
+    }))
     : [];
-  const belegbar = zitate.filter((z) =>
-    String(z.reference ?? z.gesetz ?? "").trim()
-  );
-  if (belegbar.length !== zitate.length) {
-    return await gescheitert(
-      "Mindestens eine Fundstelle ist unvollständig. Die Analyse wurde nicht übernommen.",
-      422,
-    );
+  const fristen = structured
+    ? structured.calculations.map((calculation) => ({
+      label: calculation.kind === "notice_end"
+        ? "Gesetzlicher Vergleichstermin"
+        : "Klagefrist im unterstützten Grundfall",
+      due_on: calculation.due_on,
+      basis: structured!.sources.filter(source => calculation.source_ids.includes(source.id)).map(source => source.reference).join("; "),
+      note: calculation.method,
+      citation_id: String(
+        structured!.sources.findIndex((source) => source.id === calculation.source_ids[0]) + 1,
+      ),
+    }))
+    : [];
+  const audit: {
+    status: string;
+    material_claims: number;
+    issues: { code: string; severity: string }[];
+    structured_result?: Result;
+  } = structured
+    ? {
+      status: "pass",
+      material_claims: structured.checks.length,
+      issues: [],
+      structured_result: structured,
+    }
+    : {
+      status: "fail",
+      material_claims: 0,
+      issues: [{ code: "uncontrolled_model_result", severity: "high" }],
+    };
+  if (!structured && snapshot.termination_input) {
+    try {
+      const controlled = buildPortfolioResult(snapshot);
+      audit.issues.push(
+        ...modelContradictions(antworttext, controlled).map((code) => ({ code, severity: "high" })),
+      );
+    } catch { /* No calculation is used without confirmed evidence. */ }
   }
-  const quellen = belegbar.map((z) => ({
-    kind: z.kind === "urteil" ? "urteil" : "gesetz",
-    citation_id: String(z.id ?? "").replace(/[^\d]/g, ""),
-    reference: String(z.reference ?? z.gesetz).trim(),
-    locator: String(z.locator ?? z.paragraph ?? "").trim() || null,
-    title: String(z.titel ?? "").trim() || null,
-    url: String(z.url ?? "").trim() || null,
-    valid_as_of: String(z.stand ?? "").trim() || null,
-    excerpt: String(z.text_preview ?? "").trim() || null,
-    relevance: typeof z.score === "number" ? z.score : null,
-  }));
-
-  // Die IDs kommen zurueck, damit eine Frist auf die Zeile zeigen kann, die sie
-  // belegt. `insert` liefert sie in der Reihenfolge der Eingabe.
-  const belege = new Map<string, Fundstelle>();
-  quellen.forEach((q) =>
-    belege.set(q.citation_id, {
-      reference: q.reference,
-      locator: q.locator,
-      id: q.citation_id,
-    })
-  );
-
-  const fristen = fristenAusAntwort(antworttext, belege).map((frist) => ({
-    ...frist,
-    citation_id: frist.source_id,
-  }));
   const erkannt = String(daten.rechtsgebiet ?? "").trim().toLowerCase();
   const { data: gespeichert, error: speicherFehler } = await worker.rpc(
     "finish_case_analysis",
@@ -374,8 +313,8 @@ export async function persistAnalysis(
       p_snapshot: snapshot,
       p_answer: antworttext,
       p_model: modell,
-      p_audit: daten.answer_audit ?? null,
-      p_source_audit: daten.source_audit ?? null,
+      p_audit: audit,
+      p_source_audit: structured ? { missing_required: [] } : daten.source_audit ?? null,
       p_sources: quellen,
       p_deadlines: fristen,
       p_area: RECHTSGEBIETE[erkannt] ?? null,
@@ -390,7 +329,7 @@ export async function persistAnalysis(
   if (!gespeichert?.released) {
     return json({
       error:
-        "Die Einordnung hat die Quellenprüfung nicht bestanden. Sie bleibt ungeprüft und kann nicht exportiert werden.",
+        "Die technischen Prüfungen wurden nicht bestanden. Das Ergebnis kann nicht exportiert werden.",
       request_id: requestId,
     }, 422);
   }
@@ -402,7 +341,7 @@ export async function persistAnalysis(
     request_id: requestId,
     sources: quellen.length,
     deadlines: fristen.length,
-    skipped_citations: zitate.length - quellen.length,
+    skipped_citations: 0,
   });
 }
 

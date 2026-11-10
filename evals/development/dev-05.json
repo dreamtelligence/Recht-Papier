@@ -1,0 +1,136 @@
+{
+  "id": "dev-05",
+  "title": "Fünf Jahre",
+  "fictional": true,
+  "input": {
+    "version": "1.0",
+    "as_of": "2026-11-10",
+    "facts": [
+      {
+        "key": "scope",
+        "value": "ordinary_employer",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-05-document",
+          "page": 1,
+          "quote": "Art der Kündigung: Ordentliche Arbeitgeberkündigung"
+        }
+      },
+      {
+        "key": "receipt_on",
+        "value": "2026-08-31",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-05-document",
+          "page": 1,
+          "quote": "Zugang am: 2026-08-31"
+        }
+      },
+      {
+        "key": "employment_started_on",
+        "value": "2021-01-01",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-05-document",
+          "page": 1,
+          "quote": "Beschäftigt seit: 2021-01-01"
+        }
+      },
+      {
+        "key": "stated_end_on",
+        "value": "2026-09-30",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-05-document",
+          "page": 1,
+          "quote": "Genanntes Vertragsende: 2026-09-30"
+        }
+      },
+      {
+        "key": "notice_regime",
+        "value": "statutory",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-05-document",
+          "page": 1,
+          "quote": "Vertrag und Tarif geprüft: Gesetzliche Frist, keine abweichende Vertrags- oder Tarifregel"
+        }
+      },
+      {
+        "key": "probation",
+        "value": "no",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-05-document",
+          "page": 1,
+          "quote": "Probezeit: Nein"
+        }
+      },
+      {
+        "key": "written_notice",
+        "value": "yes",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-05-document",
+          "page": 1,
+          "quote": "Schriftliches Original erhalten: Ja"
+        }
+      },
+      {
+        "key": "special_protection",
+        "value": "no",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-05-document",
+          "page": 1,
+          "quote": "Behördliche Zustimmung / Sonderkündigungsschutz: Nein"
+        }
+      },
+      {
+        "key": "court_state",
+        "value": "NW",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-05-document",
+          "page": 1,
+          "quote": "Bundesland des Arbeitsgerichts: Nordrhein-Westfalen"
+        }
+      },
+      {
+        "key": "representative_authority",
+        "value": "attached",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-05-document",
+          "page": 1,
+          "quote": "Vollmacht: Vollmacht beigefügt"
+        }
+      },
+      {
+        "key": "works_council",
+        "value": "not_present",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-05-document",
+          "page": 1,
+          "quote": "Betriebsratsanhörung: Kein Betriebsrat"
+        }
+      }
+    ]
+  },
+  "documents": [
+    {
+      "id": "dev-05-document",
+      "file_name": "dev-05.pdf",
+      "extracted_text": "FIKTIVER PORTFOLIO-FALL. KEINE ECHTEN PERSONEN.\nAktennotiz und Kündigungsauszug: Fünf Jahre\nAnliegen: Ordentliche Arbeitgeberkündigung prüfen und Fragen für eine Kanzlei vorbereiten.\nDie folgenden Angaben stammen aus einem fiktiven Schreiben, einem fiktiven Vertrag und der eigenen Zugangsnotiz. Sie sind keine Echtheitsnachweise.\nArt der Kündigung: Ordentliche Arbeitgeberkündigung\nZugang am: 2026-08-31\nBeschäftigt seit: 2021-01-01\nGenanntes Vertragsende: 2026-09-30\nVertrag und Tarif geprüft: Gesetzliche Frist, keine abweichende Vertrags- oder Tarifregel\nProbezeit: Nein\nSchriftliches Original erhalten: Ja\nBehördliche Zustimmung / Sonderkündigungsschutz: Nein\nBundesland des Arbeitsgerichts: Nordrhein-Westfalen\nVollmacht: Vollmacht beigefügt\nBetriebsratsanhörung: Kein Betriebsrat",
+      "extracted_pages": [
+        "FIKTIVER PORTFOLIO-FALL. KEINE ECHTEN PERSONEN.\nAktennotiz und Kündigungsauszug: Fünf Jahre\nAnliegen: Ordentliche Arbeitgeberkündigung prüfen und Fragen für eine Kanzlei vorbereiten.\nDie folgenden Angaben stammen aus einem fiktiven Schreiben, einem fiktiven Vertrag und der eigenen Zugangsnotiz. Sie sind keine Echtheitsnachweise.\nArt der Kündigung: Ordentliche Arbeitgeberkündigung\nZugang am: 2026-08-31\nBeschäftigt seit: 2021-01-01\nGenanntes Vertragsende: 2026-09-30\nVertrag und Tarif geprüft: Gesetzliche Frist, keine abweichende Vertrags- oder Tarifregel\nProbezeit: Nein\nSchriftliches Original erhalten: Ja\nBehördliche Zustimmung / Sonderkündigungsschutz: Nein\nBundesland des Arbeitsgerichts: Nordrhein-Westfalen\nVollmacht: Vollmacht beigefügt\nBetriebsratsanhörung: Kein Betriebsrat"
+      ]
+    }
+  ],
+  "expected": {
+    "notice_end": "2026-10-31",
+    "claim_deadline": "2026-09-21",
+    "invalid": false
+  }
+}

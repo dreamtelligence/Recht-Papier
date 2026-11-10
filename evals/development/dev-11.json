@@ -1,0 +1,116 @@
+{
+  "id": "dev-11",
+  "title": "Wann kam das Schreiben an?",
+  "fictional": true,
+  "input": {
+    "version": "1.0",
+    "as_of": "2026-11-10",
+    "facts": [
+      {
+        "key": "scope",
+        "value": "ordinary_employer",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-11-document",
+          "page": 1,
+          "quote": "Art der Kündigung: Ordentliche Arbeitgeberkündigung"
+        }
+      },
+      {
+        "key": "stated_end_on",
+        "value": "2026-09-30",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-11-document",
+          "page": 1,
+          "quote": "Genanntes Vertragsende: 2026-09-30"
+        }
+      },
+      {
+        "key": "notice_regime",
+        "value": "unknown",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-11-document",
+          "page": 1,
+          "quote": "Vertrag und Tarif geprüft: Unbekannt"
+        }
+      },
+      {
+        "key": "probation",
+        "value": "no",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-11-document",
+          "page": 1,
+          "quote": "Probezeit: Nein"
+        }
+      },
+      {
+        "key": "written_notice",
+        "value": "yes",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-11-document",
+          "page": 1,
+          "quote": "Schriftliches Original erhalten: Ja"
+        }
+      },
+      {
+        "key": "special_protection",
+        "value": "no",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-11-document",
+          "page": 1,
+          "quote": "Behördliche Zustimmung / Sonderkündigungsschutz: Nein"
+        }
+      },
+      {
+        "key": "court_state",
+        "value": "NW",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-11-document",
+          "page": 1,
+          "quote": "Bundesland des Arbeitsgerichts: Nordrhein-Westfalen"
+        }
+      },
+      {
+        "key": "representative_authority",
+        "value": "attached",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-11-document",
+          "page": 1,
+          "quote": "Vollmacht: Vollmacht beigefügt"
+        }
+      },
+      {
+        "key": "works_council",
+        "value": "not_present",
+        "confirmed": true,
+        "evidence": {
+          "document_id": "dev-11-document",
+          "page": 1,
+          "quote": "Betriebsratsanhörung: Kein Betriebsrat"
+        }
+      }
+    ]
+  },
+  "documents": [
+    {
+      "id": "dev-11-document",
+      "file_name": "dev-11.pdf",
+      "extracted_text": "FIKTIVER PORTFOLIO-FALL. KEINE ECHTEN PERSONEN.\nAktennotiz und Kündigungsauszug: Wann kam das Schreiben an?\nAnliegen: Ordentliche Arbeitgeberkündigung prüfen und Fragen für eine Kanzlei vorbereiten.\nDie folgenden Angaben stammen aus einem fiktiven Schreiben, einem fiktiven Vertrag und der eigenen Zugangsnotiz. Sie sind keine Echtheitsnachweise.\nArt der Kündigung: Ordentliche Arbeitgeberkündigung\nGenanntes Vertragsende: 2026-09-30\nVertrag und Tarif geprüft: Unbekannt\nProbezeit: Nein\nSchriftliches Original erhalten: Ja\nBehördliche Zustimmung / Sonderkündigungsschutz: Nein\nBundesland des Arbeitsgerichts: Nordrhein-Westfalen\nVollmacht: Vollmacht beigefügt\nBetriebsratsanhörung: Kein Betriebsrat",
+      "extracted_pages": [
+        "FIKTIVER PORTFOLIO-FALL. KEINE ECHTEN PERSONEN.\nAktennotiz und Kündigungsauszug: Wann kam das Schreiben an?\nAnliegen: Ordentliche Arbeitgeberkündigung prüfen und Fragen für eine Kanzlei vorbereiten.\nDie folgenden Angaben stammen aus einem fiktiven Schreiben, einem fiktiven Vertrag und der eigenen Zugangsnotiz. Sie sind keine Echtheitsnachweise.\nArt der Kündigung: Ordentliche Arbeitgeberkündigung\nGenanntes Vertragsende: 2026-09-30\nVertrag und Tarif geprüft: Unbekannt\nProbezeit: Nein\nSchriftliches Original erhalten: Ja\nBehördliche Zustimmung / Sonderkündigungsschutz: Nein\nBundesland des Arbeitsgerichts: Nordrhein-Westfalen\nVollmacht: Vollmacht beigefügt\nBetriebsratsanhörung: Kein Betriebsrat"
+      ]
+    }
+  ],
+  "expected": {
+    "notice_end": null,
+    "claim_deadline": null,
+    "invalid": false
+  }
+}

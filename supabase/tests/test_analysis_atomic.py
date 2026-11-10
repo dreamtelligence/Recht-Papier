@@ -3,6 +3,7 @@ from concurrent.futures import ThreadPoolExecutor
 import uuid
 
 from test_fall_einordnen import Supabase, load_env
+from portfolio_fixture import controlled_result
 
 
 def main():
@@ -13,7 +14,7 @@ def main():
     try:
         token = sb.sign_in(mail, password)
         status, rows = sb.rest("POST", "cases", token, body={
-            "owner_id": owner, "title": "Atomarer Test", "description": "Synthetischer Mietfall."},
+            "owner_id": owner, "title": "Atomarer Test", "description": "Synthetischer Kündigungsfall."},
             prefer="return=representation")
         assert status == 201, (status, rows)
         case = rows[0]["id"]
@@ -28,10 +29,10 @@ def main():
         winner = next(i for i, (_, body) in enumerate(results) if body is not None)
         run = runs[winner]
         snapshot = results[winner][1]
-        payload = {**run, "p_snapshot": snapshot, "p_answer": "Die Mietsache muss geeignet sein [1].",
-            "p_model": "synthetic-test", "p_audit": {"status": "pass", "material_claims": 1},
-            "p_source_audit": {"missing_required": []}, "p_deadlines": [], "p_area": "mietrecht",
-            "p_sources": [{"kind": "invalid", "reference": "BGB", "locator": "§ 535", "citation_id": "1"}]}
+        payload = {**run, "p_snapshot": snapshot, "p_answer": "Die Kündigung bedarf der Schriftform [1].",
+            "p_model": "controlled-termination/1.0", "p_audit": {"status": "pass", "material_claims": 1,"structured_result":controlled_result()},
+            "p_source_audit": {"missing_required": []}, "p_deadlines": [], "p_area": "arbeitsrecht",
+            "p_sources": [{"kind": "invalid", "reference": "BGB", "locator": "§ 623", "citation_id": "1"}]}
         assert rpc("finish_case_analysis", payload)[0] >= 400
         status, rows = sb.rest("GET", f"case_analyses?case_id=eq.{case}", token)
         assert status == 200 and rows == [], rows

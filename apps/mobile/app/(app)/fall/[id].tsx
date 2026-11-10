@@ -1,3 +1,4 @@
+import { TerminationInput } from "@/features/faelle/TerminationInput";
 import { useCallback, useState } from "react";
 import { Linking, Pressable, RefreshControl, StyleSheet, Text, View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -149,12 +150,11 @@ export default function Fallakte() {
   // etwas, das es so nicht mehr gibt.
   const laufAbgelaufen = fall.status === "in_pruefung" && !analyseLaeuft(fall);
   const analyseVeraltet = Boolean(analyse) && analyse!.input_revision !== fall.input_revision;
-  const bestaetigteAngaben = fakten.filter((fakt) => fakt.confirmed).length;
+  const bestaetigteAngaben = fall.termination_input?.facts.filter(f => f.confirmed).length ?? 0;
 
   // Einordnen lohnt sich, solange keine vorliegt, die letzte gescheitert ist
-  // oder die Akte sich seither geändert hat. Während der Prüfung wäre der Knopf
-  // eine Einladung zum Doppeltippen — und jeder Lauf ist ein kostenpflichtiger
-  // Modellaufruf.
+  // oder die Akte sich seither geändert hat. Während der Prüfung verhindert
+  // der gesperrte Knopf doppelte Jobs.
   const kannEinordnen =
     !ordnetEin &&
     (fall.status === "entwurf" || fall.status === "fehlgeschlagen" || laufAbgelaufen || analyseVeraltet);
@@ -164,11 +164,11 @@ export default function Fallakte() {
   // dasselbe noch einmal; hier steht es, damit der Knopf nicht in einen Fehler
   // führt, den man vorher sehen konnte.
   const kannDokument =
-    !erstelltDokument && Boolean(analyse?.released) && !analyseVeraltet && bestaetigteAngaben > 0;
+    !erstelltDokument && Boolean(analyse?.released && analyse.structured_result) && !analyseVeraltet && bestaetigteAngaben > 0;
   const dokumentGrund = !analyse
     ? "Dafür muss der Fall zuerst rechtlich eingeordnet werden."
     : !analyse.released
-      ? "Die letzte Einordnung hat die Quellenprüfung nicht bestanden."
+      ? "Die letzte Einordnung hat die technischen Prüfungen nicht bestanden."
       : analyseVeraltet
         ? "Die Akte hat sich seit der Einordnung geändert. Bitte erneut einordnen."
         : bestaetigteAngaben === 0
@@ -240,13 +240,16 @@ export default function Fallakte() {
         ) : undefined}
       </Section>
 
+      <Section titel="Berechnungsrelevante Angaben">
+        <TerminationInput key={`${fall.input_revision}-${dokumente.map(d => d.processed_at).join()}`} caseId={id} input={fall.termination_input} documents={dokumente} onSaved={aktualisieren} />
+      </Section>
+
       <Section
-        titel={`Angaben${bestaetigteAngaben ? ` · ${bestaetigteAngaben} bestätigt` : ""}`}
+        titel="Ergänzende Freitextangaben"
       >
         {!fakten.length ? (
           <Muted>
-            Noch keine Angaben. Aus dem Schreiben gezogene Aussagen erscheinen hier zur
-            Bestätigung.
+            Keine ergänzenden Freitextangaben. Berechnungsrelevante Angaben und Belegstellen stehen im Abschnitt darüber.
           </Muted>
         ) : null}
         {fakten.length ? (
@@ -294,7 +297,7 @@ export default function Fallakte() {
       </Section>
 
       <Section
-        titel="Rechtliche Einordnung"
+        titel="Strukturierte Prüfung"
         leer={
           fall.status === "in_pruefung"
             ? "Die Prüfung läuft im Hintergrund. Beim ersten Mal kann sie mehrere Minuten dauern. Sie können diese Ansicht verlassen und später zurückkehren."
@@ -308,7 +311,7 @@ export default function Fallakte() {
                 ist die Begründung dafür, warum hier nichts weitergeht. */}
             {!analyse.released ? (
               <Text style={styles.warnung}>
-                Diese Einordnung hat die Quellenprüfung nicht bestanden. Sie trägt kein
+                Diese Einordnung hat die technischen Prüfungen nicht bestanden. Sie trägt kein
                 Schreiben.
               </Text>
             ) : null}
@@ -317,7 +320,12 @@ export default function Fallakte() {
                 Die Akte hat sich seit dieser Einordnung geändert. Bitte erneut einordnen.
               </Text>
             ) : null}
-            <Body>{analyse.answer}</Body>
+            {analyse.structured_result ? <View style={{ gap: 14 }}>
+              <Muted>Technische Prüfungen bestanden. Keine anwaltliche Prüfung.</Muted>
+              {analyse.structured_result.calculations.map(c => <View key={c.kind} style={{ gap: 5 }}><Body>{c.kind === "notice_end" ? "Gesetzlicher Vergleichstermin" : "Klagefrist im unterstützten Grundfall"}: {c.due_on}</Body><Muted>{c.method}</Muted><Muted>{c.assumptions.join(" ")}</Muted></View>)}
+              {analyse.structured_result.checks.map(c => <Body key={c.code}>{c.statement}</Body>)}
+              {analyse.structured_result.uncertainties.map(u => <Body key={u}>Offen: {u}</Body>)}
+            </View> : <Body>{analyse.answer}</Body>}
           </View>
         ) : undefined}
       </Section>
@@ -330,7 +338,7 @@ export default function Fallakte() {
                 ? "Wird geprüft …"
                 : analyseVeraltet
                   ? "Erneut einordnen"
-                  : "Rechtlich einordnen"
+                  : "Strukturiert prüfen"
             }
             onPress={einordnen}
             disabled={!kannEinordnen}
@@ -389,11 +397,7 @@ export default function Fallakte() {
             onPress={() => erstellen("bericht")}
             disabled={!kannDokument}
           />
-          <SecondaryAction
-            label={erstelltDokument === "anschreiben" ? "Wird erstellt …" : "Schreiben entwerfen"}
-            onPress={() => erstellen("anschreiben")}
-            disabled={!kannDokument}
-          />
+
           {/* Wenn der Weg versperrt ist, steht hier warum — und nicht erst,
               nachdem jemand vergeblich getippt hat. */}
           {dokumentGrund ? <Muted>{dokumentGrund}</Muted> : null}
@@ -402,13 +406,13 @@ export default function Fallakte() {
 
       <Section
         titel="Fristen"
-        leer="Noch keine Fristen. Nennt die Einordnung eine, steht sie hier mit ihrer Rechtsgrundlage."
+        leer="Nur aus bestätigten Angaben berechnete Termine erscheinen hier mit ihren Voraussetzungen."
       >
         {fristen.length ? (
           <View style={styles.liste}>
             {fristen.map((frist) => (
               <View key={frist.id} style={styles.frist}>
-                <View style={styles.zeile}>
+                <View style={{ gap: 5 }}>
                   <Text style={styles.fristDatum}>{datum(frist.due_on)}</Text>
                   <Text style={styles.zeileNeben}>{frist.basis}</Text>
                 </View>
@@ -418,7 +422,7 @@ export default function Fallakte() {
                     verlässt sich jemand auf ein Datum, das ein Modell aus
                     einem Text gezogen hat. */}
                 {!frist.confirmed ? (
-                  <Text style={styles.hinweis}>ungeprüft · bitte selbst nachrechnen</Text>
+                  <Text style={styles.hinweis}>aus bestätigten Angaben berechnet · keine anwaltliche Prüfung</Text>
                 ) : null}
               </View>
             ))}
@@ -468,7 +472,7 @@ const styles = StyleSheet.create({
   zeile: { flexDirection: "row", alignItems: "baseline", gap: 10 },
   zeileText: { flex: 1, gap: 2 },
   zeileHaupt: { flex: 1, fontSize: 14, lineHeight: 21, color: colors.ink },
-  zeileNeben: { fontSize: 11, color: colors.inkSoft },
+  zeileNeben: { fontSize: 11, color: colors.inkSoft, flexShrink: 1 },
   gedrueckt: { opacity: 0.55 },
   hinweis: { fontSize: 11, color: colors.inkSoft, fontStyle: "italic" },
   marke: {

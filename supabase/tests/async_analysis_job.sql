@@ -28,11 +28,11 @@ begin
   result := public.finish_case_analysis(cid,owner,run,snapshot,'Synthetic answer [1]','synthetic-test',
     '{"status":"pass","material_claims":1}','{"missing_required":[]}',
     '[{"kind":"gesetz","reference":"BGB","locator":"§ 622","citation_id":"1"}]','[]','arbeitsrecht');
-  assert result->>'released'='true';
+  assert result->>'released'='false'; -- Free model/synthetic results cannot bypass the portfolio contract.
   assert public.get_case_analysis_job(run,null) is null;
   -- A late error callback cannot overwrite the completed result.
   perform public.fail_case_analysis_job(run,'Late failure');
-  assert (select status='analysiert' from public.cases where id=cid);
+  assert (select status='fehlgeschlagen' from public.cases where id=cid);
   snapshot := public.start_case_analysis(cid,owner,other);
   update public.cases set description='Changed fictional input' where id=cid;
   begin

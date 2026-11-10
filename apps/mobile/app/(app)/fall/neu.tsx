@@ -17,9 +17,6 @@ import { colors, radius } from "@/theme";
 
 const ERLAUBTE_TYPEN = [
   "application/pdf",
-  "application/msword",
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  "image/*",
 ];
 
 /**
@@ -99,7 +96,7 @@ export default function NeuerFall() {
       </Pressable>
 
       <Title>Worum geht es?</Title>
-      <Muted>Beschreiben Sie kurz Ihren Fall und fügen Sie Ihr Anschreiben direkt hinzu.</Muted>
+      <Muted>Portfolio-Version: Beschreiben Sie eine fiktive ordentliche Arbeitgeberkündigung und fügen Sie ein PDF mit Textebene hinzu.</Muted>
 
       <View style={styles.formular}>
         <TextArea
@@ -119,7 +116,7 @@ export default function NeuerFall() {
             {anlage?.name ?? "Anschreiben hinzufügen"}
           </Text>
         </Pressable>
-        <Muted>PDF, DOCX oder Bild · maximal 20 MB</Muted>
+        <Muted>PDF mit Textebene · maximal 20 MB. Scans, Bilder und Word-Dateien werden noch nicht ausgewertet; OCR folgt als mögliche Erweiterung.</Muted>
 
         <PrimaryAction
           label={beschaeftigt ? "Wird gespeichert …" : "Fall anlegen"}

@@ -83,14 +83,14 @@ Deno.serve(async (req) => {
   // ob es existiert, geht den Fragenden nichts an.
   const { data: dokument, error: leseFehler } = await asUser
     .from("case_documents")
-    .select("id,case_id,file_name,storage_path,mime_type,byte_size,processed_at")
+    .select("id,case_id,file_name,storage_path,mime_type,byte_size,processed_at,extracted_pages")
     .eq("id", documentId)
     .maybeSingle();
 
   if (leseFehler) return json({ error: "Das Dokument konnte nicht geladen werden." }, 500);
   if (!dokument) return json({ error: "Dokument nicht gefunden." }, 404);
 
-  if (dokument.processed_at) {
+  if (dokument.processed_at && dokument.extracted_pages) {
     // Schon gelesen. Ein zweiter Lauf kostet nur Zeit und wuerde denselben Text
     // erzeugen; das Dokument im Bucket aendert sich nicht (es gibt keine
     // Update-Policy darauf).
@@ -129,12 +129,14 @@ Deno.serve(async (req) => {
 
   let text = "";
   let seiten = 0;
+  let pages: string[] = [];
   try {
     const bytes = new Uint8Array(await datei.arrayBuffer());
     const pdf = await getDocumentProxy(bytes);
     seiten = pdf.numPages;
-    const { text: roh } = await extractText(pdf, { mergePages: true });
-    text = aufraeumen(typeof roh === "string" ? roh : roh.join("\n"));
+    const { text: roh } = await extractText(pdf, { mergePages: false });
+    pages = (typeof roh === "string" ? [roh] : roh).map(aufraeumen);
+    text = pages.join("\n\n");
   } catch (fehler) {
     await vermerke({ processing_error: `PDF nicht lesbar: ${fehler}` });
     return json({ status: "nicht_lesbar" }, 200);
@@ -156,6 +158,7 @@ Deno.serve(async (req) => {
     .from("case_documents")
     .update({
       extracted_text: text,
+      extracted_pages: pages,
       processed_at: new Date().toISOString(),
       processing_error: null,
     })

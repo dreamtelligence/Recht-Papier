@@ -2,19 +2,28 @@
 
 ## Was hier gebaut wird
 
-Recht & Papier ist das erste eigene Produkt von **Klein Digital Solutions** (geplante
-Umbenennung: **Dreamtelligence**): eine Consumer-App, die einen Rechtsfall
-strukturiert aufnimmt, ihn gegen geprüfte Gesetzes- und Urteilsquellen einordnet und
-verständliche nächste Schritte zeigt. MVP 1 bleibt bewusst auf **Arbeitsrecht und Mietrecht**
-begrenzt.
+Aktueller Auftrag ist das begrenzte Engineering-Portfolio zur **ordentlichen
+Arbeitgeberkündigung aus Arbeitnehmersicht**, beschrieben in
+`docs/portfolio-release-plan.md`. Öffentliche Demo ausschließlich mit drei
+fiktiven, vorab durch das gehostete Backend erzeugten Fällen; keine Anmeldung,
+keine privaten Uploads und keine Modellaufrufe durch Besucher.
 
-Zwei Sätze, die alles andere bestimmen:
+Die Fallakte bleibt die Datenstruktur; Berichte entstehen aus dem versionierten
+strukturierten Ergebnis. `packages/shared/contract.schema.json` ist der Vertrag,
+`termination.ts` berechnet aus bestätigten belegten Angaben, `report.ts` rendert.
+Freie Qwen-/Gemini-Schlussfolgerungen sind gesperrt. Kein allgemeiner Assistent,
+kein Mietrecht, keine Abrechnung und kein Pilot in diesem Release.
 
-- **Die Fallakte ist die Datenstruktur, der Chat ist nur eine Oberfläche.**
-- **Schreiben entstehen aus strukturierten, freigegebenen Falldaten — nicht aus dem Chatverlauf.**
+Web: `src/entry.web.tsx` importiert nur die öffentliche Demo. Native:
+`src/entry.tsx` verwendet den bestehenden Expo Router und privaten Backend-Pfad.
+Beide Dateien behalten dieselbe Endung, damit Metro die Web-Variante wählt.
+Die öffentliche Bundle-Prüfung darf keine Supabase-Konfiguration finden.
 
-Das Produkt ist keine KI-Anwältin. Formulierungen und Funktionsumfang folgen dem
-fachanwaltlich bestätigten Leistungsbild.
+Es wird keine anwaltliche Validierung behauptet. Anbieterangaben bleiben auf
+Nutzerwunsch erkennbare Platzhalter; Screenshots dokumentieren den nativen Pfad.
+Aktueller Nachweis und offene Gates: `docs/portfolio/release-status.md`.
+Die älteren Produkt-/Infrastrukturentwürfe weiter unten sind historischer Kontext;
+für tatsächliche Datenflüsse gilt `docs/architecture.md`.
 
 ## Vor jeder nicht-trivialen Änderung: Semantica
 
@@ -40,7 +49,12 @@ wird korrigiert statt ergänzt.
 Fallanalysen laufen als Hintergrundauftrag: `fall-einordnen` antwortet mit 202,
 `private.case_analysis_jobs` hält den Eingabestand, und ein separater Modal-Worker
 liefert das Ergebnis an `case-analysis-worker`. Die App lädt den Status nach.
-Modell- und Quellenfreigabe bleiben serverseitig und werden nicht umgangen.
+Der kontrollierte Worker erhält nur öffentliche Versionskennungen und liefert
+16 vollständige versionierte Normtexte. Die Supabase-Grenze prüft den Korpus und
+berechnet aus dem eingefrorenen Original. Freigabe nur für
+`controlled-termination/1.0` mit gültigem strukturiertem Ergebnis. Der alte breitere
+Live-Index und die allgemeinen Engine-Pfade bleiben getrennt. Es gibt keine
+stillen Modell-Fallbacks.
 Details, Tests und Rollback: [`docs/analysis-jobs.md`](docs/analysis-jobs.md).
 Die älteren synchronen Ablaufbeschreibungen unten sind historische Einordnung.
 

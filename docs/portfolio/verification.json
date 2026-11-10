@@ -1,0 +1,56 @@
+{
+  "verified_at": "2026-11-10T12:55:30.032730+00:00",
+  "public_url": "https://recht-papier-portfolio.vercel.app",
+  "deployment": {
+    "id": "dpl_3pv31oNXDH5hUrSa4qnxt8ZSbcRZ",
+    "url": "https://recht-papier-portfolio-ihxcgkz8i-bucci369s-projects.vercel.app",
+    "inspectorUrl": "https://vercel.com/bucci369s-projects/recht-papier-portfolio/3pv31oNXDH5hUrSa4qnxt8ZSbcRZ",
+    "readyState": "READY",
+    "target": "production",
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_3pv31oNXDH5hUrSa4qnxt8ZSbcRZ"
+  },
+  "corpus_version": "termination-2026-11-10-e1a8f4ba0853",
+  "edge_tests": 27,
+  "python_fast_tests": 192,
+  "deterministic_cases": 24,
+  "deterministic_executions": 40,
+  "deterministic_mismatches": 0,
+  "native_build": {
+    "errors": 0,
+    "warnings": 0,
+    "device": "iPhone 17 Pro Simulator / iOS 26.5",
+    "screenshots": 7,
+    "pdf_pages": 4,
+    "original_account_restored": true,
+    "synthetic_accounts_removed": true
+  },
+  "private_boundary_checks": [
+    "owner RLS and storage",
+    "analysis atomicity and revisions",
+    "document approval and stale revision",
+    "authenticated worker callback"
+  ],
+  "public_browser_evidence": "browser-live-verification.json",
+  "pdf_evidence": "pdf-verification.json",
+  "complete_model_comparison": false,
+  "final_invoice_reconciled": false,
+  "release_tag_created": false,
+  "ci_billing_failure": "The job was not started because your account is locked due to a billing issue.",
+  "artifact_sha256": {
+    "index.html": "451cbe122b9d9262ccf64ed4cd9085c142f80e9179a03e7ea939cbbaa876cc69",
+    "metadata.json": "aa5f19cc84d41c0f8c70ececb2bc82e863227ea1e121632aca879eb616056991",
+    "portfolio/dev-01-report.pdf": "b3d5525d4bca8a7290c71831ebae10deb93f870432d8416ce6c5e1e3f1c70459",
+    "portfolio/dev-11-document.pdf": "6fed184c5030dbbf294be3b353db5413538bf9b72aebde49aaf01291c7e6e682",
+    "portfolio/dev-14-report.html": "935a86c3f73bf05ece4446720bd24341509946273c614f306a04c54acf101012",
+    "portfolio/dev-01-report.html": "6f3f40445680696c1ff1821e823172a4d173e15d367b9730de8d52fb2823b332",
+    "portfolio/architecture.html": "842afb20ca24a21253849fd87cb1fa78d452eb482bfed007c887955fa8c3f38e",
+    "portfolio/dev-11-report.html": "ae0e63317b5c1c32c3390d76ea5b8d35cccedec0a7ff2e0e049e995fa5b2d33e",
+    "portfolio/dev-14-report.pdf": "fb515177c34571c5abae0c415539bcd89e252dde0864fe7715672f88016bb4d9",
+    "portfolio/balloon.png": "ec75410193f3c15e02a01ed17f5d1f2980b2f3ab8dadf10fc5e419d96ad516d7",
+    "portfolio/dev-14-document.pdf": "d5e1ade214a44bb844daa9b193ab4224b4d663891fcd5a8208100a04f80162d4",
+    "portfolio/dev-01-document.pdf": "2791f29604575b659fb637281c2bd9690ff9e1aa02f483b889be13f692a97839",
+    "portfolio/dev-11-report.pdf": "15187145f70beff83d96be9239af8d0ba6d769570f2cb1960daf8c65e306c653",
+    "_expo/static/css/portfolio-e41647ce8b0bdd8359ac74bb629fad19.css": "758bcddc45447d630190244e59a1581f8bb0f0c71fe3d42a3b112f6d1c4a4dfd",
+    "_expo/static/js/web/index-e8fff4a6003f79fabf9257c064793dab.js": "692600a2328710f5edd154df858af77b1425a8f34e1903d645286addde55fc94"
+  }
+}

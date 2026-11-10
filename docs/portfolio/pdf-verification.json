@@ -1,0 +1,51 @@
+[
+  {
+    "file": "apps/mobile/public/portfolio/dev-01-document.pdf",
+    "pages": 1,
+    "sha256": "2791f29604575b659fb637281c2bd9690ff9e1aa02f483b889be13f692a97839",
+    "text_layer": true,
+    "visually_reviewed": true
+  },
+  {
+    "file": "apps/mobile/public/portfolio/dev-01-report.pdf",
+    "pages": 3,
+    "sha256": "b3d5525d4bca8a7290c71831ebae10deb93f870432d8416ce6c5e1e3f1c70459",
+    "text_layer": true,
+    "visually_reviewed": true
+  },
+  {
+    "file": "apps/mobile/public/portfolio/dev-11-document.pdf",
+    "pages": 1,
+    "sha256": "6fed184c5030dbbf294be3b353db5413538bf9b72aebde49aaf01291c7e6e682",
+    "text_layer": true,
+    "visually_reviewed": true
+  },
+  {
+    "file": "apps/mobile/public/portfolio/dev-11-report.pdf",
+    "pages": 3,
+    "sha256": "15187145f70beff83d96be9239af8d0ba6d769570f2cb1960daf8c65e306c653",
+    "text_layer": true,
+    "visually_reviewed": true
+  },
+  {
+    "file": "apps/mobile/public/portfolio/dev-14-document.pdf",
+    "pages": 1,
+    "sha256": "d5e1ade214a44bb844daa9b193ab4224b4d663891fcd5a8208100a04f80162d4",
+    "text_layer": true,
+    "visually_reviewed": true
+  },
+  {
+    "file": "apps/mobile/public/portfolio/dev-14-report.pdf",
+    "pages": 3,
+    "sha256": "fb515177c34571c5abae0c415539bcd89e252dde0864fe7715672f88016bb4d9",
+    "text_layer": true,
+    "visually_reviewed": true
+  },
+  {
+    "file": "docs/portfolio/native/native-export.pdf",
+    "pages": 4,
+    "sha256": "6080f57ff3d1469999e185c0b7ce16b5ba5b58a0ee4f0b88a526bd8db02dafa0",
+    "text_layer": true,
+    "visually_reviewed": true
+  }
+]

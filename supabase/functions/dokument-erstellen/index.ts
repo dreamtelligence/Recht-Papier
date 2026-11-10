@@ -1,3 +1,5 @@
+import { reportText } from "../../../packages/shared/report.ts";
+import { validateResult } from "../_shared/portfolio-validation.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2.115.0";
 
 const cors = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "authorization, content-type, apikey, x-client-info" };
@@ -28,24 +30,20 @@ Deno.serve(async (req) => {
     return json({error:"Fall und Dokumenttyp fehlen."},400);
   }
   const {data:analysis,error}=await asUser.from("case_analyses")
-    .select("id,answer,model,input_snapshot,released,created_at")
+    .select("id,answer,model,input_snapshot,structured_result,released,created_at")
     .eq("case_id",input.case_id).order("created_at",{ascending:false}).limit(1).maybeSingle();
   if (error) return json({error:"Die Einordnung konnte nicht geladen werden."},500);
   if (!analysis) return json({error:"Keine Einordnung verfügbar."},404);
   if (!analysis.released) return json({error:"Die Einordnung hat die Quellenprüfung noch nicht bestanden."},422);
-  const facts=analysis.input_snapshot?.facts ?? [];
+  try { validateResult(analysis.structured_result); }
+  catch { return json({error:"Ein aktuelles strukturiertes Prüfergebnis fehlt."},422); }
+  const facts=analysis.structured_result.facts;
   if (!facts.length) return json({error:"Bitte zuerst Angaben bestätigen und den Fall erneut einordnen."},422);
   const {data:sources,error:sourceError}=await asUser.from("case_sources").select("*").eq("analysis_id",analysis.id);
   if (sourceError || !sources?.length) return json({error:"Die Quellen sind nicht vollständig verfügbar."},422);
-  const statements=facts.map((f: {statement:string;occurred_on?:string}) =>
-    `• ${f.occurred_on ? f.occurred_on+": " : ""}${f.statement}`).join("\n");
-  const title=input.kind === "bericht" ? "Bericht zur Fallakte" : "Bitte um Stellungnahme";
-  // Die Schreiben-Vorlage behauptet keine neue Rechtsfolge. Namen/Adressen
-  // werden nicht aus dem Chat geraten; persönliche Angaben stehen in den Fakten.
-  const body=input.kind === "bericht"
-    ? `${title}\n\nBestätigte Angaben\n${statements}\n\nEinordnung\n${analysis.answer}\n\nQuellen\n${sources.map(s =>
-      `[${s.citation_id}] ${s.reference} ${s.locator ?? ""}${s.valid_as_of ? " · "+s.valid_as_of : ""}${s.url ? "\n"+s.url : ""}`).join("\n\n")}\n\nErstellt aus Analyse ${analysis.id} vom ${analysis.created_at}. Modell: ${analysis.model}. Vorlagenversion 1.\nKeine fachanwaltliche Freigabe.`
-    : `${title}\n\nSehr geehrte Damen und Herren,\n\nzu folgendem Sachverhalt bitte ich um Ihre schriftliche Stellungnahme:\n\n${statements}\n\nBitte erläutern Sie Ihre Sicht und übersenden Sie die dazugehörigen Unterlagen.\n\nMit freundlichen Grüßen`;
+  if (input.kind !== "bericht") return json({error:"Das Portfolio unterstützt ausschließlich Fallberichte."},422);
+  const title="Bericht zur Fallakte";
+  const body=reportText(analysis.structured_result);
   const {data:id,error:saveError}=await worker.rpc("save_case_document",{
     p_case:input.case_id,p_owner:auth.user.id,p_analysis:analysis.id,
     p_kind:input.kind,p_title:title,p_body:body,

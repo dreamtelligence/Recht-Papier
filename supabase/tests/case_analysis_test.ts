@@ -57,7 +57,7 @@ Deno.test("unapproved models never reach the persistence RPC", async () => {
   assert.equal(response.status, 502);
   assert.deepEqual(calls, ["fail_case_analysis_job"]);
 });
-Deno.test("audit and sources are preserved; database rejection stays visible", async () => {
+Deno.test("legacy model result is blocked and creates no operational dates", async () => {
   let payload: Record<string, unknown> = {};
   const worker = {
     rpc: (_name: string, args: Record<string, unknown>) => {
@@ -94,16 +94,16 @@ Deno.test("audit and sources are preserved; database rejection stays visible", a
   };
   const response = await persistAnalysis(worker as never, job, result);
   assert.equal(response.status, 422);
-  assert.deepEqual(payload.p_audit, audit);
+  assert.equal((payload.p_audit as { status: string }).status, "fail");
   assert.deepEqual(payload.p_source_audit, result.source_audit);
-  assert.equal((payload.p_sources as unknown[]).length, 1);
+  assert.equal((payload.p_deadlines as unknown[]).length, 0);
 });
-Deno.test("successful persistence returns the actual database analysis identifier", async () => {
+Deno.test("legacy result remains rejected without the versioned contract", async () => {
   const worker = {
     rpc: () =>
       Promise.resolve({
         error: null,
-        data: { analysis_id: "actual-id", released: true },
+        data: { analysis_id: "actual-id", released: false },
       }),
   };
   const response = await persistAnalysis(
@@ -120,6 +120,5 @@ Deno.test("successful persistence returns the actual database analysis identifie
       citations: [{ id: "1", reference: "BGB", locator: "§ 622" }],
     },
   );
-  assert.equal(response.status, 200);
-  assert.equal((await response.json()).analysis_id, "actual-id");
+  assert.equal(response.status, 422);
 });

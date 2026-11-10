@@ -1,0 +1,30 @@
+{
+  "version": "termination-2026-11-10-e1a8f4ba0853",
+  "inputs": [
+    {
+      "url": "https://www.gesetze-im-internet.de/bgb/xml.zip",
+      "xml_sha256": "34fc732d8b963eb753ed11236490d3c47c123ccb72b67c2fdda7f19544389e57"
+    },
+    {
+      "url": "https://www.gesetze-im-internet.de/kschg/xml.zip",
+      "xml_sha256": "e4d9da79504ba8cda7ac849b01fd4e55232223ed2c5e40d982e670cfca3abdb5"
+    },
+    {
+      "url": "https://www.gesetze-im-internet.de/betrvg/xml.zip",
+      "xml_sha256": "5fdf7c393c9a7b7dc2c1bd21580c760d18e795c2134b1b179d098c80f017e43a"
+    },
+    {
+      "url": "https://www.gesetze-im-internet.de/zpo/xml.zip",
+      "xml_sha256": "3bde5966d8fcdc2c736d5b6f2e28c5e99db77b91c55e4f088bd5f31cfa80b3a5"
+    },
+    {
+      "url": "https://www.gesetze-im-internet.de/arbgg/xml.zip",
+      "xml_sha256": "eb20c1a0e6668cb6de2ae7ba43e0955e0ae0d8dae9c6ddf2ae81e2332f9a2ace"
+    }
+  ],
+  "parser": "GesetzeScraper._parse_xml/itertext",
+  "source_count": 16,
+  "corpus_sha256": "3d0c82b04c397613fb541c051b08386219c38843260bb173d867c0a8751b5f96",
+  "retrieved_on_is_not_effective_date": true,
+  "live_index_modified": false
+}

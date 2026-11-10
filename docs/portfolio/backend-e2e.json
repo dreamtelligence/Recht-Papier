@@ -1,0 +1,46 @@
+{
+  "executed_at": "2026-11-10T12:51:22.558415+00:00",
+  "project_region": "eu-central-1",
+  "public_data": "fictional only",
+  "cases": [
+    {
+      "fixture": "dev-01",
+      "start_status": 202,
+      "start_latency_seconds": 4.556,
+      "analysis_latency_seconds": 14.824,
+      "released": true,
+      "model": "controlled-termination/1.0",
+      "source_count": 16,
+      "calculation_count": 2,
+      "real_pdf_text_extraction": true,
+      "private_anonymous_read_denied": true,
+      "report_saved_and_approved": true
+    },
+    {
+      "fixture": "dev-11",
+      "start_status": 202,
+      "start_latency_seconds": 0.973,
+      "analysis_latency_seconds": 5.508,
+      "released": true,
+      "model": "controlled-termination/1.0",
+      "source_count": 16,
+      "calculation_count": 0,
+      "real_pdf_text_extraction": true,
+      "private_anonymous_read_denied": true,
+      "report_saved_and_approved": true
+    },
+    {
+      "fixture": "dev-14",
+      "start_status": 202,
+      "start_latency_seconds": 0.93,
+      "analysis_latency_seconds": 6.099,
+      "released": true,
+      "model": "controlled-termination/1.0",
+      "source_count": 16,
+      "calculation_count": 0,
+      "real_pdf_text_extraction": true,
+      "private_anonymous_read_denied": true,
+      "report_saved_and_approved": true
+    }
+  ]
+}

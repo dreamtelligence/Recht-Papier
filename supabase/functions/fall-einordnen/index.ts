@@ -1,6 +1,6 @@
 import { createClient } from "jsr:@supabase/supabase-js@2.115.0";
 import {
-  buildAnalysisInput,
+  buildWorkerInput,
   cors,
   failJob,
   json,
@@ -69,7 +69,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    buildAnalysisInput(snapshot);
+    buildWorkerInput(snapshot);
   } catch (error) {
     return await failJob(
       worker,

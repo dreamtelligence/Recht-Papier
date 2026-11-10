@@ -1,0 +1,1139 @@
+{
+  "corpus_version": "termination-2026-11-10-e1a8f4ba0853",
+  "planned_logical_runs": 80,
+  "recorded_logical_runs": 80,
+  "transport_attempts_including_replaced_bad_poll": 81,
+  "complete_model_comparison": false,
+  "comparison_limit": "Qwen EU L40S capacity unavailable within three request limits; existing Gemini quota exhausted. No model ranking or successful full acceptance benchmark claimed.",
+  "scoring_limit": "Date/reference and citation-ID checks only; legal entailment is not established by an existing ID. No professional validation.",
+  "manual_source_review_findings": [
+    {
+      "case": "dev-10/dev-11/acc-01",
+      "finding": "Gemini reverses § 1 KSchG in the wording unwirksam, wenn sie nicht sozial ungerechtfertigt ist. This is a material legal error."
+    },
+    {
+      "case": "dev-15",
+      "finding": "Gemini invents an immediate rejection and an omitted works-council hearing; neither follows from the confirmed facts."
+    },
+    {
+      "case": "dev-14",
+      "finding": "Gemini chooses a later receipt date despite contradictory confirmed evidence and emits dates instead of preserving the uncertainty."
+    },
+    {
+      "case": "dev-03",
+      "finding": "Gemini says written form is unknown although written_notice=yes was confirmed."
+    }
+  ],
+  "summary": {
+    "qwen": {
+      "planned_runs": 40,
+      "returned_valid_contract": 0,
+      "transport_or_format_or_blocked": {
+        "TimeoutError": 3,
+        "provider_circuit_open": 37
+      },
+      "runs_with_date_mismatch": null,
+      "date_mismatches": null,
+      "runs_with_undefined_source_ids": null,
+      "calculations_without_norm_source": null,
+      "claims_without_norm_source": null,
+      "uncertainty_correctly_preserved": null,
+      "uncertainty_not_preserved": null,
+      "p50_request_seconds": 180.08,
+      "free_legal_conclusions_approved": false
+    },
+    "gemini": {
+      "planned_runs": 40,
+      "returned_valid_contract": 17,
+      "transport_or_format_or_blocked": {
+        "invalid_json": 1,
+        "http_503": 1,
+        "http_429": 3,
+        "provider_circuit_open": 18
+      },
+      "runs_with_date_mismatch": 15,
+      "date_mismatches": 19,
+      "runs_with_undefined_source_ids": 1,
+      "calculations_without_norm_source": 5,
+      "claims_without_norm_source": 0,
+      "uncertainty_correctly_preserved": 0,
+      "uncertainty_not_preserved": 3,
+      "p50_request_seconds": 2.0375,
+      "free_legal_conclusions_approved": false
+    }
+  },
+  "scores": [
+    {
+      "id": "dev-01",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 1.651,
+      "error": null,
+      "date_mismatches": [
+        {
+          "kind": "notice_end",
+          "expected": "2026-11-30",
+          "actual": "2026-10-31"
+        }
+      ],
+      "unknown_source_ids": [
+        "facts"
+      ],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-01",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 180.08,
+      "error": "TimeoutError",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-02",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 1.868,
+      "error": null,
+      "date_mismatches": [
+        {
+          "kind": "notice_end",
+          "expected": "2026-11-30",
+          "actual": "2026-10-31"
+        }
+      ],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-02",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 180.075,
+      "error": "TimeoutError",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-03",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 6.2,
+      "error": null,
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-03",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 180.087,
+      "error": "TimeoutError",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-04",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 1.617,
+      "error": null,
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 1,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-04",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-05",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 2.027,
+      "error": null,
+      "date_mismatches": [
+        {
+          "kind": "notice_end",
+          "expected": "2026-10-31",
+          "actual": "2026-09-30"
+        }
+      ],
+      "unknown_source_ids": [],
+      "uncited_calculations": 1,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-05",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-06",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 1.423,
+      "error": null,
+      "date_mismatches": [
+        {
+          "kind": "notice_end",
+          "expected": "2026-11-30",
+          "actual": "2026-10-31"
+        }
+      ],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-06",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-07",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 1.756,
+      "error": null,
+      "date_mismatches": [
+        {
+          "kind": "notice_end",
+          "expected": "2026-12-31",
+          "actual": "2026-11-30"
+        }
+      ],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-07",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-08",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 2.106,
+      "error": "invalid_json",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-08",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-09",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 2.143,
+      "error": null,
+      "date_mismatches": [
+        {
+          "kind": "notice_end",
+          "expected": "2027-02-28",
+          "actual": "2026-11-30"
+        }
+      ],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-09",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-10",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 1.339,
+      "error": null,
+      "date_mismatches": [
+        {
+          "kind": "notice_end",
+          "expected": "2027-03-31",
+          "actual": "2026-09-30"
+        }
+      ],
+      "unknown_source_ids": [],
+      "uncited_calculations": 1,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-10",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-11",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 7.471,
+      "error": null,
+      "date_mismatches": [
+        {
+          "kind": "notice_end",
+          "expected": null,
+          "actual": "2026-10-31"
+        },
+        {
+          "kind": "claim_deadline",
+          "expected": null,
+          "actual": "2026-10-21"
+        }
+      ],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": false
+    },
+    {
+      "id": "dev-11",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-12",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 5.842,
+      "error": null,
+      "date_mismatches": [
+        {
+          "kind": "notice_end",
+          "expected": null,
+          "actual": "2026-10-31"
+        }
+      ],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": false
+    },
+    {
+      "id": "dev-12",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-13",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 1.812,
+      "error": "http_503",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-13",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-14",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 7.221,
+      "error": null,
+      "date_mismatches": [
+        {
+          "kind": "notice_end",
+          "expected": null,
+          "actual": "2026-09-30"
+        },
+        {
+          "kind": "claim_deadline",
+          "expected": null,
+          "actual": "2026-10-21"
+        }
+      ],
+      "unknown_source_ids": [],
+      "uncited_calculations": 1,
+      "uncited_claims": 0,
+      "uncertainty_recognized": false
+    },
+    {
+      "id": "dev-14",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-15",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 4.054,
+      "error": null,
+      "date_mismatches": [
+        {
+          "kind": "notice_end",
+          "expected": "2026-11-30",
+          "actual": "2026-10-31"
+        }
+      ],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-15",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-16",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 2.315,
+      "error": null,
+      "date_mismatches": [
+        {
+          "kind": "notice_end",
+          "expected": "2026-11-30",
+          "actual": "2026-09-30"
+        }
+      ],
+      "unknown_source_ids": [],
+      "uncited_calculations": 1,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "dev-16",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-01",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 3.215,
+      "error": null,
+      "date_mismatches": [
+        {
+          "kind": "notice_end",
+          "expected": "2027-03-31",
+          "actual": "2027-01-31"
+        },
+        {
+          "kind": "claim_deadline",
+          "expected": "2026-12-28",
+          "actual": "2027-01-11"
+        }
+      ],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-01",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-01",
+      "provider": "gemini",
+      "repetition": 2,
+      "latency_seconds": 2.048,
+      "error": null,
+      "date_mismatches": [
+        {
+          "kind": "notice_end",
+          "expected": "2027-03-31",
+          "actual": "2027-01-31"
+        },
+        {
+          "kind": "claim_deadline",
+          "expected": "2026-12-28",
+          "actual": "2027-01-11"
+        }
+      ],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-01",
+      "provider": "qwen",
+      "repetition": 2,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-01",
+      "provider": "gemini",
+      "repetition": 3,
+      "latency_seconds": 0.18,
+      "error": "http_429",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-01",
+      "provider": "qwen",
+      "repetition": 3,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-02",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 2.957,
+      "error": null,
+      "date_mismatches": [
+        {
+          "kind": "claim_deadline",
+          "expected": "2026-11-09",
+          "actual": "2026-11-07"
+        }
+      ],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-02",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-02",
+      "provider": "gemini",
+      "repetition": 2,
+      "latency_seconds": 0.249,
+      "error": "http_429",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-02",
+      "provider": "qwen",
+      "repetition": 2,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-02",
+      "provider": "gemini",
+      "repetition": 3,
+      "latency_seconds": 0.215,
+      "error": "http_429",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-02",
+      "provider": "qwen",
+      "repetition": 3,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-03",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-03",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-03",
+      "provider": "gemini",
+      "repetition": 2,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-03",
+      "provider": "qwen",
+      "repetition": 2,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-03",
+      "provider": "gemini",
+      "repetition": 3,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-03",
+      "provider": "qwen",
+      "repetition": 3,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-04",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-04",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-04",
+      "provider": "gemini",
+      "repetition": 2,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-04",
+      "provider": "qwen",
+      "repetition": 2,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-04",
+      "provider": "gemini",
+      "repetition": 3,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-04",
+      "provider": "qwen",
+      "repetition": 3,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-05",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-05",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-05",
+      "provider": "gemini",
+      "repetition": 2,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-05",
+      "provider": "qwen",
+      "repetition": 2,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-05",
+      "provider": "gemini",
+      "repetition": 3,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-05",
+      "provider": "qwen",
+      "repetition": 3,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-06",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-06",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-06",
+      "provider": "gemini",
+      "repetition": 2,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-06",
+      "provider": "qwen",
+      "repetition": 2,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-06",
+      "provider": "gemini",
+      "repetition": 3,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-06",
+      "provider": "qwen",
+      "repetition": 3,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-07",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-07",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-07",
+      "provider": "gemini",
+      "repetition": 2,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-07",
+      "provider": "qwen",
+      "repetition": 2,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-07",
+      "provider": "gemini",
+      "repetition": 3,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-07",
+      "provider": "qwen",
+      "repetition": 3,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-08",
+      "provider": "gemini",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-08",
+      "provider": "qwen",
+      "repetition": 1,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-08",
+      "provider": "gemini",
+      "repetition": 2,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-08",
+      "provider": "qwen",
+      "repetition": 2,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-08",
+      "provider": "gemini",
+      "repetition": 3,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    },
+    {
+      "id": "acc-08",
+      "provider": "qwen",
+      "repetition": 3,
+      "latency_seconds": 0,
+      "error": "provider_circuit_open",
+      "date_mismatches": [],
+      "unknown_source_ids": [],
+      "uncited_calculations": 0,
+      "uncited_claims": 0,
+      "uncertainty_recognized": null
+    }
+  ]
+}

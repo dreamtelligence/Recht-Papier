@@ -1,3 +1,4 @@
+import type { Input, Result } from "@portfolio/contract";
 /**
  * Die Fallakte, wie der Client sie sieht.
  *
@@ -43,6 +44,7 @@ export type CaseDetail = CaseSummary & {
   input_revision: number;
   run_expires_at: string | null;
   analysis_error: string | null;
+  termination_input: Input | null;
 };
 
 export type CaseDocument = {
@@ -60,6 +62,8 @@ export type CaseDocument = {
   // gelesen", ein gesetztes `processed_at` mit leerem Text heißt "gelesen,
   // aber da war nichts" — meist ein Scan ohne Textebene.
   processed_at: string | null;
+  extracted_text: string | null;
+  extracted_pages: string[] | null;
   processing_error: string | null;
 };
 
@@ -75,6 +79,7 @@ export type CaseAnalysis = {
   id: string;
   question: string;
   answer: string | null;
+  structured_result: Result | null;
   created_at: string;
   /** Der Eingabestand, auf den sich diese Prüfung bezieht. */
   input_revision: number;

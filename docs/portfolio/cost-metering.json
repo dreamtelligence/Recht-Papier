@@ -1,0 +1,36 @@
+{
+  "rows": [
+    {
+      "object_id": "ap-dtAEMzUMSy7BcMqIej56EE",
+      "description": "recht-papier-qwen",
+      "environment_name": "main",
+      "interval": "2026-11-10T11:00:00Z",
+      "cost": "0.22913820",
+      "cost_by_resource": {
+        "CPU": "0.01912179",
+        "L40S": "0.19707972",
+        "Memory": "0.01293651",
+        "Network Egress": "0.00000018"
+      }
+    },
+    {
+      "object_id": "ap-eq4mhwG82PQZiuPkL4Tv6m",
+      "description": "recht-papier-portfolio-evaluation",
+      "environment_name": "main",
+      "interval": "2026-11-10T11:00:00Z",
+      "cost": "0.00053108",
+      "cost_by_resource": {
+        "CPU": "0.00045329",
+        "Memory": "0.00007667",
+        "Network Egress": "0.00000112"
+      }
+    }
+  ],
+  "start_utc": "2026-11-10T11:53:00Z",
+  "end_utc": "2026-11-10T12:43:46.021335Z",
+  "scope": "Evaluation apps and existing Qwen app; hourly metering is not an invoice and may arrive late.",
+  "metered_usd_total": 0.22966928,
+  "gemini_actual_billed_cost": null,
+  "gemini_list_price_estimate_usd": 0.0133723,
+  "final_invoice_reconciled": false
+}

@@ -1,0 +1,335 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "document_id",
+        "page",
+        "quote"
+      ],
+      "properties": {
+        "document_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        }
+      }
+    },
+    "Fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "value",
+        "confirmed",
+        "evidence"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "enum": [
+            "scope",
+            "receipt_on",
+            "employment_started_on",
+            "stated_end_on",
+            "notice_regime",
+            "probation",
+            "written_notice",
+            "special_protection",
+            "court_state",
+            "representative_authority",
+            "works_council"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "confirmed": {
+          "type": "boolean"
+        },
+        "evidence": {
+          "$ref": "#/definitions/Evidence"
+        }
+      }
+    },
+    "Input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "as_of",
+        "facts"
+      ],
+      "properties": {
+        "version": {
+          "type": "string",
+          "enum": [
+            "1.0"
+          ]
+        },
+        "as_of": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "facts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Fact"
+          }
+        }
+      }
+    },
+    "Source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "reference",
+        "url",
+        "text",
+        "sha256",
+        "retrieved_on"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "retrieved_on": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        }
+      }
+    },
+    "Calculation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "due_on",
+        "method",
+        "fact_keys",
+        "source_ids",
+        "assumptions"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "notice_end",
+            "claim_deadline"
+          ]
+        },
+        "due_on": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "fact_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "scope",
+              "receipt_on",
+              "employment_started_on",
+              "stated_end_on",
+              "notice_regime",
+              "probation",
+              "written_notice",
+              "special_protection",
+              "court_state",
+              "representative_authority",
+              "works_council"
+            ]
+          }
+        },
+        "source_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          }
+        }
+      }
+    },
+    "Check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "statement",
+        "source_ids"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "source_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          }
+        }
+      }
+    },
+    "Result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "mode",
+        "as_of",
+        "corpus_version",
+        "facts",
+        "calculations",
+        "checks",
+        "uncertainties",
+        "sources",
+        "technical_status",
+        "model_review"
+      ],
+      "properties": {
+        "version": {
+          "type": "string",
+          "enum": [
+            "1.0"
+          ]
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "controlled"
+          ]
+        },
+        "as_of": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "corpus_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "facts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Fact"
+          }
+        },
+        "calculations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Calculation"
+          }
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Check"
+          }
+        },
+        "uncertainties": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Source"
+          }
+        },
+        "technical_status": {
+          "type": "string",
+          "enum": [
+            "pass"
+          ]
+        },
+        "model_review": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "issues"
+          ],
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "not_used",
+                "rejected"
+              ]
+            },
+            "issues": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 12000
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

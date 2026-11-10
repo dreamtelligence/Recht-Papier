@@ -32,16 +32,16 @@ function escapeHtml(text: string): string {
  *
  * Bewusst nüchtern und ohne Bilder: das PDF geht möglicherweise an eine
  * Gegenseite oder an eine Kanzlei, und dort zählt Lesbarkeit, nicht die
- * Papieranmutung der App. Serifen, 11 pt, 2 cm Rand — ein Schriftstück.
+ * Papieranmutung der App. Serifen, 10,5 pt, 2 cm Rand — ein Schriftstück.
  */
 function seite(dokument: GeneratedDocument): string {
   return `<!DOCTYPE html>
 <html lang="de"><head><meta charset="utf-8" />
 <style>
   @page { margin: 20mm; }
-  body { font-family: Georgia, "Times New Roman", serif; font-size: 11pt; line-height: 1.55; color: #1c1a17; }
+  body { font-family: Georgia, "Times New Roman", serif; font-size: 10.5pt; line-height: 1.45; color: #1c1a17; }
   pre { font-family: inherit; font-size: inherit; white-space: pre-wrap; word-wrap: break-word; margin: 0; }
-  .fuss { margin-top: 14mm; padding-top: 4mm; border-top: 0.5pt solid #b9b2a5;
+  .fuss { margin-top: 6mm; padding-top: 4mm; border-top: 0.5pt solid #b9b2a5; break-inside: avoid;
           font-size: 8.5pt; color: #5f594e; }
 </style></head>
 <body>

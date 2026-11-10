@@ -1,0 +1,1271 @@
+[
+  {
+    "id": "dev-01",
+    "title": "Ein Termin, der nicht zur Frist passt",
+    "fictional": true,
+    "input": {
+      "version": "1.0",
+      "as_of": "2026-11-10",
+      "facts": [
+        {
+          "key": "scope",
+          "value": "ordinary_employer",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-01-document",
+            "page": 1,
+            "quote": "Art der Kündigung: Ordentliche Arbeitgeberkündigung"
+          }
+        },
+        {
+          "key": "receipt_on",
+          "value": "2026-11-10",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-01-document",
+            "page": 1,
+            "quote": "Zugang am: 2026-11-10"
+          }
+        },
+        {
+          "key": "employment_started_on",
+          "value": "2017-03-01",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-01-document",
+            "page": 1,
+            "quote": "Beschäftigt seit: 2017-03-01"
+          }
+        },
+        {
+          "key": "stated_end_on",
+          "value": "2026-12-31",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-01-document",
+            "page": 1,
+            "quote": "Genanntes Vertragsende: 2026-12-31"
+          }
+        },
+        {
+          "key": "notice_regime",
+          "value": "statutory",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-01-document",
+            "page": 1,
+            "quote": "Vertrag und Tarif geprüft: Gesetzliche Frist, keine abweichende Vertrags- oder Tarifregel"
+          }
+        },
+        {
+          "key": "probation",
+          "value": "no",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-01-document",
+            "page": 1,
+            "quote": "Probezeit: Nein"
+          }
+        },
+        {
+          "key": "written_notice",
+          "value": "yes",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-01-document",
+            "page": 1,
+            "quote": "Schriftliches Original erhalten: Ja"
+          }
+        },
+        {
+          "key": "special_protection",
+          "value": "no",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-01-document",
+            "page": 1,
+            "quote": "Behördliche Zustimmung / Sonderkündigungsschutz: Nein"
+          }
+        },
+        {
+          "key": "court_state",
+          "value": "NW",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-01-document",
+            "page": 1,
+            "quote": "Bundesland des Arbeitsgerichts: Nordrhein-Westfalen"
+          }
+        },
+        {
+          "key": "representative_authority",
+          "value": "attached",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-01-document",
+            "page": 1,
+            "quote": "Vollmacht: Vollmacht beigefügt"
+          }
+        },
+        {
+          "key": "works_council",
+          "value": "not_present",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-01-document",
+            "page": 1,
+            "quote": "Betriebsratsanhörung: Kein Betriebsrat"
+          }
+        }
+      ]
+    },
+    "documents": [
+      {
+        "id": "dev-01-document",
+        "file_name": "dev-01.pdf",
+        "extracted_text": "FIKTIVER PORTFOLIO-FALL. KEINE ECHTEN PERSONEN.\nAktennotiz und Kündigungsauszug: Drei Monate sind nicht ein Monat\nAnliegen: Ordentliche Arbeitgeberkündigung prüfen und Fragen für eine Kanzlei vorbereiten.\nDie folgenden Angaben stammen aus einem fiktiven Schreiben, einem fiktiven Vertrag und der eigenen Zugangsnotiz. Sie sind keine Echtheitsnachweise.\nArt der Kündigung: Ordentliche Arbeitgeberkündigung\nZugang am: 2026-11-10\nBeschäftigt seit: 2017-03-01\nGenanntes Vertragsende: 2026-12-31\nVertrag und Tarif geprüft: Gesetzliche Frist, keine abweichende Vertrags- oder Tarifregel\nProbezeit: Nein\nSchriftliches Original erhalten: Ja\nBehördliche Zustimmung / Sonderkündigungsschutz: Nein\nBundesland des Arbeitsgerichts: Nordrhein-Westfalen\nVollmacht: Vollmacht beigefügt\nBetriebsratsanhörung: Kein Betriebsrat",
+        "extracted_pages": [
+          "FIKTIVER PORTFOLIO-FALL. KEINE ECHTEN PERSONEN.\nAktennotiz und Kündigungsauszug: Drei Monate sind nicht ein Monat\nAnliegen: Ordentliche Arbeitgeberkündigung prüfen und Fragen für eine Kanzlei vorbereiten.\nDie folgenden Angaben stammen aus einem fiktiven Schreiben, einem fiktiven Vertrag und der eigenen Zugangsnotiz. Sie sind keine Echtheitsnachweise.\nArt der Kündigung: Ordentliche Arbeitgeberkündigung\nZugang am: 2026-11-10\nBeschäftigt seit: 2017-03-01\nGenanntes Vertragsende: 2026-12-31\nVertrag und Tarif geprüft: Gesetzliche Frist, keine abweichende Vertrags- oder Tarifregel\nProbezeit: Nein\nSchriftliches Original erhalten: Ja\nBehördliche Zustimmung / Sonderkündigungsschutz: Nein\nBundesland des Arbeitsgerichts: Nordrhein-Westfalen\nVollmacht: Vollmacht beigefügt\nBetriebsratsanhörung: Kein Betriebsrat"
+        ]
+      }
+    ],
+    "result": {
+      "mode": "controlled",
+      "as_of": "2026-11-10",
+      "facts": [
+        {
+          "key": "scope",
+          "value": "ordinary_employer",
+          "evidence": {
+            "page": 1,
+            "quote": "Art der Kündigung: Ordentliche Arbeitgeberkündigung",
+            "document_id": "dev-01-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "receipt_on",
+          "value": "2026-11-10",
+          "evidence": {
+            "page": 1,
+            "quote": "Zugang am: 2026-11-10",
+            "document_id": "dev-01-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "employment_started_on",
+          "value": "2017-03-01",
+          "evidence": {
+            "page": 1,
+            "quote": "Beschäftigt seit: 2017-03-01",
+            "document_id": "dev-01-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "stated_end_on",
+          "value": "2026-12-31",
+          "evidence": {
+            "page": 1,
+            "quote": "Genanntes Vertragsende: 2026-12-31",
+            "document_id": "dev-01-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "notice_regime",
+          "value": "statutory",
+          "evidence": {
+            "page": 1,
+            "quote": "Vertrag und Tarif geprüft: Gesetzliche Frist, keine abweichende Vertrags- oder Tarifregel",
+            "document_id": "dev-01-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "probation",
+          "value": "no",
+          "evidence": {
+            "page": 1,
+            "quote": "Probezeit: Nein",
+            "document_id": "dev-01-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "written_notice",
+          "value": "yes",
+          "evidence": {
+            "page": 1,
+            "quote": "Schriftliches Original erhalten: Ja",
+            "document_id": "dev-01-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "special_protection",
+          "value": "no",
+          "evidence": {
+            "page": 1,
+            "quote": "Behördliche Zustimmung / Sonderkündigungsschutz: Nein",
+            "document_id": "dev-01-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "court_state",
+          "value": "NW",
+          "evidence": {
+            "page": 1,
+            "quote": "Bundesland des Arbeitsgerichts: Nordrhein-Westfalen",
+            "document_id": "dev-01-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "representative_authority",
+          "value": "attached",
+          "evidence": {
+            "page": 1,
+            "quote": "Vollmacht: Vollmacht beigefügt",
+            "document_id": "dev-01-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "works_council",
+          "value": "not_present",
+          "evidence": {
+            "page": 1,
+            "quote": "Betriebsratsanhörung: Kein Betriebsrat",
+            "document_id": "dev-01-document"
+          },
+          "confirmed": true
+        }
+      ],
+      "checks": [
+        {
+          "code": "scope",
+          "statement": "Diese Prüfung entscheidet nicht über die Wirksamkeit der Kündigung. Sozialauswahl, Kündigungsgrund und Sonderkündigungsschutz sind nicht abschließend geprüft.",
+          "source_ids": [
+            "KSchG_1",
+            "KSchG_23"
+          ]
+        },
+        {
+          "code": "written_form",
+          "statement": "Die Beendigung durch Kündigung erfordert Schriftform; die elektronische Form ist ausgeschlossen. Das Original muss gesondert geprüft werden.",
+          "source_ids": [
+            "BGB_623"
+          ]
+        },
+        {
+          "code": "notice_comparison",
+          "statement": "Das genannte Vertragsende 2026-12-31 liegt vor dem berechneten gesetzlichen Vergleichstermin 2027-02-28. Auslegung und Rechtsfolgen anwaltlich klären.",
+          "source_ids": [
+            "BGB_622"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "id": "BGB_130",
+          "url": "https://www.gesetze-im-internet.de/bgb/__130.html",
+          "text": "(1) Eine Willenserklärung, die einem anderen gegenüber abzugeben ist, wird, wenn sie in dessen Abwesenheit abgegeben wird, in dem Zeitpunkt wirksam, in welchem sie ihm zugeht. Sie wird nicht wirksam, wenn dem anderen vorher oder gleichzeitig ein Widerruf zugeht.\n(2) Eine Willenserklärung, die notariell beurkundet oder öffentlich beglaubigt wurde, wird auch wirksam, wenn dem Erklärungsempfänger eine öffentlich beglaubigte Abschrift der Urschrift zugeht.\n(3) Auf die Wirksamkeit der Willenserklärung ist es ohne Einfluss, wenn der Erklärende nach der Abgabe stirbt oder geschäftsunfähig wird.\n(4) Diese Vorschriften finden auch dann Anwendung, wenn die Willenserklärung einer Behörde gegenüber abzugeben ist.",
+          "sha256": "79355e302823938a800db986b3a0ee210426164fa072a9746a4e705cf25aa8f5",
+          "reference": "§ 130 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_174",
+          "url": "https://www.gesetze-im-internet.de/bgb/__174.html",
+          "text": "Ein einseitiges Rechtsgeschäft, das ein Bevollmächtigter einem anderen gegenüber vornimmt, ist unwirksam, wenn der Bevollmächtigte eine Vollmachtsurkunde nicht vorlegt und der andere das Rechtsgeschäft aus diesem Grunde unverzüglich zurückweist. Die Zurückweisung ist ausgeschlossen, wenn der Vollmachtgeber den anderen von der Bevollmächtigung in Kenntnis gesetzt hatte.",
+          "sha256": "917167d43dd021b763fe16d86fe1768930410369406c8fdce970c386167d09e7",
+          "reference": "§ 174 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_187",
+          "url": "https://www.gesetze-im-internet.de/bgb/__187.html",
+          "text": "(1) Ist für den Anfang einer Frist ein Ereignis oder ein in den Lauf eines Tages fallender Zeitpunkt maßgebend, so wird bei der Berechnung der Frist der Tag nicht mitgerechnet, in welchen das Ereignis oder der Zeitpunkt fällt.\n(2) Ist der Beginn eines Tages der für den Anfang einer Frist maßgebende Zeitpunkt, so wird dieser Tag bei der Berechnung der Frist mitgerechnet. Das Gleiche gilt von dem Tage der Geburt bei der Berechnung des Lebensalters.\n(+++ § 187: Zur Anwendung vgl. § 31 Abs. 5 KVBG +++)",
+          "sha256": "0643e3df6dce8e22c933624b9d79e409e47c7248a3acced238fb1d0e043c4551",
+          "reference": "§ 187 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_188",
+          "url": "https://www.gesetze-im-internet.de/bgb/__188.html",
+          "text": "(1) Eine nach Tagen bestimmte Frist endigt mit dem Ablauf des letzten Tages der Frist.\n(2) Eine Frist, die nach Wochen, nach Monaten oder nach einem mehrere Monate umfassenden Zeitraum - Jahr, halbes Jahr, Vierteljahr - bestimmt ist, endigt im Falle des § 187 Abs. 1 mit dem Ablauf desjenigen Tages der letzten Woche oder des letzten Monats, welcher durch seine Benennung oder seine Zahl dem Tage entspricht, in den das Ereignis oder der Zeitpunkt fällt, im Falle des § 187 Abs. 2 mit dem Ablauf desjenigen Tages der letzten Woche oder des letzten Monats, welcher dem Tage vorhergeht, der durch seine Benennung oder seine Zahl dem Anfangstag der Frist entspricht.\n(3) Fehlt bei einer nach Monaten bestimmten Frist in dem letzten Monat der für ihren Ablauf maßgebende Tag, so endigt die Frist mit dem Ablauf des letzten Tages dieses Monats.\n(+++ § 188: Zur Anwendung vgl. § 31 Abs. 5 KVBG +++)",
+          "sha256": "598fbe81b78d2f6b369a295701339973e90c113f4bd8172c07cfab169c5caef4",
+          "reference": "§ 188 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_193",
+          "url": "https://www.gesetze-im-internet.de/bgb/__193.html",
+          "text": "Ist an einem bestimmten Tage oder innerhalb einer Frist eine Willenserklärung abzugeben oder eine Leistung zu bewirken und fällt der bestimmte Tag oder der letzte Tag der Frist auf einen Sonntag, einen am Erklärungs- oder Leistungsort staatlich anerkannten allgemeinen Feiertag oder einen Sonnabend, so tritt an die Stelle eines solchen Tages der nächste Werktag.",
+          "sha256": "f8ecc03c337f35809d08a6a3b1762d8253e0a8a70a49445002b6254266d83fb5",
+          "reference": "§ 193 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_622",
+          "url": "https://www.gesetze-im-internet.de/bgb/__622.html",
+          "text": "(1) Das Arbeitsverhältnis eines Arbeiters oder eines Angestellten (Arbeitnehmers) kann mit einer Frist von vier Wochen zum Fünfzehnten oder zum Ende eines Kalendermonats gekündigt werden.\n(2) Für eine Kündigung durch den Arbeitgeber beträgt die Kündigungsfrist, wenn das Arbeitsverhältnis in dem Betrieb oder Unternehmen\n1.\nzwei Jahre bestanden hat, einen Monat zum Ende eines Kalendermonats,\n2.\nfünf Jahre bestanden hat, zwei Monate zum Ende eines Kalendermonats,\n3.\nacht Jahre bestanden hat, drei Monate zum Ende eines Kalendermonats,\n4.\nzehn Jahre bestanden hat, vier Monate zum Ende eines Kalendermonats,\n5.\nzwölf Jahre bestanden hat, fünf Monate zum Ende eines Kalendermonats,\n6.\n15 Jahre bestanden hat, sechs Monate zum Ende eines Kalendermonats,\n7.\n20 Jahre bestanden hat, sieben Monate zum Ende eines Kalendermonats.\n(3) Während einer vereinbarten Probezeit, längstens für die Dauer von sechs Monaten, kann das Arbeitsverhältnis mit einer Frist von zwei Wochen gekündigt werden.\n(4) Von den Absätzen 1 bis 3 abweichende Regelungen können durch Tarifvertrag vereinbart werden. Im Geltungsbereich eines solchen Tarifvertrags gelten die abweichenden tarifvertraglichen Bestimmungen zwischen nicht tarifgebundenen Arbeitgebern und Arbeitnehmern, wenn ihre Anwendung zwischen ihnen vereinbart ist.\n(5) Einzelvertraglich kann eine kürzere als die in Absatz 1 genannte Kündigungsfrist nur vereinbart werden,\n1.\nwenn ein Arbeitnehmer zur vorübergehenden Aushilfe eingestellt ist; dies gilt nicht, wenn das Arbeitsverhältnis über die Zeit von drei Monaten hinaus fortgesetzt wird;\n2.\nwenn der Arbeitgeber in der Regel nicht mehr als 20 Arbeitnehmer ausschließlich der zu ihrer Berufsbildung Beschäftigten beschäftigt und die Kündigungsfrist vier Wochen nicht unterschreitet.\nBei der Feststellung der Zahl der beschäftigten Arbeitnehmer sind teilzeitbeschäftigte Arbeitnehmer mit einer regelmäßigen wöchentlichen Arbeitszeit von nicht mehr als 20 Stunden mit 0,5 und nicht mehr als 30 Stunden mit 0,75 zu berücksichtigen. Die einzelvertragliche Vereinbarung längerer als der in den Absätzen 1 bis 3 genannten Kündigungsfristen bleibt hiervon unberührt.\n(6) Für die Kündigung des Arbeitsverhältnisses durch den Arbeitnehmer darf keine längere Frist vereinbart werden als für die Kündigung durch den Arbeitgeber.",
+          "sha256": "ff82d5f71b98082aa7e9639cb6a8fef6eaaa7ed3e2bbc014ca7f7db36d36f4c9",
+          "reference": "§ 622 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_623",
+          "url": "https://www.gesetze-im-internet.de/bgb/__623.html",
+          "text": "Die Beendigung von Arbeitsverhältnissen durch Kündigung oder Auflösungsvertrag bedürfen zu ihrer Wirksamkeit der Schriftform; die elektronische Form ist ausgeschlossen.",
+          "sha256": "c41eb464d851cb485bb8b1ddc8b57488bc1dd675a147677d2bc37b029347c25b",
+          "reference": "§ 623 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "KSchG_1",
+          "url": "https://www.gesetze-im-internet.de/kschg/__1.html",
+          "text": "(1) Die Kündigung des Arbeitsverhältnisses gegenüber einem Arbeitnehmer, dessen Arbeitsverhältnis in demselben Betrieb oder Unternehmen ohne Unterbrechung länger als sechs Monate bestanden hat, ist rechtsunwirksam, wenn sie sozial ungerechtfertigt ist.\n(2) Sozial ungerechtfertigt ist die Kündigung, wenn sie nicht durch Gründe, die in der Person oder in dem Verhalten des Arbeitnehmers liegen, oder durch dringende betriebliche Erfordernisse, die einer Weiterbeschäftigung des Arbeitnehmers in diesem Betrieb entgegenstehen, bedingt ist. Die Kündigung ist auch sozial ungerechtfertigt, wenn\n1.\nin Betrieben des privaten Rechts\na)\ndie Kündigung gegen eine Richtlinie nach § 95 des Betriebsverfassungsgesetzes verstößt,\nb)\nder Arbeitnehmer an einem anderen Arbeitsplatz in demselben Betrieb oder in einem anderen Betrieb des Unternehmens weiterbeschäftigt werden kann\nund der Betriebsrat oder eine andere nach dem Betriebsverfassungsgesetz insoweit zuständige Vertretung der Arbeitnehmer aus einem dieser Gründe der Kündigung innerhalb der Frist des § 102 Abs. 2 Satz 1 des Betriebsverfassungsgesetzes schriftlich widersprochen hat,\n2.\nin Betrieben und Verwaltungen des öffentlichen Rechts\na)\ndie Kündigung gegen eine Richtlinie über die personelle Auswahl bei Kündigungen verstößt,\nb)\nder Arbeitnehmer an einem anderen Arbeitsplatz in derselben Dienststelle oder in einer anderen Dienststelle desselben Verwaltungszweigs an demselben Dienstort einschließlich seines Einzugsgebiets weiterbeschäftigt werden kann\nund die zuständige Personalvertretung aus einem dieser Gründe fristgerecht gegen die Kündigung Einwendungen erhoben hat, es sei denn, daß die Stufenvertretung in der Verhandlung mit der übergeordneten Dienststelle die Einwendungen nicht aufrechterhalten hat.\nSatz 2 gilt entsprechend, wenn die Weiterbeschäftigung des Arbeitnehmers nach zumutbaren Umschulungs- oder Fortbildungsmaßnahmen oder eine Weiterbeschäftigung des Arbeitnehmers unter geänderten Arbeitsbedingungen möglich ist und der Arbeitnehmer sein Einverständnis hiermit erklärt hat. Der Arbeitgeber hat die Tatsachen zu beweisen, die die Kündigung bedingen.\n(3) Ist einem Arbeitnehmer aus dringenden betrieblichen Erfordernissen im Sinne des Absatzes 2 gekündigt worden, so ist die Kündigung trotzdem sozial ungerechtfertigt, wenn der Arbeitgeber bei der Auswahl des Arbeitnehmers die Dauer der Betriebszugehörigkeit, das Lebensalter, die Unterhaltspflichten und die Schwerbehinderung des Arbeitnehmers nicht oder nicht ausreichend berücksichtigt hat; auf Verlangen des Arbeitnehmers hat der Arbeitgeber dem Arbeitnehmer die Gründe anzugeben, die zu der getroffenen sozialen Auswahl geführt haben. In die soziale Auswahl nach Satz 1 sind Arbeitnehmer nicht einzubeziehen, deren Weiterbeschäftigung, insbesondere wegen ihrer Kenntnisse, Fähigkeiten und Leistungen oder zur Sicherung einer ausgewogenen Personalstruktur des Betriebes, im berechtigten betrieblichen Interesse liegt. Der Arbeitnehmer hat die Tatsachen zu beweisen, die die Kündigung als sozial ungerechtfertigt im Sinne des Satzes 1 erscheinen lassen.\n(4) Ist in einem Tarifvertrag, in einer Betriebsvereinbarung nach § 95 des Betriebsverfassungsgesetzes oder in einer entsprechenden Richtlinie nach den Personalvertretungsgesetzen festgelegt, wie die sozialen Gesichtspunkte nach Absatz 3 Satz 1 im Verhältnis zueinander zu bewerten sind, so kann die Bewertung nur auf grobe Fehlerhaftigkeit überprüft werden.\n(5) Sind bei einer Kündigung auf Grund einer Betriebsänderung nach § 111 des Betriebsverfassungsgesetzes die Arbeitnehmer, denen gekündigt werden soll, in einem Interessenausgleich zwischen Arbeitgeber und Betriebsrat namentlich bezeichnet, so wird vermutet, dass die Kündigung durch dringende betriebliche Erfordernisse im Sinne des Absatzes 2 bedingt ist. Die soziale Auswahl der Arbeitnehmer kann nur auf grobe Fehlerhaftigkeit überprüft werden. Die Sätze 1 und 2 gelten nicht, soweit sich die Sachlage nach Zustandekommen des Interessenausgleichs wesentlich geändert hat. Der Interessenausgleich nach Satz 1 ersetzt die Stellungnahme des Betriebsrates nach § 17 Abs. 3 Satz 2.",
+          "sha256": "d2cca8a5e993b5c51c7d60138d6879152835b4f3b147c9440510f7ac4e992828",
+          "reference": "§ 1 KSchG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "KSchG_4",
+          "url": "https://www.gesetze-im-internet.de/kschg/__4.html",
+          "text": "Will ein Arbeitnehmer geltend machen, dass eine Kündigung sozial ungerechtfertigt oder aus anderen Gründen rechtsunwirksam ist, so muss er innerhalb von drei Wochen nach Zugang der schriftlichen Kündigung Klage beim Arbeitsgericht auf Feststellung erheben, dass das Arbeitsverhältnis durch die Kündigung nicht aufgelöst ist. Im Falle des § 2 ist die Klage auf Feststellung zu erheben, daß die Änderung der Arbeitsbedingungen sozial ungerechtfertigt oder aus anderen Gründen rechtsunwirksam ist. Hat der Arbeitnehmer Einspruch beim Betriebsrat eingelegt (§ 3), so soll er der Klage die Stellungnahme des Betriebsrats beifügen. Soweit die Kündigung der Zustimmung einer Behörde bedarf, läuft die Frist zur Anrufung des Arbeitsgerichts erst von der Bekanntgabe der Entscheidung der Behörde an den Arbeitnehmer ab.",
+          "sha256": "c3629589d74fd1232f5d0a3186cc62383a6e0872b12dd21fbea21efa9ea38bf4",
+          "reference": "§ 4 KSchG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "KSchG_5",
+          "url": "https://www.gesetze-im-internet.de/kschg/__5.html",
+          "text": "(1) War ein Arbeitnehmer nach erfolgter Kündigung trotz Anwendung aller ihm nach Lage der Umstände zuzumutenden Sorgfalt verhindert, die Klage innerhalb von drei Wochen nach Zugang der schriftlichen Kündigung zu erheben, so ist auf seinen Antrag die Klage nachträglich zuzulassen. Gleiches gilt, wenn eine Frau von ihrer Schwangerschaft aus einem von ihr nicht zu vertretenden Grund erst nach Ablauf der Frist des § 4 Satz 1 Kenntnis erlangt hat.\n(2) Mit dem Antrag ist die Klageerhebung zu verbinden; ist die Klage bereits eingereicht, so ist auf sie im Antrag Bezug zu nehmen. Der Antrag muß ferner die Angabe der die nachträgliche Zulassung begründenden Tatsachen und der Mittel für deren Glaubhaftmachung enthalten.\n(3) Der Antrag ist nur innerhalb von zwei Wochen nach Behebung des Hindernisses zulässig. Nach Ablauf von sechs Monaten, vom Ende der versäumten Frist an gerechnet, kann der Antrag nicht mehr gestellt werden.\n(4) Das Verfahren über den Antrag auf nachträgliche Zulassung ist mit dem Verfahren über die Klage zu verbinden. Das Arbeitsgericht kann das Verfahren zunächst auf die Verhandlung und Entscheidung über den Antrag beschränken. In diesem Fall ergeht die Entscheidung durch Zwischenurteil, das wie ein Endurteil angefochten werden kann.\n(5) Hat das Arbeitsgericht über einen Antrag auf nachträgliche Klagezulassung nicht entschieden oder wird ein solcher Antrag erstmals vor dem Landesarbeitsgericht gestellt, entscheidet hierüber die Kammer des Landesarbeitsgerichts. Absatz 4 gilt entsprechend.",
+          "sha256": "ff30893268191bde9b4175affbbdaa20464af98a0d48970fdfbd08e07b170d18",
+          "reference": "§ 5 KSchG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "KSchG_7",
+          "url": "https://www.gesetze-im-internet.de/kschg/__7.html",
+          "text": "Wird die Rechtsunwirksamkeit einer Kündigung nicht rechtzeitig geltend gemacht (§ 4 Satz 1, §§ 5 und 6), so gilt die Kündigung als von Anfang an rechtswirksam; ein vom Arbeitnehmer nach § 2 erklärter Vorbehalt erlischt.",
+          "sha256": "73165cf9eae5106f2cbb3e152fed2e575634ef406625708132e3b9f8e9472582",
+          "reference": "§ 7 KSchG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "KSchG_23",
+          "url": "https://www.gesetze-im-internet.de/kschg/__23.html",
+          "text": "(1) Die Vorschriften des Ersten und Zweiten Abschnitts gelten für Betriebe und Verwaltungen des privaten und des öffentlichen Rechts, vorbehaltlich der Vorschriften des § 24 für die Seeschiffahrts-, Binnenschiffahrts- und Luftverkehrsbetriebe. Die Vorschriften des Ersten Abschnitts gelten mit Ausnahme der §§ 4 bis 7 und des § 13 Abs. 1 Satz 1 und 2 nicht für Betriebe und Verwaltungen, in denen in der Regel fünf oder weniger Arbeitnehmer ausschließlich der zu ihrer Berufsbildung Beschäftigten beschäftigt werden. In Betrieben und Verwaltungen, in denen in der Regel zehn oder weniger Arbeitnehmer ausschließlich der zu ihrer Berufsbildung Beschäftigten beschäftigt werden, gelten die Vorschriften des Ersten Abschnitts mit Ausnahme der §§ 4 bis 7 und des § 13 Abs. 1 Satz 1 und 2 nicht für Arbeitnehmer, deren Arbeitsverhältnis nach dem 31. Dezember 2003 begonnen hat; diese Arbeitnehmer sind bei der Feststellung der Zahl der beschäftigten Arbeitnehmer nach Satz 2 bis zur Beschäftigung von in der Regel zehn Arbeitnehmern nicht zu berücksichtigen. Bei der Feststellung der Zahl der beschäftigten Arbeitnehmer nach den Sätzen 2 und 3 sind teilzeitbeschäftigte Arbeitnehmer mit einer regelmäßigen wöchentlichen Arbeitszeit von nicht mehr als 20 Stunden mit 0,5 und nicht mehr als 30 Stunden mit 0,75 zu berücksichtigen.\n(2) Die Vorschriften des Dritten Abschnitts gelten für Betriebe und Verwaltungen des privaten Rechts sowie für Betriebe, die von einer öffentlichen Verwaltung geführt werden, soweit sie wirtschaftliche Zwecke verfolgen.",
+          "sha256": "1cab59272cc5ec00a55a93cedc097cf346bbf5f873bd285194b22a323087da19",
+          "reference": "§ 23 KSchG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BetrVG_102",
+          "url": "https://www.gesetze-im-internet.de/betrvg/__102.html",
+          "text": "(1) Der Betriebsrat ist vor jeder Kündigung zu hören. Der Arbeitgeber hat ihm die Gründe für die Kündigung mitzuteilen. Eine ohne Anhörung des Betriebsrats ausgesprochene Kündigung ist unwirksam.\n(2) Hat der Betriebsrat gegen eine ordentliche Kündigung Bedenken, so hat er diese unter Angabe der Gründe dem Arbeitgeber spätestens innerhalb einer Woche schriftlich mitzuteilen. Äußert er sich innerhalb dieser Frist nicht, gilt seine Zustimmung zur Kündigung als erteilt. Hat der Betriebsrat gegen eine außerordentliche Kündigung Bedenken, so hat er diese unter Angabe der Gründe dem Arbeitgeber unverzüglich, spätestens jedoch innerhalb von drei Tagen, schriftlich mitzuteilen. Der Betriebsrat soll, soweit dies erforderlich erscheint, vor seiner Stellungnahme den betroffenen Arbeitnehmer hören. § 99 Abs. 1 Satz 3 gilt entsprechend.\n(3) Der Betriebsrat kann innerhalb der Frist des Absatzes 2 Satz 1 der ordentlichen Kündigung widersprechen, wenn\n1.\nder Arbeitgeber bei der Auswahl des zu kündigenden Arbeitnehmers soziale Gesichtspunkte nicht oder nicht ausreichend berücksichtigt hat,\n2.\ndie Kündigung gegen eine Richtlinie nach § 95 verstößt,\n3.\nder zu kündigende Arbeitnehmer an einem anderen Arbeitsplatz im selben Betrieb oder in einem anderen Betrieb des Unternehmens weiterbeschäftigt werden kann,\n4.\ndie Weiterbeschäftigung des Arbeitnehmers nach zumutbaren Umschulungs- oder Fortbildungsmaßnahmen möglich ist oder\n5.\neine Weiterbeschäftigung des Arbeitnehmers unter geänderten Vertragsbedingungen möglich ist und der Arbeitnehmer sein Einverständnis hiermit erklärt hat.\n(4) Kündigt der Arbeitgeber, obwohl der Betriebsrat nach Absatz 3 der Kündigung widersprochen hat, so hat er dem Arbeitnehmer mit der Kündigung eine Abschrift der Stellungnahme des Betriebsrats zuzuleiten.\n(5) Hat der Betriebsrat einer ordentlichen Kündigung frist- und ordnungsgemäß widersprochen, und hat der Arbeitnehmer nach dem Kündigungsschutzgesetz Klage auf Feststellung erhoben, dass das Arbeitsverhältnis durch die Kündigung nicht aufgelöst ist, so muss der Arbeitgeber auf Verlangen des Arbeitnehmers diesen nach Ablauf der Kündigungsfrist bis zum rechtskräftigen Abschluss des Rechtsstreits bei unveränderten Arbeitsbedingungen weiterbeschäftigen. Auf Antrag des Arbeitgebers kann das Gericht ihn durch einstweilige Verfügung von der Verpflichtung zur Weiterbeschäftigung nach Satz 1 entbinden, wenn\n1.\ndie Klage des Arbeitnehmers keine hinreichende Aussicht auf Erfolg bietet oder mutwillig erscheint oder\n2.\ndie Weiterbeschäftigung des Arbeitnehmers zu einer unzumutbaren wirtschaftlichen Belastung des Arbeitgebers führen würde oder\n3.\nder Widerspruch des Betriebsrats offensichtlich unbegründet war.\n(6) Arbeitgeber und Betriebsrat können vereinbaren, dass Kündigungen der Zustimmung des Betriebsrats bedürfen und dass bei Meinungsverschiedenheiten über die Berechtigung der Nichterteilung der Zustimmung die Einigungsstelle entscheidet.\n(7) Die Vorschriften über die Beteiligung des Betriebsrats nach dem Kündigungsschutzgesetz bleiben unberührt.",
+          "sha256": "1539b78bd759716b7d03c4ac4cbd5d769c8bdc233438e49afc83e71d55f2fd87",
+          "reference": "§ 102 BetrVG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "ZPO_222",
+          "url": "https://www.gesetze-im-internet.de/zpo/__222.html",
+          "text": "(1) Für die Berechnung der Fristen gelten die Vorschriften des Bürgerlichen Gesetzbuchs.\n(2) Fällt das Ende einer Frist auf einen Sonntag, einen allgemeinen Feiertag oder einen Sonnabend, so endet die Frist mit Ablauf des nächsten Werktages.\n(3) Bei der Berechnung einer Frist, die nach Stunden bestimmt ist, werden Sonntage, allgemeine Feiertage und Sonnabende nicht mitgerechnet.",
+          "sha256": "cc0ee0255cb2991fad873f439a57559904a9128f0184ec2b2a65a61a861edbad",
+          "reference": "§ 222 ZPO",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "ArbGG_46",
+          "url": "https://www.gesetze-im-internet.de/arbgg/__46.html",
+          "text": "(1) Das Urteilsverfahren findet in den in § 2 Abs. 1 bis 4 bezeichneten bürgerlichen Rechtsstreitigkeiten Anwendung.\n(2) Für das Urteilsverfahren des ersten Rechtszugs gelten die Vorschriften der Zivilprozeßordnung über das Verfahren vor den Amtsgerichten entsprechend, soweit dieses Gesetz nichts anderes bestimmt. Die Vorschriften über den frühen ersten Termin zur mündlichen Verhandlung und das schriftliche Vorverfahren (§§ 275 bis 277 der Zivilprozessordnung), über das vereinfachte Verfahren (§ 495a der Zivilprozessordnung), über den Urkunden- und Wechselprozess (§§ 592 bis 605a der Zivilprozessordnung), über die Entscheidung ohne mündliche Verhandlung (§ 128 Absatz 2 der Zivilprozessordnung), über die Förderung von Videoverhandlungen bei Terminsänderungsanträgen (§ 227 Absatz 1 Satz 3 und Absatz 4 der Zivilprozessordnung), über die Verlegung von Terminen in der Zeit vom 1. Juli bis 31. August (§ 227 Absatz 3 Satz 1 der Zivilprozessordnung) und die Äußerung über Bedenken gegen eine Videoverhandlung in der Klageschrift und der Klageerwiderung (§ 253 Absatz 3 Nummer 4 und § 277 Absatz 1 Satz 2 Nummer 2 der Zivilprozessordnung) finden keine Anwendung. § 127 Abs. 2 der Zivilprozessordnung findet mit der Maßgabe Anwendung, dass die sofortige Beschwerde bei Bestandsschutzstreitigkeiten unabhängig von dem Streitwert zulässig ist. Abweichend von § 160 Absatz 1 Nummer 4 der Zivilprozessordnung enthält das Protokoll die Namen der erschienenen Parteien, Nebenintervenienten, Vertreter, Bevollmächtigten, Beistände, Zeugen und Sachverständigen sowie im Fall der §§ 50a und 58 Absatz 4 die Angabe, wer an der Verhandlung oder der Beweisaufnahme per Bild- und Tonübertragung teilnimmt.",
+          "sha256": "44015f5a52fbbc8e4e9de8319698b4aa5c3cd5e480644e29548bd7efc1ececef",
+          "reference": "§ 46 ArbGG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "FeiertG_NW_2",
+          "url": "https://recht.nrw.de/lrgv/gesetz/01012000-bekanntmachung-der-neufassung-des-gesetzes-ueber-die-sonn-und-feiertage/",
+          "text": "(1) Feiertage sind:\n1. der Neujahrstag,\n2. der Karfreitag,\n3. der Ostermontag,\n4. der 1. Mai als Tag des Bekenntnisses zu Freiheit und Frieden, sozialer Gerechtigkeit, Völkerversöhnung und Menschenwürde,\n5. der Christi-Himmelfahrts-Tag,\n6. der Pfingstmontag,\n7. der Fronleichnamstag (Donnerstag nach dem Sonntag Trinitatis),\n8. der 3. Oktober als Tag der Deutschen Einheit,\n9. der Allerheiligentag (1. November),\n10. der 1. Weihnachtstag,\n11. der 2. Weihnachtstag.",
+          "sha256": "07fb97e3a2921adac445d1ea8317c11ac87507be78c056e323f4b91ddbccead6",
+          "reference": "§ 2 Abs. 1 Feiertagsgesetz NW",
+          "retrieved_on": "2026-11-10"
+        }
+      ],
+      "version": "1.0",
+      "calculations": [
+        {
+          "kind": "claim_deadline",
+          "due_on": "2026-12-01",
+          "method": "2026-11-10 + drei Wochen = 2026-12-01; danach ggf. nächster Werktag am Arbeitsgericht in NRW = 2026-12-01. Zugangstag nicht mitgezählt.",
+          "fact_keys": [
+            "scope",
+            "receipt_on",
+            "written_notice",
+            "special_protection",
+            "court_state"
+          ],
+          "source_ids": [
+            "KSchG_4",
+            "BGB_187",
+            "BGB_188",
+            "ZPO_222",
+            "ArbGG_46",
+            "FeiertG_NW_2"
+          ],
+          "assumptions": [
+            "Zugang eines schriftlichen Originals bestätigt.",
+            "Keine behördliche Zustimmung und kein Sonderkündigungsschutz laut bestätigter Angabe.",
+            "Zuständiges Arbeitsgericht in NRW; Feiertagskalender ausschließlich 2026/2027.",
+            "Sonderfälle und nachträgliche Klagezulassung nicht entschieden."
+          ]
+        },
+        {
+          "kind": "notice_end",
+          "due_on": "2027-02-28",
+          "method": "9 volle Beschäftigungsjahre bei Zugang → 3 Monat(e) zum Monatsende (§ 622 Abs. 2 BGB). Kein Verschieben des Kündigungstermins wegen Wochenenden oder Feiertagen.",
+          "fact_keys": [
+            "scope",
+            "receipt_on",
+            "employment_started_on",
+            "notice_regime",
+            "probation",
+            "special_protection"
+          ],
+          "source_ids": [
+            "BGB_622",
+            "BGB_187",
+            "BGB_188"
+          ],
+          "assumptions": [
+            "Gesetzliche Grundregel: keine abweichenden Vertrags- oder Tariffristen bestätigt.",
+            "Keine Probezeit und kein Sonderfall laut bestätigten Angaben.",
+            "Nur Fristvergleich; keine Entscheidung über die Wirksamkeit der Kündigung."
+          ]
+        }
+      ],
+      "model_review": {
+        "issues": [],
+        "status": "not_used"
+      },
+      "uncertainties": [],
+      "corpus_version": "termination-2026-11-10-e1a8f4ba0853",
+      "technical_status": "pass"
+    },
+    "provenance": {
+      "kind": "hosted_controlled_pipeline",
+      "generated_at": "2026-11-10T12:51:07.631911+00:00",
+      "model_calls": 0,
+      "corpus_version": "termination-2026-11-10-e1a8f4ba0853"
+    }
+  },
+  {
+    "id": "dev-11",
+    "title": "Wann kam das Schreiben an?",
+    "fictional": true,
+    "input": {
+      "version": "1.0",
+      "as_of": "2026-11-10",
+      "facts": [
+        {
+          "key": "scope",
+          "value": "ordinary_employer",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-11-document",
+            "page": 1,
+            "quote": "Art der Kündigung: Ordentliche Arbeitgeberkündigung"
+          }
+        },
+        {
+          "key": "stated_end_on",
+          "value": "2026-12-31",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-11-document",
+            "page": 1,
+            "quote": "Genanntes Vertragsende: 2026-12-31"
+          }
+        },
+        {
+          "key": "notice_regime",
+          "value": "unknown",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-11-document",
+            "page": 1,
+            "quote": "Vertrag und Tarif geprüft: Unbekannt"
+          }
+        },
+        {
+          "key": "probation",
+          "value": "no",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-11-document",
+            "page": 1,
+            "quote": "Probezeit: Nein"
+          }
+        },
+        {
+          "key": "written_notice",
+          "value": "yes",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-11-document",
+            "page": 1,
+            "quote": "Schriftliches Original erhalten: Ja"
+          }
+        },
+        {
+          "key": "special_protection",
+          "value": "no",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-11-document",
+            "page": 1,
+            "quote": "Behördliche Zustimmung / Sonderkündigungsschutz: Nein"
+          }
+        },
+        {
+          "key": "court_state",
+          "value": "NW",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-11-document",
+            "page": 1,
+            "quote": "Bundesland des Arbeitsgerichts: Nordrhein-Westfalen"
+          }
+        },
+        {
+          "key": "representative_authority",
+          "value": "attached",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-11-document",
+            "page": 1,
+            "quote": "Vollmacht: Vollmacht beigefügt"
+          }
+        },
+        {
+          "key": "works_council",
+          "value": "not_present",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-11-document",
+            "page": 1,
+            "quote": "Betriebsratsanhörung: Kein Betriebsrat"
+          }
+        }
+      ]
+    },
+    "documents": [
+      {
+        "id": "dev-11-document",
+        "file_name": "dev-11.pdf",
+        "extracted_text": "FIKTIVER PORTFOLIO-FALL. KEINE ECHTEN PERSONEN.\nAktennotiz und Kündigungsauszug: Wann kam das Schreiben an?\nAnliegen: Ordentliche Arbeitgeberkündigung prüfen und Fragen für eine Kanzlei vorbereiten.\nDie folgenden Angaben stammen aus einem fiktiven Schreiben, einem fiktiven Vertrag und der eigenen Zugangsnotiz. Sie sind keine Echtheitsnachweise.\nArt der Kündigung: Ordentliche Arbeitgeberkündigung\nGenanntes Vertragsende: 2026-12-31\nVertrag und Tarif geprüft: Unbekannt\nProbezeit: Nein\nSchriftliches Original erhalten: Ja\nBehördliche Zustimmung / Sonderkündigungsschutz: Nein\nBundesland des Arbeitsgerichts: Nordrhein-Westfalen\nVollmacht: Vollmacht beigefügt\nBetriebsratsanhörung: Kein Betriebsrat",
+        "extracted_pages": [
+          "FIKTIVER PORTFOLIO-FALL. KEINE ECHTEN PERSONEN.\nAktennotiz und Kündigungsauszug: Wann kam das Schreiben an?\nAnliegen: Ordentliche Arbeitgeberkündigung prüfen und Fragen für eine Kanzlei vorbereiten.\nDie folgenden Angaben stammen aus einem fiktiven Schreiben, einem fiktiven Vertrag und der eigenen Zugangsnotiz. Sie sind keine Echtheitsnachweise.\nArt der Kündigung: Ordentliche Arbeitgeberkündigung\nGenanntes Vertragsende: 2026-12-31\nVertrag und Tarif geprüft: Unbekannt\nProbezeit: Nein\nSchriftliches Original erhalten: Ja\nBehördliche Zustimmung / Sonderkündigungsschutz: Nein\nBundesland des Arbeitsgerichts: Nordrhein-Westfalen\nVollmacht: Vollmacht beigefügt\nBetriebsratsanhörung: Kein Betriebsrat"
+        ]
+      }
+    ],
+    "result": {
+      "mode": "controlled",
+      "as_of": "2026-11-10",
+      "facts": [
+        {
+          "key": "scope",
+          "value": "ordinary_employer",
+          "evidence": {
+            "page": 1,
+            "quote": "Art der Kündigung: Ordentliche Arbeitgeberkündigung",
+            "document_id": "dev-11-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "stated_end_on",
+          "value": "2026-12-31",
+          "evidence": {
+            "page": 1,
+            "quote": "Genanntes Vertragsende: 2026-12-31",
+            "document_id": "dev-11-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "notice_regime",
+          "value": "unknown",
+          "evidence": {
+            "page": 1,
+            "quote": "Vertrag und Tarif geprüft: Unbekannt",
+            "document_id": "dev-11-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "probation",
+          "value": "no",
+          "evidence": {
+            "page": 1,
+            "quote": "Probezeit: Nein",
+            "document_id": "dev-11-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "written_notice",
+          "value": "yes",
+          "evidence": {
+            "page": 1,
+            "quote": "Schriftliches Original erhalten: Ja",
+            "document_id": "dev-11-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "special_protection",
+          "value": "no",
+          "evidence": {
+            "page": 1,
+            "quote": "Behördliche Zustimmung / Sonderkündigungsschutz: Nein",
+            "document_id": "dev-11-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "court_state",
+          "value": "NW",
+          "evidence": {
+            "page": 1,
+            "quote": "Bundesland des Arbeitsgerichts: Nordrhein-Westfalen",
+            "document_id": "dev-11-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "representative_authority",
+          "value": "attached",
+          "evidence": {
+            "page": 1,
+            "quote": "Vollmacht: Vollmacht beigefügt",
+            "document_id": "dev-11-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "works_council",
+          "value": "not_present",
+          "evidence": {
+            "page": 1,
+            "quote": "Betriebsratsanhörung: Kein Betriebsrat",
+            "document_id": "dev-11-document"
+          },
+          "confirmed": true
+        }
+      ],
+      "checks": [
+        {
+          "code": "scope",
+          "statement": "Diese Prüfung entscheidet nicht über die Wirksamkeit der Kündigung. Sozialauswahl, Kündigungsgrund und Sonderkündigungsschutz sind nicht abschließend geprüft.",
+          "source_ids": [
+            "KSchG_1",
+            "KSchG_23"
+          ]
+        },
+        {
+          "code": "written_form",
+          "statement": "Die Beendigung durch Kündigung erfordert Schriftform; die elektronische Form ist ausgeschlossen. Das Original muss gesondert geprüft werden.",
+          "source_ids": [
+            "BGB_623"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "id": "BGB_130",
+          "url": "https://www.gesetze-im-internet.de/bgb/__130.html",
+          "text": "(1) Eine Willenserklärung, die einem anderen gegenüber abzugeben ist, wird, wenn sie in dessen Abwesenheit abgegeben wird, in dem Zeitpunkt wirksam, in welchem sie ihm zugeht. Sie wird nicht wirksam, wenn dem anderen vorher oder gleichzeitig ein Widerruf zugeht.\n(2) Eine Willenserklärung, die notariell beurkundet oder öffentlich beglaubigt wurde, wird auch wirksam, wenn dem Erklärungsempfänger eine öffentlich beglaubigte Abschrift der Urschrift zugeht.\n(3) Auf die Wirksamkeit der Willenserklärung ist es ohne Einfluss, wenn der Erklärende nach der Abgabe stirbt oder geschäftsunfähig wird.\n(4) Diese Vorschriften finden auch dann Anwendung, wenn die Willenserklärung einer Behörde gegenüber abzugeben ist.",
+          "sha256": "79355e302823938a800db986b3a0ee210426164fa072a9746a4e705cf25aa8f5",
+          "reference": "§ 130 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_174",
+          "url": "https://www.gesetze-im-internet.de/bgb/__174.html",
+          "text": "Ein einseitiges Rechtsgeschäft, das ein Bevollmächtigter einem anderen gegenüber vornimmt, ist unwirksam, wenn der Bevollmächtigte eine Vollmachtsurkunde nicht vorlegt und der andere das Rechtsgeschäft aus diesem Grunde unverzüglich zurückweist. Die Zurückweisung ist ausgeschlossen, wenn der Vollmachtgeber den anderen von der Bevollmächtigung in Kenntnis gesetzt hatte.",
+          "sha256": "917167d43dd021b763fe16d86fe1768930410369406c8fdce970c386167d09e7",
+          "reference": "§ 174 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_187",
+          "url": "https://www.gesetze-im-internet.de/bgb/__187.html",
+          "text": "(1) Ist für den Anfang einer Frist ein Ereignis oder ein in den Lauf eines Tages fallender Zeitpunkt maßgebend, so wird bei der Berechnung der Frist der Tag nicht mitgerechnet, in welchen das Ereignis oder der Zeitpunkt fällt.\n(2) Ist der Beginn eines Tages der für den Anfang einer Frist maßgebende Zeitpunkt, so wird dieser Tag bei der Berechnung der Frist mitgerechnet. Das Gleiche gilt von dem Tage der Geburt bei der Berechnung des Lebensalters.\n(+++ § 187: Zur Anwendung vgl. § 31 Abs. 5 KVBG +++)",
+          "sha256": "0643e3df6dce8e22c933624b9d79e409e47c7248a3acced238fb1d0e043c4551",
+          "reference": "§ 187 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_188",
+          "url": "https://www.gesetze-im-internet.de/bgb/__188.html",
+          "text": "(1) Eine nach Tagen bestimmte Frist endigt mit dem Ablauf des letzten Tages der Frist.\n(2) Eine Frist, die nach Wochen, nach Monaten oder nach einem mehrere Monate umfassenden Zeitraum - Jahr, halbes Jahr, Vierteljahr - bestimmt ist, endigt im Falle des § 187 Abs. 1 mit dem Ablauf desjenigen Tages der letzten Woche oder des letzten Monats, welcher durch seine Benennung oder seine Zahl dem Tage entspricht, in den das Ereignis oder der Zeitpunkt fällt, im Falle des § 187 Abs. 2 mit dem Ablauf desjenigen Tages der letzten Woche oder des letzten Monats, welcher dem Tage vorhergeht, der durch seine Benennung oder seine Zahl dem Anfangstag der Frist entspricht.\n(3) Fehlt bei einer nach Monaten bestimmten Frist in dem letzten Monat der für ihren Ablauf maßgebende Tag, so endigt die Frist mit dem Ablauf des letzten Tages dieses Monats.\n(+++ § 188: Zur Anwendung vgl. § 31 Abs. 5 KVBG +++)",
+          "sha256": "598fbe81b78d2f6b369a295701339973e90c113f4bd8172c07cfab169c5caef4",
+          "reference": "§ 188 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_193",
+          "url": "https://www.gesetze-im-internet.de/bgb/__193.html",
+          "text": "Ist an einem bestimmten Tage oder innerhalb einer Frist eine Willenserklärung abzugeben oder eine Leistung zu bewirken und fällt der bestimmte Tag oder der letzte Tag der Frist auf einen Sonntag, einen am Erklärungs- oder Leistungsort staatlich anerkannten allgemeinen Feiertag oder einen Sonnabend, so tritt an die Stelle eines solchen Tages der nächste Werktag.",
+          "sha256": "f8ecc03c337f35809d08a6a3b1762d8253e0a8a70a49445002b6254266d83fb5",
+          "reference": "§ 193 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_622",
+          "url": "https://www.gesetze-im-internet.de/bgb/__622.html",
+          "text": "(1) Das Arbeitsverhältnis eines Arbeiters oder eines Angestellten (Arbeitnehmers) kann mit einer Frist von vier Wochen zum Fünfzehnten oder zum Ende eines Kalendermonats gekündigt werden.\n(2) Für eine Kündigung durch den Arbeitgeber beträgt die Kündigungsfrist, wenn das Arbeitsverhältnis in dem Betrieb oder Unternehmen\n1.\nzwei Jahre bestanden hat, einen Monat zum Ende eines Kalendermonats,\n2.\nfünf Jahre bestanden hat, zwei Monate zum Ende eines Kalendermonats,\n3.\nacht Jahre bestanden hat, drei Monate zum Ende eines Kalendermonats,\n4.\nzehn Jahre bestanden hat, vier Monate zum Ende eines Kalendermonats,\n5.\nzwölf Jahre bestanden hat, fünf Monate zum Ende eines Kalendermonats,\n6.\n15 Jahre bestanden hat, sechs Monate zum Ende eines Kalendermonats,\n7.\n20 Jahre bestanden hat, sieben Monate zum Ende eines Kalendermonats.\n(3) Während einer vereinbarten Probezeit, längstens für die Dauer von sechs Monaten, kann das Arbeitsverhältnis mit einer Frist von zwei Wochen gekündigt werden.\n(4) Von den Absätzen 1 bis 3 abweichende Regelungen können durch Tarifvertrag vereinbart werden. Im Geltungsbereich eines solchen Tarifvertrags gelten die abweichenden tarifvertraglichen Bestimmungen zwischen nicht tarifgebundenen Arbeitgebern und Arbeitnehmern, wenn ihre Anwendung zwischen ihnen vereinbart ist.\n(5) Einzelvertraglich kann eine kürzere als die in Absatz 1 genannte Kündigungsfrist nur vereinbart werden,\n1.\nwenn ein Arbeitnehmer zur vorübergehenden Aushilfe eingestellt ist; dies gilt nicht, wenn das Arbeitsverhältnis über die Zeit von drei Monaten hinaus fortgesetzt wird;\n2.\nwenn der Arbeitgeber in der Regel nicht mehr als 20 Arbeitnehmer ausschließlich der zu ihrer Berufsbildung Beschäftigten beschäftigt und die Kündigungsfrist vier Wochen nicht unterschreitet.\nBei der Feststellung der Zahl der beschäftigten Arbeitnehmer sind teilzeitbeschäftigte Arbeitnehmer mit einer regelmäßigen wöchentlichen Arbeitszeit von nicht mehr als 20 Stunden mit 0,5 und nicht mehr als 30 Stunden mit 0,75 zu berücksichtigen. Die einzelvertragliche Vereinbarung längerer als der in den Absätzen 1 bis 3 genannten Kündigungsfristen bleibt hiervon unberührt.\n(6) Für die Kündigung des Arbeitsverhältnisses durch den Arbeitnehmer darf keine längere Frist vereinbart werden als für die Kündigung durch den Arbeitgeber.",
+          "sha256": "ff82d5f71b98082aa7e9639cb6a8fef6eaaa7ed3e2bbc014ca7f7db36d36f4c9",
+          "reference": "§ 622 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_623",
+          "url": "https://www.gesetze-im-internet.de/bgb/__623.html",
+          "text": "Die Beendigung von Arbeitsverhältnissen durch Kündigung oder Auflösungsvertrag bedürfen zu ihrer Wirksamkeit der Schriftform; die elektronische Form ist ausgeschlossen.",
+          "sha256": "c41eb464d851cb485bb8b1ddc8b57488bc1dd675a147677d2bc37b029347c25b",
+          "reference": "§ 623 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "KSchG_1",
+          "url": "https://www.gesetze-im-internet.de/kschg/__1.html",
+          "text": "(1) Die Kündigung des Arbeitsverhältnisses gegenüber einem Arbeitnehmer, dessen Arbeitsverhältnis in demselben Betrieb oder Unternehmen ohne Unterbrechung länger als sechs Monate bestanden hat, ist rechtsunwirksam, wenn sie sozial ungerechtfertigt ist.\n(2) Sozial ungerechtfertigt ist die Kündigung, wenn sie nicht durch Gründe, die in der Person oder in dem Verhalten des Arbeitnehmers liegen, oder durch dringende betriebliche Erfordernisse, die einer Weiterbeschäftigung des Arbeitnehmers in diesem Betrieb entgegenstehen, bedingt ist. Die Kündigung ist auch sozial ungerechtfertigt, wenn\n1.\nin Betrieben des privaten Rechts\na)\ndie Kündigung gegen eine Richtlinie nach § 95 des Betriebsverfassungsgesetzes verstößt,\nb)\nder Arbeitnehmer an einem anderen Arbeitsplatz in demselben Betrieb oder in einem anderen Betrieb des Unternehmens weiterbeschäftigt werden kann\nund der Betriebsrat oder eine andere nach dem Betriebsverfassungsgesetz insoweit zuständige Vertretung der Arbeitnehmer aus einem dieser Gründe der Kündigung innerhalb der Frist des § 102 Abs. 2 Satz 1 des Betriebsverfassungsgesetzes schriftlich widersprochen hat,\n2.\nin Betrieben und Verwaltungen des öffentlichen Rechts\na)\ndie Kündigung gegen eine Richtlinie über die personelle Auswahl bei Kündigungen verstößt,\nb)\nder Arbeitnehmer an einem anderen Arbeitsplatz in derselben Dienststelle oder in einer anderen Dienststelle desselben Verwaltungszweigs an demselben Dienstort einschließlich seines Einzugsgebiets weiterbeschäftigt werden kann\nund die zuständige Personalvertretung aus einem dieser Gründe fristgerecht gegen die Kündigung Einwendungen erhoben hat, es sei denn, daß die Stufenvertretung in der Verhandlung mit der übergeordneten Dienststelle die Einwendungen nicht aufrechterhalten hat.\nSatz 2 gilt entsprechend, wenn die Weiterbeschäftigung des Arbeitnehmers nach zumutbaren Umschulungs- oder Fortbildungsmaßnahmen oder eine Weiterbeschäftigung des Arbeitnehmers unter geänderten Arbeitsbedingungen möglich ist und der Arbeitnehmer sein Einverständnis hiermit erklärt hat. Der Arbeitgeber hat die Tatsachen zu beweisen, die die Kündigung bedingen.\n(3) Ist einem Arbeitnehmer aus dringenden betrieblichen Erfordernissen im Sinne des Absatzes 2 gekündigt worden, so ist die Kündigung trotzdem sozial ungerechtfertigt, wenn der Arbeitgeber bei der Auswahl des Arbeitnehmers die Dauer der Betriebszugehörigkeit, das Lebensalter, die Unterhaltspflichten und die Schwerbehinderung des Arbeitnehmers nicht oder nicht ausreichend berücksichtigt hat; auf Verlangen des Arbeitnehmers hat der Arbeitgeber dem Arbeitnehmer die Gründe anzugeben, die zu der getroffenen sozialen Auswahl geführt haben. In die soziale Auswahl nach Satz 1 sind Arbeitnehmer nicht einzubeziehen, deren Weiterbeschäftigung, insbesondere wegen ihrer Kenntnisse, Fähigkeiten und Leistungen oder zur Sicherung einer ausgewogenen Personalstruktur des Betriebes, im berechtigten betrieblichen Interesse liegt. Der Arbeitnehmer hat die Tatsachen zu beweisen, die die Kündigung als sozial ungerechtfertigt im Sinne des Satzes 1 erscheinen lassen.\n(4) Ist in einem Tarifvertrag, in einer Betriebsvereinbarung nach § 95 des Betriebsverfassungsgesetzes oder in einer entsprechenden Richtlinie nach den Personalvertretungsgesetzen festgelegt, wie die sozialen Gesichtspunkte nach Absatz 3 Satz 1 im Verhältnis zueinander zu bewerten sind, so kann die Bewertung nur auf grobe Fehlerhaftigkeit überprüft werden.\n(5) Sind bei einer Kündigung auf Grund einer Betriebsänderung nach § 111 des Betriebsverfassungsgesetzes die Arbeitnehmer, denen gekündigt werden soll, in einem Interessenausgleich zwischen Arbeitgeber und Betriebsrat namentlich bezeichnet, so wird vermutet, dass die Kündigung durch dringende betriebliche Erfordernisse im Sinne des Absatzes 2 bedingt ist. Die soziale Auswahl der Arbeitnehmer kann nur auf grobe Fehlerhaftigkeit überprüft werden. Die Sätze 1 und 2 gelten nicht, soweit sich die Sachlage nach Zustandekommen des Interessenausgleichs wesentlich geändert hat. Der Interessenausgleich nach Satz 1 ersetzt die Stellungnahme des Betriebsrates nach § 17 Abs. 3 Satz 2.",
+          "sha256": "d2cca8a5e993b5c51c7d60138d6879152835b4f3b147c9440510f7ac4e992828",
+          "reference": "§ 1 KSchG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "KSchG_4",
+          "url": "https://www.gesetze-im-internet.de/kschg/__4.html",
+          "text": "Will ein Arbeitnehmer geltend machen, dass eine Kündigung sozial ungerechtfertigt oder aus anderen Gründen rechtsunwirksam ist, so muss er innerhalb von drei Wochen nach Zugang der schriftlichen Kündigung Klage beim Arbeitsgericht auf Feststellung erheben, dass das Arbeitsverhältnis durch die Kündigung nicht aufgelöst ist. Im Falle des § 2 ist die Klage auf Feststellung zu erheben, daß die Änderung der Arbeitsbedingungen sozial ungerechtfertigt oder aus anderen Gründen rechtsunwirksam ist. Hat der Arbeitnehmer Einspruch beim Betriebsrat eingelegt (§ 3), so soll er der Klage die Stellungnahme des Betriebsrats beifügen. Soweit die Kündigung der Zustimmung einer Behörde bedarf, läuft die Frist zur Anrufung des Arbeitsgerichts erst von der Bekanntgabe der Entscheidung der Behörde an den Arbeitnehmer ab.",
+          "sha256": "c3629589d74fd1232f5d0a3186cc62383a6e0872b12dd21fbea21efa9ea38bf4",
+          "reference": "§ 4 KSchG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "KSchG_5",
+          "url": "https://www.gesetze-im-internet.de/kschg/__5.html",
+          "text": "(1) War ein Arbeitnehmer nach erfolgter Kündigung trotz Anwendung aller ihm nach Lage der Umstände zuzumutenden Sorgfalt verhindert, die Klage innerhalb von drei Wochen nach Zugang der schriftlichen Kündigung zu erheben, so ist auf seinen Antrag die Klage nachträglich zuzulassen. Gleiches gilt, wenn eine Frau von ihrer Schwangerschaft aus einem von ihr nicht zu vertretenden Grund erst nach Ablauf der Frist des § 4 Satz 1 Kenntnis erlangt hat.\n(2) Mit dem Antrag ist die Klageerhebung zu verbinden; ist die Klage bereits eingereicht, so ist auf sie im Antrag Bezug zu nehmen. Der Antrag muß ferner die Angabe der die nachträgliche Zulassung begründenden Tatsachen und der Mittel für deren Glaubhaftmachung enthalten.\n(3) Der Antrag ist nur innerhalb von zwei Wochen nach Behebung des Hindernisses zulässig. Nach Ablauf von sechs Monaten, vom Ende der versäumten Frist an gerechnet, kann der Antrag nicht mehr gestellt werden.\n(4) Das Verfahren über den Antrag auf nachträgliche Zulassung ist mit dem Verfahren über die Klage zu verbinden. Das Arbeitsgericht kann das Verfahren zunächst auf die Verhandlung und Entscheidung über den Antrag beschränken. In diesem Fall ergeht die Entscheidung durch Zwischenurteil, das wie ein Endurteil angefochten werden kann.\n(5) Hat das Arbeitsgericht über einen Antrag auf nachträgliche Klagezulassung nicht entschieden oder wird ein solcher Antrag erstmals vor dem Landesarbeitsgericht gestellt, entscheidet hierüber die Kammer des Landesarbeitsgerichts. Absatz 4 gilt entsprechend.",
+          "sha256": "ff30893268191bde9b4175affbbdaa20464af98a0d48970fdfbd08e07b170d18",
+          "reference": "§ 5 KSchG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "KSchG_7",
+          "url": "https://www.gesetze-im-internet.de/kschg/__7.html",
+          "text": "Wird die Rechtsunwirksamkeit einer Kündigung nicht rechtzeitig geltend gemacht (§ 4 Satz 1, §§ 5 und 6), so gilt die Kündigung als von Anfang an rechtswirksam; ein vom Arbeitnehmer nach § 2 erklärter Vorbehalt erlischt.",
+          "sha256": "73165cf9eae5106f2cbb3e152fed2e575634ef406625708132e3b9f8e9472582",
+          "reference": "§ 7 KSchG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "KSchG_23",
+          "url": "https://www.gesetze-im-internet.de/kschg/__23.html",
+          "text": "(1) Die Vorschriften des Ersten und Zweiten Abschnitts gelten für Betriebe und Verwaltungen des privaten und des öffentlichen Rechts, vorbehaltlich der Vorschriften des § 24 für die Seeschiffahrts-, Binnenschiffahrts- und Luftverkehrsbetriebe. Die Vorschriften des Ersten Abschnitts gelten mit Ausnahme der §§ 4 bis 7 und des § 13 Abs. 1 Satz 1 und 2 nicht für Betriebe und Verwaltungen, in denen in der Regel fünf oder weniger Arbeitnehmer ausschließlich der zu ihrer Berufsbildung Beschäftigten beschäftigt werden. In Betrieben und Verwaltungen, in denen in der Regel zehn oder weniger Arbeitnehmer ausschließlich der zu ihrer Berufsbildung Beschäftigten beschäftigt werden, gelten die Vorschriften des Ersten Abschnitts mit Ausnahme der §§ 4 bis 7 und des § 13 Abs. 1 Satz 1 und 2 nicht für Arbeitnehmer, deren Arbeitsverhältnis nach dem 31. Dezember 2003 begonnen hat; diese Arbeitnehmer sind bei der Feststellung der Zahl der beschäftigten Arbeitnehmer nach Satz 2 bis zur Beschäftigung von in der Regel zehn Arbeitnehmern nicht zu berücksichtigen. Bei der Feststellung der Zahl der beschäftigten Arbeitnehmer nach den Sätzen 2 und 3 sind teilzeitbeschäftigte Arbeitnehmer mit einer regelmäßigen wöchentlichen Arbeitszeit von nicht mehr als 20 Stunden mit 0,5 und nicht mehr als 30 Stunden mit 0,75 zu berücksichtigen.\n(2) Die Vorschriften des Dritten Abschnitts gelten für Betriebe und Verwaltungen des privaten Rechts sowie für Betriebe, die von einer öffentlichen Verwaltung geführt werden, soweit sie wirtschaftliche Zwecke verfolgen.",
+          "sha256": "1cab59272cc5ec00a55a93cedc097cf346bbf5f873bd285194b22a323087da19",
+          "reference": "§ 23 KSchG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BetrVG_102",
+          "url": "https://www.gesetze-im-internet.de/betrvg/__102.html",
+          "text": "(1) Der Betriebsrat ist vor jeder Kündigung zu hören. Der Arbeitgeber hat ihm die Gründe für die Kündigung mitzuteilen. Eine ohne Anhörung des Betriebsrats ausgesprochene Kündigung ist unwirksam.\n(2) Hat der Betriebsrat gegen eine ordentliche Kündigung Bedenken, so hat er diese unter Angabe der Gründe dem Arbeitgeber spätestens innerhalb einer Woche schriftlich mitzuteilen. Äußert er sich innerhalb dieser Frist nicht, gilt seine Zustimmung zur Kündigung als erteilt. Hat der Betriebsrat gegen eine außerordentliche Kündigung Bedenken, so hat er diese unter Angabe der Gründe dem Arbeitgeber unverzüglich, spätestens jedoch innerhalb von drei Tagen, schriftlich mitzuteilen. Der Betriebsrat soll, soweit dies erforderlich erscheint, vor seiner Stellungnahme den betroffenen Arbeitnehmer hören. § 99 Abs. 1 Satz 3 gilt entsprechend.\n(3) Der Betriebsrat kann innerhalb der Frist des Absatzes 2 Satz 1 der ordentlichen Kündigung widersprechen, wenn\n1.\nder Arbeitgeber bei der Auswahl des zu kündigenden Arbeitnehmers soziale Gesichtspunkte nicht oder nicht ausreichend berücksichtigt hat,\n2.\ndie Kündigung gegen eine Richtlinie nach § 95 verstößt,\n3.\nder zu kündigende Arbeitnehmer an einem anderen Arbeitsplatz im selben Betrieb oder in einem anderen Betrieb des Unternehmens weiterbeschäftigt werden kann,\n4.\ndie Weiterbeschäftigung des Arbeitnehmers nach zumutbaren Umschulungs- oder Fortbildungsmaßnahmen möglich ist oder\n5.\neine Weiterbeschäftigung des Arbeitnehmers unter geänderten Vertragsbedingungen möglich ist und der Arbeitnehmer sein Einverständnis hiermit erklärt hat.\n(4) Kündigt der Arbeitgeber, obwohl der Betriebsrat nach Absatz 3 der Kündigung widersprochen hat, so hat er dem Arbeitnehmer mit der Kündigung eine Abschrift der Stellungnahme des Betriebsrats zuzuleiten.\n(5) Hat der Betriebsrat einer ordentlichen Kündigung frist- und ordnungsgemäß widersprochen, und hat der Arbeitnehmer nach dem Kündigungsschutzgesetz Klage auf Feststellung erhoben, dass das Arbeitsverhältnis durch die Kündigung nicht aufgelöst ist, so muss der Arbeitgeber auf Verlangen des Arbeitnehmers diesen nach Ablauf der Kündigungsfrist bis zum rechtskräftigen Abschluss des Rechtsstreits bei unveränderten Arbeitsbedingungen weiterbeschäftigen. Auf Antrag des Arbeitgebers kann das Gericht ihn durch einstweilige Verfügung von der Verpflichtung zur Weiterbeschäftigung nach Satz 1 entbinden, wenn\n1.\ndie Klage des Arbeitnehmers keine hinreichende Aussicht auf Erfolg bietet oder mutwillig erscheint oder\n2.\ndie Weiterbeschäftigung des Arbeitnehmers zu einer unzumutbaren wirtschaftlichen Belastung des Arbeitgebers führen würde oder\n3.\nder Widerspruch des Betriebsrats offensichtlich unbegründet war.\n(6) Arbeitgeber und Betriebsrat können vereinbaren, dass Kündigungen der Zustimmung des Betriebsrats bedürfen und dass bei Meinungsverschiedenheiten über die Berechtigung der Nichterteilung der Zustimmung die Einigungsstelle entscheidet.\n(7) Die Vorschriften über die Beteiligung des Betriebsrats nach dem Kündigungsschutzgesetz bleiben unberührt.",
+          "sha256": "1539b78bd759716b7d03c4ac4cbd5d769c8bdc233438e49afc83e71d55f2fd87",
+          "reference": "§ 102 BetrVG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "ZPO_222",
+          "url": "https://www.gesetze-im-internet.de/zpo/__222.html",
+          "text": "(1) Für die Berechnung der Fristen gelten die Vorschriften des Bürgerlichen Gesetzbuchs.\n(2) Fällt das Ende einer Frist auf einen Sonntag, einen allgemeinen Feiertag oder einen Sonnabend, so endet die Frist mit Ablauf des nächsten Werktages.\n(3) Bei der Berechnung einer Frist, die nach Stunden bestimmt ist, werden Sonntage, allgemeine Feiertage und Sonnabende nicht mitgerechnet.",
+          "sha256": "cc0ee0255cb2991fad873f439a57559904a9128f0184ec2b2a65a61a861edbad",
+          "reference": "§ 222 ZPO",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "ArbGG_46",
+          "url": "https://www.gesetze-im-internet.de/arbgg/__46.html",
+          "text": "(1) Das Urteilsverfahren findet in den in § 2 Abs. 1 bis 4 bezeichneten bürgerlichen Rechtsstreitigkeiten Anwendung.\n(2) Für das Urteilsverfahren des ersten Rechtszugs gelten die Vorschriften der Zivilprozeßordnung über das Verfahren vor den Amtsgerichten entsprechend, soweit dieses Gesetz nichts anderes bestimmt. Die Vorschriften über den frühen ersten Termin zur mündlichen Verhandlung und das schriftliche Vorverfahren (§§ 275 bis 277 der Zivilprozessordnung), über das vereinfachte Verfahren (§ 495a der Zivilprozessordnung), über den Urkunden- und Wechselprozess (§§ 592 bis 605a der Zivilprozessordnung), über die Entscheidung ohne mündliche Verhandlung (§ 128 Absatz 2 der Zivilprozessordnung), über die Förderung von Videoverhandlungen bei Terminsänderungsanträgen (§ 227 Absatz 1 Satz 3 und Absatz 4 der Zivilprozessordnung), über die Verlegung von Terminen in der Zeit vom 1. Juli bis 31. August (§ 227 Absatz 3 Satz 1 der Zivilprozessordnung) und die Äußerung über Bedenken gegen eine Videoverhandlung in der Klageschrift und der Klageerwiderung (§ 253 Absatz 3 Nummer 4 und § 277 Absatz 1 Satz 2 Nummer 2 der Zivilprozessordnung) finden keine Anwendung. § 127 Abs. 2 der Zivilprozessordnung findet mit der Maßgabe Anwendung, dass die sofortige Beschwerde bei Bestandsschutzstreitigkeiten unabhängig von dem Streitwert zulässig ist. Abweichend von § 160 Absatz 1 Nummer 4 der Zivilprozessordnung enthält das Protokoll die Namen der erschienenen Parteien, Nebenintervenienten, Vertreter, Bevollmächtigten, Beistände, Zeugen und Sachverständigen sowie im Fall der §§ 50a und 58 Absatz 4 die Angabe, wer an der Verhandlung oder der Beweisaufnahme per Bild- und Tonübertragung teilnimmt.",
+          "sha256": "44015f5a52fbbc8e4e9de8319698b4aa5c3cd5e480644e29548bd7efc1ececef",
+          "reference": "§ 46 ArbGG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "FeiertG_NW_2",
+          "url": "https://recht.nrw.de/lrgv/gesetz/01012000-bekanntmachung-der-neufassung-des-gesetzes-ueber-die-sonn-und-feiertage/",
+          "text": "(1) Feiertage sind:\n1. der Neujahrstag,\n2. der Karfreitag,\n3. der Ostermontag,\n4. der 1. Mai als Tag des Bekenntnisses zu Freiheit und Frieden, sozialer Gerechtigkeit, Völkerversöhnung und Menschenwürde,\n5. der Christi-Himmelfahrts-Tag,\n6. der Pfingstmontag,\n7. der Fronleichnamstag (Donnerstag nach dem Sonntag Trinitatis),\n8. der 3. Oktober als Tag der Deutschen Einheit,\n9. der Allerheiligentag (1. November),\n10. der 1. Weihnachtstag,\n11. der 2. Weihnachtstag.",
+          "sha256": "07fb97e3a2921adac445d1ea8317c11ac87507be78c056e323f4b91ddbccead6",
+          "reference": "§ 2 Abs. 1 Feiertagsgesetz NW",
+          "retrieved_on": "2026-11-10"
+        }
+      ],
+      "version": "1.0",
+      "calculations": [],
+      "model_review": {
+        "issues": [],
+        "status": "not_used"
+      },
+      "uncertainties": [
+        "An welchem Tag ist das Kündigungsschreiben tatsächlich zugegangen? Datum auf dem Schreiben genügt nicht."
+      ],
+      "corpus_version": "termination-2026-11-10-e1a8f4ba0853",
+      "technical_status": "pass"
+    },
+    "provenance": {
+      "kind": "hosted_controlled_pipeline",
+      "generated_at": "2026-11-10T12:51:14.668759+00:00",
+      "model_calls": 0,
+      "corpus_version": "termination-2026-11-10-e1a8f4ba0853"
+    }
+  },
+  {
+    "id": "dev-14",
+    "title": "Zwei Belege, zwei Zugangstage",
+    "fictional": true,
+    "input": {
+      "version": "1.0",
+      "as_of": "2026-11-10",
+      "facts": [
+        {
+          "key": "scope",
+          "value": "ordinary_employer",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-14-document",
+            "page": 1,
+            "quote": "Art der Kündigung: Ordentliche Arbeitgeberkündigung"
+          }
+        },
+        {
+          "key": "receipt_on",
+          "value": "2026-11-10",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-14-document",
+            "page": 1,
+            "quote": "Zugang am: 2026-11-10"
+          }
+        },
+        {
+          "key": "receipt_on",
+          "value": "2026-11-09",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-14-document",
+            "page": 1,
+            "quote": "Zugang am: 2026-11-09"
+          }
+        },
+        {
+          "key": "employment_started_on",
+          "value": "2017-03-01",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-14-document",
+            "page": 1,
+            "quote": "Beschäftigt seit: 2017-03-01"
+          }
+        },
+        {
+          "key": "stated_end_on",
+          "value": "2026-12-31",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-14-document",
+            "page": 1,
+            "quote": "Genanntes Vertragsende: 2026-12-31"
+          }
+        },
+        {
+          "key": "notice_regime",
+          "value": "statutory",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-14-document",
+            "page": 1,
+            "quote": "Vertrag und Tarif geprüft: Gesetzliche Frist, keine abweichende Vertrags- oder Tarifregel"
+          }
+        },
+        {
+          "key": "probation",
+          "value": "no",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-14-document",
+            "page": 1,
+            "quote": "Probezeit: Nein"
+          }
+        },
+        {
+          "key": "written_notice",
+          "value": "yes",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-14-document",
+            "page": 1,
+            "quote": "Schriftliches Original erhalten: Ja"
+          }
+        },
+        {
+          "key": "special_protection",
+          "value": "no",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-14-document",
+            "page": 1,
+            "quote": "Behördliche Zustimmung / Sonderkündigungsschutz: Nein"
+          }
+        },
+        {
+          "key": "court_state",
+          "value": "NW",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-14-document",
+            "page": 1,
+            "quote": "Bundesland des Arbeitsgerichts: Nordrhein-Westfalen"
+          }
+        },
+        {
+          "key": "representative_authority",
+          "value": "attached",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-14-document",
+            "page": 1,
+            "quote": "Vollmacht: Vollmacht beigefügt"
+          }
+        },
+        {
+          "key": "works_council",
+          "value": "not_present",
+          "confirmed": true,
+          "evidence": {
+            "document_id": "dev-14-document",
+            "page": 1,
+            "quote": "Betriebsratsanhörung: Kein Betriebsrat"
+          }
+        }
+      ]
+    },
+    "documents": [
+      {
+        "id": "dev-14-document",
+        "file_name": "dev-14.pdf",
+        "extracted_text": "FIKTIVER PORTFOLIO-FALL. KEINE ECHTEN PERSONEN.\nAktennotiz und Kündigungsauszug: Zwei Belege, zwei Zugangstage\nAnliegen: Ordentliche Arbeitgeberkündigung prüfen und Fragen für eine Kanzlei vorbereiten.\nDie folgenden Angaben stammen aus einem fiktiven Schreiben, einem fiktiven Vertrag und der eigenen Zugangsnotiz. Sie sind keine Echtheitsnachweise.\nArt der Kündigung: Ordentliche Arbeitgeberkündigung\nZugang am: 2026-11-10\nZugang am: 2026-11-09\nBeschäftigt seit: 2017-03-01\nGenanntes Vertragsende: 2026-12-31\nVertrag und Tarif geprüft: Gesetzliche Frist, keine abweichende Vertrags- oder Tarifregel\nProbezeit: Nein\nSchriftliches Original erhalten: Ja\nBehördliche Zustimmung / Sonderkündigungsschutz: Nein\nBundesland des Arbeitsgerichts: Nordrhein-Westfalen\nVollmacht: Vollmacht beigefügt\nBetriebsratsanhörung: Kein Betriebsrat",
+        "extracted_pages": [
+          "FIKTIVER PORTFOLIO-FALL. KEINE ECHTEN PERSONEN.\nAktennotiz und Kündigungsauszug: Zwei Belege, zwei Zugangstage\nAnliegen: Ordentliche Arbeitgeberkündigung prüfen und Fragen für eine Kanzlei vorbereiten.\nDie folgenden Angaben stammen aus einem fiktiven Schreiben, einem fiktiven Vertrag und der eigenen Zugangsnotiz. Sie sind keine Echtheitsnachweise.\nArt der Kündigung: Ordentliche Arbeitgeberkündigung\nZugang am: 2026-11-10\nZugang am: 2026-11-09\nBeschäftigt seit: 2017-03-01\nGenanntes Vertragsende: 2026-12-31\nVertrag und Tarif geprüft: Gesetzliche Frist, keine abweichende Vertrags- oder Tarifregel\nProbezeit: Nein\nSchriftliches Original erhalten: Ja\nBehördliche Zustimmung / Sonderkündigungsschutz: Nein\nBundesland des Arbeitsgerichts: Nordrhein-Westfalen\nVollmacht: Vollmacht beigefügt\nBetriebsratsanhörung: Kein Betriebsrat"
+        ]
+      }
+    ],
+    "result": {
+      "mode": "controlled",
+      "as_of": "2026-11-10",
+      "facts": [
+        {
+          "key": "scope",
+          "value": "ordinary_employer",
+          "evidence": {
+            "page": 1,
+            "quote": "Art der Kündigung: Ordentliche Arbeitgeberkündigung",
+            "document_id": "dev-14-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "receipt_on",
+          "value": "2026-11-10",
+          "evidence": {
+            "page": 1,
+            "quote": "Zugang am: 2026-11-10",
+            "document_id": "dev-14-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "receipt_on",
+          "value": "2026-11-09",
+          "evidence": {
+            "page": 1,
+            "quote": "Zugang am: 2026-11-09",
+            "document_id": "dev-14-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "employment_started_on",
+          "value": "2017-03-01",
+          "evidence": {
+            "page": 1,
+            "quote": "Beschäftigt seit: 2017-03-01",
+            "document_id": "dev-14-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "stated_end_on",
+          "value": "2026-12-31",
+          "evidence": {
+            "page": 1,
+            "quote": "Genanntes Vertragsende: 2026-12-31",
+            "document_id": "dev-14-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "notice_regime",
+          "value": "statutory",
+          "evidence": {
+            "page": 1,
+            "quote": "Vertrag und Tarif geprüft: Gesetzliche Frist, keine abweichende Vertrags- oder Tarifregel",
+            "document_id": "dev-14-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "probation",
+          "value": "no",
+          "evidence": {
+            "page": 1,
+            "quote": "Probezeit: Nein",
+            "document_id": "dev-14-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "written_notice",
+          "value": "yes",
+          "evidence": {
+            "page": 1,
+            "quote": "Schriftliches Original erhalten: Ja",
+            "document_id": "dev-14-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "special_protection",
+          "value": "no",
+          "evidence": {
+            "page": 1,
+            "quote": "Behördliche Zustimmung / Sonderkündigungsschutz: Nein",
+            "document_id": "dev-14-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "court_state",
+          "value": "NW",
+          "evidence": {
+            "page": 1,
+            "quote": "Bundesland des Arbeitsgerichts: Nordrhein-Westfalen",
+            "document_id": "dev-14-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "representative_authority",
+          "value": "attached",
+          "evidence": {
+            "page": 1,
+            "quote": "Vollmacht: Vollmacht beigefügt",
+            "document_id": "dev-14-document"
+          },
+          "confirmed": true
+        },
+        {
+          "key": "works_council",
+          "value": "not_present",
+          "evidence": {
+            "page": 1,
+            "quote": "Betriebsratsanhörung: Kein Betriebsrat",
+            "document_id": "dev-14-document"
+          },
+          "confirmed": true
+        }
+      ],
+      "checks": [
+        {
+          "code": "scope",
+          "statement": "Diese Prüfung entscheidet nicht über die Wirksamkeit der Kündigung. Sozialauswahl, Kündigungsgrund und Sonderkündigungsschutz sind nicht abschließend geprüft.",
+          "source_ids": [
+            "KSchG_1",
+            "KSchG_23"
+          ]
+        },
+        {
+          "code": "written_form",
+          "statement": "Die Beendigung durch Kündigung erfordert Schriftform; die elektronische Form ist ausgeschlossen. Das Original muss gesondert geprüft werden.",
+          "source_ids": [
+            "BGB_623"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "id": "BGB_130",
+          "url": "https://www.gesetze-im-internet.de/bgb/__130.html",
+          "text": "(1) Eine Willenserklärung, die einem anderen gegenüber abzugeben ist, wird, wenn sie in dessen Abwesenheit abgegeben wird, in dem Zeitpunkt wirksam, in welchem sie ihm zugeht. Sie wird nicht wirksam, wenn dem anderen vorher oder gleichzeitig ein Widerruf zugeht.\n(2) Eine Willenserklärung, die notariell beurkundet oder öffentlich beglaubigt wurde, wird auch wirksam, wenn dem Erklärungsempfänger eine öffentlich beglaubigte Abschrift der Urschrift zugeht.\n(3) Auf die Wirksamkeit der Willenserklärung ist es ohne Einfluss, wenn der Erklärende nach der Abgabe stirbt oder geschäftsunfähig wird.\n(4) Diese Vorschriften finden auch dann Anwendung, wenn die Willenserklärung einer Behörde gegenüber abzugeben ist.",
+          "sha256": "79355e302823938a800db986b3a0ee210426164fa072a9746a4e705cf25aa8f5",
+          "reference": "§ 130 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_174",
+          "url": "https://www.gesetze-im-internet.de/bgb/__174.html",
+          "text": "Ein einseitiges Rechtsgeschäft, das ein Bevollmächtigter einem anderen gegenüber vornimmt, ist unwirksam, wenn der Bevollmächtigte eine Vollmachtsurkunde nicht vorlegt und der andere das Rechtsgeschäft aus diesem Grunde unverzüglich zurückweist. Die Zurückweisung ist ausgeschlossen, wenn der Vollmachtgeber den anderen von der Bevollmächtigung in Kenntnis gesetzt hatte.",
+          "sha256": "917167d43dd021b763fe16d86fe1768930410369406c8fdce970c386167d09e7",
+          "reference": "§ 174 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_187",
+          "url": "https://www.gesetze-im-internet.de/bgb/__187.html",
+          "text": "(1) Ist für den Anfang einer Frist ein Ereignis oder ein in den Lauf eines Tages fallender Zeitpunkt maßgebend, so wird bei der Berechnung der Frist der Tag nicht mitgerechnet, in welchen das Ereignis oder der Zeitpunkt fällt.\n(2) Ist der Beginn eines Tages der für den Anfang einer Frist maßgebende Zeitpunkt, so wird dieser Tag bei der Berechnung der Frist mitgerechnet. Das Gleiche gilt von dem Tage der Geburt bei der Berechnung des Lebensalters.\n(+++ § 187: Zur Anwendung vgl. § 31 Abs. 5 KVBG +++)",
+          "sha256": "0643e3df6dce8e22c933624b9d79e409e47c7248a3acced238fb1d0e043c4551",
+          "reference": "§ 187 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_188",
+          "url": "https://www.gesetze-im-internet.de/bgb/__188.html",
+          "text": "(1) Eine nach Tagen bestimmte Frist endigt mit dem Ablauf des letzten Tages der Frist.\n(2) Eine Frist, die nach Wochen, nach Monaten oder nach einem mehrere Monate umfassenden Zeitraum - Jahr, halbes Jahr, Vierteljahr - bestimmt ist, endigt im Falle des § 187 Abs. 1 mit dem Ablauf desjenigen Tages der letzten Woche oder des letzten Monats, welcher durch seine Benennung oder seine Zahl dem Tage entspricht, in den das Ereignis oder der Zeitpunkt fällt, im Falle des § 187 Abs. 2 mit dem Ablauf desjenigen Tages der letzten Woche oder des letzten Monats, welcher dem Tage vorhergeht, der durch seine Benennung oder seine Zahl dem Anfangstag der Frist entspricht.\n(3) Fehlt bei einer nach Monaten bestimmten Frist in dem letzten Monat der für ihren Ablauf maßgebende Tag, so endigt die Frist mit dem Ablauf des letzten Tages dieses Monats.\n(+++ § 188: Zur Anwendung vgl. § 31 Abs. 5 KVBG +++)",
+          "sha256": "598fbe81b78d2f6b369a295701339973e90c113f4bd8172c07cfab169c5caef4",
+          "reference": "§ 188 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_193",
+          "url": "https://www.gesetze-im-internet.de/bgb/__193.html",
+          "text": "Ist an einem bestimmten Tage oder innerhalb einer Frist eine Willenserklärung abzugeben oder eine Leistung zu bewirken und fällt der bestimmte Tag oder der letzte Tag der Frist auf einen Sonntag, einen am Erklärungs- oder Leistungsort staatlich anerkannten allgemeinen Feiertag oder einen Sonnabend, so tritt an die Stelle eines solchen Tages der nächste Werktag.",
+          "sha256": "f8ecc03c337f35809d08a6a3b1762d8253e0a8a70a49445002b6254266d83fb5",
+          "reference": "§ 193 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_622",
+          "url": "https://www.gesetze-im-internet.de/bgb/__622.html",
+          "text": "(1) Das Arbeitsverhältnis eines Arbeiters oder eines Angestellten (Arbeitnehmers) kann mit einer Frist von vier Wochen zum Fünfzehnten oder zum Ende eines Kalendermonats gekündigt werden.\n(2) Für eine Kündigung durch den Arbeitgeber beträgt die Kündigungsfrist, wenn das Arbeitsverhältnis in dem Betrieb oder Unternehmen\n1.\nzwei Jahre bestanden hat, einen Monat zum Ende eines Kalendermonats,\n2.\nfünf Jahre bestanden hat, zwei Monate zum Ende eines Kalendermonats,\n3.\nacht Jahre bestanden hat, drei Monate zum Ende eines Kalendermonats,\n4.\nzehn Jahre bestanden hat, vier Monate zum Ende eines Kalendermonats,\n5.\nzwölf Jahre bestanden hat, fünf Monate zum Ende eines Kalendermonats,\n6.\n15 Jahre bestanden hat, sechs Monate zum Ende eines Kalendermonats,\n7.\n20 Jahre bestanden hat, sieben Monate zum Ende eines Kalendermonats.\n(3) Während einer vereinbarten Probezeit, längstens für die Dauer von sechs Monaten, kann das Arbeitsverhältnis mit einer Frist von zwei Wochen gekündigt werden.\n(4) Von den Absätzen 1 bis 3 abweichende Regelungen können durch Tarifvertrag vereinbart werden. Im Geltungsbereich eines solchen Tarifvertrags gelten die abweichenden tarifvertraglichen Bestimmungen zwischen nicht tarifgebundenen Arbeitgebern und Arbeitnehmern, wenn ihre Anwendung zwischen ihnen vereinbart ist.\n(5) Einzelvertraglich kann eine kürzere als die in Absatz 1 genannte Kündigungsfrist nur vereinbart werden,\n1.\nwenn ein Arbeitnehmer zur vorübergehenden Aushilfe eingestellt ist; dies gilt nicht, wenn das Arbeitsverhältnis über die Zeit von drei Monaten hinaus fortgesetzt wird;\n2.\nwenn der Arbeitgeber in der Regel nicht mehr als 20 Arbeitnehmer ausschließlich der zu ihrer Berufsbildung Beschäftigten beschäftigt und die Kündigungsfrist vier Wochen nicht unterschreitet.\nBei der Feststellung der Zahl der beschäftigten Arbeitnehmer sind teilzeitbeschäftigte Arbeitnehmer mit einer regelmäßigen wöchentlichen Arbeitszeit von nicht mehr als 20 Stunden mit 0,5 und nicht mehr als 30 Stunden mit 0,75 zu berücksichtigen. Die einzelvertragliche Vereinbarung längerer als der in den Absätzen 1 bis 3 genannten Kündigungsfristen bleibt hiervon unberührt.\n(6) Für die Kündigung des Arbeitsverhältnisses durch den Arbeitnehmer darf keine längere Frist vereinbart werden als für die Kündigung durch den Arbeitgeber.",
+          "sha256": "ff82d5f71b98082aa7e9639cb6a8fef6eaaa7ed3e2bbc014ca7f7db36d36f4c9",
+          "reference": "§ 622 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BGB_623",
+          "url": "https://www.gesetze-im-internet.de/bgb/__623.html",
+          "text": "Die Beendigung von Arbeitsverhältnissen durch Kündigung oder Auflösungsvertrag bedürfen zu ihrer Wirksamkeit der Schriftform; die elektronische Form ist ausgeschlossen.",
+          "sha256": "c41eb464d851cb485bb8b1ddc8b57488bc1dd675a147677d2bc37b029347c25b",
+          "reference": "§ 623 BGB",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "KSchG_1",
+          "url": "https://www.gesetze-im-internet.de/kschg/__1.html",
+          "text": "(1) Die Kündigung des Arbeitsverhältnisses gegenüber einem Arbeitnehmer, dessen Arbeitsverhältnis in demselben Betrieb oder Unternehmen ohne Unterbrechung länger als sechs Monate bestanden hat, ist rechtsunwirksam, wenn sie sozial ungerechtfertigt ist.\n(2) Sozial ungerechtfertigt ist die Kündigung, wenn sie nicht durch Gründe, die in der Person oder in dem Verhalten des Arbeitnehmers liegen, oder durch dringende betriebliche Erfordernisse, die einer Weiterbeschäftigung des Arbeitnehmers in diesem Betrieb entgegenstehen, bedingt ist. Die Kündigung ist auch sozial ungerechtfertigt, wenn\n1.\nin Betrieben des privaten Rechts\na)\ndie Kündigung gegen eine Richtlinie nach § 95 des Betriebsverfassungsgesetzes verstößt,\nb)\nder Arbeitnehmer an einem anderen Arbeitsplatz in demselben Betrieb oder in einem anderen Betrieb des Unternehmens weiterbeschäftigt werden kann\nund der Betriebsrat oder eine andere nach dem Betriebsverfassungsgesetz insoweit zuständige Vertretung der Arbeitnehmer aus einem dieser Gründe der Kündigung innerhalb der Frist des § 102 Abs. 2 Satz 1 des Betriebsverfassungsgesetzes schriftlich widersprochen hat,\n2.\nin Betrieben und Verwaltungen des öffentlichen Rechts\na)\ndie Kündigung gegen eine Richtlinie über die personelle Auswahl bei Kündigungen verstößt,\nb)\nder Arbeitnehmer an einem anderen Arbeitsplatz in derselben Dienststelle oder in einer anderen Dienststelle desselben Verwaltungszweigs an demselben Dienstort einschließlich seines Einzugsgebiets weiterbeschäftigt werden kann\nund die zuständige Personalvertretung aus einem dieser Gründe fristgerecht gegen die Kündigung Einwendungen erhoben hat, es sei denn, daß die Stufenvertretung in der Verhandlung mit der übergeordneten Dienststelle die Einwendungen nicht aufrechterhalten hat.\nSatz 2 gilt entsprechend, wenn die Weiterbeschäftigung des Arbeitnehmers nach zumutbaren Umschulungs- oder Fortbildungsmaßnahmen oder eine Weiterbeschäftigung des Arbeitnehmers unter geänderten Arbeitsbedingungen möglich ist und der Arbeitnehmer sein Einverständnis hiermit erklärt hat. Der Arbeitgeber hat die Tatsachen zu beweisen, die die Kündigung bedingen.\n(3) Ist einem Arbeitnehmer aus dringenden betrieblichen Erfordernissen im Sinne des Absatzes 2 gekündigt worden, so ist die Kündigung trotzdem sozial ungerechtfertigt, wenn der Arbeitgeber bei der Auswahl des Arbeitnehmers die Dauer der Betriebszugehörigkeit, das Lebensalter, die Unterhaltspflichten und die Schwerbehinderung des Arbeitnehmers nicht oder nicht ausreichend berücksichtigt hat; auf Verlangen des Arbeitnehmers hat der Arbeitgeber dem Arbeitnehmer die Gründe anzugeben, die zu der getroffenen sozialen Auswahl geführt haben. In die soziale Auswahl nach Satz 1 sind Arbeitnehmer nicht einzubeziehen, deren Weiterbeschäftigung, insbesondere wegen ihrer Kenntnisse, Fähigkeiten und Leistungen oder zur Sicherung einer ausgewogenen Personalstruktur des Betriebes, im berechtigten betrieblichen Interesse liegt. Der Arbeitnehmer hat die Tatsachen zu beweisen, die die Kündigung als sozial ungerechtfertigt im Sinne des Satzes 1 erscheinen lassen.\n(4) Ist in einem Tarifvertrag, in einer Betriebsvereinbarung nach § 95 des Betriebsverfassungsgesetzes oder in einer entsprechenden Richtlinie nach den Personalvertretungsgesetzen festgelegt, wie die sozialen Gesichtspunkte nach Absatz 3 Satz 1 im Verhältnis zueinander zu bewerten sind, so kann die Bewertung nur auf grobe Fehlerhaftigkeit überprüft werden.\n(5) Sind bei einer Kündigung auf Grund einer Betriebsänderung nach § 111 des Betriebsverfassungsgesetzes die Arbeitnehmer, denen gekündigt werden soll, in einem Interessenausgleich zwischen Arbeitgeber und Betriebsrat namentlich bezeichnet, so wird vermutet, dass die Kündigung durch dringende betriebliche Erfordernisse im Sinne des Absatzes 2 bedingt ist. Die soziale Auswahl der Arbeitnehmer kann nur auf grobe Fehlerhaftigkeit überprüft werden. Die Sätze 1 und 2 gelten nicht, soweit sich die Sachlage nach Zustandekommen des Interessenausgleichs wesentlich geändert hat. Der Interessenausgleich nach Satz 1 ersetzt die Stellungnahme des Betriebsrates nach § 17 Abs. 3 Satz 2.",
+          "sha256": "d2cca8a5e993b5c51c7d60138d6879152835b4f3b147c9440510f7ac4e992828",
+          "reference": "§ 1 KSchG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "KSchG_4",
+          "url": "https://www.gesetze-im-internet.de/kschg/__4.html",
+          "text": "Will ein Arbeitnehmer geltend machen, dass eine Kündigung sozial ungerechtfertigt oder aus anderen Gründen rechtsunwirksam ist, so muss er innerhalb von drei Wochen nach Zugang der schriftlichen Kündigung Klage beim Arbeitsgericht auf Feststellung erheben, dass das Arbeitsverhältnis durch die Kündigung nicht aufgelöst ist. Im Falle des § 2 ist die Klage auf Feststellung zu erheben, daß die Änderung der Arbeitsbedingungen sozial ungerechtfertigt oder aus anderen Gründen rechtsunwirksam ist. Hat der Arbeitnehmer Einspruch beim Betriebsrat eingelegt (§ 3), so soll er der Klage die Stellungnahme des Betriebsrats beifügen. Soweit die Kündigung der Zustimmung einer Behörde bedarf, läuft die Frist zur Anrufung des Arbeitsgerichts erst von der Bekanntgabe der Entscheidung der Behörde an den Arbeitnehmer ab.",
+          "sha256": "c3629589d74fd1232f5d0a3186cc62383a6e0872b12dd21fbea21efa9ea38bf4",
+          "reference": "§ 4 KSchG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "KSchG_5",
+          "url": "https://www.gesetze-im-internet.de/kschg/__5.html",
+          "text": "(1) War ein Arbeitnehmer nach erfolgter Kündigung trotz Anwendung aller ihm nach Lage der Umstände zuzumutenden Sorgfalt verhindert, die Klage innerhalb von drei Wochen nach Zugang der schriftlichen Kündigung zu erheben, so ist auf seinen Antrag die Klage nachträglich zuzulassen. Gleiches gilt, wenn eine Frau von ihrer Schwangerschaft aus einem von ihr nicht zu vertretenden Grund erst nach Ablauf der Frist des § 4 Satz 1 Kenntnis erlangt hat.\n(2) Mit dem Antrag ist die Klageerhebung zu verbinden; ist die Klage bereits eingereicht, so ist auf sie im Antrag Bezug zu nehmen. Der Antrag muß ferner die Angabe der die nachträgliche Zulassung begründenden Tatsachen und der Mittel für deren Glaubhaftmachung enthalten.\n(3) Der Antrag ist nur innerhalb von zwei Wochen nach Behebung des Hindernisses zulässig. Nach Ablauf von sechs Monaten, vom Ende der versäumten Frist an gerechnet, kann der Antrag nicht mehr gestellt werden.\n(4) Das Verfahren über den Antrag auf nachträgliche Zulassung ist mit dem Verfahren über die Klage zu verbinden. Das Arbeitsgericht kann das Verfahren zunächst auf die Verhandlung und Entscheidung über den Antrag beschränken. In diesem Fall ergeht die Entscheidung durch Zwischenurteil, das wie ein Endurteil angefochten werden kann.\n(5) Hat das Arbeitsgericht über einen Antrag auf nachträgliche Klagezulassung nicht entschieden oder wird ein solcher Antrag erstmals vor dem Landesarbeitsgericht gestellt, entscheidet hierüber die Kammer des Landesarbeitsgerichts. Absatz 4 gilt entsprechend.",
+          "sha256": "ff30893268191bde9b4175affbbdaa20464af98a0d48970fdfbd08e07b170d18",
+          "reference": "§ 5 KSchG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "KSchG_7",
+          "url": "https://www.gesetze-im-internet.de/kschg/__7.html",
+          "text": "Wird die Rechtsunwirksamkeit einer Kündigung nicht rechtzeitig geltend gemacht (§ 4 Satz 1, §§ 5 und 6), so gilt die Kündigung als von Anfang an rechtswirksam; ein vom Arbeitnehmer nach § 2 erklärter Vorbehalt erlischt.",
+          "sha256": "73165cf9eae5106f2cbb3e152fed2e575634ef406625708132e3b9f8e9472582",
+          "reference": "§ 7 KSchG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "KSchG_23",
+          "url": "https://www.gesetze-im-internet.de/kschg/__23.html",
+          "text": "(1) Die Vorschriften des Ersten und Zweiten Abschnitts gelten für Betriebe und Verwaltungen des privaten und des öffentlichen Rechts, vorbehaltlich der Vorschriften des § 24 für die Seeschiffahrts-, Binnenschiffahrts- und Luftverkehrsbetriebe. Die Vorschriften des Ersten Abschnitts gelten mit Ausnahme der §§ 4 bis 7 und des § 13 Abs. 1 Satz 1 und 2 nicht für Betriebe und Verwaltungen, in denen in der Regel fünf oder weniger Arbeitnehmer ausschließlich der zu ihrer Berufsbildung Beschäftigten beschäftigt werden. In Betrieben und Verwaltungen, in denen in der Regel zehn oder weniger Arbeitnehmer ausschließlich der zu ihrer Berufsbildung Beschäftigten beschäftigt werden, gelten die Vorschriften des Ersten Abschnitts mit Ausnahme der §§ 4 bis 7 und des § 13 Abs. 1 Satz 1 und 2 nicht für Arbeitnehmer, deren Arbeitsverhältnis nach dem 31. Dezember 2003 begonnen hat; diese Arbeitnehmer sind bei der Feststellung der Zahl der beschäftigten Arbeitnehmer nach Satz 2 bis zur Beschäftigung von in der Regel zehn Arbeitnehmern nicht zu berücksichtigen. Bei der Feststellung der Zahl der beschäftigten Arbeitnehmer nach den Sätzen 2 und 3 sind teilzeitbeschäftigte Arbeitnehmer mit einer regelmäßigen wöchentlichen Arbeitszeit von nicht mehr als 20 Stunden mit 0,5 und nicht mehr als 30 Stunden mit 0,75 zu berücksichtigen.\n(2) Die Vorschriften des Dritten Abschnitts gelten für Betriebe und Verwaltungen des privaten Rechts sowie für Betriebe, die von einer öffentlichen Verwaltung geführt werden, soweit sie wirtschaftliche Zwecke verfolgen.",
+          "sha256": "1cab59272cc5ec00a55a93cedc097cf346bbf5f873bd285194b22a323087da19",
+          "reference": "§ 23 KSchG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "BetrVG_102",
+          "url": "https://www.gesetze-im-internet.de/betrvg/__102.html",
+          "text": "(1) Der Betriebsrat ist vor jeder Kündigung zu hören. Der Arbeitgeber hat ihm die Gründe für die Kündigung mitzuteilen. Eine ohne Anhörung des Betriebsrats ausgesprochene Kündigung ist unwirksam.\n(2) Hat der Betriebsrat gegen eine ordentliche Kündigung Bedenken, so hat er diese unter Angabe der Gründe dem Arbeitgeber spätestens innerhalb einer Woche schriftlich mitzuteilen. Äußert er sich innerhalb dieser Frist nicht, gilt seine Zustimmung zur Kündigung als erteilt. Hat der Betriebsrat gegen eine außerordentliche Kündigung Bedenken, so hat er diese unter Angabe der Gründe dem Arbeitgeber unverzüglich, spätestens jedoch innerhalb von drei Tagen, schriftlich mitzuteilen. Der Betriebsrat soll, soweit dies erforderlich erscheint, vor seiner Stellungnahme den betroffenen Arbeitnehmer hören. § 99 Abs. 1 Satz 3 gilt entsprechend.\n(3) Der Betriebsrat kann innerhalb der Frist des Absatzes 2 Satz 1 der ordentlichen Kündigung widersprechen, wenn\n1.\nder Arbeitgeber bei der Auswahl des zu kündigenden Arbeitnehmers soziale Gesichtspunkte nicht oder nicht ausreichend berücksichtigt hat,\n2.\ndie Kündigung gegen eine Richtlinie nach § 95 verstößt,\n3.\nder zu kündigende Arbeitnehmer an einem anderen Arbeitsplatz im selben Betrieb oder in einem anderen Betrieb des Unternehmens weiterbeschäftigt werden kann,\n4.\ndie Weiterbeschäftigung des Arbeitnehmers nach zumutbaren Umschulungs- oder Fortbildungsmaßnahmen möglich ist oder\n5.\neine Weiterbeschäftigung des Arbeitnehmers unter geänderten Vertragsbedingungen möglich ist und der Arbeitnehmer sein Einverständnis hiermit erklärt hat.\n(4) Kündigt der Arbeitgeber, obwohl der Betriebsrat nach Absatz 3 der Kündigung widersprochen hat, so hat er dem Arbeitnehmer mit der Kündigung eine Abschrift der Stellungnahme des Betriebsrats zuzuleiten.\n(5) Hat der Betriebsrat einer ordentlichen Kündigung frist- und ordnungsgemäß widersprochen, und hat der Arbeitnehmer nach dem Kündigungsschutzgesetz Klage auf Feststellung erhoben, dass das Arbeitsverhältnis durch die Kündigung nicht aufgelöst ist, so muss der Arbeitgeber auf Verlangen des Arbeitnehmers diesen nach Ablauf der Kündigungsfrist bis zum rechtskräftigen Abschluss des Rechtsstreits bei unveränderten Arbeitsbedingungen weiterbeschäftigen. Auf Antrag des Arbeitgebers kann das Gericht ihn durch einstweilige Verfügung von der Verpflichtung zur Weiterbeschäftigung nach Satz 1 entbinden, wenn\n1.\ndie Klage des Arbeitnehmers keine hinreichende Aussicht auf Erfolg bietet oder mutwillig erscheint oder\n2.\ndie Weiterbeschäftigung des Arbeitnehmers zu einer unzumutbaren wirtschaftlichen Belastung des Arbeitgebers führen würde oder\n3.\nder Widerspruch des Betriebsrats offensichtlich unbegründet war.\n(6) Arbeitgeber und Betriebsrat können vereinbaren, dass Kündigungen der Zustimmung des Betriebsrats bedürfen und dass bei Meinungsverschiedenheiten über die Berechtigung der Nichterteilung der Zustimmung die Einigungsstelle entscheidet.\n(7) Die Vorschriften über die Beteiligung des Betriebsrats nach dem Kündigungsschutzgesetz bleiben unberührt.",
+          "sha256": "1539b78bd759716b7d03c4ac4cbd5d769c8bdc233438e49afc83e71d55f2fd87",
+          "reference": "§ 102 BetrVG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "ZPO_222",
+          "url": "https://www.gesetze-im-internet.de/zpo/__222.html",
+          "text": "(1) Für die Berechnung der Fristen gelten die Vorschriften des Bürgerlichen Gesetzbuchs.\n(2) Fällt das Ende einer Frist auf einen Sonntag, einen allgemeinen Feiertag oder einen Sonnabend, so endet die Frist mit Ablauf des nächsten Werktages.\n(3) Bei der Berechnung einer Frist, die nach Stunden bestimmt ist, werden Sonntage, allgemeine Feiertage und Sonnabende nicht mitgerechnet.",
+          "sha256": "cc0ee0255cb2991fad873f439a57559904a9128f0184ec2b2a65a61a861edbad",
+          "reference": "§ 222 ZPO",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "ArbGG_46",
+          "url": "https://www.gesetze-im-internet.de/arbgg/__46.html",
+          "text": "(1) Das Urteilsverfahren findet in den in § 2 Abs. 1 bis 4 bezeichneten bürgerlichen Rechtsstreitigkeiten Anwendung.\n(2) Für das Urteilsverfahren des ersten Rechtszugs gelten die Vorschriften der Zivilprozeßordnung über das Verfahren vor den Amtsgerichten entsprechend, soweit dieses Gesetz nichts anderes bestimmt. Die Vorschriften über den frühen ersten Termin zur mündlichen Verhandlung und das schriftliche Vorverfahren (§§ 275 bis 277 der Zivilprozessordnung), über das vereinfachte Verfahren (§ 495a der Zivilprozessordnung), über den Urkunden- und Wechselprozess (§§ 592 bis 605a der Zivilprozessordnung), über die Entscheidung ohne mündliche Verhandlung (§ 128 Absatz 2 der Zivilprozessordnung), über die Förderung von Videoverhandlungen bei Terminsänderungsanträgen (§ 227 Absatz 1 Satz 3 und Absatz 4 der Zivilprozessordnung), über die Verlegung von Terminen in der Zeit vom 1. Juli bis 31. August (§ 227 Absatz 3 Satz 1 der Zivilprozessordnung) und die Äußerung über Bedenken gegen eine Videoverhandlung in der Klageschrift und der Klageerwiderung (§ 253 Absatz 3 Nummer 4 und § 277 Absatz 1 Satz 2 Nummer 2 der Zivilprozessordnung) finden keine Anwendung. § 127 Abs. 2 der Zivilprozessordnung findet mit der Maßgabe Anwendung, dass die sofortige Beschwerde bei Bestandsschutzstreitigkeiten unabhängig von dem Streitwert zulässig ist. Abweichend von § 160 Absatz 1 Nummer 4 der Zivilprozessordnung enthält das Protokoll die Namen der erschienenen Parteien, Nebenintervenienten, Vertreter, Bevollmächtigten, Beistände, Zeugen und Sachverständigen sowie im Fall der §§ 50a und 58 Absatz 4 die Angabe, wer an der Verhandlung oder der Beweisaufnahme per Bild- und Tonübertragung teilnimmt.",
+          "sha256": "44015f5a52fbbc8e4e9de8319698b4aa5c3cd5e480644e29548bd7efc1ececef",
+          "reference": "§ 46 ArbGG",
+          "retrieved_on": "2026-11-10"
+        },
+        {
+          "id": "FeiertG_NW_2",
+          "url": "https://recht.nrw.de/lrgv/gesetz/01012000-bekanntmachung-der-neufassung-des-gesetzes-ueber-die-sonn-und-feiertage/",
+          "text": "(1) Feiertage sind:\n1. der Neujahrstag,\n2. der Karfreitag,\n3. der Ostermontag,\n4. der 1. Mai als Tag des Bekenntnisses zu Freiheit und Frieden, sozialer Gerechtigkeit, Völkerversöhnung und Menschenwürde,\n5. der Christi-Himmelfahrts-Tag,\n6. der Pfingstmontag,\n7. der Fronleichnamstag (Donnerstag nach dem Sonntag Trinitatis),\n8. der 3. Oktober als Tag der Deutschen Einheit,\n9. der Allerheiligentag (1. November),\n10. der 1. Weihnachtstag,\n11. der 2. Weihnachtstag.",
+          "sha256": "07fb97e3a2921adac445d1ea8317c11ac87507be78c056e323f4b91ddbccead6",
+          "reference": "§ 2 Abs. 1 Feiertagsgesetz NW",
+          "retrieved_on": "2026-11-10"
+        }
+      ],
+      "version": "1.0",
+      "calculations": [],
+      "model_review": {
+        "issues": [],
+        "status": "not_used"
+      },
+      "uncertainties": [
+        "Widersprüchliche bestätigte Angaben: Zugang am. Bitte anhand der Originale klären.",
+        "An welchem Tag ist das Kündigungsschreiben tatsächlich zugegangen? Datum auf dem Schreiben genügt nicht."
+      ],
+      "corpus_version": "termination-2026-11-10-e1a8f4ba0853",
+      "technical_status": "pass"
+    },
+    "provenance": {
+      "kind": "hosted_controlled_pipeline",
+      "generated_at": "2026-11-10T12:51:22.551221+00:00",
+      "model_calls": 0,
+      "corpus_version": "termination-2026-11-10-e1a8f4ba0853"
+    }
+  }
+]

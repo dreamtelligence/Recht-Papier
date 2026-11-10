@@ -1,0 +1,12 @@
+{
+  "before_commit": "e44bf416a3a46ccd7e56dcc4f48b54348da9e763",
+  "source_url": "https://www.gesetze-im-internet.de/bgb/xml.zip",
+  "xml_sha256": "34fc732d8b963eb753ed11236490d3c47c123ccb72b67c2fdda7f19544389e57",
+  "norm": "\u00a7 622 BGB",
+  "before_characters": 1931,
+  "after_characters": 2308,
+  "lost_contract_exception_restored": true,
+  "part_time_counting_restored": true,
+  "live_vector_index_replaced": false,
+  "scope": "The bounded portfolio uses a new immutable exact-norm corpus; existing broader live vector corpus is preserved for rollback."
+}

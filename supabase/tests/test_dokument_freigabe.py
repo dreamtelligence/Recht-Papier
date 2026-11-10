@@ -22,6 +22,7 @@ import sys
 import uuid
 
 from test_fall_einordnen import Supabase, load_env
+from portfolio_fixture import controlled_result
 
 ANGABE = "Die Kündigung ist mir am 31.08.2026 zugegangen."
 ZWEITE_ANGABE = "Im Betrieb arbeiten 62 Personen."
@@ -93,11 +94,11 @@ def main() -> int:
             return rpc("finish_case_analysis", {
                 **run, "p_snapshot": snapshot,
                 "p_answer": "Die Kündigung bedarf der Schriftform [1].",
-                "p_model": "synthetic-test",
+                "p_model": "controlled-termination/1.0",
                 # `released` entscheidet die Datenbank aus Audit und
                 # Quellenlage. Ein nicht bestandenes Audit ist deshalb der
                 # einzige Weg, eine gesperrte Analyse zu erzeugen.
-                "p_audit": {"status": "pass" if released else "fail", "material_claims": 1},
+                "p_audit": {"status": "pass" if released else "fail", "material_claims": 1, "structured_result":controlled_result([ANGABE])},
                 "p_source_audit": {"missing_required": [] if released else ["BGB § 623"]},
                 "p_deadlines": [], "p_area": "arbeitsrecht",
                 "p_sources": [{"kind": "gesetz", "reference": "BGB", "locator": "§ 623",
@@ -127,7 +128,7 @@ def main() -> int:
         check("Bericht lesbar", status == 200 and len(rows) == 1, f"{status} {rows}")
         text = rows[0]["body"]
         check("Bestätigte Angabe steht im Bericht", ANGABE in text)
-        check("Quelle steht mit Fundstelle im Bericht", "BGB § 623" in text)
+        check("Quelle steht mit Fundstelle im Bericht", "§ 623 BGB" in text)
         check("Bericht ist zunächst Entwurf", rows[0]["approved_at"] is None)
 
         print("5. Was der Client nicht selbst darf")
@@ -159,7 +160,7 @@ def main() -> int:
         sb.rest("PATCH", f"case_facts?id=eq.{zweite[0]['id']}", token, body={"confirmed": True})
 
         status, body = sb.function("dokument-erstellen", token,
-                                   {"case_id": case, "kind": "anschreiben"})
+                                   {"case_id": case, "kind": "bericht"})
         check("Kein neues Dokument aus veralteter Analyse", status == 409, f"{status} {body}")
 
         status, rows = sb.rest("GET", f"cases?id=eq.{case}&select=input_revision", token)

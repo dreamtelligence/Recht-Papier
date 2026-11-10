@@ -1,0 +1,17 @@
+{
+  "executed_at": "2026-11-10T12:54:17.066Z",
+  "url": "https://recht-papier-portfolio.vercel.app",
+  "corrupt_storage_checked": true,
+  "architecture_checked": true,
+  "browser": "Brave/Chromium",
+  "viewports": [
+    1440,
+    390
+  ],
+  "cases_per_viewport": 3,
+  "pdf_downloads": 6,
+  "persistence_checked": true,
+  "private_backend_requests": [],
+  "page_errors": [],
+  "http_errors": []
+}
