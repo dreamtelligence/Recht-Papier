@@ -20,7 +20,7 @@ Stand 10.11.2026. Auftrag: `docs/portfolio-release-plan.md`. Nutzerentscheidunge
 - [x] README, Architekturseite, Regressionsnachweis, Kostenmessung und Modellfehler dokumentiert.
 - [ ] Vollständiger Modellvergleich: Qwen EU-L40S-Kapazität nicht verfügbar; Gemini-Quote vor allen Wiederholungen erschöpft. Nur 17 Gemini-Antworten auswertbar, davon 15 mit abweichendem Termin. Keine Modellrangliste oder freie Modellfreigabe.
 - [ ] Endgültige Providerrechnung/Kostenabgleich. Modal meldet bisher 0,22966928 USD Verbrauch; Gemini 0,0133723 USD nur Listenpreis-Schätzung. Kein vollständiger Ist-Kosten-Benchmark.
-- [ ] Grüner gehosteter GitHub-CI-Nachweis: Konto laut Actions-Annotation wegen Abrechnungsproblem gesperrt. Lokale grüne Checks ersetzen diesen Nachweis nicht.
+- [ ] Grüner gehosteter GitHub-CI-Nachweis: Konto laut [neuem CI-Lauf](https://github.com/dreamtelligence/Recht-Papier/actions/runs/42820008368) und [Annotation](ci-verification.json) wegen Abrechnungsproblem gesperrt. Lokale grüne Checks ersetzen diesen Nachweis nicht.
 - [ ] Release-Tag `v1.0.0` nach den offenen Abnahmen.
 
 [Browser-Nachweis](browser-live-verification.json) · [Native Nachweise](native/README.md) · [PDF-Prüfung](pdf-verification.json) · [Evaluation](evaluation.md) · [Abhängigkeiten](dependency-audit.json)

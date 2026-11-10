@@ -1,0 +1,10 @@
+{
+  "implementation_commit": "25662e17934c2dc867f0c3b5d13ddc3efdfb2d5d",
+  "run_url": "https://github.com/dreamtelligence/Recht-Papier/actions/runs/42820008368",
+  "conclusion": "failure",
+  "jobs_started": false,
+  "failure_annotation": "The job was not started because your account is locked due to a billing issue.",
+  "local_checks": "TypeScript, lease status, schema drift, 27 Deno tests, 192 Python tests, 40 deterministic executions, web export, public bundle isolation and real hosted/browser/native checks passed.",
+  "workflow_syntax": "actionlint passed",
+  "not_claimed": "No green hosted CI badge or v1.0.0 release tag."
+}
