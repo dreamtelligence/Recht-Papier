@@ -41,6 +41,8 @@ export type CaseDetail = CaseSummary & {
    * aktuelles aussehen zu lassen.
    */
   input_revision: number;
+  run_expires_at: string | null;
+  analysis_error: string | null;
 };
 
 export type CaseDocument = {

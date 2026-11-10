@@ -79,6 +79,8 @@ export async function rechtNachschlagen(frage: string): Promise<RechtAntwort> {
  * Sekunden, bevor überhaupt das Modell gefragt wird. Der Bildschirm muss das
  * ansagen, sonst sieht Warten aus wie Hängen.
  *
+ * Die Startanfrage bestätigt nur den Hintergrundauftrag (HTTP 202).
+ * Die Fallansicht lädt den gespeicherten Status bis zum Abschluss nach.
  * Zurück kommt nichts Verwertbares — die Function schreibt selbst in die Akte,
  * und der Bildschirm lädt sie danach neu. Nur der Fehlerfall trägt
  * Information, und die wird hier in einen Satz übersetzt, den man jemandem

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { analyseLaeuft } from "./analyse-status";
 import { deleteCase, loadCaseOverview, loadCases } from "./api";
 import { KEIN_NETZ, istNetzfehler } from "@/lib/fehler";
 import type { CaseOverview, CaseSummary } from "./typen";
@@ -101,5 +102,10 @@ export function useFall(caseId: string) {
     laden,
     "Diese Fallakte ist nicht verfügbar.",
   );
+  useEffect(() => {
+    if (!daten || !analyseLaeuft(daten.fall)) return;
+    const timer = setTimeout(rest.aktualisieren, 3000);
+    return () => clearTimeout(timer);
+  }, [daten, rest.aktualisieren]);
   return { fall: daten, ...rest };
 }

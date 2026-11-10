@@ -91,9 +91,10 @@ export function PaperScrollScreen({
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <ScrollView
+          style={{ marginTop: insets.top }}
           contentContainerStyle={[
             styles.rollInhalt,
-            { paddingTop: insets.top + oben, paddingBottom: insets.bottom + unten },
+            { paddingTop: oben, paddingBottom: insets.bottom + unten },
           ]}
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="interactive"

@@ -42,7 +42,7 @@ export async function loadCaseOverview(caseId: string): Promise<CaseOverview> {
   const [caseResult, documents, facts, analyses, sources, deadlines, schreiben] = await Promise.all([
     supabase
       .from("cases")
-      .select("id,title,status,created_at,updated_at,description,legal_area,input_revision")
+      .select("id,title,status,created_at,updated_at,description,legal_area,input_revision,run_expires_at,analysis_error")
       .eq("id", caseId)
       .maybeSingle(),
     supabase

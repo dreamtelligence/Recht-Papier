@@ -35,6 +35,15 @@ Projektwissen liegt im Semantica-MCP und ist dort verbindlich. Relevante Knoten:
 Neue Erkenntnisse und Architekturentscheidungen werden dort festgehalten, veraltetes Wissen
 wird korrigiert statt ergänzt.
 
+## Aktueller Analysepfad (10.11.2026)
+
+Fallanalysen laufen als Hintergrundauftrag: `fall-einordnen` antwortet mit 202,
+`private.case_analysis_jobs` hält den Eingabestand, und ein separater Modal-Worker
+liefert das Ergebnis an `case-analysis-worker`. Die App lädt den Status nach.
+Modell- und Quellenfreigabe bleiben serverseitig und werden nicht umgangen.
+Details, Tests und Rollback: [`docs/analysis-jobs.md`](docs/analysis-jobs.md).
+Die älteren synchronen Ablaufbeschreibungen unten sind historische Einordnung.
+
 ## Architektur
 
 ### Client

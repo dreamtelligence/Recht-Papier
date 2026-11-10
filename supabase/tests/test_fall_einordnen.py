@@ -206,17 +206,21 @@ def main() -> int:
         print(f"        {len(text)} Zeichen, Fehler: {rows[0].get('processing_error')!r}")
 
         # --- Einordnen ------------------------------------------------------
-        print("\n3. fall-einordnen  (Kaltstart der Engine möglich, bis zu 2 Minuten)")
+        print("\n3. fall-einordnen  (Hintergrundauftrag, Kaltstart möglich)")
         begonnen = time.monotonic()
         status, body = sb.function("fall-einordnen", token, {"case_id": case_id})
-        dauer = time.monotonic() - begonnen
-        check("Einordnung durchgelaufen", status == 200, f"{status} {body}")
-        print(f"        {dauer:.1f}s  {body if status == 200 else ''}")
-        if status != 200:
-            status, fall = sb.rest("GET", f"cases?id=eq.{case_id}&select=status", token)
-            check("Gescheiterter Lauf hinterlässt keinen hängenden Fall",
-                  fall and fall[0]["status"] == "fehlgeschlagen", fall)
+        check("Hintergrundauftrag angenommen", status == 202, f"{status} {body}")
+        if status != 202:
             return 1
+        duplicate, _ = sb.function("fall-einordnen", token, {"case_id": case_id})
+        check("Doppelter Start wird abgewiesen", duplicate == 409, duplicate)
+        deadline = time.monotonic() + 26 * 60
+        while time.monotonic() < deadline:
+            status, rows = sb.rest("GET", f"cases?id=eq.{case_id}&select=status,analysis_error", token)
+            if status != 200 or not rows or rows[0]["status"] != "in_pruefung":
+                break
+            time.sleep(3)
+        check("Hintergrundauftrag abgeschlossen", rows and rows[0]["status"] == "analysiert", rows)
 
         # --- Was in der Akte steht ------------------------------------------
         print("\n4. Was in der Fallakte steht")
@@ -241,7 +245,7 @@ def main() -> int:
         analyse = analysen[0]
 
         check("Antworttext vorhanden", len(analyse["answer"] or "") > 400, len(analyse["answer"] or ""))
-        check("Modell ist das freigegebene", analyse["model"] == "gemini-2.5-flash-lite", analyse["model"])
+        check("Modell ist das freigegebene", analyse["model"] == "Qwen/Qwen3.8-27B-FP8", analyse["model"])
         check("request_id festgehalten", bool(analyse["request_id"]), analyse["request_id"])
 
         audit = analyse["answer_audit"] or {}
@@ -276,18 +280,17 @@ def main() -> int:
 
         # --- Kein zweiter Lauf auf Knopfdruck --------------------------------
         print("\n5. Schutz gegen doppelte Läufe")
-        sb.rest("PATCH", f"cases?id=eq.{case_id}", token, body={"status": "in_pruefung"})
-        status, body = sb.function("fall-einordnen", token, {"case_id": case_id})
-        check("Ein laufender Vorgang wird nicht zweimal gestartet", status == 409, f"{status} {body}")
-        sb.rest("PATCH", f"cases?id=eq.{case_id}", token, body={"status": "analysiert"})
-
         status, body = sb.function("fall-einordnen", token,
                                    {"case_id": "00000000-0000-0000-0000-000000000000"})
         check("Ein fremder Fall wird nicht eingeordnet", status == 404, f"{status} {body}")
 
     finally:
         if behalten and case_id:
-            print(f"\nFall bleibt stehen: {case_id} (Konto {mail} / {password})")
+            access = ROOT / "test-results" / "last-demo-access.json"
+            access.parent.mkdir(exist_ok=True)
+            access.write_text(json.dumps({"case_id": case_id, "email": mail, "password": password}))
+            access.chmod(0o600)
+            print(f"\nFall bleibt stehen: {case_id}; Zugangsdaten nur in {access}")
         else:
             print("\n6. Aufräumen")
             if storage_path:

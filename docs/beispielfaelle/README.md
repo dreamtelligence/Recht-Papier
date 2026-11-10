@@ -28,10 +28,10 @@ müsste — hier steht es, damit sich das Ergebnis daran messen lässt:
 
 | Ansatz | Fundstelle | Was im Schreiben steht |
 |---|---|---|
-| Kündigungsfrist zu kurz | § 622 Abs. 2 Nr. 3 BGB | 9 Jahre Betriebszugehörigkeit ⇒ 3 Monate zum Monatsende, also frühestens 31.12.2026 — gekündigt wird zum 30.09.2026 |
+| Kündigungsfrist zu kurz | § 622 Abs. 2 Nr. 3 BGB | 9 Jahre Betriebszugehörigkeit ⇒ 3 Monate zum Monatsende, also nach der gesetzlichen Frist frühestens 30.11.2026 — gekündigt wird zum 30.09.2026 |
 | KSchG anwendbar | § 1, § 23 Abs. 1 KSchG | 62 Beschäftigte, Wartezeit lange erfüllt |
 | Sozialauswahl nicht dargelegt | § 1 Abs. 3 KSchG | nur pauschal „Umstrukturierung" |
-| Betriebsratsanhörung nicht erwähnt | § 102 Abs. 1 S. 3 BetrVG | Betriebsrat existiert, Anhörung fehlt im Schreiben |
+| Betriebsratsanhörung prüfen | § 102 Abs. 1 S. 3 BetrVG | Betriebsrat existiert; aus dem Schweigen des Schreibens folgt noch nicht, dass eine Anhörung unterblieben ist |
 | Zurückweisung mangels Vollmacht | § 174 BGB | Unterschrift „i. A. Tobias Grewe", keine Vollmacht beigefügt |
 | Klagefrist | § 4 KSchG | Zugang 31.08.2026 ⇒ drei Wochen, Ende 21.09.2026 |
 | Urlaub / Freistellung | § 7 BUrlG | 14 Tage Resturlaub auf die Freistellung angerechnet |

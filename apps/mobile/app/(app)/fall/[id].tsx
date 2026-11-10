@@ -3,6 +3,7 @@ import { Linking, Pressable, RefreshControl, StyleSheet, Text, View } from "reac
 import { useLocalSearchParams, useRouter } from "expo-router";
 
 import { dokumentAdresse, dokumentErstellen, faktBestaetigen } from "@/features/faelle/api";
+import { analyseLaeuft } from "@/features/faelle/analyse-status";
 import { useFall } from "@/features/faelle/hooks";
 import {
   DOKUMENT_TEXT,
@@ -146,6 +147,7 @@ export default function Fallakte() {
   // eine Angabe bestätigt oder ein Dokument nachreicht, hat eine andere Akte
   // als die geprüfte — und die Einordnung darunter ist ab da eine Aussage über
   // etwas, das es so nicht mehr gibt.
+  const laufAbgelaufen = fall.status === "in_pruefung" && !analyseLaeuft(fall);
   const analyseVeraltet = Boolean(analyse) && analyse!.input_revision !== fall.input_revision;
   const bestaetigteAngaben = fakten.filter((fakt) => fakt.confirmed).length;
 
@@ -155,7 +157,7 @@ export default function Fallakte() {
   // Modellaufruf.
   const kannEinordnen =
     !ordnetEin &&
-    (fall.status === "entwurf" || fall.status === "fehlgeschlagen" || analyseVeraltet);
+    (fall.status === "entwurf" || fall.status === "fehlgeschlagen" || laufAbgelaufen || analyseVeraltet);
 
   // Ein Dokument darf nur aus einer bestandenen, aktuellen Prüfung entstehen —
   // und nur, wenn überhaupt etwas bestätigt ist. Die Datenbank erzwingt
@@ -188,7 +190,7 @@ export default function Fallakte() {
       <View style={styles.kopf}>
         <Title>{fall.title}</Title>
         <Text style={styles.meta}>
-          {STATUS_TEXT[fall.status] ?? fall.status}
+          {laufAbgelaufen ? "Prüfung unterbrochen" : STATUS_TEXT[fall.status] ?? fall.status}
           {fall.legal_area ? ` · ${RECHTSGEBIET_TEXT[fall.legal_area] ?? fall.legal_area}` : ""}
           {` · angelegt am ${datum(fall.created_at)}`}
         </Text>
@@ -295,7 +297,7 @@ export default function Fallakte() {
         titel="Rechtliche Einordnung"
         leer={
           fall.status === "in_pruefung"
-            ? "Die Prüfung läuft. Beim ersten Mal dauert es länger — die Rechtsdatenbank fährt erst hoch."
+            ? "Die Prüfung läuft im Hintergrund. Beim ersten Mal kann sie mehrere Minuten dauern. Sie können diese Ansicht verlassen und später zurückkehren."
             : "Noch keine Analyse. Die Prüfung vergleicht Ihren Sachverhalt mit Gesetzen und Urteilen."
         }
       >
@@ -334,12 +336,12 @@ export default function Fallakte() {
             disabled={!kannEinordnen}
           />
           <Muted>
-            Dauert bis zu zwei Minuten. Ihr Sachverhalt wird dafür pseudonymisiert.
+            Die Prüfung läuft im Hintergrund und kann mehrere Minuten dauern. Ihr Sachverhalt wird dafür pseudonymisiert.
           </Muted>
         </View>
       ) : null}
 
-      <Message>{meldung}</Message>
+      <Message>{meldung || fall.analysis_error || (laufAbgelaufen ? "Die Prüfung wurde unterbrochen. Bitte erneut starten." : "")}</Message>
 
       <Section
         titel={`Bericht und Schreiben${schreiben.length ? ` · ${schreiben.length}` : ""}`}

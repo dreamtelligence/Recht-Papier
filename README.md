@@ -4,6 +4,18 @@ An Expo/React Native application for collecting a case, attaching documents and 
 
 This repository demonstrates the client, authentication and case-data boundary, Supabase migrations and Edge Functions. The retrieval/reranking engine is a **separate service in [Jura](https://github.com/dreamtelligence/Jura)**; access to that repository is separate. This repository alone does not contain the full RAG engine or its legal corpus.
 
+## iOS walkthrough
+
+Captured from the native iOS Simulator on 10 November 2026, using the fictional dismissal fixture in [`docs/beispielfaelle/`](docs/beispielfaelle/). The August/September dates belong to a historical test case.
+
+| Start | Describe the case and attach a PDF |
+| --- | --- |
+| <a href="docs/screenshots/01-start.png"><img src="docs/screenshots/01-start.png" alt="Native start screen" width="270"></a> | <a href="docs/screenshots/02-fall-beschreiben.png"><img src="docs/screenshots/02-fall-beschreiben.png" alt="Fictional case intake with a selected PDF" width="270"></a> |
+| **Generated analysis — release blocked** | **Retrieved legal sources** |
+| <a href="docs/screenshots/03-pruefsperre.png"><img src="docs/screenshots/03-pruefsperre.png" alt="Real analysis with the failed source-check warning visible" width="270"></a> | <a href="docs/screenshots/04-rechtsgrundlagen.png"><img src="docs/screenshots/04-rechtsgrundlagen.png" alt="Retrieved statutes and their stored source dates" width="270"></a> |
+
+The real background run returned 202 in 2.9 seconds and persisted an answer with 11 sources after about seven minutes. **Its answer audit failed, so document generation and deadline creation stayed blocked.** These images demonstrate the actual workflow and its rejection state; they do not demonstrate a legally validated answer. See [capture notes and remaining gaps](docs/screenshots/README.md).
+
 ## Engineering focus
 
 - Expo SDK 57, React Native 0.86, TypeScript and Expo Router.
@@ -11,7 +23,8 @@ This repository demonstrates the client, authentication and case-data boundary, 
 - Structured cases, private document storage, analyses, sources and deadlines.
 - Supabase Row Level Security binds case data to its owner.
 - Edge Functions validate the user, resolve ownership and call the engine with server-only credentials.
-- Case analysis includes pseudonymization, model allowlisting, request identifiers and atomic persistence.
+- Background case analysis with persisted input snapshots, worker claim deduplication and bounded leases.
+- Pseudonymization, model allowlisting, request identifiers and atomic audit/source persistence.
 - Account deletion explicitly removes stored documents before deleting the account.
 - Integration checks cover isolation between users, account deletion, document release and analysis writes.
 
@@ -22,12 +35,16 @@ flowchart LR
   App[Expo client] --> Auth[Supabase Auth]
   App --> Case[Private case file and documents]
   App --> Edge[Authenticated Edge Functions]
-  Edge --> Engine[Jura legal engine]
+  Edge --> Queue[Persisted run and opaque job UUID]
+  Queue --> Engine[Jura legal engine]
   Engine --> Retrieval[Retrieval and evidence validation]
   Retrieval --> Model[Configured answer model]
   Model --> Result[Analysis with sources and proposed deadlines]
-  Result --> Case
+  Result --> Callback[Authenticated completion callback]
+  Callback --> Case
 ```
+
+The case view polls the saved status while analysis runs; the start request returns HTTP 202. See [job lifecycle, security boundaries and deployment](docs/analysis-jobs.md).
 
 The client never receives the engine credential. Public legal-source data and private case data are separate. `apps/mobile/src/features/legal/client.ts` is the client boundary; `supabase/functions/fall-einordnen/index.ts` handles the case-analysis request.
 
