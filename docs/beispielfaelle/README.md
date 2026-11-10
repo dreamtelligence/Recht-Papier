@@ -3,14 +3,9 @@
 Zwei fertige Anschreiben plus die Schilderung, die dazu gehört. Gedacht zum
 Durchklicken der Fallakte im Simulator — nicht als juristisches Muster.
 
-Die Unterlagen liegen als PDF neben dieser Datei und zusätzlich im Simulator
-unter **Dateien → Auf meinem iPhone → Beispielfaelle**. Ablegen bzw. erneuern:
-
-```
-DEV=BE356150-D829-45CE-8145-EDE43EE354A5   # iPhone 17 Pro
-FP=~/Library/Developer/CoreSimulator/Devices/$DEV/data/Containers/Shared/AppGroup
-cp docs/beispielfaelle/*.pdf "$(ls -d $FP/*/File\ Provider\ Storage | tail -1)/Beispielfaelle/"
-```
+Alle Personen, Unternehmen und Sachverhalte in diesen Dateien sind erfundene Testdaten.
+Es handelt sich weder um echte Mandatsunterlagen noch um juristisch freigegebene Muster.
+Die PDFs können über die Dateien-App eines Simulators oder Testgeräts importiert werden.
 
 ---
 

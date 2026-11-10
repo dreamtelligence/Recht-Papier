@@ -1,53 +1,102 @@
-umbau B2B2C statt B2C: Deine Engine nicht direkt an Verbraucher, sondern als Werkzeug an Stellen lizenzieren, die bereits RDG-befugt sind – Mietervereine, Gewerkschaften (die haben Rechtsschutz für Mitglieder), Rechtsschutzversicherer. Die setzen dein Tool intern für die Vorprüfung/Triage ihrer eigenen Berater ein. Das umgeht das RDG-Problem komplett, weil die Rechtsdienstleistung weiterhin von einer befugten Stelle erbracht wird – du lieferst nur die Software. Das könnte bei deiner Zeitlage sogar der schnellere Weg zu echtem Geld sein: ein Pilotprojekt mit einem lokalen Mieterverein ist greifbarer als ein Consumer-Launch mit RDG-Risiko.
+# Recht & Papier — Case-file application with a legal RAG integration
 
-# Recht & Papier
+An Expo/React Native application for collecting a case, attaching documents and reviewing source-backed analysis. The case file is the data model; chat is an interface over it.
 
-Eine Consumer-App, die einen Rechtsfall strukturiert aufnimmt, ihn gegen geprüfte Gesetzes- und
-Urteilsquellen einordnet und verständliche nächste Schritte zeigt. MVP 1 deckt Arbeitsrecht und
-Mietrecht ab.
+This repository demonstrates the client, authentication and case-data boundary, Supabase migrations and Edge Functions. The retrieval/reranking engine is a **separate service in [Jura](https://github.com/dreamtelligence/Jura)**; access to that repository is separate. This repository alone does not contain the full RAG engine or its legal corpus.
 
-Die Fallakte ist die Datenstruktur — der Chat ist nur eine Oberfläche darauf.
+## Engineering focus
 
-## Stand
+- Expo SDK 57, React Native 0.86, TypeScript and Expo Router.
+- Session-based navigation with one protected application route group.
+- Structured cases, private document storage, analyses, sources and deadlines.
+- Supabase Row Level Security binds case data to its owner.
+- Edge Functions validate the user, resolve ownership and call the engine with server-only credentials.
+- Case analysis includes pseudonymization, model allowlisting, request identifiers and atomic persistence.
+- Account deletion explicitly removes stored documents before deleting the account.
+- Integration checks cover isolation between users, account deletion, document release and analysis writes.
 
-Der Ende-zu-Ende-Pfad läuft: Fall anlegen, Anschreiben hochladen, Text auslesen, gegen Gesetze
-einordnen, Analyse mit Fundstellen und Fristen in der Akte. Der belegte Detailstand mit
-gemessenen Werten steht in [`docs/implementation-status.md`](docs/implementation-status.md).
+## Data flow
 
-| | Status |
-|---|---|
-| Architekturentscheidungen | steht (siehe `AGENTS.md`) |
-| Legal-Engine als Dienst | läuft; `POST /api/legal/analyze` nimmt einen ganzen Sachverhalt |
-| Datenmodell in Supabase | sieben Tabellen mit RLS; Isolationstest bestanden am 06.09.2026 |
-| Edge Functions | vier deployt; nur `delete-account` braucht `service_role` |
-| Expo-Client | Fallakte kann einordnen, Fristen und Fundstellen anzeigen, Dokumente öffnen |
-| Einordnung | gemessen: 11 Fundstellen, alle sechs Pflichtnormen, Klagefrist erkannt |
+```mermaid
+flowchart LR
+  App[Expo client] --> Auth[Supabase Auth]
+  App --> Case[Private case file and documents]
+  App --> Edge[Authenticated Edge Functions]
+  Edge --> Engine[Jura legal engine]
+  Engine --> Retrieval[Retrieval and evidence validation]
+  Retrieval --> Model[Configured answer model]
+  Model --> Result[Analysis with sources and proposed deadlines]
+  Result --> Case
+```
 
-Drei Dinge stehen dem Weiterkommen im Weg, und keines davon ist Code:
+The client never receives the engine credential. Public legal-source data and private case data are separate. `apps/mobile/src/features/legal/client.ts` is the client boundary; `supabase/functions/fall-einordnen/index.ts` handles the case-analysis request.
 
-- **Das Gemini-Kontingent.** Gratis-Tarif, 20 Anfragen pro Tag und Projekt. Nach wenigen
-  Testläufen erschöpft. Abrechnung ist Voraussetzung für alles Weitere.
-- **Mietrecht fehlt im Index.** `Mietrecht: 0` von 17.024 Dokumenten — MVP 1 sagt zwei
-  Rechtsgebiete zu und liefert eines.
-- **Der Falltext läuft über Modal**, nicht über den EU-CPU-Container, den `AGENTS.md` für
-  diesen Pfad verlangt. Bis das steht, laufen ausschließlich erfundene Beispielfälle.
+## Check the source without production credentials
 
-Zwei frühere Stände sind als Tags erhalten: `mockup-prototype` (Vite-Prototyp im simulierten
-Geräterahmen) und `capacitor-spike` (native iOS-App via Capacitor, lief auf dem Gerät). Beide
-sind Design- und Verhaltensreferenz, nicht der Produktclient.
+Node.js 24 is used in CI:
 
-## Aufbau
+```bash
+cd apps/mobile
+npm ci
+npm run typecheck
+```
 
-- **Client:** Expo mit Expo Router, iOS und Android
-- **Fallakte, Auth, Dokumente:** Supabase in der EU-Region
-- **Legal-Engine:** [`dreamtelligence/Jura`](https://github.com/dreamtelligence/Jura) als eigener
-  Dienst — Hybrid Retrieval, Reranking, deterministische Quality Profiles, Answer Audit
-- **Trennung:** Falldaten und Rechtskorpus werden nie vermischt. Der Abfragepfad läuft in der EU
-  auf CPU; die GPU auf Modal sieht ausschließlich öffentliches Recht.
+This verifies client types, not a native build or a live legal answer. GitHub Actions runs this check on pushes and pull requests.
 
-Vollständige Begründung und die noch zu klärenden Punkte stehen in `AGENTS.md`.
+## Local setup
 
-## Hinweis
+1. Use your own Supabase project, or the Supabase CLI local stack. Apply the migrations in `supabase/migrations/` and configure the private document bucket and Edge Functions.
+2. Copy `.env.example` to `.env` for local tooling, and `apps/mobile/.env.example` to `apps/mobile/.env.local` for the client. Keep service-role and engine credentials on the server.
+3. Configure a compatible Jura engine and the model allowlist in the Edge Functions. The model must agree with the deployment and its disclosed data flow; provider names in older status documents are historical snapshots.
+4. Install client dependencies and create a native development build:
 
-Kein Rechtsberatungsangebot. Vor einem öffentlichen Launch ist fachanwaltlich zu klären, welche
-Funktionen Verbrauchern nach RDG angeboten werden dürfen.
+```bash
+cd apps/mobile
+npm ci
+npm run ios
+# or npm run android
+```
+
+Use the [versioned Expo SDK 57 documentation](https://docs.expo.dev/versions/v57.0.0/). Native build tooling and a simulator/device are required; Expo Go does not replace this project's native development build.
+
+The optional local infrastructure script starts **Qdrant only**:
+
+```bash
+npm run stack:up
+npm run stack:status
+npm run stack:down
+```
+
+It does not provision the Jura engine or Supabase. `stack:reset` also removes local volumes.
+
+## Integration tests
+
+The scripts in `supabase/tests/` exercise real Supabase/engine boundaries. They need a dedicated test project and the variables described in each file. They can create and delete temporary users, cases and documents; analysis tests also consume model quota. They are intentionally not run against an unknown production project by CI.
+
+Examples:
+
+```bash
+python3 supabase/tests/test_rls_isolation.py
+python3 supabase/tests/test_account_deletion.py
+python3 supabase/tests/test_analysis_atomic.py
+```
+
+The PDFs in `docs/beispielfaelle/` contain fictional test cases. They are fixtures, not real customer files or reusable legal advice. Historical run results and limitations are in `docs/implementation-status.md`; they are not a fresh verification of today's engine, corpus, model or deployment.
+
+## Code map
+
+| Area | Path |
+| --- | --- |
+| Routes and session boundary | `apps/mobile/app/`, `apps/mobile/src/features/auth/` |
+| Case-file data access | `apps/mobile/src/features/faelle/` |
+| Engine integration and types | `apps/mobile/src/features/legal/` |
+| Privileged request handling | `supabase/functions/` |
+| Database and ownership policies | `supabase/migrations/` |
+| Integration checks | `supabase/tests/` |
+| Implementation notes and fixtures | `docs/` |
+
+## Current scope
+
+This is a portfolio/development project, not a public legal-advice service. A functioning client integration does not establish legal completeness, a validated deadline in every case, compliant data residency or app-store readiness. Corpus coverage, engine evaluation, deployment/data-flow review and native end-to-end testing remain separate gates. Use fictional cases until those gates are established for the deployment.
+
+The repository currently does not provide a public consumer demo. The client and Edge Functions can be reviewed independently; operating the complete product also requires the external engine and a configured backend.
