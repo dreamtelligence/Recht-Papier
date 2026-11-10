@@ -12,6 +12,8 @@ Am 10.11.2026 im nativen Development-Build auf dem **iPhone 17 Pro Simulator, iO
 | **Natives PDF und Teilen-Dialog** | |
 | <img src="07-nativer-pdf-export.png" alt="iOS-Dialog für die tatsächlich erstellte PDF-Datei" width="280"> | |
 
+Zusätzliche aktuelle Aufnahme `08-fallaufnahme.png`: unveränderte native Eingabemaske mit dem tatsächlich unterstützten PDF-Format, am 10.11.2026 neu aufgenommen. Keine neue Akte angelegt, keine Daten gespeichert. Die öffentliche Fallstudie verwendet sie statt der älteren Intake-Aufnahme mit inzwischen überholten Dateityp-Hinweisen. Der ursprüngliche Startbildschirm bleibt die echte Aufnahme aus `docs/screenshots/01-start.png`.
+
 [Tatsächlich nativ exportierte PDF](native-export.pdf). Vier Seiten, beide erwarteten Termine und Quellen durch Textauslese überprüft; zusätzlich visuell geprüft. Die Dokumentkennungen gehören zum inzwischen gelöschten synthetischen Testkonto.
 
 Der automatisierte Backend-Test hat die Original-PDFs hochgeladen, mit der echten Textauslese verarbeitet und die drei Analysen samt Berichten erzeugt. Anschließend wurden im nativen Client die gespeicherten Fälle, aufklappbaren Belegstellen, Rechenwege, fehlenden/widersprüchlichen Angaben und die Berichtsvorschau angesehen. Der PDF-Knopf wurde im nativen Client betätigt; `expo-print` erzeugte eine Datei und `expo-sharing` öffnete den iOS-Dialog. Es wurde nichts an Dritte versendet.

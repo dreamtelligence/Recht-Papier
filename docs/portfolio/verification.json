@@ -2,12 +2,12 @@
   "verified_at": "2026-11-10T12:55:30.032730+00:00",
   "public_url": "https://recht-papier-portfolio.vercel.app",
   "deployment": {
-    "id": "dpl_3pv31oNXDH5hUrSa4qnxt8ZSbcRZ",
-    "url": "https://recht-papier-portfolio-ihxcgkz8i-bucci369s-projects.vercel.app",
-    "inspectorUrl": "https://vercel.com/bucci369s-projects/recht-papier-portfolio/3pv31oNXDH5hUrSa4qnxt8ZSbcRZ",
+    "id": "dpl_Ecoi4XVP6tUvFdc7PhHDD41Rk7Mw",
+    "url": "https://recht-papier-portfolio-ecdfr8fd5-bucci369s-projects.vercel.app",
+    "inspectorUrl": "https://vercel.com/bucci369s-projects/recht-papier-portfolio/Ecoi4XVP6tUvFdc7PhHDD41Rk7Mw",
     "readyState": "READY",
     "target": "production",
-    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_3pv31oNXDH5hUrSa4qnxt8ZSbcRZ"
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_Ecoi4XVP6tUvFdc7PhHDD41Rk7Mw"
   },
   "corpus_version": "termination-2026-11-10-e1a8f4ba0853",
   "edge_tests": 27,
@@ -37,25 +37,62 @@
   "release_tag_created": false,
   "ci_billing_failure": "The job was not started because your account is locked due to a billing issue.",
   "artifact_sha256": {
-    "index.html": "451cbe122b9d9262ccf64ed4cd9085c142f80e9179a03e7ea939cbbaa876cc69",
+    "index.html": "1777f47c77efeafb795bde5e0c77b7ca2086db65becd51c63ad6ef85a6990320",
     "metadata.json": "aa5f19cc84d41c0f8c70ececb2bc82e863227ea1e121632aca879eb616056991",
     "portfolio/dev-01-report.pdf": "b3d5525d4bca8a7290c71831ebae10deb93f870432d8416ce6c5e1e3f1c70459",
+    "portfolio/SourceSerif4-SemiBold.ttf": "3f471d65b233b067f5d7bfebb9b598994dd513a41f9fb4d900c20ae9d30f242c",
     "portfolio/dev-11-document.pdf": "6fed184c5030dbbf294be3b353db5413538bf9b72aebde49aaf01291c7e6e682",
     "portfolio/dev-14-report.html": "935a86c3f73bf05ece4446720bd24341509946273c614f306a04c54acf101012",
     "portfolio/dev-01-report.html": "6f3f40445680696c1ff1821e823172a4d173e15d367b9730de8d52fb2823b332",
-    "portfolio/architecture.html": "842afb20ca24a21253849fd87cb1fa78d452eb482bfed007c887955fa8c3f38e",
+    "portfolio/architecture.html": "9c58d5273ed148ff13960833914208fc96e2d0516f4655b82a5c40c6f960ac3b",
     "portfolio/dev-11-report.html": "ae0e63317b5c1c32c3390d76ea5b8d35cccedec0a7ff2e0e049e995fa5b2d33e",
     "portfolio/dev-14-report.pdf": "fb515177c34571c5abae0c415539bcd89e252dde0864fe7715672f88016bb4d9",
     "portfolio/balloon.png": "ec75410193f3c15e02a01ed17f5d1f2980b2f3ab8dadf10fc5e419d96ad516d7",
     "portfolio/dev-14-document.pdf": "d5e1ade214a44bb844daa9b193ab4224b4d663891fcd5a8208100a04f80162d4",
+    "portfolio/OFL.txt": "5f94c3fd3a23131a417ab5a0c8452de57e70c3cfb9f604d88241f7065ebf9fd9",
     "portfolio/dev-01-document.pdf": "2791f29604575b659fb637281c2bd9690ff9e1aa02f483b889be13f692a97839",
     "portfolio/dev-11-report.pdf": "15187145f70beff83d96be9239af8d0ba6d769570f2cb1960daf8c65e306c653",
-    "_expo/static/css/portfolio-e41647ce8b0bdd8359ac74bb629fad19.css": "758bcddc45447d630190244e59a1581f8bb0f0c71fe3d42a3b112f6d1c4a4dfd",
-    "_expo/static/js/web/index-e8fff4a6003f79fabf9257c064793dab.js": "692600a2328710f5edd154df858af77b1425a8f34e1903d645286addde55fc94"
+    "portfolio/paper-texture.png": "2ba26462d08109e3c1823a2e4c69499b09d8312f798a6584dd9822e0a71ba87f",
+    "portfolio/SourceSerif4-Regular.ttf": "8ca4d603b02214e2723f2bdf6c83632551942c9b06702e2bdbcf07f0d8714809",
+    "portfolio/native/04-fehlender-zugang.png": "52b413f7a9aa9cd0ca6a0b589bbb40db8708c43647896b03eb2508743dbb5d79",
+    "portfolio/native/07-nativer-pdf-export.png": "584b1213fbf39cbdf87320377dea1a91024012e5ee0f36b2452dafad1830c97a",
+    "portfolio/native/03-fristen-mit-rechenweg.png": "7846be15df4eabc3eac2b64db374c98cd5b8300313f2d637d07f66740a04a05b",
+    "portfolio/native/05-widerspruch.png": "0be587d3bdb031cfca4d6063af0419f8e8e497d2eec4dc969270eb833d537685",
+    "portfolio/native/01-fallakte.png": "c3955b97c1b3692b1c6ef800d83fe877ec4c0ce75e0280363f83cb57b10ccade",
+    "portfolio/native/06-bestaetigter-bericht.png": "c841e95418f0d590795e57b18906ad8297cd812223b5aaca96f8622d2be1375a",
+    "portfolio/native/08-fallaufnahme.png": "42caa748bd0b97a46a208c1f3bfb28f15968b671197b3d8f480128058671cb19",
+    "portfolio/native/00-start.png": "ed83ea84eb2f56abaa6a632b16da06b6e5520b0cb2f4edc6c049bfa1d62f8ecb",
+    "portfolio/native/02-bestaetigte-belegstellen.png": "544e3aa4b7d81565f189c47ad66973e70043d333ab798f5b167fb1fc52fe4c9e",
+    "_expo/static/css/portfolio-97d5f4651958532d5db9da4b606e79ce.css": "1510b4d85b0b12701356a460f1a128eaa7bf7f916ab6e1ca3d352f8020a1b78d",
+    "_expo/static/js/web/index-5ba9c753a622c5fe87252792ba2fc068.js": "f1ddad2623be10a9683d7b0175ea6ca130da1e4fa79029f5477c23f9c93c95fd"
   },
   "ci_run_url": "https://github.com/dreamtelligence/Recht-Papier/actions/runs/42820008368",
   "implementation_commit": "25662e17934c2dc867f0c3b5d13ddc3efdfb2d5d",
   "engine_commit": "b041d3c211005dd7c27dfe9a88e1f0da10f740e8",
   "gitleaks_staged_findings": 0,
-  "actionlint_passed": true
+  "actionlint_passed": true,
+  "prior_deployment": {
+    "id": "dpl_3pv31oNXDH5hUrSa4qnxt8ZSbcRZ",
+    "url": "https://recht-papier-portfolio-ihxcgkz8i-bucci369s-projects.vercel.app",
+    "inspectorUrl": "https://vercel.com/bucci369s-projects/recht-papier-portfolio/3pv31oNXDH5hUrSa4qnxt8ZSbcRZ",
+    "readyState": "READY",
+    "target": "production",
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_3pv31oNXDH5hUrSa4qnxt8ZSbcRZ"
+  },
+  "presentation_verified_at": "2026-11-10T13:30:29.610761+00:00",
+  "presentation": {
+    "native_originals": 9,
+    "journey_steps": 6,
+    "new_capture": "native/08-fallaufnahme.png",
+    "backend_or_native_logic_changed": false,
+    "shared_contract_changed": false,
+    "browser_evidence": "browser-live-verification.json",
+    "scroll_evidence": "presentation/scroll-live-verification.json",
+    "reused_brand_assets": [
+      "paper-texture.png",
+      "balloon.png",
+      "Source Serif 4"
+    ],
+    "source_commit_before_update": "d767ca141e0445b95d4c7de85cdacc8554590717"
+  }
 }

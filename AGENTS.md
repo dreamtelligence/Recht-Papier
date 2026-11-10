@@ -2,8 +2,13 @@
 
 ## Was hier gebaut wird
 
-Aktueller Auftrag ist das begrenzte Engineering-Portfolio zur **ordentlichen
-Arbeitgeberkündigung aus Arbeitnehmersicht**, beschrieben in
+Aktueller Präsentationsauftrag ist eine Produkt-Fallstudie für Recruiter und
+technische Hiring Manager: zuerst umfassendere Produktvision, ehrlicher
+Funktionsstand, echte iOS-Aufnahmen, UI/UX und Frontend-/Full-Stack-Beiträge.
+Die drei fiktiven Fälle stehen nachgelagert als Technische Demo. Die vorhandenen
+Funktionen und Nachweise bleiben erhalten. Kontrolliert geprüft ist weiterhin
+ausschließlich die **ordentliche Arbeitgeberkündigung aus Arbeitnehmersicht**.
+Der begrenzte technische Release-Umfang ist beschrieben in
 `docs/portfolio-release-plan.md`. Öffentliche Demo ausschließlich mit drei
 fiktiven, vorab durch das gehostete Backend erzeugten Fällen; keine Anmeldung,
 keine privaten Uploads und keine Modellaufrufe durch Besucher.

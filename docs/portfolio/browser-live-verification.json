@@ -1,5 +1,5 @@
 {
-  "executed_at": "2026-11-10T12:54:17.066Z",
+  "executed_at": "2026-11-10T13:30:53.057Z",
   "url": "https://recht-papier-portfolio.vercel.app",
   "corrupt_storage_checked": true,
   "architecture_checked": true,
@@ -9,6 +9,8 @@
     390
   ],
   "cases_per_viewport": 3,
+  "native_screens_per_viewport": 6,
+  "presentation_order_checked": true,
   "pdf_downloads": 6,
   "persistence_checked": true,
   "private_backend_requests": [],

@@ -1,6 +1,8 @@
 # Architektur und überprüfbare Beiträge
 
-Recht & Papier bereitet eine **fiktive ordentliche Arbeitgeberkündigung aus Arbeitnehmersicht** für ein anwaltliches Gespräch auf. Der freigegebene Portfolio-Pfad erzeugt kontrollierte Prüfpunkte und offene Fragen. Er entscheidet nicht über die Wirksamkeit einer Kündigung.
+Die Produktvision von Recht & Papier ist eine umfassendere digitale Rechtsassistenz. Die native App enthält bereits Konto, Fallakten, private Dokumente, Rechtssuche und Berichte. Die öffentliche Produkt-Fallstudie zeigt diese Oberflächen und unterscheidet implementierte Grundlagen, Teilumsetzungen und geplante Funktionen.
+
+Der folgende technische Nachweis beschreibt den kontrolliert geprüften Teil: eine **fiktive ordentliche Arbeitgeberkündigung aus Arbeitnehmersicht**, aufbereitet für ein anwaltliches Gespräch. Der freigegebene Portfolio-Pfad erzeugt kontrollierte Prüfpunkte und offene Fragen. Er entscheidet nicht über die Wirksamkeit einer Kündigung.
 
 ## Zwei Wege mit demselben Ergebnisvertrag
 

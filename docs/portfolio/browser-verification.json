@@ -1,5 +1,5 @@
 {
-  "executed_at": "2026-11-10T12:50:44.761Z",
+  "executed_at": "2026-11-10T13:27:06.719Z",
   "url": "http://127.0.0.1:3291",
   "corrupt_storage_checked": true,
   "architecture_checked": true,
@@ -9,6 +9,8 @@
     390
   ],
   "cases_per_viewport": 3,
+  "native_screens_per_viewport": 6,
+  "presentation_order_checked": true,
   "pdf_downloads": 6,
   "persistence_checked": true,
   "private_backend_requests": [],

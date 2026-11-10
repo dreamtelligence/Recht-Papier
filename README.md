@@ -1,12 +1,12 @@
 # Recht & Papier
 
-**[Browser-Demo öffnen](https://recht-papier-portfolio.vercel.app)** · **[Beispielbericht als PDF](apps/mobile/public/portfolio/dev-01-report.pdf)** · **[Nativer iPhone-Ablauf in Screenshots](docs/portfolio/native/README.md)**
+**[Produkt-Fallstudie öffnen](https://recht-papier-portfolio.vercel.app)** · **[Beispielbericht als PDF](apps/mobile/public/portfolio/dev-01-report.pdf)** · **[Nativer iPhone-Ablauf in Screenshots](docs/portfolio/native/README.md)**
 
-Eine Kündigung wird zur nachvollziehbaren Fallakte: bestätigte Angaben mit Dokumentbelegen, berechnete Termine, amtliche Quellen und offene Fragen für das anwaltliche Gespräch. Der begrenzte Anwendungsfall ist die **ordentliche Arbeitgeberkündigung aus Arbeitnehmersicht**. Alle veröffentlichten Fälle sind fiktiv; das Projekt bietet keine Rechtsberatung.
+Recht & Papier ist als **digitale Rechtsassistenz** konzipiert: eine mobile App, die Sachverhalt, Dokumente, rechtliche Orientierung und nächste Schritte in einer Fallakte verbindet. Die Fallstudie zeigt die echte iOS-Oberfläche, UI/UX-Entscheidungen, Full-Stack-Implementierung und den tatsächlichen Entwicklungsstand. Der aktuell kontrolliert geprüfte Teil ist die **ordentliche Arbeitgeberkündigung aus Arbeitnehmersicht**; die umfassendere Assistenz bleibt eine Produktvision.
 
-In zwei Minuten: Fall auswählen → Dokument ansehen → Angaben bestätigen → Rechenweg prüfen → Bericht herunterladen. Drei Beispiele zeigen einen Fristkonflikt, fehlende Angaben und widersprüchliche Zugangsdaten. Die Demo zeigt gespeicherte Ergebnisse der echten gehosteten Pipeline, ohne Anmeldung, persönliche Uploads oder Modellkosten pro Besucher.
+In zwei Minuten: Produkt und Entwicklungsstand verstehen → den nativen Ablauf ansehen → Gestaltung und technische Beiträge nachvollziehen. Der nachgelagerte Abschnitt **Technische Demo** erhält drei fiktive Fälle mit Bestätigung, Quellen, Rechenweg und Bericht. Er zeigt gespeicherte Ergebnisse der echten gehosteten Pipeline, ohne Anmeldung, persönliche Uploads oder Modellkosten pro Besucher. Keine Rechtsberatung.
 
-<a href="https://recht-papier-portfolio.vercel.app"><img src="docs/portfolio/browser-1440-home.png" alt="Browser-Demo mit drei fiktiven Kündigungsfällen"></a>
+<a href="https://recht-papier-portfolio.vercel.app"><img src="docs/portfolio/presentation/after-1440.png" alt="Produkt-Fallstudie mit echter iOS-App, Produktvision und Entwicklungsbeiträgen"></a>
 
 ## Architektur und eigener technischer Beitrag
 
@@ -59,7 +59,7 @@ python3 scripts/check-public-bundle.py
 python3 -m http.server 3291 --bind 127.0.0.1 --directory apps/mobile/dist
 ```
 
-Der statische Build benötigt keine `.env` und keine Cloud-Zugangsdaten. Die gespeicherten PDFs und Ergebnisse sind eingecheckt. Die Browserprüfung in `scripts/verify-browser.mjs` benötigt Playwright und Chromium; `PLAYWRIGHT_MODULE` und `BROWSER_EXECUTABLE` erlauben vorhandene lokale Installationen. `DEMO_URL` prüft ein anderes Deployment. Lokale Ausführung erzeugt die Bericht-PDFs aus den gespeicherten HTML-Berichten erneut.
+Der statische Build benötigt keine `.env` und keine Cloud-Zugangsdaten. Die gespeicherten PDFs und Ergebnisse sind eingecheckt. Die Browserprüfung in `scripts/verify-browser.mjs` benötigt Playwright und Chromium; `PLAYWRIGHT_MODULE` und `BROWSER_EXECUTABLE` erlauben vorhandene lokale Installationen. `DEMO_URL` prüft ein anderes Deployment. `RENDER_REPORTS=1` erzeugt bei lokaler Ausführung die Bericht-PDFs erneut. `scripts/verify-mobile-scroll.mjs` prüft echte Touch-Eingabe in Chromium sowie Scrollen in WebKit bei Smartphonebreite; dafür müssen die entsprechenden Playwright-Browser installiert sein. [Präsentation und Scrollregression](docs/portfolio/presentation/README.md).
 
 Für den privaten nativen Pfad ein eigenes Supabase-Testprojekt mit Migrationen, privaten Buckets, Edge Functions und dem separaten Modal-Worker konfigurieren. Zugangsdaten bleiben in ignorierten `.env`-Dateien beziehungsweise Server-Secrets. Dann `npm --prefix apps/mobile run ios`. Die Integrationstests in `supabase/tests/` und `scripts/verify-portfolio-e2e.py` erstellen temporäre Testkonten und benötigen entsprechend autorisierten Backend-Zugang; sie sind keine anonymen CI-Tests.
 

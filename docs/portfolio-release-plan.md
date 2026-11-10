@@ -1,5 +1,7 @@
 # Recht & Papier: ein abgeschlossenes Portfolio-Projekt für Recruiter
 
+Präsentationsänderung vom 10.11.2026: Die öffentliche Seite ist eine Produkt-Fallstudie für Recruiter mit umfassenderer Produktvision, ehrlichem Funktionsstand, echten iOS-Aufnahmen und UI/UX-/Full-Stack-Beiträgen. Die drei fiktiven Kündigungsfälle bleiben vollständig erhalten und stehen nachgelagert als „Technische Demo“. Der geprüfte technische Funktionsumfang dieses Plans bleibt bestehen.
+
 ## 1. Verbindliches Ziel
 
 **Recruiter sollen innerhalb von zwei Minuten verstehen, was das Produkt leistet und welche technische Arbeit dahintersteht.**

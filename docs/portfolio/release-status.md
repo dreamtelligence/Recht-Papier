@@ -2,7 +2,7 @@
 
 Stand 10.11.2026. Auftrag: `docs/portfolio-release-plan.md`. Nutzerentscheidungen: vorhandenes Qwen/Gemini, erkennbare Anbieter-Platzhalter, native Dokumentation mit Screenshots.
 
-**Öffentliche Demo:** https://recht-papier-portfolio.vercel.app
+**Öffentliche Produkt-Fallstudie mit Technischer Demo:** https://recht-papier-portfolio.vercel.app
 
 - [x] Gemeinsames versioniertes Schema und generierte TypeScript-Typen.
 - [x] Bestätigte typisierte Angaben mit Dokumentseite und wörtlicher Belegstelle; Freitext bleibt getrennt.
@@ -18,6 +18,9 @@ Stand 10.11.2026. Auftrag: `docs/portfolio-release-plan.md`. Nutzerentscheidunge
 - [x] Lokale Checks: 27 Edge-Tests, 192 Python-Tests, Mobile-Typecheck, Lease-Status-Test, Schemagenerierung und öffentliche Bundle-Isolation bestanden.
 - [x] Echte Zugriffstrennung, atomare Speicherung, Revisionen, Worker-Aufträge und Dokumentfreigabe geprüft; synthetische Konten und Uploads entfernt.
 - [x] README, Architekturseite, Regressionsnachweis, Kostenmessung und Modellfehler dokumentiert.
+- [x] Präsentation für Recruiter grundlegend überarbeitet: umfassendere Produktvision, implementiert/teilweise/geplant, echte iOS-Tour, UI/UX und Frontend-/Full-Stack-Beiträge vor der nachgelagerten Technischen Demo.
+- [x] Neun unveränderte native Aufnahmen öffentlich eingebunden, darunter eine aktuelle Eingabemaske mit dem tatsächlich unterstützten PDF-Umfang.
+- [x] Scrollregression reproduziert (Wischgeste 0 Pixel), Expo-Scrollsperre ausschließlich im Web aufgehoben. Vorwärts-/Rückwärtsscrollen und Fußzeile in Chromium mit Touch sowie WebKit bei Smartphonebreite geprüft. [Nachweis und Grenzen](presentation/README.md).
 - [ ] Vollständiger Modellvergleich: Qwen EU-L40S-Kapazität nicht verfügbar; Gemini-Quote vor allen Wiederholungen erschöpft. Nur 17 Gemini-Antworten auswertbar, davon 15 mit abweichendem Termin. Keine Modellrangliste oder freie Modellfreigabe.
 - [ ] Endgültige Providerrechnung/Kostenabgleich. Modal meldet bisher 0,22966928 USD Verbrauch; Gemini 0,0133723 USD nur Listenpreis-Schätzung. Kein vollständiger Ist-Kosten-Benchmark.
 - [ ] Grüner gehosteter GitHub-CI-Nachweis: Konto laut [neuem CI-Lauf](https://github.com/dreamtelligence/Recht-Papier/actions/runs/42820008368) und [Annotation](ci-verification.json) wegen Abrechnungsproblem gesperrt. Lokale grüne Checks ersetzen diesen Nachweis nicht.

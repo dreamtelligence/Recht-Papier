@@ -24,3 +24,9 @@ for example in examples:
     for suffix in ('document.pdf','report.pdf'):
         assert (DIST/'portfolio'/f"{example['id']}-{suffix}").is_file()
 print('Public bundle isolated; 3 hosted fictional results and all document/report PDFs verified.')
+
+# Only the already reviewed fictional native captures may be copied to the public gallery.
+for source in (ROOT/'docs/portfolio/native').glob('*.png'):
+    assert (DIST/'portfolio/native'/source.name).read_bytes()==source.read_bytes(),source.name
+assert (DIST/'portfolio/native/00-start.png').read_bytes()==(ROOT/'docs/screenshots/01-start.png').read_bytes()
+print('Nine original native screenshots verified byte for byte.')

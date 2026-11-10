@@ -1,0 +1,43 @@
+{
+  "executed_at": "2026-11-10T13:30:59.238Z",
+  "url": "https://recht-papier-portfolio.vercel.app",
+  "results": [
+    {
+      "engine": "chromium",
+      "width": 390,
+      "input": "CDP trusted touch swipe",
+      "initial_scroll_y": 625,
+      "reverse_scroll": true,
+      "footer_reached": true,
+      "page_errors": []
+    },
+    {
+      "engine": "chromium",
+      "width": 430,
+      "input": "CDP trusted touch swipe",
+      "initial_scroll_y": 618,
+      "reverse_scroll": true,
+      "footer_reached": true,
+      "page_errors": []
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "input": "browser wheel at phone viewport",
+      "initial_scroll_y": 650,
+      "reverse_scroll": true,
+      "footer_reached": true,
+      "page_errors": []
+    },
+    {
+      "engine": "webkit",
+      "width": 430,
+      "input": "browser wheel at phone viewport",
+      "initial_scroll_y": 650,
+      "reverse_scroll": true,
+      "footer_reached": true,
+      "page_errors": []
+    }
+  ],
+  "limit": "Browser emulation and WebKit engine; no physical iPhone test."
+}
