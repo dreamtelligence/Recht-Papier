@@ -10,6 +10,8 @@ In zwei Minuten: Produkt und Entwicklungsstand verstehen → den nativen Ablauf 
 
 ## Architektur und eigener technischer Beitrag
 
+Für den Einstieg in den Code: [Dokumentationsindex](docs/README.md), [Schnittstellenvertrag](packages/shared/contract.schema.json), [kontrollierte Berechnung](packages/shared/termination.ts) und [Berichtsrendervorgang](packages/shared/report.ts). Ältere Architektur- und Agentenaufzeichnungen sind dort ausdrücklich als historisch eingeordnet.
+
 Expo SDK 57 / React Native 0.86, TypeScript, Supabase und die bestehende Python-Engine auf Modal bleiben erhalten. [Architektur mit Datenfluss und Grenzen](docs/architecture.md).
 
 - **Verlässliche Berechnungsgrundlage:** typisierte Angaben mit Seite, wörtlichem Zitat und Nutzerbestätigung; bestehender Freitext wird nicht automatisch zur Rechengrundlage.
