@@ -93,6 +93,14 @@
       "balloon.png",
       "Source Serif 4"
     ],
-    "source_commit_before_update": "d767ca141e0445b95d4c7de85cdacc8554590717"
+    "source_commit_before_update": "d767ca141e0445b95d4c7de85cdacc8554590717",
+    "implementation_commit": "a8fa5d9",
+    "keyboard_navigation_checked": true,
+    "mobile_scroll_before_y": 0,
+    "mobile_scroll_after_y": [
+      625,
+      618
+    ],
+    "all_28_public_file_hashes_matched": true
   }
 }

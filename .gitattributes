@@ -1,1 +1,4 @@
 *.pdf binary
+
+# Preserve the upstream font license verbatim.
+apps/mobile/public/portfolio/OFL.txt -whitespace
