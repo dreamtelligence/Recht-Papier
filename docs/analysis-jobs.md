@@ -57,3 +57,11 @@ The existing fictional dismissal fixture was uploaded and read through the norma
 The background job completed after approximately 419 seconds, persisted one analysis and 11 statute sources, then cleared its private job and active lease. The audit rejected the generated answer: its uncited material claims were not released. Manual inspection also found an impossible calendar date and unsupported conclusions about a works-council hearing. The failed result remains visible with a warning, and no operational deadlines were created. This verifies the asynchronous lifecycle and rejection path, not the quality of the model's legal reasoning.
 
 Local checks passed: mobile type checking and four status assertions, five Deno boundary/persistence tests, eight Python dispatcher/lifecycle tests, 39 existing legal-quality/audit/evaluation tests, and SQL transaction rollback checks. Native iOS loading and the persisted result/source views were inspected in Simulator. GitHub Actions was separately blocked by the account's billing lock; local passing checks do not imply hosted CI success.
+
+### Follow-up quality check
+
+The subsequent quality investigation corrected five false heading findings, added impossible-calendar-date and observed hearing-inference checks, and made the background worker resolve source requirements from the full case. BGB § 174 had been omitted after the 500-character search condensation lost the power-of-attorney detail.
+
+A second real run finished after about 299 seconds and remained unreleased. Its four uncited sentences were not the only problem: manual review found that the model called a one-month interval compliant with its own stated three-month notice rule. The source gate remains active. A citation ID alone does not establish legal correctness.
+
+The investigation also found an XML extraction defect: text after nested lists was absent from the indexed BGB § 622. The parser fix and regression tests are in the private Jura change, but repairing existing data requires a controlled fresh index/re-embedding and consistency check. Existing incremental ingestion skips embeddings for replaced IDs. Typed confirmed dates, deterministic legal deadline calculation and an explicit analysis date remain required work; the screenshot result is still a rejected development answer.
