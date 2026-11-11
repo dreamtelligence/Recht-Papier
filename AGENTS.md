@@ -57,11 +57,24 @@ liefert das Ergebnis an `case-analysis-worker`. Die App lädt den Status nach.
 Der kontrollierte Worker erhält nur öffentliche Versionskennungen und liefert
 16 vollständige versionierte Normtexte. Die Supabase-Grenze prüft den Korpus und
 berechnet aus dem eingefrorenen Original. Freigabe nur für
-`controlled-termination/1.0` mit gültigem strukturiertem Ergebnis. Der alte breitere
-Live-Index und die allgemeinen Engine-Pfade bleiben getrennt. Es gibt keine
+`controlled-termination/1.0` mit gültigem strukturiertem Ergebnis. Der getrennte breite
+Suchdienst verwendet seit 11.11.2026 den neuen Fensterindex; die allgemeinen
+Engine-Pfade bleiben vom kontrollierten Portfolio getrennt. Es gibt keine
 stillen Modell-Fallbacks.
 Details, Tests und Rollback: [`docs/analysis-jobs.md`](docs/analysis-jobs.md).
 Die älteren synchronen Ablaufbeschreibungen unten sind historische Einordnung.
+
+## Suchdienst und Dokumentationsstand (11.11.2026)
+
+`legal-rag` v41: 17.132 Indexeinträge, 17.060 vollständige Quellen und 21/21
+bestandene Live-Suchverträge. Analyse-Worker v5; kontrollierter 16-Normen-Korpus
+unverändert. [Release-Status](docs/portfolio/release-status.md) und
+[maschineller Live-Nachweis](docs/portfolio/live-index-release-2026-11-11.json).
+Die allgemeine LEX-Ausgabe benötigt noch das
+[gemeinsame Antwort-Gate](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md).
+Keine allgemeine juristische oder Lastfreigabe behaupten. Der deployte
+Runtime-Quellstand ist im Jura-GitHub-Repository noch nicht vollständig
+veröffentlicht; ältere Checkout-Befehle nicht als Wiederherstellungsnachweis nutzen.
 
 ## Verbindlicher aktueller Aufbau
 

@@ -1,0 +1,652 @@
+{
+  "kind": "full_offline_candidate_index_verification",
+  "executed_at": "2026-11-11T11:29:49.610738+00:00",
+  "scope": "Complete baseline catalogue with only the five audited laws replaced; other source texts not re-audited.",
+  "baseline": {
+    "documents": 17051,
+    "sha256": "f56b171e6e944ecf112cd2dd735e7f69e7d9cc78a5b34dd3d381cf54e7635d14"
+  },
+  "candidate": {
+    "candidate_documents": 17060,
+    "candidate_documents_sha256": "1982ca0a648bd5f8acceb4f16afd56ad92ea8ef40f53bb28ef94edcac975d04b",
+    "replacement_sha256": "0bce0e2147906d59de7580518b7d0f23d9b857c6aeb4968c13a62120add18527",
+    "unchanged_documents": 13215,
+    "unchanged_documents_sha256": "6efb328c1e35beaef94f70f5dcffb117c7adb9ebba7b3a144a7f9c4f4e24e305",
+    "preserved_source_records_sha256": "d9d175c76d99f5df6678fdbb33e5ded655830d5f32fe707330e3d23a360167fc",
+    "legacy_court_chunks_labeled": 782,
+    "court_chunks": 782,
+    "index_stats": {
+      "indexed": 17060,
+      "skipped": 0
+    },
+    "freshly_embedded_documents": 17060
+  },
+  "law_abbreviations": 77,
+  "newly_source_audited_paragraphs": 3845,
+  "models": {
+    "embedding_model": "BAAI/bge-m3",
+    "embedding_revision": "5617a9f61b028005a4858fdac845db406aefb181",
+    "reranker_model": "BAAI/bge-reranker-v2-m3",
+    "reranker_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e"
+  },
+  "packages": {
+    "torch": "2.12.0",
+    "transformers": "4.57.6",
+    "FlagEmbedding": "1.4.0",
+    "qdrant-client": "1.18.0",
+    "numpy": "2.4.6"
+  },
+  "integrity": {
+    "gpu": {
+      "passed": true,
+      "verified_points": 17060,
+      "dense_dimensions": 1024,
+      "sparse_vectors_verified": true,
+      "payloads_verified": true
+    },
+    "independent_local": {
+      "passed": true,
+      "verified_points": 17060,
+      "dense_dimensions": 1024,
+      "sparse_vectors_verified": true,
+      "payloads_verified": true
+    },
+    "graph": {
+      "node": 17060,
+      "edge": 1020521
+    }
+  },
+  "retrieval": {
+    "passed": true,
+    "cases": [
+      {
+        "id": "restored_notice_text",
+        "query": "§ 622 BGB Kündigungsfristen",
+        "raw_top_8": [
+          "BGB § 622",
+          "BGB § 621",
+          "BGB § 627",
+          "URTEIL ECLI:DE:BGH:2026:160426UIIIZR152.25.0",
+          "BGB § 1193",
+          "SGB IX § 174",
+          "BGB § 624",
+          "BGB § 626"
+        ],
+        "raw_missing": [],
+        "qualified_sources": [
+          "BGB § 622",
+          "BGB § 621",
+          "BGB § 627",
+          "URTEIL ECLI:DE:BGH:2026:160426UIIIZR152.25.0",
+          "BGB § 1193",
+          "SGB IX § 174",
+          "BGB § 624",
+          "BGB § 626"
+        ],
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "latency_seconds": 6.819,
+        "source_controls_used": false,
+        "passed": true
+      },
+      {
+        "id": "restored_dismissal_text",
+        "query": "§ 1 KSchG soziale Rechtfertigung",
+        "raw_top_8": [
+          "KSCHG § 1",
+          "SGB I § 2",
+          "KSCHG § 2",
+          "KSCHG § 4",
+          "SGB I § 1",
+          "KSCHG § 3",
+          "SGB XII § 23",
+          "AÜG § 16"
+        ],
+        "raw_missing": [],
+        "qualified_sources": [
+          "KSCHG § 1",
+          "SGB I § 2",
+          "KSCHG § 2",
+          "KSCHG § 4",
+          "SGB I § 1",
+          "KSCHG § 3",
+          "SGB XII § 23",
+          "AÜG § 16"
+        ],
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "latency_seconds": 30.593,
+        "source_controls_used": false,
+        "passed": true
+      },
+      {
+        "id": "notice_semantic",
+        "query": "Welche gesetzliche Kündigungsfrist gilt für Arbeitgeber nach neun Jahren Beschäftigung?",
+        "raw_top_8": [
+          "BGB § 622",
+          "TZBFG § 15",
+          "SGB III § 158",
+          "SGB IX § 169",
+          "HGB § 89",
+          "BGB § 621",
+          "KSCHG § 1a",
+          "KSCHG § 15"
+        ],
+        "raw_missing": [],
+        "qualified_sources": [
+          "BGB § 622",
+          "TZBFG § 15",
+          "SGB III § 158",
+          "SGB IX § 169",
+          "HGB § 89",
+          "BGB § 621",
+          "KSCHG § 1a",
+          "KSCHG § 15"
+        ],
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "latency_seconds": 18.027,
+        "source_controls_used": false,
+        "passed": true
+      },
+      {
+        "id": "written_form",
+        "query": "Kündigung eines Arbeitsvertrags Schriftform elektronische Form ausgeschlossen",
+        "raw_top_8": [
+          "BGB § 623",
+          "BGB § 594f",
+          "ZPO § 130e",
+          "ARBGG § 46h",
+          "TZBFG § 16",
+          "BGB § 312k",
+          "SGB X § 59",
+          "VWVFG § 57"
+        ],
+        "raw_missing": [],
+        "qualified_sources": [
+          "BGB § 623",
+          "BGB § 594f",
+          "ZPO § 130e",
+          "ARBGG § 46h",
+          "TZBFG § 16",
+          "BGB § 312k",
+          "SGB X § 59",
+          "VWVFG § 57"
+        ],
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "latency_seconds": 13.317,
+        "source_controls_used": false,
+        "passed": true
+      },
+      {
+        "id": "claim_deadline",
+        "query": "Kündigungsschutzklage innerhalb von drei Wochen nach Zugang einer Kündigung",
+        "raw_top_8": [
+          "KSCHG § 4",
+          "KSCHG § 6",
+          "TZBFG § 17",
+          "KSCHG § 5",
+          "KSCHG § 2",
+          "KSCHG § 24",
+          "KSCHG § 3",
+          "SGB IX § 171"
+        ],
+        "raw_missing": [],
+        "qualified_sources": [
+          "KSCHG § 4",
+          "KSCHG § 6",
+          "TZBFG § 17",
+          "KSCHG § 5",
+          "KSCHG § 2",
+          "KSCHG § 24",
+          "KSCHG § 3",
+          "SGB IX § 171"
+        ],
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "latency_seconds": 26.364,
+        "source_controls_used": false,
+        "passed": true
+      },
+      {
+        "id": "power_of_attorney",
+        "query": "Kündigung Vollmacht: Personalreferent ohne Vollmachtsurkunde, unverzüglich zurückweisen",
+        "raw_top_8": [
+          "BGB § 174",
+          "BGB § 410",
+          "BGB § 175",
+          "ZVG § 71",
+          "VWVFG § 14",
+          "SGB X § 13",
+          "BGB § 1820",
+          "BGB § 172"
+        ],
+        "raw_missing": [],
+        "qualified_sources": [
+          "BGB § 174",
+          "BGB § 410",
+          "BGB § 175",
+          "ZVG § 71",
+          "VWVFG § 14",
+          "SGB X § 13",
+          "BGB § 1820",
+          "BGB § 172"
+        ],
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "latency_seconds": 11.411,
+        "source_controls_used": false,
+        "passed": true
+      },
+      {
+        "id": "works_council",
+        "query": "Arbeitgeber kündigt: Betriebsrat vor jeder Kündigung anhören, ohne Anhörung unwirksam",
+        "raw_top_8": [
+          "BETRVG § 102",
+          "URTEIL ECLI:DE:BAG:2026:010426.U.6AZR152.22.0",
+          "URTEIL ECLI:DE:BAG:2026:010426.U.6AZR157.22.0",
+          "KSCHG § 1",
+          "KSCHG § 4",
+          "KSCHG § 15",
+          "BETRVG § 99",
+          "FAMFG § 278"
+        ],
+        "raw_missing": [],
+        "qualified_sources": [
+          "BETRVG § 102",
+          "URTEIL ECLI:DE:BAG:2026:010426.U.6AZR152.22.0",
+          "URTEIL ECLI:DE:BAG:2026:010426.U.6AZR157.22.0",
+          "KSCHG § 1",
+          "KSCHG § 4",
+          "KSCHG § 15",
+          "BETRVG § 99",
+          "FAMFG § 278"
+        ],
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "latency_seconds": 26.161,
+        "source_controls_used": false,
+        "passed": true
+      },
+      {
+        "id": "scope",
+        "query": "Kündigungsschutzgesetz Geltungsbereich mehr als zehn Arbeitnehmer Teilzeitbeschäftigte",
+        "raw_top_8": [
+          "KSCHG § 23",
+          "BGB § 622",
+          "TZBFG § 1",
+          "TZBFG § 2",
+          "TZBFG § 4",
+          "INSO § 125",
+          "TZBFG § 9a",
+          "TZBFG § 11"
+        ],
+        "raw_missing": [],
+        "qualified_sources": [
+          "KSCHG § 23",
+          "BGB § 622",
+          "TZBFG § 1",
+          "TZBFG § 2",
+          "TZBFG § 4",
+          "INSO § 125",
+          "TZBFG § 9a",
+          "TZBFG § 11"
+        ],
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "latency_seconds": 26.959,
+        "source_controls_used": false,
+        "passed": true
+      },
+      {
+        "id": "period_start",
+        "query": "Beginn einer Frist durch Ereignis, Tag des Ereignisses wird nicht mitgerechnet",
+        "raw_top_8": [
+          "STPO § 42",
+          "BGB § 187",
+          "URHG § 69",
+          "AO § 108",
+          "BGB § 188",
+          "URHG § 135a",
+          "SGB X § 26",
+          "VWVFG § 31"
+        ],
+        "raw_missing": [],
+        "qualified_sources": [
+          "STPO § 42",
+          "BGB § 187",
+          "URHG § 69",
+          "AO § 108",
+          "BGB § 188",
+          "URHG § 135a",
+          "SGB X § 26",
+          "VWVFG § 31"
+        ],
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "latency_seconds": 14.233,
+        "source_controls_used": false,
+        "passed": true
+      },
+      {
+        "id": "period_end",
+        "query": "Ende einer nach Wochen oder Monaten bestimmten Frist",
+        "raw_top_8": [
+          "STPO § 43",
+          "BGB § 188",
+          "BGB § 621",
+          "BGB § 1996",
+          "SGB X § 26",
+          "AO § 108",
+          "VWVFG § 31",
+          "ZPO § 222"
+        ],
+        "raw_missing": [],
+        "qualified_sources": [
+          "STPO § 43",
+          "BGB § 188",
+          "BGB § 621",
+          "BGB § 1996",
+          "SGB X § 26",
+          "AO § 108",
+          "VWVFG § 31",
+          "ZPO § 222"
+        ],
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "latency_seconds": 13.979,
+        "source_controls_used": false,
+        "passed": true
+      },
+      {
+        "id": "court_holiday",
+        "query": "§ 222 ZPO Fristende Sonnabend Sonntag allgemeiner Feiertag",
+        "raw_top_8": [
+          "ZPO § 222",
+          "ZPO § 216",
+          "URTEIL ECLI:DE:BGH:2026:130326BANWZ.BRFG.4.26.0",
+          "ZPO § 229",
+          "STGB § 126",
+          "ZPO § 522",
+          "SGB IX § 222",
+          "STPO § 217"
+        ],
+        "raw_missing": [],
+        "qualified_sources": [
+          "ZPO § 222",
+          "ZPO § 216",
+          "URTEIL ECLI:DE:BGH:2026:130326BANWZ.BRFG.4.26.0",
+          "ZPO § 229",
+          "STGB § 126",
+          "ZPO § 522",
+          "SGB IX § 222",
+          "STPO § 217"
+        ],
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "latency_seconds": 5.99,
+        "source_controls_used": false,
+        "passed": true
+      },
+      {
+        "id": "labour_procedure",
+        "query": "§ 46 ArbGG Urteilsverfahren Zivilprozessordnung entsprechende Anwendung",
+        "raw_top_8": [
+          "ARBGG § 46",
+          "ARBGG § 46b",
+          "ARBGG § 72",
+          "ARBGG § 69",
+          "PATG § 84",
+          "VWGO § 173",
+          "ARBGG § 78",
+          "DESIGNG § 46a"
+        ],
+        "raw_missing": [],
+        "qualified_sources": [
+          "ARBGG § 46",
+          "ARBGG § 46b",
+          "ARBGG § 72",
+          "ARBGG § 69",
+          "PATG § 84",
+          "VWGO § 173",
+          "ARBGG § 78",
+          "DESIGNG § 46a"
+        ],
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "latency_seconds": 15.216,
+        "source_controls_used": false,
+        "passed": true
+      },
+      {
+        "id": "ordinary_dismissal_profile",
+        "query": "Welche Anforderungen gelten für eine ordentliche Kündigung eines Arbeitnehmers?",
+        "raw_top_8": [
+          "BETRVG § 102",
+          "TZBFG § 15",
+          "SGB IX § 175",
+          "BGB § 622",
+          "BGB § 580a",
+          "TZBFG § 16",
+          "BETRVG § 103",
+          "KSCHG § 1"
+        ],
+        "raw_missing": [
+          "BGB § 623",
+          "KSCHG § 23",
+          "KSCHG § 4"
+        ],
+        "qualified_sources": [
+          "KSCHG § 23",
+          "KSCHG § 4",
+          "BGB § 623",
+          "BETRVG § 102",
+          "TZBFG § 15",
+          "BGB § 622",
+          "KSCHG § 1",
+          "BGB § 130",
+          "SGB IX § 168"
+        ],
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "latency_seconds": 24.453,
+        "source_controls_used": true,
+        "passed": true
+      },
+      {
+        "id": "rent_regression",
+        "query": "Mietkaution höchstens drei Monatsmieten, Zahlung in drei gleichen Teilzahlungen",
+        "raw_top_8": [
+          "BGB § 551",
+          "BGB § 498",
+          "BGB § 556d",
+          "BGB § 569",
+          "BGB § 556b",
+          "WOGG Anlage 1",
+          "BGB § 559a",
+          "URTEIL ECLI:DE:BGH:2026:160426UIIIZR152.25.0"
+        ],
+        "raw_missing": [],
+        "qualified_sources": [
+          "BGB § 551",
+          "BGB § 498",
+          "BGB § 556d",
+          "BGB § 569",
+          "BGB § 556b",
+          "WOGG Anlage 1",
+          "BGB § 559a",
+          "URTEIL ECLI:DE:BGH:2026:160426UIIIZR152.25.0"
+        ],
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "latency_seconds": 8.013,
+        "source_controls_used": false,
+        "passed": true
+      },
+      {
+        "id": "purchase_regression",
+        "query": "Rechte des Käufers bei Mängeln Nacherfüllung Rücktritt Minderung Schadensersatz",
+        "raw_top_8": [
+          "BGB § 439",
+          "BGB § 437",
+          "BGB § 442",
+          "BGB § 634",
+          "BGB § 475d",
+          "BGB § 309",
+          "BGB § 327i",
+          "BGB § 438"
+        ],
+        "raw_missing": [],
+        "qualified_sources": [
+          "BGB § 439",
+          "BGB § 437",
+          "BGB § 442",
+          "BGB § 634",
+          "BGB § 475d",
+          "BGB § 309",
+          "BGB § 327i",
+          "BGB § 438"
+        ],
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "latency_seconds": 5.312,
+        "source_controls_used": false,
+        "passed": true
+      },
+      {
+        "id": "interest_regression",
+        "query": "Gesetzliche Verzugszinsen bei Geldschulden fünf Prozentpunkte über dem Basiszinssatz",
+        "raw_top_8": [
+          "BGB § 288",
+          "URTEIL ECLI:DE:BGH:2026:030326UXIZR39.25.0",
+          "GNOTKG § 88",
+          "URTEIL ECLI:DE:BGH:2026:030326UXIZR39.25.0",
+          "GNOTKG § 90",
+          "BGB § 497",
+          "UMWG § 15",
+          "AKTG § 327b"
+        ],
+        "raw_missing": [],
+        "qualified_sources": [
+          "BGB § 288",
+          "URTEIL ECLI:DE:BGH:2026:030326UXIZR39.25.0",
+          "GNOTKG § 88",
+          "URTEIL ECLI:DE:BGH:2026:030326UXIZR39.25.0",
+          "GNOTKG § 90",
+          "BGB § 497",
+          "UMWG § 15",
+          "AKTG § 327b"
+        ],
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "latency_seconds": 11.715,
+        "source_controls_used": false,
+        "passed": true
+      }
+    ],
+    "passed_cases": 16,
+    "total_cases": 16,
+    "raw_top_8_passed_cases": 15,
+    "no_llm_calls": true,
+    "scope": "Retrieval contracts only, no generated answers or legal approval. Raw top-8 and deterministic source controls are reported separately."
+  },
+  "evaluation_sha256": "25dfa9dfb86e5083a9c2d674f648b4b67914b438bdfcfc13593eda1f30b4f116",
+  "search_latency_seconds": {
+    "minimum": 5.312,
+    "median": 14.106,
+    "maximum": 30.593,
+    "scope": "16 sequential searches in an isolated GPU worker; not an HTTP endpoint or load benchmark."
+  },
+  "original_build": {
+    "elapsed_seconds": 1104.451,
+    "passed_cases": 15,
+    "failed_cases": [
+      "labour_procedure"
+    ],
+    "reported_embedding_counter": 17076,
+    "counter_note": "Original progress counter included the 16 query embeddings. index_stats.indexed and complete scans prove 17060 document embeddings; fixed counter restored in final verification."
+  },
+  "verification_seconds": 304.388,
+  "verification_source_hashes": {
+    "scripts/build_candidate_index.py": "ab8ed46f721422be890ac9382067475cbc5ea404fc3d754bc0ff77c8153934de",
+    "src/ingestion/rag_pipeline.py": "32a20f3928898b5218711f20a00ccac321e04d076180a911b6b834a1b5e8ce61",
+    "src/retrieval/enhanced_search.py": "af9d36f67ecbc3028f8e36b3de4b51efae610e64b6aec623f7afa130ec9be2c7",
+    "src/api/answering.py": "bdae4f59afb2a3e3b2b258a62352df97e97401d8f86151772f3398ab53c3ad78",
+    "src/retrieval/answer_audit.py": "f60f38e5dd9608e33b7e8a1cc9f8a9b885c05a0043159cfe5a52384cd4cc8c87"
+  },
+  "model_context_audit": {
+    "model": "BAAI/bge-m3",
+    "revision": "5617a9f61b028005a4858fdac845db406aefb181",
+    "documents": 17060,
+    "model_context_tokens": 8192,
+    "longer_than_model_context": 5,
+    "maximum_input_tokens": 20638,
+    "long_documents": [
+      {
+        "pid": "ESTG||§ 3",
+        "tokens": 8448
+      },
+      {
+        "pid": "SGB V||§ 87",
+        "tokens": 9288
+      },
+      {
+        "pid": "SGB VI||Anlage 14",
+        "tokens": 20638
+      },
+      {
+        "pid": "WPHG||§ 120",
+        "tokens": 18188
+      },
+      {
+        "pid": "GNOTKG||Anlage 1",
+        "tokens": 10652
+      }
+    ],
+    "note": "Source text remains complete in catalogue; the embedding model cannot encode beyond its sequence limit."
+  },
+  "artifacts": {
+    "directory": "/Users/ozi/Jura-Analyse/legal_rag_storage/candidates/2026-11-11-full-v2",
+    "archive_sha256": "502e2c2e82e68ae23e53b299a4404943f02f79861f7d35c79fde2e71eefaf368",
+    "verification_sha256": "86857b257bd180031035b7077ac591d331aadc3c4ae34db9953c630dcfbeb560",
+    "local_integrity_sha256": "a422c96778bf474d408e9b74b32eae6b1d2adee180700e58ba432cf5e6279bdc"
+  },
+  "regression_tests": {
+    "passed": 94,
+    "command": "python -m pytest -q tests/test_candidate_index.py tests/test_answer_audit.py tests/test_legal_quality.py tests/test_rag_quality_regressions.py tests/test_case_quality_regressions.py tests/test_incremental_updates.py tests/test_ingestion.py tests/test_statute_corpus_audit.py tests/test_statute_xml_completeness.py"
+  },
+  "modal_runs": {
+    "build": "ap-c74MtodYPsZsfdv1vgdRxN",
+    "verification": "ap-V5dj0kr2P2MHjNAUKOO8Kt",
+    "cancelled_capacity_wait": "ap-LCRWieeWWbs8NRTVYWxRQo"
+  },
+  "live_index_modified": false,
+  "portfolio_corpus_modified": false,
+  "generated_answer_calls": 0,
+  "passed": true,
+  "limitations": [
+    "Complete existing catalogue, not complete German law coverage. Only BGB, KSchG, BetrVG, ZPO and ArbGG were newly source-audited.",
+    "Five long documents exceed the 8192-token embedding context; complete text retained but vector only represents its beginning. Chunking and targeted retrieval checks remain open.",
+    "Raw retrieval misses three mandatory sources and includes excluded sources for the ordinary-dismissal case. Existing deterministic source controls are necessary for its passing result.",
+    "Sixteen fixed source contracts are not a representative accuracy estimate or legal-answer approval; no generated legal answers evaluated.",
+    "No live promotion, rollback exercise, concurrency/load test or independent legal review in this task.",
+    "Actual provider invoice not checked; bounded GPU execution is not a settled cost benchmark."
+  ]
+}

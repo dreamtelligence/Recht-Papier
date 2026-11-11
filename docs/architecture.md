@@ -48,19 +48,37 @@ Bestehende Freitextangaben bleiben erhalten und werden nicht automatisch als Ber
 - Fehlende Unterlagen zur Betriebsratsanhörung sind kein Beweis einer unterlassenen Anhörung. Der Bericht unterscheidet das ausdrücklich.
 - PDFs mit Textebene werden gelesen; Bilder, Word-Dateien und Scans werden verständlich abgegrenzt. OCR ist Ausblick.
 
-## Quellenbestand ohne riskanten Austausch des Live-Index
+## Kontrollierter Quellenbestand und getrennte Live-Suche
 
 Der Portfolio-Pfad verwendet einen frisch aus amtlichen Quellen aufgebauten, unveränderlichen **Index von 16 vollständigen Normtexten** mit IDs, Abrufdatum, Text-Hashes und XML-Manifest. Für den engen Fall genügt exakter Normzugriff; ein frei suchender Vektorindex ist hier nicht nötig. Abrufdatum und materieller Geltungszeitpunkt werden nicht gleichgesetzt.
 
-Der vorhandene breitere Live-Vektorindex wird nicht überschrieben. Der inkrementelle Indexer im separaten Jura-Repository bettet geänderte Texte nun unter derselben Punkt-ID neu ein und speichert den passenden Katalog. Vollaufbauten verlangen einen frischen lokalen Bestand; Schreibzugriffe auf die bedienende Server-Collection werden verweigert. Ein unterbrochener Schreibvorgang sperrt das Laden dieser Version, statt gemischte Vektoren und Metadaten auszuliefern. Ein vollständiger breiter Neuaufbau samt Embedding-Benchmark bleibt außerhalb dieses begrenzten Releases.
+Der breite Suchdienst wurde am 11.11.2026 separat auf einen geprüften,
+unveränderlichen Fensterindex umgestellt: **17.132 Einträge aus 17.060
+vollständigen Quellen**, `legal-rag` v41, Analyse-Worker v5. Der kontrollierte
+16-Normen-Korpus wurde dabei nicht geändert. Der Datenrückweg wurde per regulärem
+Deployment auf eine gesicherte Altindex-Kopie getestet und danach der neue Stand
+wiederhergestellt. Der tarifbedingt fehlende Modal-Versionsrollback wird dadurch
+nicht als exakte Wiederherstellung einer früheren Anwendung behauptet.
+[Live-Nachweis](portfolio/live-index-release-2026-11-11.json): 21 bestandene
+Suchverträge, Median 2,004 Sekunden in einer kleinen sequenziellen Probe nach
+Kaltstart; kein Lasttest des vollständigen Produkts und keine Antwortfreigabe.
+Der vollständige Runtime-Quellstand liegt noch nicht auf GitHub vor.
 
-## Warum freie Modelltexte gesperrt bleiben
+Im lokalen Release-Quellstand gilt: Der inkrementelle Indexer im separaten Jura-Repository bettet geänderte Texte nun unter derselben Punkt-ID neu ein und speichert den passenden Katalog. Vollaufbauten verlangen einen frischen lokalen Bestand; Schreibzugriffe auf die bedienende Server-Collection werden verweigert. Ein unterbrochener Schreibvorgang sperrt das Laden dieser Version, statt gemischte Vektoren und Metadaten auszuliefern. Der breite Neuaufbau und seine getrennte [Kandidatenmessung](portfolio/candidate-hardening-2026-11-11.json) sind technische Nachweise neben dem kontrollierten Portfolio-Release. Nur fünf Gesetze wurden frisch gegen amtliche Quellen auditiert.
+
+## Warum freie Modelltexte im kontrollierten Portfolio gesperrt bleiben
 
 Der alte Ansatz behandelte eine korrekt zitierte Antwort als hinreichende Grundlage, um Datumsangaben aus Freitext zu übernehmen. Das prüft weder eine Berechnung noch die Schlussfolgerung.
 
 Die neue Datenbankfreigabe verlangt den kontrollierten Modellkennzeichner, den versionierten strukturierten Vertrag und bestandene technische Prüfungen. Quellen und Fristen werden aus dem neu berechneten Ergebnis gespeichert. Eine freie Qwen-/Gemini-Antwort kann diese Freigabe nicht erhalten, selbst wenn alle Zitate formal vorhanden sind. Der zusätzliche Freitext-Widerspruchsdetektor ist nur eine Regression für beobachtete Formulierungen, kein vollständiger semantischer Gutachter.
 
 Der Nutzer ersetzte am 10.11.2026 den geplanten Mistral-Vergleich ausdrücklich durch die bereits vorhandenen Modal-Zugänge: **Qwen/Qwen3.8-27B-FP8 und gemini-2.5-flash-lite**. Es gibt keinen stillen Anbieterwechsel im Produktpfad. Methodik, reale Antworten, Betriebsfehler und Kosten stehen im [Evaluationsnachweis](https://github.com/dreamtelligence/Recht-Papier/blob/main/docs/portfolio/evaluation.md). Der Versuch ist wegen Kapazität und Quote unvollständig; keine der freien Modellvarianten erhielt eine Freigabe.
+
+Im allgemeinen LEX-Pfad des getrennten Jura-Dienstes ist die Sperre noch nicht
+vereinheitlicht: Modelltext kann dort vor der abschließenden Auditentscheidung
+übertragen werden. Das nächste [serverseitige Antwort-Gate](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md)
+soll JSON, Streaming und Fallpfade erreichen. Eine bloße Anzeige des Audits stellt
+keine Freigabe dar und darf die kontrollierten Portfolio-Regeln nicht ersetzen.
 
 ## Belegter Vorher-/Nachher-Nachweis
 
@@ -105,6 +123,6 @@ Die Modellmessung liegt in Juras `modal_portfolio_eval.py`. Beide Modelle erhalt
 
 ## Betrieb und Rückweg
 
-Die Migration ist additiv. Eigentümer-RLS und serverseitige Schreibrechte der Ergebnisse bleiben erhalten. Der bisherige breitere Quellenindex und Qwen-Dienst wurden nicht mit einem älteren RAG-Stand überschrieben. Bei einer Störung zuerst neue Portfolio-Starts unterbinden, laufende Leases auslaufen lassen und Worker/Callback gemeinsam auf die bekannte Version bringen. Den neuen Freigabeguard nicht für alte freie Antworten lockern. Bestehende Akten und Originaldokumente werden dabei nicht gelöscht.
+Die Migration ist additiv. Eigentümer-RLS und serverseitige Schreibrechte der Ergebnisse bleiben erhalten. Der breite Quellenindex wurde getrennt mit geprüftem Datenrückweg aktualisiert; der Qwen-Dienst blieb unverändert. [Stand und Grenzen](portfolio/live-index-release-2026-11-11.json). Bei einer Störung zuerst neue Portfolio-Starts unterbinden, laufende Leases auslaufen lassen und Worker/Callback gemeinsam auf die bekannte Version bringen. Den neuen Freigabeguard nicht für alte freie Antworten lockern. Bestehende Akten und Originaldokumente werden dabei nicht gelöscht.
 
 Impressum und Datenschutz enthalten auf Nutzerwunsch noch sichtbare Portfolio-Platzhalter. Fachanwaltlicher Review, dessen Umfang, Fachgebiet und Benennung sind nicht bestätigt. Eine Pilotierung ist kein Release-Arbeitspaket. Das Projekt ist keine Freigabe für echte Rechtsberatung oder eine Store-Einreichung.

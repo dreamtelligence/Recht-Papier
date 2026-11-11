@@ -1,0 +1,623 @@
+{
+  "checked_at": "2026-11-11T13:14:15.333485+00:00",
+  "release_id": "2026-11-11-windowed-c99a2f5d",
+  "engine_url": "https://aliundmaggy--legal-rag-fastapi-app.modal.run",
+  "deployed_versions": {
+    "legal-rag": "v41",
+    "recht-papier-case-analysis": "v5"
+  },
+  "source_commit": "b041d3c with local changes; exact runtime source snapshot preserved",
+  "release_metadata": {
+    "release_id": "2026-11-11-windowed-c99a2f5d",
+    "prepared_at": "2026-11-11T12:51:37.588414+00:00",
+    "candidate_documents": 17132,
+    "candidate_documents_sha256": "c99a2f5deb23f670374688958385c0e66a150945af562e7b978c3efce40accb0",
+    "embedding_revision": "5617a9f61b028005a4858fdac845db406aefb181",
+    "reranker_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+    "retrieval_checks_passed": true,
+    "legal_answer_release": false,
+    "archive_sha256": "9d61e5ef2a5511b75c1113169e09ff8bbfe10a90fdaa8b97d32bd30f1af43c48",
+    "files": {
+      "legal_graph.graphml": "3e261c5ecc32bef40c78588bb16678e02bdae7f526c7e391761e82293a03bf25",
+      "documents.json": "eaa05f1ec578aba810f29620e8a8e54128b0c806548b16f1cf763b1499fcfaa9",
+      "manifest.json": "1d4c39bb30e9df13639caa41f000720c0351a433a35f38f4e5f95d9fbdbd3526",
+      "source_documents.json": "90516e939fb9540e4b44bdfff327c232f166457d5600264c5547ec960a274134",
+      "qdrant/meta.json": "cbca3a562357111bad216f65c4becc80b7322b343a60d68ab5579004f52c579c",
+      "qdrant/collection/legal_docs/storage.sqlite": "fbea55b673a18422149a9d5dfa3a9da90475943e4899d86cfe64648cc10562c5"
+    },
+    "runtime_sources": {
+      "src/processors/chunker.py": "4a21101951fccc50e419fcb8e3eebb2ea1625823d1693aac7caf2b5354c109f0",
+      "src/processors/norms.py": "4f5449f24f19438512c0bff3cb501c0fc48414c9e1c51ad5347ab311d0e7fdb5",
+      "src/ingestion/rag_pipeline.py": "58a5e7a5493da14937e8e7d0f6c54c58db4067f6e7d872eed6c71083ed4c20b7",
+      "src/api/answering.py": "d55d0858fe01c413eda1491284ab4626aa819abdfac2333aa3318233718addf2",
+      "src/retrieval/enhanced_search.py": "778595a07b0a9bb8aa2239fa3b3dea3e922e884e1e1b87b01c4127aaccb42193",
+      "src/retrieval/answer_audit.py": "495abb777b2cd8d3938d6970478f8b4a1d2e5539c0528797a0691d60c8f1b717",
+      "src/ingestion/release.py": "3bdd902997b0c256e2071c9bfa8b245a2503adb85bdb0fc3db83c36627676d2a",
+      "src/data/termination-corpus.json": "3d0c82b04c397613fb541c051b08386219c38843260bb173d867c0a8751b5f96"
+    },
+    "rollback": {
+      "engine_deployment": "v38",
+      "worker_deployment": "v4",
+      "legacy_index_path": "/legal_rag_storage"
+    },
+    "verification_sha256": "148a817f86da8edd5d4280d8abfe5491c02c4bae4aeefa02adc43278491fa757",
+    "independent_scan_sha256": "9aba46ac51d92908c36f3e9b7b7c4ada1b6be0476dbe0af72463625378b8fc1b"
+  },
+  "before": {
+    "health": {
+      "status": "ok",
+      "layer": "web"
+    },
+    "stats": {
+      "total_docs": 17051
+    },
+    "authentication_checked": true,
+    "notice_text_characters": 1931,
+    "notice_tail_present": false,
+    "cases": [],
+    "passed": true,
+    "worker": null,
+    "new_case_jobs": 0,
+    "new_answer_generations": 0,
+    "query_rewriting_may_run_once": false
+  },
+  "staging": {
+    "staged_release": "2026-11-11-windowed-c99a2f5d",
+    "directory": "/data/releases/2026-11-11-windowed-c99a2f5d",
+    "integrity": {
+      "passed": true,
+      "verified_points": 17132,
+      "dense_dimensions": 1024,
+      "sparse_vectors_verified": true,
+      "payloads_verified": true
+    },
+    "backup_directory": "/data/backups/2026-11-11-windowed-c99a2f5d-before-v38",
+    "backup": {
+      "deployment": "v38",
+      "files": {
+        "documents.json": "f56b171e6e944ecf112cd2dd735e7f69e7d9cc78a5b34dd3d381cf54e7635d14",
+        "legal_graph.graphml": "56a106a9aa51ec0201e5621728f9cae1df55f344f6ef800021461b3e4fd93fd4",
+        "qdrant/meta.json": "cbca3a562357111bad216f65c4becc80b7322b343a60d68ab5579004f52c579c",
+        "qdrant/collection/legal_docs/storage.sqlite": "243904829796c6928612172c26696870a6814854ac4df8a7c4edd43518320d2e"
+      },
+      "original_documents": 17051,
+      "rollback_command": "python -m modal app rollback legal-rag v38"
+    },
+    "serving_root_unchanged": true
+  },
+  "rollback_probe": {
+    "health": {
+      "status": "ok",
+      "layer": "web",
+      "index_release": "rollback-v38-index"
+    },
+    "stats": {
+      "total_docs": 17051,
+      "index_release": "rollback-v38-index",
+      "catalogue_sha256": "04e006d9e24f0cf7a10d987a93b9b4422198d8df5b824eeab011292b1f894fe8",
+      "embedding_revision": "5617a9f61b028005a4858fdac845db406aefb181",
+      "reranker_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e"
+    },
+    "authentication_checked": true,
+    "notice_text_characters": 1931,
+    "notice_tail_present": false,
+    "cases": [],
+    "passed": true,
+    "worker": null,
+    "new_case_jobs": 0,
+    "new_answer_generations": 0,
+    "query_rewriting_may_run_once": false
+  },
+  "rollback_method": {
+    "method": "Regular deployment of preserved old index with checked backup hashes; platform version rollback unavailable on current plan.",
+    "rollback_index": "rollback-v38-index",
+    "original_live_source_sha256": "50c7e587b15bc4d0b8b3e3977c87b88e8a4f3d95941990e70abac26b7be92328",
+    "rollback_probe_source_sha256": "e76ad1b39a5d3f795ce39d1bd46bc8f04b74c4ddf07c6239faa45df5c0147be3",
+    "limitations": "This checks index fallback, not exact restoration of the old v38 application code."
+  },
+  "final_live": {
+    "health": {
+      "status": "ok",
+      "layer": "web",
+      "index_release": "rollback-v38-index"
+    },
+    "stats": {
+      "total_docs": 17132,
+      "index_release": "2026-11-11-windowed-c99a2f5d",
+      "catalogue_sha256": "c99a2f5deb23f670374688958385c0e66a150945af562e7b978c3efce40accb0",
+      "embedding_revision": "5617a9f61b028005a4858fdac845db406aefb181",
+      "reranker_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e"
+    },
+    "authentication_checked": true,
+    "notice_text_characters": 2308,
+    "notice_tail_present": true,
+    "cases": [
+      {
+        "id": "restored_notice_text",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 2.004,
+        "sources": [
+          "BGB § 622",
+          "BGB § 621",
+          "BGB § 627",
+          "URTEIL ECLI:DE:BGH:2026:160426UIIIZR152.25.0",
+          "BGB § 1193",
+          "BGB § 624",
+          "BGB § 626",
+          "BGB § 573C"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "restored_dismissal_text",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 1.903,
+        "sources": [
+          "KSCHG § 1",
+          "KSCHG § 2",
+          "KSCHG § 4",
+          "KSCHG § 3",
+          "KSCHG § 8",
+          "KSCHG § 9",
+          "KSCHG § 11",
+          "KSCHG § 22"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "notice_semantic",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 1.922,
+        "sources": [
+          "BGB § 622",
+          "TZBFG § 15",
+          "SGB III § 158",
+          "SGB IX § 169",
+          "HGB § 89",
+          "BGB § 621",
+          "KSCHG § 1A",
+          "KSCHG § 15"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "written_form",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 1.802,
+        "sources": [
+          "BGB § 623",
+          "BGB § 594F",
+          "ZPO § 130E",
+          "ARBGG § 46H",
+          "TZBFG § 16",
+          "BGB § 312K",
+          "SGB X § 59",
+          "VWVFG § 57"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "claim_deadline",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 1.851,
+        "sources": [
+          "KSCHG § 4",
+          "KSCHG § 6",
+          "TZBFG § 17",
+          "KSCHG § 5",
+          "KSCHG § 2",
+          "KSCHG § 24",
+          "KSCHG § 3",
+          "SGB IX § 171"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "power_of_attorney",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 1.975,
+        "sources": [
+          "BGB § 174",
+          "BGB § 410",
+          "BGB § 175",
+          "ZVG § 71",
+          "VWVFG § 14",
+          "SGB X § 13",
+          "BGB § 1820",
+          "BGB § 172"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "works_council",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 1.976,
+        "sources": [
+          "BETRVG § 102",
+          "URTEIL ECLI:DE:BAG:2026:010426.U.6AZR152.22.0",
+          "URTEIL ECLI:DE:BAG:2026:010426.U.6AZR157.22.0",
+          "KSCHG § 1",
+          "KSCHG § 4",
+          "KSCHG § 15",
+          "BETRVG § 99",
+          "FAMFG § 278"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "scope",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 2.19,
+        "sources": [
+          "KSCHG § 23",
+          "BGB § 622",
+          "TZBFG § 1",
+          "TZBFG § 2",
+          "TZBFG § 4",
+          "INSO § 125",
+          "TZBFG § 9A",
+          "TZBFG § 11"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "period_start",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 1.959,
+        "sources": [
+          "STPO § 42",
+          "BGB § 187",
+          "URHG § 69",
+          "AO § 108",
+          "BGB § 188",
+          "URHG § 135A",
+          "SGB X § 26",
+          "VWVFG § 31"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "period_end",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 1.832,
+        "sources": [
+          "STPO § 43",
+          "BGB § 188",
+          "BGB § 621",
+          "BGB § 1996",
+          "SGB X § 26",
+          "AO § 108",
+          "VWVFG § 31",
+          "BGB § 189"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "court_holiday",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 2.279,
+        "sources": [
+          "ZPO § 222",
+          "ZPO § 216",
+          "ZPO § 229",
+          "STGB § 126",
+          "ZPO § 522",
+          "STPO § 217",
+          "ZPO § 850A",
+          "ZPO § 214"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "labour_procedure",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 2.243,
+        "sources": [
+          "ARBGG § 46",
+          "ARBGG § 46B",
+          "ARBGG § 72",
+          "ARBGG § 69",
+          "ARBGG § 78",
+          "ARBGG § 97",
+          "ARBGG § 85",
+          "ARBGG § 80"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "ordinary_dismissal_profile",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 5.081,
+        "sources": [
+          "KSCHG § 23",
+          "KSCHG § 4",
+          "BGB § 623",
+          "BETRVG § 102",
+          "TZBFG § 15",
+          "BGB § 622",
+          "KSCHG § 1",
+          "BGB § 130",
+          "SGB IX § 168"
+        ],
+        "source_audit": {
+          "accepted_count": 9,
+          "rejected": [
+            {
+              "source": "SGB IX § 175",
+              "reason": "Erweiterter Beendigungsschutz, nicht die primäre Zustimmungsvorschrift bei ordentlicher Kündigung"
+            },
+            {
+              "source": "BGB § 580a",
+              "reason": "Mietrechtliche Kündigungsfrist, nicht Arbeitsverhältnis"
+            },
+            {
+              "source": "TZBFG § 16",
+              "reason": "Spezialfall unwirksamer Befristung, nicht allgemeine Anforderung der ordentlichen Kündigung"
+            },
+            {
+              "source": "BETRVG § 103",
+              "reason": "Sonderfall außerordentliche Kündigung von Betriebsratsmitgliedern"
+            },
+            {
+              "source": "BETRVG § 99",
+              "reason": "KG-Kontext ist für das erkannte Prüfprofil keine Pflicht- oder Sonderquelle"
+            },
+            {
+              "source": "ARBGG § 99",
+              "reason": "KG-Kontext ist für das erkannte Prüfprofil keine Pflicht- oder Sonderquelle"
+            },
+            {
+              "source": "SGB III § 99",
+              "reason": "KG-Kontext ist für das erkannte Prüfprofil keine Pflicht- oder Sonderquelle"
+            }
+          ],
+          "injected": [
+            "BGB § 623",
+            "KSchG § 4",
+            "KSchG § 23",
+            "BGB § 130",
+            "SGB IX § 168"
+          ],
+          "missing_required": [],
+          "notes": [
+            "Fachfremde oder profilwidrige Quellen wurden vor der Antwort entfernt.",
+            "Pflichtquellen wurden deterministisch ergänzt."
+          ]
+        }
+      },
+      {
+        "id": "rent_regression",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 2.041,
+        "sources": [
+          "BGB § 551",
+          "BGB § 498",
+          "BGB § 556D",
+          "URTEIL ECLI:DE:BGH:2026:160426UIIIZR152.25.0",
+          "BGB § 569",
+          "BGB § 556B",
+          "WOGG ANLAGE 1",
+          "BGB § 559A"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "purchase_regression",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 1.865,
+        "sources": [
+          "BGB § 439",
+          "BGB § 437",
+          "BGB § 442",
+          "BGB § 634",
+          "BGB § 475D",
+          "BGB § 309",
+          "BGB § 327I",
+          "BGB § 438"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "interest_regression",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 1.842,
+        "sources": [
+          "BGB § 288",
+          "URTEIL ECLI:DE:BGH:2026:030326UXIZR39.25.0",
+          "URTEIL ECLI:DE:BGH:2026:030326UXIZR39.25.0",
+          "URTEIL ECLI:DE:BGH:2026:030326UXIZR39.25.0",
+          "GNOTKG § 88",
+          "BGB § 497",
+          "BGB § 247",
+          "HGB § 352"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "estg_tail",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 2.369,
+        "sources": [
+          "ESTG ANLAGE 3",
+          "ESTG § 3",
+          "ESTG § 3",
+          "ESTG § 3",
+          "ESTG § 3",
+          "ESTG § 3",
+          "ESTG § 3",
+          "ESTG § 3"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "sgbv_tail",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 2.336,
+        "sources": [
+          "SGB V § 87",
+          "SGB V § 87",
+          "SGB V § 87",
+          "SGB V § 87",
+          "SGB V § 87",
+          "SGB V § 87",
+          "SGB V § 87",
+          "SGB V § 87"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "sgbvi_tail",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 2.822,
+        "sources": [
+          "SGB VI ANLAGE 14",
+          "SGB VI ANLAGE 14",
+          "SGB VI ANLAGE 14",
+          "SGB VI ANLAGE 14",
+          "SGB VI ANLAGE 14",
+          "SGB VI ANLAGE 14",
+          "SGB VI ANLAGE 14",
+          "SGB VI ANLAGE 14"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "wphg_tail",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 2.956,
+        "sources": [
+          "WPHG § 120",
+          "WPHG § 120",
+          "WPHG § 120",
+          "WPHG § 120",
+          "WPHG § 120",
+          "WPHG § 120",
+          "WPHG § 120",
+          "WPHG § 120"
+        ],
+        "source_audit": null
+      },
+      {
+        "id": "gnotkg_tail",
+        "passed": true,
+        "missing": [],
+        "unexpected": [],
+        "missing_text": [],
+        "seconds": 2.361,
+        "sources": [
+          "GNOTKG ANLAGE 1",
+          "GNOTKG ANLAGE 1",
+          "GNOTKG ANLAGE 1",
+          "GNOTKG ANLAGE 1",
+          "GNOTKG ANLAGE 1",
+          "GNOTKG ANLAGE 1",
+          "GNOTKG ANLAGE 1",
+          "GNOTKG ANLAGE 1"
+        ],
+        "source_audit": null
+      }
+    ],
+    "passed": true,
+    "worker": {
+      "controlled_model": "controlled-termination/1.0",
+      "controlled_sources": 16,
+      "corpus_version": "termination-2026-11-10-e1a8f4ba0853",
+      "corpus_sha256": "3d0c82b04c397613fb541c051b08386219c38843260bb173d867c0a8751b5f96",
+      "semantic_inversion_guard_passed": true,
+      "runtime_sources": {
+        "src/retrieval/answer_audit.py": "495abb777b2cd8d3938d6970478f8b4a1d2e5539c0528797a0691d60c8f1b717",
+        "src/processors/norms.py": "4f5449f24f19438512c0bff3cb501c0fc48414c9e1c51ad5347ab311d0e7fdb5",
+        "src/api/case_jobs.py": "32ee9923535fbbc20fb2fd4f7167ddbb87f35e9119592c7047dcf1e4c3a3f9fb"
+      },
+      "dispatch_probe_statuses": [
+        401,
+        400
+      ]
+    },
+    "new_case_jobs": 0,
+    "new_answer_generations": 0,
+    "query_rewriting_may_run_once": true
+  },
+  "public_probe": {
+    "requests": "21 sequential source-contract checks; ordinary dismissal additionally uses enhanced RPC",
+    "median_seconds": 2.004,
+    "min_seconds": 1.802,
+    "max_seconds": 5.081,
+    "includes_cold_start": false,
+    "production_load_acceptance": false
+  },
+  "local_python_tests_passed": 231,
+  "evidence_directory": "/Users/ozi/Jura-Analyse/legal_rag_storage/deployments/2026-11-11-windowed-c99a2f5d",
+  "runtime_source_archive_sha256": "b40465f579d935683bbe1c7c8e636013989dce041069244a1ce3297517564a46",
+  "next_step": "Shared server-side answer gate across generic JSON, SSE and case jobs; hold model prose until audit passes.",
+  "next_step_spec": "/Users/ozi/Jura-Analyse/docs/next-step-answer-release.md",
+  "limitations": [
+    "No new case jobs or legal answer generation; one public-query rewrite may run.",
+    "Controlled 16-norm portfolio corpus unchanged; public Vercel case study not redeployed.",
+    "Platform app-version rollback unavailable on current Modal plan; regular deployment tested index fallback only, not exact v38 application restoration.",
+    "No independent legal review or whole-product production load test.",
+    "Only five laws freshly source-audited; remaining 72 laws and existing court texts not freshly source-audited.",
+    "Generic LEX still emits model tokens before final audit; output gate remains next work package.",
+    "Release metadata rollback fields identify former versions, not guaranteed provider rollback commands."
+  ]
+}

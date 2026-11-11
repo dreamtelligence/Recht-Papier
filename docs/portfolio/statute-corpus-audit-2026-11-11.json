@@ -1,0 +1,184 @@
+{
+  "kind": "bounded_statute_catalogue_audit",
+  "executed_at": "2026-11-11T10:31:30.002429+00:00",
+  "baseline": {
+    "origin": "Read-only download of legal-rag-data/documents.json",
+    "documents": 17051,
+    "sha256": "f56b171e6e944ecf112cd2dd735e7f69e7d9cc78a5b34dd3d381cf54e7635d14"
+  },
+  "scope": "Statutory paragraphs in BGB, KSchG, BetrVG, ZPO and ArbGG; preambles, annexes and repeal placeholders excluded. Text changes need review, not every difference is truncation. Retrieval date is not effective date.",
+  "sources": [
+    {
+      "law": "BGB",
+      "url": "https://www.gesetze-im-internet.de/bgb/xml.zip",
+      "xml_sha256": "34fc732d8b963eb753ed11236490d3c47c123ccb72b67c2fdda7f19544389e57",
+      "version_notes": [
+        "NeufNeugefasst durch Bek. v. 2.1.2002 I 42, 2909; 2003, 738;",
+        "Standzuletzt geändert durch Art. 6 G v. 23.7.2026 I Nr. 226"
+      ]
+    },
+    {
+      "law": "KSchG",
+      "url": "https://www.gesetze-im-internet.de/kschg/xml.zip",
+      "xml_sha256": "e4d9da79504ba8cda7ac849b01fd4e55232223ed2c5e40d982e670cfca3abdb5",
+      "version_notes": [
+        "NeufNeugefasst durch Bek. v. 25.8.1969 I 1317",
+        "StandZuletzt geändert durch Art. 2 G v. 14.6.2021 I 1762"
+      ]
+    },
+    {
+      "law": "BetrVG",
+      "url": "https://www.gesetze-im-internet.de/betrvg/xml.zip",
+      "xml_sha256": "5fdf7c393c9a7b7dc2c1bd21580c760d18e795c2134b1b179d098c80f017e43a",
+      "version_notes": [
+        "NeufNeugefasst durch Bek. v. 25.9.2001 I 2518",
+        "StandZuletzt geändert durch Art. 1 G v. 19.7.2024 I Nr. 248"
+      ]
+    },
+    {
+      "law": "ZPO",
+      "url": "https://www.gesetze-im-internet.de/zpo/xml.zip",
+      "xml_sha256": "3bde5966d8fcdc2c736d5b6f2e28c5e99db77b91c55e4f088bd5f31cfa80b3a5",
+      "version_notes": [
+        "NeufNeugefasst durch Bek. v. 5.12.2005 I 3202; 2006 I 431; 2007 I 1781;",
+        "Standzuletzt geändert Art. 2 G v. 22.12.2025 I Nr. 349",
+        "HinweisÄnderung durch Art. 1 G v. 20.5.2026 I Nr. 152 textlich nachgewiesen, dokumentarisch noch nicht abschließend bearbeitet",
+        "HinweisÄnderung durch Art. 2 G v. 20.5.2026 I Nr. 152 textlich nachgewiesen, dokumentarisch noch nicht abschließend bearbeitet",
+        "HinweisÄnderung durch Art. 3 G v. 20.5.2026 I Nr. 152 textlich nachgewiesen, dokumentarisch noch nicht abschließend bearbeitet",
+        "SonstMittelbare Änderung durch Art. 154a Nr. 3 Buchst. a G v. 20.11.2019 I 1626 ist nicht ausführbar, da das geänderte G v. 21.6.2019 I 846 zum Zeitpunkt des Inkrafttretens des mittelbaren Änderungsgesetzes bereits zum 1.11.2019 in Kraft getreten war"
+      ]
+    },
+    {
+      "law": "ArbGG",
+      "url": "https://www.gesetze-im-internet.de/arbgg/xml.zip",
+      "xml_sha256": "eb20c1a0e6668cb6de2ae7ba43e0955e0ae0d8dae9c6ddf2ae81e2332f9a2ace",
+      "version_notes": [
+        "NeufNeugefasst durch Bek. v. 2.7.1979 I 853, 1036;",
+        "Standzuletzt geändert durch Art. 11 G v. 22.10.2026 I Nr. 321",
+        "SonstMittelbare Änderung durch Art. 154a Nr. 3 Buchst. a G v. 20.11.2019 I 1626 ist nicht ausführbar, da das geänderte G v. 21.6.2019 I 846 zum Zeitpunkt des Inkrafttretens des mittelbaren Änderungsgesetzes bereits zum 1.11.2019 in Kraft getreten war"
+      ]
+    }
+  ],
+  "laws": [
+    {
+      "law": "BGB",
+      "baseline_count": 2479,
+      "source_count": 2487,
+      "unchanged": 2044,
+      "missing": [
+        "§ 356f",
+        "§ 479a",
+        "§ 479b",
+        "§ 479c",
+        "§ 479d",
+        "§ 479e",
+        "§ 479f",
+        "§ 479g",
+        "§ 559f"
+      ],
+      "obsolete": [
+        "§ 1597a"
+      ],
+      "duplicate_baseline": [],
+      "duplicate_source": [],
+      "passed": false,
+      "changed": 434
+    },
+    {
+      "law": "KSchG",
+      "baseline_count": 28,
+      "source_count": 28,
+      "unchanged": 14,
+      "missing": [],
+      "obsolete": [],
+      "duplicate_baseline": [],
+      "duplicate_source": [],
+      "passed": false,
+      "changed": 14
+    },
+    {
+      "law": "BetrVG",
+      "baseline_count": 145,
+      "source_count": 145,
+      "unchanged": 57,
+      "missing": [],
+      "obsolete": [],
+      "duplicate_baseline": [],
+      "duplicate_source": [],
+      "passed": false,
+      "changed": 88
+    },
+    {
+      "law": "ZPO",
+      "baseline_count": 1050,
+      "source_count": 1052,
+      "unchanged": 811,
+      "missing": [
+        "§ 102",
+        "§ 752a"
+      ],
+      "obsolete": [],
+      "duplicate_baseline": [],
+      "duplicate_source": [],
+      "passed": false,
+      "changed": 239
+    },
+    {
+      "law": "ArbGG",
+      "baseline_count": 133,
+      "source_count": 133,
+      "unchanged": 66,
+      "missing": [],
+      "obsolete": [],
+      "duplicate_baseline": [],
+      "duplicate_source": [],
+      "passed": false,
+      "changed": 67
+    }
+  ],
+  "candidate_documents": 3845,
+  "candidate_sha256": "0bce0e2147906d59de7580518b7d0f23d9b857c6aeb4968c13a62120add18527",
+  "comparison_passed": false,
+  "live_index_modified": false,
+  "embeddings_built": false,
+  "candidate_source_check": {
+    "candidate_matches_frozen_xml": true,
+    "checks": [
+      {
+        "law": "BGB",
+        "matched_paragraphs": 2487
+      },
+      {
+        "law": "KSchG",
+        "matched_paragraphs": 28
+      },
+      {
+        "law": "BetrVG",
+        "matched_paragraphs": 145
+      },
+      {
+        "law": "ZPO",
+        "matched_paragraphs": 1052
+      },
+      {
+        "law": "ArbGG",
+        "matched_paragraphs": 133
+      }
+    ],
+    "baseline_unchanged": true,
+    "hashes_verified": true,
+    "live_index_modified": false,
+    "embeddings_built": false
+  },
+  "regression_tests": {
+    "passed": 26,
+    "command": "python -m pytest tests/test_statute_corpus_audit.py tests/test_statute_xml_completeness.py tests/test_scrapers.py -q"
+  },
+  "implementation": "Separate Jura repository: scripts/audit_statute_corpus.py; docs/statute-corpus-audit.md",
+  "limitations": [
+    "842 text/title differences are not 842 confirmed legal errors; legacy abbreviation normalization and law changes require distinction.",
+    "The 3845-document candidate contains only five laws and cannot replace the entire catalogue.",
+    "No Qdrant payload/vector consistency or retrieval benchmark performed.",
+    "Retrieval date does not establish legal effective date; no independent legal approval."
+  ]
+}

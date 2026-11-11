@@ -17,7 +17,7 @@ Expo SDK 57 / React Native 0.86, TypeScript, Supabase und die bestehende Python-
 - **Verlässliche Berechnungsgrundlage:** typisierte Angaben mit Seite, wörtlichem Zitat und Nutzerbestätigung; bestehender Freitext wird nicht automatisch zur Rechengrundlage.
 - **Code statt Datumsübernahme aus Modelltext:** begrenzte Fristregeln, explizite Voraussetzungen und offene Prüfpunkte. Ein passendes Zitat kann eine widersprüchliche Schlussfolgerung nicht freigeben.
 - **Ein Schnittstellenvertrag:** versioniertes JSON Schema, generierte TypeScript-Typen und serverseitige Validierung trennen Fakten, Berechnungen, rechtliche Prüfpunkte und Unsicherheiten.
-- **Vollständiger Quellenstand:** 16 frisch aufgebaute amtliche Normtexte, unveränderliche Version und Text-Hashes. Der bisherige breitere Live-Index bleibt erhalten; geänderte Texte werden im Indexer unter derselben ID neu eingebettet.
+- **Vollständiger Quellenstand:** 16 frisch aufgebaute amtliche Normtexte, unveränderliche Version und Text-Hashes. Der getrennte breite Suchdienst verwendet seit 11.11.2026 einen geprüften Fensterindex; der kontrollierte 16-Normen-Korpus bleibt unverändert.
 - **Echter privater Backend-Pfad:** private PDFs, Textauslese, eingefrorener Eingabestand, asynchroner Auftrag, authentifizierter Callback und atomare Analyse-/Quellen-/Fristspeicherung. Der kontrollierte Modal-Worker erhält nur öffentliche Versionskennungen.
 - **Öffentliche und private Daten getrennt:** ein eigener Web-Einstieg enthält ausschließlich kuratierte Beispiele. Der native Ablauf nutzt weiterhin Supabase Auth und Eigentümer-RLS.
 
@@ -43,6 +43,26 @@ Der ungültige Datumsvorschlag ist eine isolierte Reproduktion des alten Extrakt
 Die drei veröffentlichten Fälle durchlaufen reale PDF-Textauslese, bestätigte Belege, den Modal-Auftrag, Ergebnisfreigabe und Berichtserstellung. Zusätzlich wurden Zugriffstrennung, atomare Speicherung, veraltete Eingabestände und Dokumentfreigabe gegen das konfigurierte Testprojekt geprüft. Die native Sichtprüfung erfolgte im iPhone-Simulator; sie ist keine Prüfung auf einem physischen Gerät.
 
 Der auf Nutzerwunsch ausgeführte Vergleich verwendet das vorhandene Qwen-Modell und Gemini. Qwen hatte keine verfügbare EU-L40S-Kapazität; Gemini erreichte die Quote vor Abschluss der Wiederholungen. Der vollständige Modellvergleich und der endgültige Kostenabgleich sind **nicht abgeschlossen**. Es gibt keine Modellrangliste oder behauptete fachliche Freigabe. Der Tag `v1.0.0` setzt die offenen Abnahmen voraus.
+
+## Suchdienst: Live-Stand vom 11.11.2026
+
+Der getrennte Suchdienst `legal-rag` **v41** enthält **17.132 Indexeinträge aus
+17.060 vollständigen Quellen**; der Analyse-Worker **v5** enthält den Guard gegen
+die beobachtete KSchG-Bedeutungsumkehr. Alle **21 Live-Suchverträge** bestehen.
+Der Median der kleinen sequenziellen Probe nach Kaltstart beträgt **2,004 Sekunden**;
+bei einem Profilfall enthält die Messung zusätzlich den kontrollierten Suchaufruf.
+Dies ist kein Lastversprechen und keine juristische Antwortfreigabe.
+
+[Live-Nachweis mit Hashes und geprüftem Datenrückweg](docs/portfolio/live-index-release-2026-11-11.json) ·
+[Textfenster und Latenzvergleich](docs/portfolio/candidate-hardening-2026-11-11.json) ·
+[Antwort-Vorprüfung](docs/portfolio/answer-review-2026-11-11.md)
+
+Der kontrollierte Portfolio-Korpus bleibt unverändert bei 16 Normtexten; die
+öffentliche Fallstudie startet weiterhin keine Modelle. Die Runtime-Änderungen
+des getrennten Jura-Dienstes sind noch nicht vollständig als GitHub-Code
+veröffentlicht. Nächster Schritt ist ein gemeinsames serverseitiges
+[Antwort-Gate für den allgemeinen LEX-Pfad](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md):
+Dort darf Modelltext erst nach bestandener Prüfung ausgegeben werden.
 
 ## Lokal reproduzieren
 

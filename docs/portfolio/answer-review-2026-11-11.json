@@ -1,0 +1,787 @@
+{
+  "checked_at": "2026-11-11T11:53:40.248739+00:00",
+  "scope": "Technical source/fact pre-review of stored fictional answers from 2026-11-10. No newly generated answers, no professional legal sign-off, no ranking or model approval.",
+  "responses_source": "docs/portfolio/model-evaluation-run3/responses.jsonl",
+  "responses_sha256": "6250a147e524b945c35320c5f4f387a61095ede473682607ee52a27b816aa8d5",
+  "returned_valid_contracts_replayed": 17,
+  "inverted_social_justification_responses": [
+    {
+      "id": "dev-10",
+      "repetition": 1
+    },
+    {
+      "id": "dev-11",
+      "repetition": 1
+    },
+    {
+      "id": "acc-01",
+      "repetition": 1
+    },
+    {
+      "id": "acc-01",
+      "repetition": 2
+    }
+  ],
+  "replay_method": "Original structured claims and source IDs retained; numeric inline citation labels added only to exercise the existing prose source-audit boundary. No new model call or change to recorded text.",
+  "rows": [
+    {
+      "id": "dev-01",
+      "provider": "gemini",
+      "repetition": 1,
+      "claims": [
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie nicht schriftlich erfolgte.",
+          "source_ids": [
+            "BGB_623"
+          ],
+          "semantic_inversion_flagged": false
+        },
+        {
+          "text": "Die Kündigung ist unwirksam, wenn der Betriebsrat nicht ordnungsgemäß angehört wurde.",
+          "source_ids": [
+            "BetrVG_102"
+          ],
+          "semantic_inversion_flagged": false
+        }
+      ]
+    },
+    {
+      "id": "dev-02",
+      "provider": "gemini",
+      "repetition": 1,
+      "claims": [
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie nicht schriftlich erfolgte.",
+          "source_ids": [
+            "BGB_623"
+          ],
+          "semantic_inversion_flagged": false
+        },
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie sozial ungerechtfertigt ist und die Wartezeit des KSchG erfüllt ist.",
+          "source_ids": [
+            "KSchG_1"
+          ],
+          "semantic_inversion_flagged": false
+        }
+      ]
+    },
+    {
+      "id": "dev-03",
+      "provider": "gemini",
+      "repetition": 1,
+      "claims": [
+        {
+          "text": "Die Kündigung ist unwirksam, wenn der Betriebsrat nicht ordnungsgemäß angehört wurde.",
+          "source_ids": [
+            "BetrVG_102"
+          ],
+          "semantic_inversion_flagged": false
+        },
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie sozial ungerechtfertigt ist und das Kündigungsschutzgesetz anwendbar ist.",
+          "source_ids": [
+            "KSchG_1"
+          ],
+          "semantic_inversion_flagged": false
+        }
+      ]
+    },
+    {
+      "id": "dev-04",
+      "provider": "gemini",
+      "repetition": 1,
+      "claims": [
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie nicht schriftlich erfolgte.",
+          "source_ids": [
+            "BGB_623"
+          ],
+          "semantic_inversion_flagged": false
+        },
+        {
+          "text": "Die Kündigung ist unwirksam, wenn der Betriebsrat nicht ordnungsgemäß angehört wurde.",
+          "source_ids": [
+            "BetrVG_102"
+          ],
+          "semantic_inversion_flagged": false
+        }
+      ]
+    },
+    {
+      "id": "dev-05",
+      "provider": "gemini",
+      "repetition": 1,
+      "claims": [
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie nicht schriftlich erfolgte.",
+          "source_ids": [
+            "BGB_623"
+          ],
+          "semantic_inversion_flagged": false
+        },
+        {
+          "text": "Die Kündigung ist unwirksam, wenn der Betriebsrat nicht ordnungsgemäß angehört wurde.",
+          "source_ids": [
+            "BetrVG_102"
+          ],
+          "semantic_inversion_flagged": false
+        }
+      ]
+    },
+    {
+      "id": "dev-06",
+      "provider": "gemini",
+      "repetition": 1,
+      "claims": [
+        {
+          "text": "Die Kündigung ist unwirksam, wenn der Betriebsrat nicht ordnungsgemäß angehört wurde.",
+          "source_ids": [
+            "BetrVG_102"
+          ],
+          "semantic_inversion_flagged": false
+        },
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie sozial ungerechtfertigt ist und die Voraussetzungen des KSchG vorliegen.",
+          "source_ids": [
+            "KSchG_1"
+          ],
+          "semantic_inversion_flagged": false
+        }
+      ]
+    },
+    {
+      "id": "dev-07",
+      "provider": "gemini",
+      "repetition": 1,
+      "claims": [
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie nicht schriftlich erfolgte.",
+          "source_ids": [
+            "BGB_623"
+          ],
+          "semantic_inversion_flagged": false
+        },
+        {
+          "text": "Die Kündigung ist unwirksam, wenn der Betriebsrat nicht ordnungsgemäß angehört wurde.",
+          "source_ids": [
+            "BetrVG_102"
+          ],
+          "semantic_inversion_flagged": false
+        }
+      ]
+    },
+    {
+      "id": "dev-09",
+      "provider": "gemini",
+      "repetition": 1,
+      "claims": [
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie nicht schriftlich erfolgte.",
+          "source_ids": [
+            "BGB_623"
+          ],
+          "semantic_inversion_flagged": false
+        },
+        {
+          "text": "Die Kündigung ist unwirksam, wenn der Betriebsrat nicht ordnungsgemäß angehört wurde.",
+          "source_ids": [
+            "BetrVG_102"
+          ],
+          "semantic_inversion_flagged": false
+        }
+      ]
+    },
+    {
+      "id": "dev-10",
+      "provider": "gemini",
+      "repetition": 1,
+      "claims": [
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie nicht sozial ungerechtfertigt ist.",
+          "source_ids": [
+            "KSchG_1"
+          ],
+          "semantic_inversion_flagged": true
+        },
+        {
+          "text": "Die Kündigung muss schriftlich erfolgen.",
+          "source_ids": [
+            "BGB_623"
+          ],
+          "semantic_inversion_flagged": false
+        }
+      ]
+    },
+    {
+      "id": "dev-11",
+      "provider": "gemini",
+      "repetition": 1,
+      "claims": [
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie nicht schriftlich erfolgte.",
+          "source_ids": [
+            "BGB_623"
+          ],
+          "semantic_inversion_flagged": false
+        },
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie nicht sozial ungerechtfertigt ist.",
+          "source_ids": [
+            "KSchG_1"
+          ],
+          "semantic_inversion_flagged": true
+        }
+      ]
+    },
+    {
+      "id": "dev-12",
+      "provider": "gemini",
+      "repetition": 1,
+      "claims": [
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie nicht schriftlich zugestellt wurde.",
+          "source_ids": [
+            "BGB_623"
+          ],
+          "semantic_inversion_flagged": false
+        },
+        {
+          "text": "Die Kündigung ist unwirksam, wenn der Betriebsrat nicht ordnungsgemäß angehört wurde.",
+          "source_ids": [
+            "BetrVG_102"
+          ],
+          "semantic_inversion_flagged": false
+        }
+      ]
+    },
+    {
+      "id": "dev-14",
+      "provider": "gemini",
+      "repetition": 1,
+      "claims": [
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie nicht schriftlich erfolgte.",
+          "source_ids": [
+            "BGB_623"
+          ],
+          "semantic_inversion_flagged": false
+        },
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie sozial ungerechtfertigt ist und das Kündigungsschutzgesetz Anwendung findet.",
+          "source_ids": [
+            "KSchG_1"
+          ],
+          "semantic_inversion_flagged": false
+        }
+      ]
+    },
+    {
+      "id": "dev-15",
+      "provider": "gemini",
+      "repetition": 1,
+      "claims": [
+        {
+          "text": "Die Kündigung ist unwirksam, da die Vollmachtsurkunde nicht vorgelegt wurde und die Kündigung unverzüglich zurückgewiesen wurde.",
+          "source_ids": [
+            "BGB_174"
+          ],
+          "semantic_inversion_flagged": false
+        },
+        {
+          "text": "Die Kündigung ist unwirksam, da der Betriebsrat nicht ordnungsgemäß angehört wurde.",
+          "source_ids": [
+            "BetrVG_102"
+          ],
+          "semantic_inversion_flagged": false
+        }
+      ]
+    },
+    {
+      "id": "dev-16",
+      "provider": "gemini",
+      "repetition": 1,
+      "claims": [
+        {
+          "text": "Die Kündigung ist unwirksam, wenn der Betriebsrat nicht ordnungsgemäß angehört wurde.",
+          "source_ids": [
+            "BetrVG_102"
+          ],
+          "semantic_inversion_flagged": false
+        },
+        {
+          "text": "Die Kündigung muss schriftlich erfolgen.",
+          "source_ids": [
+            "BGB_623"
+          ],
+          "semantic_inversion_flagged": false
+        }
+      ]
+    },
+    {
+      "id": "acc-01",
+      "provider": "gemini",
+      "repetition": 1,
+      "claims": [
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie nicht sozial ungerechtfertigt ist.",
+          "source_ids": [
+            "KSchG_1"
+          ],
+          "semantic_inversion_flagged": true
+        },
+        {
+          "text": "Die Kündigung muss schriftlich erfolgen.",
+          "source_ids": [
+            "BGB_623"
+          ],
+          "semantic_inversion_flagged": false
+        }
+      ]
+    },
+    {
+      "id": "acc-01",
+      "provider": "gemini",
+      "repetition": 2,
+      "claims": [
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie nicht sozial ungerechtfertigt ist.",
+          "source_ids": [
+            "KSchG_1"
+          ],
+          "semantic_inversion_flagged": true
+        },
+        {
+          "text": "Die Kündigung muss schriftlich erfolgen.",
+          "source_ids": [
+            "BGB_623"
+          ],
+          "semantic_inversion_flagged": false
+        }
+      ]
+    },
+    {
+      "id": "acc-02",
+      "provider": "gemini",
+      "repetition": 1,
+      "claims": [
+        {
+          "text": "Die Kündigung ist unwirksam, wenn sie nicht schriftlich erfolgte.",
+          "source_ids": [
+            "BGB_623"
+          ],
+          "semantic_inversion_flagged": false
+        },
+        {
+          "text": "Die Kündigung ist unwirksam, wenn der Betriebsrat nicht ordnungsgemäß angehört wurde.",
+          "source_ids": [
+            "BetrVG_102"
+          ],
+          "semantic_inversion_flagged": false
+        }
+      ]
+    }
+  ],
+  "manually_reviewed_fixtures": [
+    {
+      "id": "dev-10",
+      "path": "evals/development/dev-10.json",
+      "sha256": "757151d831146d6365a8ef76e43cd54c440bcebb28af4e3bc49366ecb397d555",
+      "confirmed_facts": [
+        {
+          "key": "scope",
+          "value": "ordinary_employer",
+          "confirmed": true
+        },
+        {
+          "key": "receipt_on",
+          "value": "2026-08-31",
+          "confirmed": true
+        },
+        {
+          "key": "employment_started_on",
+          "value": "2006-01-01",
+          "confirmed": true
+        },
+        {
+          "key": "stated_end_on",
+          "value": "2026-09-30",
+          "confirmed": true
+        },
+        {
+          "key": "notice_regime",
+          "value": "statutory",
+          "confirmed": true
+        },
+        {
+          "key": "probation",
+          "value": "no",
+          "confirmed": true
+        },
+        {
+          "key": "written_notice",
+          "value": "yes",
+          "confirmed": true
+        },
+        {
+          "key": "special_protection",
+          "value": "no",
+          "confirmed": true
+        },
+        {
+          "key": "court_state",
+          "value": "NW",
+          "confirmed": true
+        },
+        {
+          "key": "representative_authority",
+          "value": "attached",
+          "confirmed": true
+        },
+        {
+          "key": "works_council",
+          "value": "not_present",
+          "confirmed": true
+        }
+      ],
+      "expected": {
+        "notice_end": "2027-03-31",
+        "claim_deadline": "2026-09-21",
+        "invalid": false
+      }
+    },
+    {
+      "id": "dev-11",
+      "path": "evals/development/dev-11.json",
+      "sha256": "6143d7187601306bb989c3d45402a91a233cd07fd40647353dc76f94d544559f",
+      "confirmed_facts": [
+        {
+          "key": "scope",
+          "value": "ordinary_employer",
+          "confirmed": true
+        },
+        {
+          "key": "stated_end_on",
+          "value": "2026-09-30",
+          "confirmed": true
+        },
+        {
+          "key": "notice_regime",
+          "value": "unknown",
+          "confirmed": true
+        },
+        {
+          "key": "probation",
+          "value": "no",
+          "confirmed": true
+        },
+        {
+          "key": "written_notice",
+          "value": "yes",
+          "confirmed": true
+        },
+        {
+          "key": "special_protection",
+          "value": "no",
+          "confirmed": true
+        },
+        {
+          "key": "court_state",
+          "value": "NW",
+          "confirmed": true
+        },
+        {
+          "key": "representative_authority",
+          "value": "attached",
+          "confirmed": true
+        },
+        {
+          "key": "works_council",
+          "value": "not_present",
+          "confirmed": true
+        }
+      ],
+      "expected": {
+        "notice_end": null,
+        "claim_deadline": null,
+        "invalid": false
+      }
+    },
+    {
+      "id": "dev-14",
+      "path": "evals/development/dev-14.json",
+      "sha256": "551f3136cc055896dba88bdf62a53d2f7fdcc8d1040de8baa3ca834437fe5605",
+      "confirmed_facts": [
+        {
+          "key": "scope",
+          "value": "ordinary_employer",
+          "confirmed": true
+        },
+        {
+          "key": "receipt_on",
+          "value": "2026-08-31",
+          "confirmed": true
+        },
+        {
+          "key": "receipt_on",
+          "value": "2026-09-02",
+          "confirmed": true
+        },
+        {
+          "key": "employment_started_on",
+          "value": "2017-03-01",
+          "confirmed": true
+        },
+        {
+          "key": "stated_end_on",
+          "value": "2026-09-30",
+          "confirmed": true
+        },
+        {
+          "key": "notice_regime",
+          "value": "statutory",
+          "confirmed": true
+        },
+        {
+          "key": "probation",
+          "value": "no",
+          "confirmed": true
+        },
+        {
+          "key": "written_notice",
+          "value": "yes",
+          "confirmed": true
+        },
+        {
+          "key": "special_protection",
+          "value": "no",
+          "confirmed": true
+        },
+        {
+          "key": "court_state",
+          "value": "NW",
+          "confirmed": true
+        },
+        {
+          "key": "representative_authority",
+          "value": "attached",
+          "confirmed": true
+        },
+        {
+          "key": "works_council",
+          "value": "not_present",
+          "confirmed": true
+        }
+      ],
+      "expected": {
+        "notice_end": null,
+        "claim_deadline": null,
+        "invalid": false
+      }
+    },
+    {
+      "id": "dev-15",
+      "path": "evals/development/dev-15.json",
+      "sha256": "26e7a19685471db97ea030de0128b2a0c6fb14f632dcf450a8ee434ec69ef599",
+      "confirmed_facts": [
+        {
+          "key": "scope",
+          "value": "ordinary_employer",
+          "confirmed": true
+        },
+        {
+          "key": "receipt_on",
+          "value": "2026-08-31",
+          "confirmed": true
+        },
+        {
+          "key": "employment_started_on",
+          "value": "2017-03-01",
+          "confirmed": true
+        },
+        {
+          "key": "stated_end_on",
+          "value": "2026-09-30",
+          "confirmed": true
+        },
+        {
+          "key": "notice_regime",
+          "value": "statutory",
+          "confirmed": true
+        },
+        {
+          "key": "probation",
+          "value": "no",
+          "confirmed": true
+        },
+        {
+          "key": "written_notice",
+          "value": "yes",
+          "confirmed": true
+        },
+        {
+          "key": "special_protection",
+          "value": "no",
+          "confirmed": true
+        },
+        {
+          "key": "court_state",
+          "value": "NW",
+          "confirmed": true
+        },
+        {
+          "key": "representative_authority",
+          "value": "missing",
+          "confirmed": true
+        },
+        {
+          "key": "works_council",
+          "value": "not_present",
+          "confirmed": true
+        }
+      ],
+      "expected": {
+        "notice_end": "2026-11-30",
+        "claim_deadline": "2026-09-21",
+        "invalid": false
+      }
+    },
+    {
+      "id": "acc-01",
+      "path": "evals/acceptance/acc-01.json",
+      "sha256": "3e03736565f05462bc601d066e1222364950f03fc4e8e8c90ebf7a56c01db65c",
+      "confirmed_facts": [
+        {
+          "key": "scope",
+          "value": "ordinary_employer",
+          "confirmed": true
+        },
+        {
+          "key": "receipt_on",
+          "value": "2026-12-04",
+          "confirmed": true
+        },
+        {
+          "key": "employment_started_on",
+          "value": "2017-03-01",
+          "confirmed": true
+        },
+        {
+          "key": "stated_end_on",
+          "value": "2026-09-30",
+          "confirmed": true
+        },
+        {
+          "key": "notice_regime",
+          "value": "statutory",
+          "confirmed": true
+        },
+        {
+          "key": "probation",
+          "value": "no",
+          "confirmed": true
+        },
+        {
+          "key": "written_notice",
+          "value": "yes",
+          "confirmed": true
+        },
+        {
+          "key": "special_protection",
+          "value": "no",
+          "confirmed": true
+        },
+        {
+          "key": "court_state",
+          "value": "NW",
+          "confirmed": true
+        },
+        {
+          "key": "representative_authority",
+          "value": "attached",
+          "confirmed": true
+        },
+        {
+          "key": "works_council",
+          "value": "not_present",
+          "confirmed": true
+        }
+      ],
+      "expected": {
+        "notice_end": "2027-03-31",
+        "claim_deadline": "2026-12-28",
+        "invalid": false
+      }
+    }
+  ],
+  "semantic_guard_source_sha256": "495abb777b2cd8d3938d6970478f8b4a1d2e5539c0528797a0691d60c8f1b717",
+  "prior_date_reference_checks": {
+    "qwen": {
+      "planned_runs": 40,
+      "returned_valid_contract": 0,
+      "transport_or_format_or_blocked": {
+        "TimeoutError": 3,
+        "provider_circuit_open": 37
+      },
+      "runs_with_date_mismatch": null,
+      "date_mismatches": null,
+      "runs_with_undefined_source_ids": null,
+      "calculations_without_norm_source": null,
+      "claims_without_norm_source": null,
+      "uncertainty_correctly_preserved": null,
+      "uncertainty_not_preserved": null,
+      "p50_request_seconds": 180.08,
+      "free_legal_conclusions_approved": false
+    },
+    "gemini": {
+      "planned_runs": 40,
+      "returned_valid_contract": 17,
+      "transport_or_format_or_blocked": {
+        "invalid_json": 1,
+        "http_503": 1,
+        "http_429": 3,
+        "provider_circuit_open": 18
+      },
+      "runs_with_date_mismatch": 15,
+      "date_mismatches": 19,
+      "runs_with_undefined_source_ids": 1,
+      "calculations_without_norm_source": 5,
+      "claims_without_norm_source": 0,
+      "uncertainty_correctly_preserved": 0,
+      "uncertainty_not_preserved": 3,
+      "p50_request_seconds": 2.0375,
+      "free_legal_conclusions_approved": false
+    }
+  },
+  "controlled_calculations_rechecked": {
+    "reference_cases": 24,
+    "executions": 40,
+    "reference_mismatches": 0,
+    "command": "npm run eval:portfolio"
+  },
+  "sources": [
+    {
+      "reference": "KSchG § 1",
+      "url": "https://www.gesetze-im-internet.de/kschg/__1.html"
+    },
+    {
+      "reference": "BGB § 622",
+      "url": "https://www.gesetze-im-internet.de/bgb/__622.html"
+    },
+    {
+      "reference": "KSchG § 4",
+      "url": "https://www.gesetze-im-internet.de/kschg/__4.html"
+    },
+    {
+      "reference": "BGB § 174",
+      "url": "https://www.gesetze-im-internet.de/bgb/__174.html"
+    },
+    {
+      "reference": "BetrVG § 102",
+      "url": "https://www.gesetze-im-internet.de/betrvg/__102.html"
+    }
+  ],
+  "free_answers_approved": false,
+  "new_model_calls": 0,
+  "independent_lawyer_review_completed": false
+}

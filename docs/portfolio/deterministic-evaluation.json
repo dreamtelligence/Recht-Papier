@@ -1,6 +1,6 @@
 {
   "kind": "deterministic_reference_evaluation",
-  "executed_at": "2026-11-10T12:43:48.471Z",
+  "executed_at": "2026-11-11T11:50:53.656Z",
   "corpus_version": "termination-2026-11-10-e1a8f4ba0853",
   "rules_sha256": "025a3260957eae2d7f9ec82abf88aa7b08b5e0114d01cb0e1f955a06e84fbefe",
   "unique_cases": 24,
@@ -16,7 +16,7 @@
       "repetition": 1,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 1.775,
+      "latency_ms": 6.884,
       "calculation_count": 2,
       "uncertainty_count": 1
     },
@@ -26,7 +26,7 @@
       "repetition": 1,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.187,
+      "latency_ms": 0.192,
       "calculation_count": 2,
       "uncertainty_count": 0
     },
@@ -36,7 +36,7 @@
       "repetition": 1,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.201,
+      "latency_ms": 0.173,
       "calculation_count": 2,
       "uncertainty_count": 1
     },
@@ -56,7 +56,7 @@
       "repetition": 1,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.128,
+      "latency_ms": 0.123,
       "calculation_count": 2,
       "uncertainty_count": 1
     },
@@ -66,7 +66,7 @@
       "repetition": 1,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.108,
+      "latency_ms": 0.111,
       "calculation_count": 2,
       "uncertainty_count": 1
     },
@@ -76,7 +76,7 @@
       "repetition": 1,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.105,
+      "latency_ms": 0.11,
       "calculation_count": 2,
       "uncertainty_count": 1
     },
@@ -86,7 +86,7 @@
       "repetition": 1,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.106,
+      "latency_ms": 0.113,
       "calculation_count": 2,
       "uncertainty_count": 1
     },
@@ -96,7 +96,7 @@
       "repetition": 1,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.106,
+      "latency_ms": 0.116,
       "calculation_count": 2,
       "uncertainty_count": 1
     },
@@ -106,7 +106,7 @@
       "repetition": 1,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.121,
+      "latency_ms": 0.13,
       "calculation_count": 2,
       "uncertainty_count": 1
     },
@@ -116,7 +116,7 @@
       "repetition": 1,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.085,
+      "latency_ms": 0.115,
       "calculation_count": 0,
       "uncertainty_count": 1
     },
@@ -126,7 +126,7 @@
       "repetition": 1,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.084,
+      "latency_ms": 0.131,
       "calculation_count": 1,
       "uncertainty_count": 2
     },
@@ -136,7 +136,7 @@
       "repetition": 1,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.091,
+      "latency_ms": 0.127,
       "calculation_count": 0,
       "uncertainty_count": 2
     },
@@ -146,7 +146,7 @@
       "repetition": 1,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.089,
+      "latency_ms": 0.122,
       "calculation_count": 0,
       "uncertainty_count": 2
     },
@@ -156,7 +156,7 @@
       "repetition": 1,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.098,
+      "latency_ms": 0.129,
       "calculation_count": 2,
       "uncertainty_count": 2
     },
@@ -166,7 +166,7 @@
       "repetition": 1,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.09,
+      "latency_ms": 0.115,
       "calculation_count": 2,
       "uncertainty_count": 2
     },
@@ -176,7 +176,7 @@
       "repetition": 1,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.115,
+      "latency_ms": 0.125,
       "calculation_count": 2,
       "uncertainty_count": 0
     },
@@ -186,7 +186,7 @@
       "repetition": 2,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.104,
+      "latency_ms": 0.116,
       "calculation_count": 2,
       "uncertainty_count": 0
     },
@@ -196,7 +196,7 @@
       "repetition": 3,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.111,
+      "latency_ms": 0.125,
       "calculation_count": 2,
       "uncertainty_count": 0
     },
@@ -206,7 +206,7 @@
       "repetition": 1,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.146,
+      "latency_ms": 0.117,
       "calculation_count": 2,
       "uncertainty_count": 1
     },
@@ -216,7 +216,7 @@
       "repetition": 2,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.131,
+      "latency_ms": 0.165,
       "calculation_count": 2,
       "uncertainty_count": 1
     },
@@ -226,7 +226,7 @@
       "repetition": 3,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.106,
+      "latency_ms": 0.134,
       "calculation_count": 2,
       "uncertainty_count": 1
     },
@@ -234,6 +234,56 @@
       "id": "acc-03",
       "group": "acceptance",
       "repetition": 1,
+      "reference_match": true,
+      "invalid_input_rejected": false,
+      "latency_ms": 0.121,
+      "calculation_count": 2,
+      "uncertainty_count": 1
+    },
+    {
+      "id": "acc-03",
+      "group": "acceptance",
+      "repetition": 2,
+      "reference_match": true,
+      "invalid_input_rejected": false,
+      "latency_ms": 0.132,
+      "calculation_count": 2,
+      "uncertainty_count": 1
+    },
+    {
+      "id": "acc-03",
+      "group": "acceptance",
+      "repetition": 3,
+      "reference_match": true,
+      "invalid_input_rejected": false,
+      "latency_ms": 0.116,
+      "calculation_count": 2,
+      "uncertainty_count": 1
+    },
+    {
+      "id": "acc-04",
+      "group": "acceptance",
+      "repetition": 1,
+      "reference_match": true,
+      "invalid_input_rejected": false,
+      "latency_ms": 0.109,
+      "calculation_count": 2,
+      "uncertainty_count": 1
+    },
+    {
+      "id": "acc-04",
+      "group": "acceptance",
+      "repetition": 2,
+      "reference_match": true,
+      "invalid_input_rejected": false,
+      "latency_ms": 0.108,
+      "calculation_count": 2,
+      "uncertainty_count": 1
+    },
+    {
+      "id": "acc-04",
+      "group": "acceptance",
+      "repetition": 3,
       "reference_match": true,
       "invalid_input_rejected": false,
       "latency_ms": 0.107,
@@ -241,172 +291,122 @@
       "uncertainty_count": 1
     },
     {
-      "id": "acc-03",
+      "id": "acc-05",
+      "group": "acceptance",
+      "repetition": 1,
+      "reference_match": true,
+      "invalid_input_rejected": false,
+      "latency_ms": 0.102,
+      "calculation_count": 1,
+      "uncertainty_count": 2
+    },
+    {
+      "id": "acc-05",
       "group": "acceptance",
       "repetition": 2,
       "reference_match": true,
       "invalid_input_rejected": false,
-      "latency_ms": 0.113,
-      "calculation_count": 2,
+      "latency_ms": 0.1,
+      "calculation_count": 1,
+      "uncertainty_count": 2
+    },
+    {
+      "id": "acc-05",
+      "group": "acceptance",
+      "repetition": 3,
+      "reference_match": true,
+      "invalid_input_rejected": false,
+      "latency_ms": 0.101,
+      "calculation_count": 1,
+      "uncertainty_count": 2
+    },
+    {
+      "id": "acc-06",
+      "group": "acceptance",
+      "repetition": 1,
+      "reference_match": true,
+      "invalid_input_rejected": false,
+      "latency_ms": 0.098,
+      "calculation_count": 1,
+      "uncertainty_count": 2
+    },
+    {
+      "id": "acc-06",
+      "group": "acceptance",
+      "repetition": 2,
+      "reference_match": true,
+      "invalid_input_rejected": false,
+      "latency_ms": 0.097,
+      "calculation_count": 1,
+      "uncertainty_count": 2
+    },
+    {
+      "id": "acc-06",
+      "group": "acceptance",
+      "repetition": 3,
+      "reference_match": true,
+      "invalid_input_rejected": false,
+      "latency_ms": 0.111,
+      "calculation_count": 1,
+      "uncertainty_count": 2
+    },
+    {
+      "id": "acc-07",
+      "group": "acceptance",
+      "repetition": 1,
+      "reference_match": true,
+      "invalid_input_rejected": true,
+      "latency_ms": 0.275,
+      "calculation_count": 0,
+      "uncertainty_count": 0
+    },
+    {
+      "id": "acc-07",
+      "group": "acceptance",
+      "repetition": 2,
+      "reference_match": true,
+      "invalid_input_rejected": true,
+      "latency_ms": 0.022,
+      "calculation_count": 0,
+      "uncertainty_count": 0
+    },
+    {
+      "id": "acc-07",
+      "group": "acceptance",
+      "repetition": 3,
+      "reference_match": true,
+      "invalid_input_rejected": true,
+      "latency_ms": 0.018,
+      "calculation_count": 0,
+      "uncertainty_count": 0
+    },
+    {
+      "id": "acc-08",
+      "group": "acceptance",
+      "repetition": 1,
+      "reference_match": true,
+      "invalid_input_rejected": false,
+      "latency_ms": 0.115,
+      "calculation_count": 0,
       "uncertainty_count": 1
     },
     {
-      "id": "acc-03",
+      "id": "acc-08",
+      "group": "acceptance",
+      "repetition": 2,
+      "reference_match": true,
+      "invalid_input_rejected": false,
+      "latency_ms": 0.1,
+      "calculation_count": 0,
+      "uncertainty_count": 1
+    },
+    {
+      "id": "acc-08",
       "group": "acceptance",
       "repetition": 3,
       "reference_match": true,
       "invalid_input_rejected": false,
       "latency_ms": 0.104,
-      "calculation_count": 2,
-      "uncertainty_count": 1
-    },
-    {
-      "id": "acc-04",
-      "group": "acceptance",
-      "repetition": 1,
-      "reference_match": true,
-      "invalid_input_rejected": false,
-      "latency_ms": 0.1,
-      "calculation_count": 2,
-      "uncertainty_count": 1
-    },
-    {
-      "id": "acc-04",
-      "group": "acceptance",
-      "repetition": 2,
-      "reference_match": true,
-      "invalid_input_rejected": false,
-      "latency_ms": 0.096,
-      "calculation_count": 2,
-      "uncertainty_count": 1
-    },
-    {
-      "id": "acc-04",
-      "group": "acceptance",
-      "repetition": 3,
-      "reference_match": true,
-      "invalid_input_rejected": false,
-      "latency_ms": 0.094,
-      "calculation_count": 2,
-      "uncertainty_count": 1
-    },
-    {
-      "id": "acc-05",
-      "group": "acceptance",
-      "repetition": 1,
-      "reference_match": true,
-      "invalid_input_rejected": false,
-      "latency_ms": 0.09,
-      "calculation_count": 1,
-      "uncertainty_count": 2
-    },
-    {
-      "id": "acc-05",
-      "group": "acceptance",
-      "repetition": 2,
-      "reference_match": true,
-      "invalid_input_rejected": false,
-      "latency_ms": 0.089,
-      "calculation_count": 1,
-      "uncertainty_count": 2
-    },
-    {
-      "id": "acc-05",
-      "group": "acceptance",
-      "repetition": 3,
-      "reference_match": true,
-      "invalid_input_rejected": false,
-      "latency_ms": 0.091,
-      "calculation_count": 1,
-      "uncertainty_count": 2
-    },
-    {
-      "id": "acc-06",
-      "group": "acceptance",
-      "repetition": 1,
-      "reference_match": true,
-      "invalid_input_rejected": false,
-      "latency_ms": 0.077,
-      "calculation_count": 1,
-      "uncertainty_count": 2
-    },
-    {
-      "id": "acc-06",
-      "group": "acceptance",
-      "repetition": 2,
-      "reference_match": true,
-      "invalid_input_rejected": false,
-      "latency_ms": 0.076,
-      "calculation_count": 1,
-      "uncertainty_count": 2
-    },
-    {
-      "id": "acc-06",
-      "group": "acceptance",
-      "repetition": 3,
-      "reference_match": true,
-      "invalid_input_rejected": false,
-      "latency_ms": 0.076,
-      "calculation_count": 1,
-      "uncertainty_count": 2
-    },
-    {
-      "id": "acc-07",
-      "group": "acceptance",
-      "repetition": 1,
-      "reference_match": true,
-      "invalid_input_rejected": true,
-      "latency_ms": 0.237,
-      "calculation_count": 0,
-      "uncertainty_count": 0
-    },
-    {
-      "id": "acc-07",
-      "group": "acceptance",
-      "repetition": 2,
-      "reference_match": true,
-      "invalid_input_rejected": true,
-      "latency_ms": 0.02,
-      "calculation_count": 0,
-      "uncertainty_count": 0
-    },
-    {
-      "id": "acc-07",
-      "group": "acceptance",
-      "repetition": 3,
-      "reference_match": true,
-      "invalid_input_rejected": true,
-      "latency_ms": 0.017,
-      "calculation_count": 0,
-      "uncertainty_count": 0
-    },
-    {
-      "id": "acc-08",
-      "group": "acceptance",
-      "repetition": 1,
-      "reference_match": true,
-      "invalid_input_rejected": false,
-      "latency_ms": 0.103,
-      "calculation_count": 0,
-      "uncertainty_count": 1
-    },
-    {
-      "id": "acc-08",
-      "group": "acceptance",
-      "repetition": 2,
-      "reference_match": true,
-      "invalid_input_rejected": false,
-      "latency_ms": 0.089,
-      "calculation_count": 0,
-      "uncertainty_count": 1
-    },
-    {
-      "id": "acc-08",
-      "group": "acceptance",
-      "repetition": 3,
-      "reference_match": true,
-      "invalid_input_rejected": false,
-      "latency_ms": 0.089,
       "calculation_count": 0,
       "uncertainty_count": 1
     }

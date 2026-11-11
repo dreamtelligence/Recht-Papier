@@ -15,6 +15,11 @@
 | Native iPhone-Oberfläche und PDF-Export | [Native Aufnahmen](portfolio/native/README.md) |
 | Produkt-Fallstudie, responsive Darstellung und Scrollregression | [Präsentation](portfolio/presentation/README.md) |
 | Deterministische Referenzfälle und begrenzter Modellversuch | [Evaluation](portfolio/evaluation.md) |
+| Suchdienst: Live-Versionen, 21 Suchverträge und geprüfter Datenrückweg | [Live-Index-Nachweis vom 11.11.2026](portfolio/live-index-release-2026-11-11.json) |
+| Fünf amtlich abgeglichene Gesetzesbestände | [Quellen-Audit](portfolio/statute-corpus-audit-2026-11-11.json) |
+| Gesamter Kandidatenbestand vor der Fensteraufteilung | [Kandidatenprüfung](portfolio/candidate-index-verification-2026-11-11.json) |
+| Vollständige Endpassagen und begrenzter Latenzvergleich | [Kandidatenhärtung](portfolio/candidate-hardening-2026-11-11.json) |
+| Inhaltliche Vorprüfung vorhandener Modellantworten | [Antwort-Vorprüfung](portfolio/answer-review-2026-11-11.md) |
 | Tatsächlich gemessener Backend-Pfad | [Backend-Nachweis](portfolio/backend-e2e.json) |
 | Providerverbrauch und Grenzen der Messung | [Kostenmessung](portfolio/cost-metering.json) |
 | Unabhängige fachliche Prüfung: Auftrag und offene Fragen | [Review-Briefing](portfolio/lawyer-review-brief.md) |
@@ -23,6 +28,7 @@
 
 - [Arbeitsregeln und aktueller Aufbau](../AGENTS.md).
 - [Hintergrundaufträge, Lease, Callback und Rollback](analysis-jobs.md).
+- [Jura: Live-Wechsel und Datenrückweg](https://github.com/dreamtelligence/Jura/blob/main/docs/live-index-release.md) sowie [nächstes serverseitiges Antwort-Gate](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md). Das getrennte Jura-Repository kann eine Zugangsberechtigung erfordern; die kompakten Prüfnachweise oben liegen auch in diesem Repository.
 - [Datiertes Apple-Review-Readiness-Dokument](apple-app-review-readiness.md): offene Voraussetzungen, keine Store-Freigabe.
 - [Migrationen](../supabase/migrations/), [Edge Functions](../supabase/functions/) und [Backend-Integrationstests](../supabase/tests/).
 - [Mobile Paketkonfiguration](../apps/mobile/package.json) und [gemeinsamer Vertrag](../packages/shared/).
