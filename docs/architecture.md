@@ -62,7 +62,18 @@ nicht als exakte Wiederherstellung einer früheren Anwendung behauptet.
 [Live-Nachweis](portfolio/live-index-release-2026-11-11.json): 21 bestandene
 Suchverträge, Median 2,004 Sekunden in einer kleinen sequenziellen Probe nach
 Kaltstart; kein Lasttest des vollständigen Produkts und keine Antwortfreigabe.
-Der passende [Runtime-Quellstand ist nun auf GitHub veröffentlicht](https://github.com/dreamtelligence/Jura/blob/main/docs/runtime-source-publication.md); alle 38 archivierten Dateien stimmen bytegenau überein. Indexartefakte und Zugangsdaten bleiben außerhalb von Git.
+Der passende [Runtime-Quellstand ist nun auf GitHub veröffentlicht](https://github.com/dreamtelligence/Jura/blob/main/docs/runtime-source-publication.md); beim Publikationscommit `a2c4974` stimmten alle 38 archivierten Dateien bytegenau überein. Die spätere Recovery-Härtung ergänzt getrennte Ressourcennamen und feste Modell-Downloads. Indexartefakte und Zugangsdaten bleiben außerhalb der Git-Historie.
+
+Der anschließende [isolierte Wiederaufbau](portfolio/recovery-drill-2026-11-11.json)
+stellt den Jura-Kern aus GitHub-Code und unabhängig gesichertem Index in neue
+Ressourcen wieder her: 21/21 HTTP-Suchverträge, kontrollierter Worker-Probe und
+automatisches Aufräumen bestehen. Produktive Secrets wurden separat schon vor
+dem Export verschlüsselt, auf GitHub gesichert, nach erneutem Download
+entschlüsselt und unter temporären Namen wiederangelegt. Die Originalwerte
+blieben unverändert. Der private Schlüssel liegt nur im lokalen
+macOS-Schlüsselbund; dessen unabhängige Offline-Sicherung bleibt offen.
+Dieser Nachweis umfasst keine Supabase-Datenbank-/Auth-/Storage-Wiederherstellung,
+keine neue Kontoanmeldung und keine echten Fallaufträge.
 
 Im lokalen Release-Quellstand gilt: Der inkrementelle Indexer im separaten Jura-Repository bettet geänderte Texte nun unter derselben Punkt-ID neu ein und speichert den passenden Katalog. Vollaufbauten verlangen einen frischen lokalen Bestand; Schreibzugriffe auf die bedienende Server-Collection werden verweigert. Ein unterbrochener Schreibvorgang sperrt das Laden dieser Version, statt gemischte Vektoren und Metadaten auszuliefern. Der breite Neuaufbau und seine getrennte [Kandidatenmessung](portfolio/candidate-hardening-2026-11-11.json) sind technische Nachweise neben dem kontrollierten Portfolio-Release. Nur fünf Gesetze wurden frisch gegen amtliche Quellen auditiert.
 

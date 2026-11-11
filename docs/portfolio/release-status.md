@@ -158,3 +158,28 @@ LEX-Antworten](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-
 ein schwerer Befund darf künftig keinen freien Antworttext passieren lassen.
 Der kontrollierte Portfolio-Pfad bleibt erhalten. Ein unabhängiger juristischer
 Review und der Lasttest des vollständigen Produktpfads stehen weiterhin aus.
+
+## Ergänzung 11.11.2026: isolierter Wiederaufbau und verschlüsselte Secrets
+
+Frischer GitHub-Klon, unabhängig heruntergeladenes GitHub-Backup, neues Volume,
+neues Modell-Image und eigene Testschlüssel: Der Jura-Kern besteht 17.132
+Punkt-/Payload-Prüfungen und 21/21 HTTP-Suchverträge. Der kontrollierte Worker
+liefert denselben 16-Normen-Korpus und den aktiven Guard. Ab Skriptstart bis
+Aufräumen: 499,013 Sekunden, etwa 8 Minuten 19 Sekunden; Klonen und Download
+sind darin nicht enthalten. Sämtliche Testressourcen sind gestoppt oder gelöscht.
+Der erste fehlgeschlagene Probe-Lauf und seine Korrekturen bleiben im Nachweis
+sichtbar. Produktion bleibt v41 / Worker v5; 290 schnelle Python-Tests bestehen.
+
+Die drei benötigten produktiven Secret-Gruppen sind zusätzlich bereits auf Modal
+verschlüsselt, im privaten GitHub-Release gesichert und nach erneutem Download
+entschlüsselt worden. Eine temporäre Wiederanlage und Löschung wurde geprüft;
+die Originalwerte wurden frisch verglichen und sind unverändert. Es gab keine
+Modell- oder produktiven Callback-Aufrufe. Der private Entschlüsselungsschlüssel
+liegt ausschließlich im lokalen macOS-Schlüsselbund. Eine unabhängige Offline-Kopie
+fehlt noch. [Nachweis und vollständige Grenzen](recovery-drill-2026-11-11.json) ·
+[Wiederaufbau-Anleitung](https://github.com/dreamtelligence/Jura/blob/main/docs/recovery.md).
+
+Dies prüft keine neue Modal-Kontoanmeldung und keine Wiederherstellung von
+Supabase-Datenbank, Auth, privaten Dateien, Edge Functions oder echten
+Fallaufträgen. Das allgemeine Antwort-Gate und die juristische Abnahme bleiben
+eigene offene Arbeitspakete.

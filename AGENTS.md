@@ -74,9 +74,15 @@ Die allgemeine LEX-Ausgabe benötigt noch das
 [gemeinsame Antwort-Gate](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md).
 Keine allgemeine juristische oder Lastfreigabe behaupten. Der zum Live-Snapshot passende
 [Jura-Runtime-Code](https://github.com/dreamtelligence/Jura/blob/main/docs/runtime-source-publication.md)
-ist nun auf GitHub veröffentlicht und bytegenau abgeglichen. Indexdaten,
-Modellgewichte und Secrets bleiben externe Voraussetzungen; die Veröffentlichung
-ist kein vollständiger Infrastruktur-Wiederherstellungsnachweis.
+ist nun auf GitHub veröffentlicht; der bytegenaue 38-Dateien-Abgleich gilt für
+Publikationscommit `a2c4974`. Die spätere Recovery-Härtung ist getrennt dokumentiert.
+Der isolierte Jura-Wiederaufbau besteht 21/21 HTTP-Verträge und den kontrollierten
+Worker-Probe; eigene Testressourcen wurden entfernt. Die drei produktiven
+Secret-Gruppen sind verschlüsselt außerhalb von Modal gesichert und nach erneutem
+Download geprüft. Der private Schlüssel liegt im lokalen macOS-Schlüsselbund;
+eine weitere Offline-Kopie fehlt. [Recovery-Nachweis](docs/portfolio/recovery-drill-2026-11-11.json).
+Dies prüft weder Supabase-Wiederherstellung noch neue Kontoanmeldung oder echte
+Fallaufträge. Keine vollständige Produkt-Recovery oder juristische Freigabe behaupten.
 
 ## Verbindlicher aktueller Aufbau
 

@@ -65,6 +65,24 @@ abgeglichen. Nächster Schritt ist ein gemeinsames serverseitiges
 [Antwort-Gate für den allgemeinen LEX-Pfad](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md):
 Dort darf Modelltext erst nach bestandener Prüfung ausgegeben werden.
 
+## Wiederherstellung geprüft
+
+Der Jura-Kern wurde aus einem frischen GitHub-Klon und dem unabhängig
+heruntergeladenen Index-Backup in einem neuen Volume mit neuem Modell-Image und
+Testschlüsseln aufgebaut. **17.132 Punkte geprüft, 21/21 HTTP-Suchverträge und
+kontrollierter Worker-Probe bestanden; Testressourcen anschließend entfernt.**
+Der Lauf benötigte 8 Minuten 19 Sekunden ab Skriptstart, ohne vorausgehendes
+Klonen und Herunterladen; dies ist kein SLA. Die drei produktiven Secret-Gruppen
+sind zusätzlich verschlüsselt außerhalb von Modal gesichert und aus der neu
+heruntergeladenen Datei wiederhergestellt worden. Die Originalwerte blieben
+unverändert. [Nachweis und Grenzen](docs/portfolio/recovery-drill-2026-11-11.json) ·
+[Anleitung im privaten Jura-Repository](https://github.com/dreamtelligence/Jura/blob/main/docs/recovery.md).
+
+Der Entschlüsselungsschlüssel liegt im lokalen macOS-Schlüsselbund; eine weitere
+Offline-Kopie ist noch offen. Supabase-Datenbank, Auth, private Dateien und echte
+Fallaufträge wurden bei diesem Jura-Test nicht wiederhergestellt. Die aktuelle
+schnelle Python-Suite besteht 290 Tests.
+
 ## Lokal reproduzieren
 
 Node.js 24, Python 3 und Deno 2.9 werden für die öffentlichen Checks benötigt:

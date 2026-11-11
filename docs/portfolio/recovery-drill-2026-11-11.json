@@ -1,0 +1,639 @@
+{
+  "checked_at": "2026-11-11T15:01:56.308339+00:00",
+  "scope": "Jura search/index and controlled worker probe, rebuilt in isolated resources in the existing Modal account.",
+  "passed": true,
+  "independent_backup_url": "https://github.com/dreamtelligence/Jura/releases/tag/recovery-index-2026-11-11",
+  "fresh_checkout_remote": "https://github.com/dreamtelligence/Jura.git",
+  "tested_source_commit": "41db07f0b0f334354781fd840e553cca06ac3f21",
+  "first_attempt": {
+    "source_commit": "7773b9876b9f7bf912f64117b507d1b8dc0d0373",
+    "passed": false,
+    "restored_points": 17132,
+    "failed_step": "HTTP probe import: modal_release.py missing from container image",
+    "cleanup_issue": "App stop required --yes; first-attempt apps manually stopped after the failure. Secrets and volume were already deleted.",
+    "correction": "Copied the helper module explicitly into the image; added --yes to noninteractive app cleanup. Repeated from a new resource ID and a fresh image build."
+  },
+  "successful_attempt": {
+    "recovery_id": "20261111b",
+    "resources": {
+      "engine_app": "legal-rag-recovery-20261111b",
+      "volume": "legal-rag-recovery-20261111b-data",
+      "engine_secret": "legal-rag-recovery-20261111b-key",
+      "model_secret": "legal-rag-recovery-20261111b-key",
+      "worker_app": "legal-rag-recovery-20261111b-jobs",
+      "callback_secret": "legal-rag-recovery-20261111b-callback",
+      "qwen_app": "legal-rag-recovery-20261111b-qwen"
+    },
+    "source_commit": "41db07f0b0f334354781fd840e553cca06ac3f21",
+    "backup": {
+      "release_id": "2026-11-11-windowed-c99a2f5d",
+      "repository": "dreamtelligence/Jura",
+      "release_tag": "recovery-index-2026-11-11",
+      "source_commit": "a2c4974225b905827dacf36981f87f1ff451d03b",
+      "files": {
+        "candidate-index.tar.gz": "9d61e5ef2a5511b75c1113169e09ff8bbfe10a90fdaa8b97d32bd30f1af43c48",
+        "release.json": "bcd09579cc04b1a00d637678eecb9a960983e614f554b6626f2949e75b0695f0"
+      },
+      "contains_private_case_data": false,
+      "contains_credentials": false,
+      "legal_answer_release": false
+    },
+    "passed": true,
+    "new_model_answers": 0,
+    "new_case_jobs": 0,
+    "cleanup": [
+      {
+        "app": "legal-rag-recovery-20261111b-jobs",
+        "stopped": true
+      },
+      {
+        "app": "legal-rag-recovery-20261111b",
+        "stopped": true
+      },
+      {
+        "secret": "legal-rag-recovery-20261111b-callback",
+        "deleted": true
+      },
+      {
+        "secret": "legal-rag-recovery-20261111b-key",
+        "deleted": true
+      },
+      {
+        "volume": "legal-rag-recovery-20261111b-data",
+        "deleted": true
+      }
+    ],
+    "restore": {
+      "release_id": "2026-11-11-windowed-c99a2f5d",
+      "directory": "/data/releases/2026-11-11-windowed-c99a2f5d",
+      "integrity": {
+        "passed": true,
+        "verified_points": 17132,
+        "dense_dimensions": 1024,
+        "sparse_vectors_verified": true,
+        "payloads_verified": true
+      },
+      "archive_sha256": "9d61e5ef2a5511b75c1113169e09ff8bbfe10a90fdaa8b97d32bd30f1af43c48",
+      "packages": {
+        "torch": "2.12.0",
+        "transformers": "4.57.6",
+        "FlagEmbedding": "1.4.0",
+        "qdrant-client": "1.18.0",
+        "numpy": "2.4.6"
+      }
+    },
+    "http_probe": {
+      "health": {
+        "status": "ok",
+        "layer": "web",
+        "index_release": "2026-11-11-windowed-c99a2f5d"
+      },
+      "stats": {
+        "total_docs": 17132,
+        "index_release": "2026-11-11-windowed-c99a2f5d",
+        "catalogue_sha256": "c99a2f5deb23f670374688958385c0e66a150945af562e7b978c3efce40accb0",
+        "embedding_revision": "5617a9f61b028005a4858fdac845db406aefb181",
+        "reranker_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e"
+      },
+      "authentication_checked": true,
+      "notice_text_characters": 2308,
+      "notice_tail_present": true,
+      "cases": [
+        {
+          "id": "restored_notice_text",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.885,
+          "sources": [
+            "BGB § 622",
+            "BGB § 621",
+            "BGB § 627",
+            "URTEIL ECLI:DE:BGH:2026:160426UIIIZR152.25.0",
+            "BGB § 1193",
+            "BGB § 624",
+            "BGB § 626",
+            "BGB § 573C"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "restored_dismissal_text",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.428,
+          "sources": [
+            "KSCHG § 1",
+            "KSCHG § 2",
+            "KSCHG § 4",
+            "KSCHG § 3",
+            "KSCHG § 8",
+            "KSCHG § 9",
+            "KSCHG § 11",
+            "KSCHG § 22"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "notice_semantic",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.315,
+          "sources": [
+            "BGB § 622",
+            "TZBFG § 15",
+            "SGB III § 158",
+            "SGB IX § 169",
+            "HGB § 89",
+            "BGB § 621",
+            "KSCHG § 1A",
+            "KSCHG § 15"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "written_form",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.208,
+          "sources": [
+            "BGB § 623",
+            "BGB § 594F",
+            "ZPO § 130E",
+            "ARBGG § 46H",
+            "TZBFG § 16",
+            "BGB § 312K",
+            "SGB X § 59",
+            "VWVFG § 57"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "claim_deadline",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.273,
+          "sources": [
+            "KSCHG § 4",
+            "KSCHG § 6",
+            "TZBFG § 17",
+            "KSCHG § 5",
+            "KSCHG § 2",
+            "KSCHG § 24",
+            "KSCHG § 3",
+            "SGB IX § 171"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "power_of_attorney",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.491,
+          "sources": [
+            "BGB § 174",
+            "BGB § 410",
+            "BGB § 175",
+            "ZVG § 71",
+            "VWVFG § 14",
+            "SGB X § 13",
+            "BGB § 1820",
+            "BGB § 172"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "works_council",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.485,
+          "sources": [
+            "BETRVG § 102",
+            "URTEIL ECLI:DE:BAG:2026:010426.U.6AZR152.22.0",
+            "URTEIL ECLI:DE:BAG:2026:010426.U.6AZR157.22.0",
+            "KSCHG § 1",
+            "KSCHG § 4",
+            "KSCHG § 15",
+            "BETRVG § 99",
+            "FAMFG § 278"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "scope",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.536,
+          "sources": [
+            "KSCHG § 23",
+            "BGB § 622",
+            "TZBFG § 1",
+            "TZBFG § 2",
+            "TZBFG § 4",
+            "INSO § 125",
+            "TZBFG § 9A",
+            "TZBFG § 11"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "period_start",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.364,
+          "sources": [
+            "STPO § 42",
+            "BGB § 187",
+            "URHG § 69",
+            "AO § 108",
+            "BGB § 188",
+            "URHG § 135A",
+            "SGB X § 26",
+            "VWVFG § 31"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "period_end",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.246,
+          "sources": [
+            "STPO § 43",
+            "BGB § 188",
+            "BGB § 621",
+            "BGB § 1996",
+            "SGB X § 26",
+            "AO § 108",
+            "VWVFG § 31",
+            "BGB § 189"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "court_holiday",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.823,
+          "sources": [
+            "ZPO § 222",
+            "ZPO § 216",
+            "ZPO § 229",
+            "STGB § 126",
+            "ZPO § 522",
+            "STPO § 217",
+            "ZPO § 850A",
+            "ZPO § 214"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "labour_procedure",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.812,
+          "sources": [
+            "ARBGG § 46",
+            "ARBGG § 46B",
+            "ARBGG § 72",
+            "ARBGG § 69",
+            "ARBGG § 78",
+            "ARBGG § 97",
+            "ARBGG § 85",
+            "ARBGG § 80"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "ordinary_dismissal_profile",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 4.714,
+          "sources": [
+            "KSCHG § 23",
+            "KSCHG § 4",
+            "BGB § 623",
+            "BETRVG § 102",
+            "TZBFG § 15",
+            "BGB § 622",
+            "KSCHG § 1",
+            "BGB § 130",
+            "SGB IX § 168"
+          ],
+          "source_audit": {
+            "accepted_count": 9,
+            "rejected": [
+              {
+                "source": "SGB IX § 175",
+                "reason": "Erweiterter Beendigungsschutz, nicht die primäre Zustimmungsvorschrift bei ordentlicher Kündigung"
+              },
+              {
+                "source": "BGB § 580a",
+                "reason": "Mietrechtliche Kündigungsfrist, nicht Arbeitsverhältnis"
+              },
+              {
+                "source": "TZBFG § 16",
+                "reason": "Spezialfall unwirksamer Befristung, nicht allgemeine Anforderung der ordentlichen Kündigung"
+              },
+              {
+                "source": "BETRVG § 103",
+                "reason": "Sonderfall außerordentliche Kündigung von Betriebsratsmitgliedern"
+              },
+              {
+                "source": "BETRVG § 99",
+                "reason": "KG-Kontext ist für das erkannte Prüfprofil keine Pflicht- oder Sonderquelle"
+              },
+              {
+                "source": "ARBGG § 99",
+                "reason": "KG-Kontext ist für das erkannte Prüfprofil keine Pflicht- oder Sonderquelle"
+              },
+              {
+                "source": "SGB III § 99",
+                "reason": "KG-Kontext ist für das erkannte Prüfprofil keine Pflicht- oder Sonderquelle"
+              }
+            ],
+            "injected": [
+              "BGB § 623",
+              "KSchG § 4",
+              "KSchG § 23",
+              "BGB § 130",
+              "SGB IX § 168"
+            ],
+            "missing_required": [],
+            "notes": [
+              "Fachfremde oder profilwidrige Quellen wurden vor der Antwort entfernt.",
+              "Pflichtquellen wurden deterministisch ergänzt."
+            ]
+          }
+        },
+        {
+          "id": "rent_regression",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.342,
+          "sources": [
+            "BGB § 551",
+            "BGB § 498",
+            "BGB § 556D",
+            "URTEIL ECLI:DE:BGH:2026:160426UIIIZR152.25.0",
+            "BGB § 569",
+            "BGB § 556B",
+            "WOGG ANLAGE 1",
+            "BGB § 559A"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "purchase_regression",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.303,
+          "sources": [
+            "BGB § 439",
+            "BGB § 437",
+            "BGB § 442",
+            "BGB § 634",
+            "BGB § 475D",
+            "BGB § 309",
+            "BGB § 327I",
+            "BGB § 438"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "interest_regression",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.314,
+          "sources": [
+            "BGB § 288",
+            "URTEIL ECLI:DE:BGH:2026:030326UXIZR39.25.0",
+            "URTEIL ECLI:DE:BGH:2026:030326UXIZR39.25.0",
+            "URTEIL ECLI:DE:BGH:2026:030326UXIZR39.25.0",
+            "GNOTKG § 88",
+            "BGB § 497",
+            "BGB § 247",
+            "HGB § 352"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "estg_tail",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.876,
+          "sources": [
+            "ESTG ANLAGE 3",
+            "ESTG § 3",
+            "ESTG § 3",
+            "ESTG § 3",
+            "ESTG § 3",
+            "ESTG § 3",
+            "ESTG § 3",
+            "ESTG § 3"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "sgbv_tail",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.847,
+          "sources": [
+            "SGB V § 87",
+            "SGB V § 87",
+            "SGB V § 87",
+            "SGB V § 87",
+            "SGB V § 87",
+            "SGB V § 87",
+            "SGB V § 87",
+            "SGB V § 87"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "sgbvi_tail",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 3.315,
+          "sources": [
+            "SGB VI ANLAGE 14",
+            "SGB VI ANLAGE 14",
+            "SGB VI ANLAGE 14",
+            "SGB VI ANLAGE 14",
+            "SGB VI ANLAGE 14",
+            "SGB VI ANLAGE 14",
+            "SGB VI ANLAGE 14",
+            "SGB VI ANLAGE 14"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "wphg_tail",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 3.521,
+          "sources": [
+            "WPHG § 120",
+            "WPHG § 120",
+            "WPHG § 120",
+            "WPHG § 120",
+            "WPHG § 120",
+            "WPHG § 120",
+            "WPHG § 120",
+            "WPHG § 120"
+          ],
+          "source_audit": null
+        },
+        {
+          "id": "gnotkg_tail",
+          "passed": true,
+          "missing": [],
+          "unexpected": [],
+          "missing_text": [],
+          "seconds": 2.908,
+          "sources": [
+            "GNOTKG ANLAGE 1",
+            "GNOTKG ANLAGE 1",
+            "GNOTKG ANLAGE 1",
+            "GNOTKG ANLAGE 1",
+            "GNOTKG ANLAGE 1",
+            "GNOTKG ANLAGE 1",
+            "GNOTKG ANLAGE 1",
+            "GNOTKG ANLAGE 1"
+          ],
+          "source_audit": null
+        }
+      ],
+      "passed": true,
+      "worker": {
+        "controlled_model": "controlled-termination/1.0",
+        "controlled_sources": 16,
+        "corpus_version": "termination-2026-11-10-e1a8f4ba0853",
+        "corpus_sha256": "3d0c82b04c397613fb541c051b08386219c38843260bb173d867c0a8751b5f96",
+        "semantic_inversion_guard_passed": true,
+        "runtime_sources": {
+          "src/retrieval/answer_audit.py": "495abb777b2cd8d3938d6970478f8b4a1d2e5539c0528797a0691d60c8f1b717",
+          "src/processors/norms.py": "4f5449f24f19438512c0bff3cb501c0fc48414c9e1c51ad5347ab311d0e7fdb5",
+          "src/api/case_jobs.py": "32ee9923535fbbc20fb2fd4f7167ddbb87f35e9119592c7047dcf1e4c3a3f9fb"
+        },
+        "dispatch_probe_statuses": [
+          401,
+          400
+        ]
+      },
+      "new_case_jobs": 0,
+      "new_answer_generations": 0,
+      "query_rewriting_may_run_once": true,
+      "engine_url": "https://aliundmaggy--legal-rag-recovery-20261111b-fastapi-app.us-east.modal.run",
+      "recovery_id": "20261111b",
+      "resources": {
+        "engine_app": "legal-rag-recovery-20261111b",
+        "volume": "legal-rag-recovery-20261111b-data",
+        "engine_secret": "legal-rag-recovery-20261111b-key",
+        "model_secret": "legal-rag-recovery-20261111b-key",
+        "worker_app": "legal-rag-recovery-20261111b-jobs",
+        "callback_secret": "legal-rag-recovery-20261111b-callback",
+        "qwen_app": "legal-rag-recovery-20261111b-qwen"
+      },
+      "production_resources_mounted": false,
+      "external_llm_credentials_mounted": false
+    },
+    "elapsed_seconds": 499.013
+  },
+  "fast_python_tests_passed": 290,
+  "warm_public_probe_median_seconds": 2.491,
+  "elapsed_scope": "499.013 seconds from script start through cleanup, excluding earlier git clone and backup download; includes fresh image/package/model build, data restoration, deployment and HTTP checks. Not an SLA.",
+  "cleanup_independently_verified": {
+    "volume_resources_remaining": 0,
+    "secret_resources_remaining": 0
+  },
+  "production_after": {
+    "legal-rag": "v41",
+    "recht-papier-case-analysis": "v5",
+    "health": {
+      "status": "ok",
+      "layer": "web",
+      "index_release": "2026-11-11-windowed-c99a2f5d"
+    },
+    "new_production_deployments": 0
+  },
+  "evidence_sha256": {
+    "run-1/http-probe.log": "69bb95750164aeba560f288c60a3a352813aa541e32e0ad422ea1eaa97f05cb8",
+    "run-1/modal_deploy.py.log": "b76a0d5c5e9dbdba23d17d149b2c2fb560c557c033d608a38370dd1dcf5e944c",
+    "run-1/modal_case_jobs.py.log": "85cb363f6c51644293f99402f5490c63a181ff60f47dc252be544511017cb698",
+    "run-1/restore.log": "66444b36a55cd3f1b3673240e49584d34811a7615f0d9834a4fc72b4e96ff780",
+    "run-1/recovery.json": "f6c3b420c1eb822b587aeb93ac9808c270718f8bdf4514cf87238a827202f7d9",
+    "run-1/restored.json": "dbf5a01203995b0b330f5c3b202b5ae9fa24f8ec08fc4b8a873095281337a456",
+    "run-2/http-probe.log": "61eec00b07f7afd0ce7f79d4ca0799ab3d7eb0a512f68508849d8786a401ab61",
+    "run-2/http-probe.json": "c866e2dd66f4a5f4a593633dfbac65dd2638cd82c903aa492552803d707d7c18",
+    "run-2/modal_deploy.py.log": "1e61a1954d7f17704192714a4bd3b47f77bb041713ed10d4650bfcde4f442662",
+    "run-2/modal_case_jobs.py.log": "8ba6c2c25ba340df70e5c9c0c2923b48a3ce5389aceab17262b606338dc314f0",
+    "run-2/restore.log": "1b5e7668d73ae09611c77995d640a2086b6d4d67e38a49045fdad3051fc916d5",
+    "run-2/recovery.json": "496d0644373a03a2f5307f2f1b12615d7f81b4edf87e3290bf897854d3e43c2a",
+    "run-2/restored.json": "dbf5a01203995b0b330f5c3b202b5ae9fa24f8ec08fc4b8a873095281337a456"
+  },
+  "limitations": [
+    "Existing Modal account and authenticated CLI were reused; not a new-account recovery.",
+    "Core drill used synthetic keys. Productive secrets were separately backed up and round-trip verified; recovery key stored in local macOS Keychain, with no offline copy verified.",
+    "No new legal model answers, private case jobs, Supabase database/Auth/storage/Edge restoration or whole-product load test.",
+    "Pinned model snapshots and package downloads still depend on their upstream services; only five core package versions are fixed.",
+    "Controlled worker source/guard probe and dispatch 401/400 passed; an actual private callback/job lifecycle was not exercised.",
+    "General LEX answer gate and independent legal review remain open."
+  ],
+  "credential_backup_follow_up": {
+    "completed": true,
+    "encrypted_asset_stored_outside_modal": true,
+    "independent_download_verified": true,
+    "decryption_verified": true,
+    "temporary_secret_recreation_verified": true,
+    "secret_groups": 3,
+    "original_secret_values_unchanged": true,
+    "original_secret_writes": 0,
+    "key_location": "Dedicated item in the local macOS login Keychain; locator only in the private Jura recovery metadata.",
+    "private_metadata_url": "https://github.com/dreamtelligence/Jura/blob/main/docs/recovery-secrets-2026-11-11.json",
+    "encrypted_asset_sha256": "208f1c375b4b2543bb24f63a706186079142ae5b6f6a56d159a2f44488169319",
+    "offline_recovery_key_copy_verified": false,
+    "external_model_provider_calls": 0,
+    "test_isolation_incident": "One synthetic create request from an incomplete test stub was rejected because the original secret already existed. The stub was fixed; original values were subsequently compared and confirmed unchanged."
+  }
+}

@@ -20,6 +20,7 @@
 | Gesamter Kandidatenbestand vor der Fensteraufteilung | [Kandidatenprüfung](portfolio/candidate-index-verification-2026-11-11.json) |
 | Vollständige Endpassagen und begrenzter Latenzvergleich | [Kandidatenhärtung](portfolio/candidate-hardening-2026-11-11.json) |
 | Inhaltliche Vorprüfung vorhandener Modellantworten | [Antwort-Vorprüfung](portfolio/answer-review-2026-11-11.md) |
+| Isolierter Jura-Wiederaufbau und verschlüsselte Secret-Sicherung | [Recovery-Nachweis](portfolio/recovery-drill-2026-11-11.json) |
 | Tatsächlich gemessener Backend-Pfad | [Backend-Nachweis](portfolio/backend-e2e.json) |
 | Providerverbrauch und Grenzen der Messung | [Kostenmessung](portfolio/cost-metering.json) |
 | Unabhängige fachliche Prüfung: Auftrag und offene Fragen | [Review-Briefing](portfolio/lawyer-review-brief.md) |
@@ -28,6 +29,7 @@
 
 - [Arbeitsregeln und aktueller Aufbau](../AGENTS.md).
 - [Hintergrundaufträge, Lease, Callback und Rollback](analysis-jobs.md).
+- [Jura: Wiederaufbau-Anleitung](https://github.com/dreamtelligence/Jura/blob/main/docs/recovery.md).
 - [Jura: veröffentlichter Runtime-Code und Quellabgleich](https://github.com/dreamtelligence/Jura/blob/main/docs/runtime-source-publication.md).
 - [Jura: Live-Wechsel und Datenrückweg](https://github.com/dreamtelligence/Jura/blob/main/docs/live-index-release.md) sowie [nächstes serverseitiges Antwort-Gate](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md). Das getrennte Jura-Repository kann eine Zugangsberechtigung erfordern; die kompakten Prüfnachweise oben liegen auch in diesem Repository.
 - [Datiertes Apple-Review-Readiness-Dokument](apple-app-review-readiness.md): offene Voraussetzungen, keine Store-Freigabe.
