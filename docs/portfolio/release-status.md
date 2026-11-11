@@ -147,8 +147,11 @@ Modal-Versionsrollback ist auf dem aktuellen Tarif nicht verfügbar. Getestet is
 damit der Datenrückweg, keine exakte Wiederherstellung des alten Anwendungscodes.
 [Live-Nachweis und Grenzen](live-index-release-2026-11-11.json) ·
 [lesbarer Ablauf im Jura-Repository](https://github.com/dreamtelligence/Jura/blob/main/docs/live-index-release.md).
-Der deployte Jura-Quellstand ist noch nicht vollständig auf GitHub veröffentlicht;
-diese Dokumentationsänderung enthält keine neue Runtime-Implementierung.
+Der zum Live-Snapshot passende Jura-Quellstand ist inzwischen ebenfalls
+[auf GitHub veröffentlicht](https://github.com/dreamtelligence/Jura/blob/main/docs/runtime-source-publication.md):
+38/38 archivierte Dateien bytegenau abgeglichen, 231 Release- und 40 weitere
+schnelle Regressionen bestanden. Die Codeveröffentlichung startet kein neues
+Deployment und ersetzt keine externe Infrastruktur- oder juristische Abnahme.
 
 **Nächstes Arbeitspaket:** [gemeinsame serverseitige Antwortsperre für allgemeine
 LEX-Antworten](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md). Dort wird Modelltext bisher vor Abschluss des Audits gestreamt;

@@ -72,9 +72,11 @@ unverändert. [Release-Status](docs/portfolio/release-status.md) und
 [maschineller Live-Nachweis](docs/portfolio/live-index-release-2026-11-11.json).
 Die allgemeine LEX-Ausgabe benötigt noch das
 [gemeinsame Antwort-Gate](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md).
-Keine allgemeine juristische oder Lastfreigabe behaupten. Der deployte
-Runtime-Quellstand ist im Jura-GitHub-Repository noch nicht vollständig
-veröffentlicht; ältere Checkout-Befehle nicht als Wiederherstellungsnachweis nutzen.
+Keine allgemeine juristische oder Lastfreigabe behaupten. Der zum Live-Snapshot passende
+[Jura-Runtime-Code](https://github.com/dreamtelligence/Jura/blob/main/docs/runtime-source-publication.md)
+ist nun auf GitHub veröffentlicht und bytegenau abgeglichen. Indexdaten,
+Modellgewichte und Secrets bleiben externe Voraussetzungen; die Veröffentlichung
+ist kein vollständiger Infrastruktur-Wiederherstellungsnachweis.
 
 ## Verbindlicher aktueller Aufbau
 

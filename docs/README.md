@@ -28,6 +28,7 @@
 
 - [Arbeitsregeln und aktueller Aufbau](../AGENTS.md).
 - [Hintergrundaufträge, Lease, Callback und Rollback](analysis-jobs.md).
+- [Jura: veröffentlichter Runtime-Code und Quellabgleich](https://github.com/dreamtelligence/Jura/blob/main/docs/runtime-source-publication.md).
 - [Jura: Live-Wechsel und Datenrückweg](https://github.com/dreamtelligence/Jura/blob/main/docs/live-index-release.md) sowie [nächstes serverseitiges Antwort-Gate](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md). Das getrennte Jura-Repository kann eine Zugangsberechtigung erfordern; die kompakten Prüfnachweise oben liegen auch in diesem Repository.
 - [Datiertes Apple-Review-Readiness-Dokument](apple-app-review-readiness.md): offene Voraussetzungen, keine Store-Freigabe.
 - [Migrationen](../supabase/migrations/), [Edge Functions](../supabase/functions/) und [Backend-Integrationstests](../supabase/tests/).

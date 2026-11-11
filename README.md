@@ -58,9 +58,10 @@ Dies ist kein Lastversprechen und keine juristische Antwortfreigabe.
 [Antwort-Vorprüfung](docs/portfolio/answer-review-2026-11-11.md)
 
 Der kontrollierte Portfolio-Korpus bleibt unverändert bei 16 Normtexten; die
-öffentliche Fallstudie startet weiterhin keine Modelle. Die Runtime-Änderungen
-des getrennten Jura-Dienstes sind noch nicht vollständig als GitHub-Code
-veröffentlicht. Nächster Schritt ist ein gemeinsames serverseitiges
+öffentliche Fallstudie startet weiterhin keine Modelle. Der zum Live-Snapshot passende
+[Jura-Runtime-Quellstand](https://github.com/dreamtelligence/Jura/blob/main/docs/runtime-source-publication.md)
+ist jetzt auf GitHub veröffentlicht und anhand aller 38 archivierten Dateien
+abgeglichen. Nächster Schritt ist ein gemeinsames serverseitiges
 [Antwort-Gate für den allgemeinen LEX-Pfad](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md):
 Dort darf Modelltext erst nach bestandener Prüfung ausgegeben werden.
 

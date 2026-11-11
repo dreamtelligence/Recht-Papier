@@ -62,7 +62,7 @@ nicht als exakte Wiederherstellung einer früheren Anwendung behauptet.
 [Live-Nachweis](portfolio/live-index-release-2026-11-11.json): 21 bestandene
 Suchverträge, Median 2,004 Sekunden in einer kleinen sequenziellen Probe nach
 Kaltstart; kein Lasttest des vollständigen Produkts und keine Antwortfreigabe.
-Der vollständige Runtime-Quellstand liegt noch nicht auf GitHub vor.
+Der passende [Runtime-Quellstand ist nun auf GitHub veröffentlicht](https://github.com/dreamtelligence/Jura/blob/main/docs/runtime-source-publication.md); alle 38 archivierten Dateien stimmen bytegenau überein. Indexartefakte und Zugangsdaten bleiben außerhalb von Git.
 
 Im lokalen Release-Quellstand gilt: Der inkrementelle Indexer im separaten Jura-Repository bettet geänderte Texte nun unter derselben Punkt-ID neu ein und speichert den passenden Katalog. Vollaufbauten verlangen einen frischen lokalen Bestand; Schreibzugriffe auf die bedienende Server-Collection werden verweigert. Ein unterbrochener Schreibvorgang sperrt das Laden dieser Version, statt gemischte Vektoren und Metadaten auszuliefern. Der breite Neuaufbau und seine getrennte [Kandidatenmessung](portfolio/candidate-hardening-2026-11-11.json) sind technische Nachweise neben dem kontrollierten Portfolio-Release. Nur fünf Gesetze wurden frisch gegen amtliche Quellen auditiert.
 
