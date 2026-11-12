@@ -53,6 +53,8 @@ DEMO_URL=https://recht-papier-portfolio.vercel.app node scripts/verify-mobile-sc
 
 ## Visuelle Prüfung
 
+Am 12.11.2026 wurde die Startansicht im Einstieg und im ersten Schritt der App-Tour auf Nutzerwunsch durch die bereitgestellte Datei `docs/screenshots/startseite-2026-11-12.png` ersetzt (863 × 1822 Pixel). Die öffentliche Kopie heißt `00-startseite.png`; die bisherigen Simulatoraufnahmen bleiben als historische Nachweise erhalten. Die neue Startansicht wird nicht als erneut geprüfte Simulatoraufnahme bezeichnet.
+
 `after-1440.png` und `after-390.png` zeigen den neuen Einstieg. `ios-flow-*.png` zeigen die native Tour. Die Browser-Bilder der einzelnen Demo-Fälle konzentrieren sich auf den jeweiligen Ablauf. Native Bilder wurden vor ihrer Einbindung angesehen; Asset-Hashes sichern die unveränderte Übernahme. Schriftgröße, Umbrüche, Abstände und Bildproportionen wurden anschließend in Desktop- und Smartphoneansichten geprüft.
 
 Quellen zur Testmethode: [versionsgebundene Expo-Dokumentation](https://docs.expo.dev/versions/v57.0.0/), [Playwright-Emulation](https://playwright.dev/docs/emulation), [Touchscreen-API und deren Grenzen](https://playwright.dev/docs/api/class-touchscreen). Die Scrollursache wurde an der tatsächlich installierten CLI-Vorlage und am ausgelieferten HTML nachgemessen.

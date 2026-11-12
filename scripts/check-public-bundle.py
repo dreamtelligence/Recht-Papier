@@ -29,4 +29,6 @@ print('Public bundle isolated; 3 hosted fictional results and all document/repor
 for source in (ROOT/'docs/portfolio/native').glob('*.png'):
     assert (DIST/'portfolio/native'/source.name).read_bytes()==source.read_bytes(),source.name
 assert (DIST/'portfolio/native/00-start.png').read_bytes()==(ROOT/'docs/screenshots/01-start.png').read_bytes()
+assert (DIST/'portfolio/native/00-startseite.png').read_bytes()==(ROOT/'docs/screenshots/startseite-2026-11-12.png').read_bytes()
 print('Nine original native screenshots verified byte for byte.')
+print('User-provided start image verified byte for byte.')

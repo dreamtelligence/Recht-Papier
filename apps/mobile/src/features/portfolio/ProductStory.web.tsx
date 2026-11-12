@@ -3,12 +3,14 @@ import { useState } from "react";
 const repo = "https://github.com/dreamtelligence/Recht-Papier";
 const screens = [
   {
-    file: "00-start.png",
+    file: "00-startseite.png",
+    width: 863,
+    height: 1822,
     title: "Ankommen",
     label: "Ein ruhiger Einstieg",
     text:
       "Ein klares Versprechen, drei verständliche Schritte und eine Hauptaktion. Der Startbildschirm führt zur Anmeldung; die Fallakten liegen hinter der geschützten Navigation.",
-    detail: "Startbildschirm · native iOS-App",
+    detail: "Startansicht · vom Nutzer bereitgestellt",
   },
   {
     file: "08-fallaufnahme.png",
@@ -112,20 +114,20 @@ export default function ProductStory() {
           />
           <figure className="hero-capture">
             <a
-              href="/portfolio/native/00-start.png"
+              href="/portfolio/native/00-startseite.png"
               target="_blank"
               rel="noreferrer"
               aria-label="iOS-Startbildschirm in voller Größe öffnen"
             >
               <img
-                src="/portfolio/native/00-start.png"
-                alt="Echter iOS-Startbildschirm mit Papiertextur, Ballonillustration und Fall-beginnen-Aktion"
-                width="1320"
-                height="2868"
+                src="/portfolio/native/00-startseite.png"
+                alt="Startansicht mit Papiertextur, Ballonillustration und Fall-beginnen-Aktion"
+                width="863"
+                height="1822"
                 fetchPriority="high"
               />
             </a>
-            <figcaption>ECHTE iOS-APP / SIMULATORAUFNAHME</figcaption>
+            <figcaption>RECHT &amp; PAPIER / STARTANSICHT</figcaption>
           </figure>
           <span className="capture-label">01 — Der erste Eindruck.</span>
         </div>
@@ -295,9 +297,9 @@ export default function ProductStory() {
               <img
                 key={screen.file}
                 src={`/portfolio/native/${screen.file}`}
-                alt={`${screen.title}: echte Bildschirmaufnahme der nativen iOS-App`}
-                width="1206"
-                height="2622"
+                alt={`${screen.title}: Bildschirmansicht der iOS-App`}
+                width={screen.width ?? 1206}
+                height={screen.height ?? 2622}
                 loading="lazy"
               />
             </a>
@@ -314,6 +316,7 @@ export default function ProductStory() {
           </figure>
         </div>
         <p className="capture-note">
+          Startansicht vom Nutzer bereitgestellt am 12. November 2026. Weitere
           Aufnahmen aus mehreren fiktiven Testfällen im iPhone-Simulator, 10.
           November 2026. Sie dokumentieren die vorhandenen Oberflächen; der
           Browser startet keine private Fallanalyse.
