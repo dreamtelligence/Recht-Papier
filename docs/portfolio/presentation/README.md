@@ -42,6 +42,7 @@ python3 -m http.server 3291 --bind 127.0.0.1 --directory apps/mobile/dist
 # In einem zweiten Terminal, nach Installation von Playwright und Browsern:
 node scripts/verify-browser.mjs
 node scripts/verify-mobile-scroll.mjs
+node scripts/verify-balloon-scroll.mjs
 # Dasselbe gegen die veröffentlichte Seite:
 DEMO_URL=https://recht-papier-portfolio.vercel.app node scripts/verify-browser.mjs
 DEMO_URL=https://recht-papier-portfolio.vercel.app node scripts/verify-mobile-scroll.mjs
@@ -52,6 +53,8 @@ DEMO_URL=https://recht-papier-portfolio.vercel.app node scripts/verify-mobile-sc
 `verify-browser.mjs` erhält alle drei Fälle, sechs Downloads, Bestätigungssperren, lokale Speicherung, beschädigte Fortschrittsdaten, Zurücksetzen und Rechtstexte. Hinzu kommen sechs Screenshot-Schritte pro Breite, Tastaturbedienung und die Reihenfolge der Produktabschnitte. `RENDER_REPORTS=1` erzeugt die Berichte optional erneut; Präsentationstests ändern vorhandene PDFs nicht.
 
 ## Visuelle Prüfung
+
+Die Ballonfigur begleitet auf breiten Ansichten den Lesefortschritt am rechten Rand: Eine blasse Grundansicht bleibt sichtbar, während die kräftige Fassung von unten nach oben aufgefüllt wird. Auf schmalen Ansichten bleibt sie beim Einstiegsbild. Reduzierte Bewegung deaktiviert das Pendeln; die Fortschrittsanzeige bleibt nutzbar. `verify-balloon-scroll.mjs` prüft Vorwärts-/Rückwärtsscrollen, Inhaltsänderungen, Fenstergrößen und echte Chromium-Touch-Eingabe.
 
 Am 12.11.2026 wurde die Startansicht im Einstieg und im ersten Schritt der App-Tour auf Nutzerwunsch durch die bereitgestellte Datei `docs/screenshots/startseite-2026-11-12.png` ersetzt (863 × 1822 Pixel). Die öffentliche Kopie heißt `00-startseite.png`; die bisherigen Simulatoraufnahmen bleiben als historische Nachweise erhalten. Die neue Startansicht wird nicht als erneut geprüfte Simulatoraufnahme bezeichnet.
 

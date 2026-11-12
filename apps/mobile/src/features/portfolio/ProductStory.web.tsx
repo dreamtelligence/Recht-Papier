@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const repo = "https://github.com/dreamtelligence/Recht-Papier";
 const screens = [
@@ -73,7 +73,33 @@ const extraScreens = [
 
 export default function ProductStory() {
   const [screenIndex, setScreenIndex] = useState(0);
+  const balloonRef = useRef<HTMLDivElement>(null);
   const screen = screens[screenIndex];
+
+  useEffect(() => {
+    const balloon = balloonRef.current;
+    if (!balloon) return;
+
+    const updateProgress = () => {
+      const range = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = range > 0
+        ? Math.min(1, Math.max(0, window.scrollY / range))
+        : 1;
+      balloon.style.setProperty("--balloon-hidden", `${(1 - progress) * 100}%`);
+    };
+    const observer = new ResizeObserver(updateProgress);
+    observer.observe(document.body);
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+    updateProgress();
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", updateProgress);
+      window.removeEventListener("resize", updateProgress);
+    };
+  }, []);
+
   return (
     <>
       <section className="product-hero" aria-labelledby="headline">
@@ -103,15 +129,24 @@ export default function ProductStory() {
           </p>
         </div>
         <div className="hero-visual">
-          <img
-            className="balloon-mark"
-            src="/portfolio/balloon.png"
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
-            width="260"
-            height="360"
-          />
+          <div className="balloon-mark" ref={balloonRef} aria-hidden="true">
+            <img
+              className="balloon-outline"
+              src="/portfolio/balloon.png"
+              alt=""
+              loading="lazy"
+              width="260"
+              height="360"
+            />
+            <img
+              className="balloon-progress"
+              src="/portfolio/balloon.png"
+              alt=""
+              loading="lazy"
+              width="260"
+              height="360"
+            />
+          </div>
           <figure className="hero-capture">
             <a
               href="/portfolio/native/00-startseite.png"
