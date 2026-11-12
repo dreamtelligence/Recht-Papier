@@ -991,12 +991,8 @@ section[id] {
   margin-top: 19px;
 }
 .balloon-mark {
-  position: absolute;
-  width: 155px;
-  height: 210px;
+  display: none;
   aspect-ratio: 1430/2000;
-  top: 25px;
-  right: -35px;
   mix-blend-mode: multiply;
   pointer-events: none;
   transform-origin: 50% 10%;
@@ -1024,8 +1020,9 @@ section[id] {
     transform: translate(6px,-8px) rotate(2deg);
   }
 }
-@media (min-width:1200px) {
+@media (min-width:1200px) and (hover:hover) and (pointer:fine) {
   .balloon-mark {
+    display: block;
     position: fixed;
     top: 28vh;
     right: 16px;
@@ -1553,11 +1550,6 @@ section[id] {
   .hero-visual {
     padding: 5px 15px;
   }
-  .balloon-mark {
-    width: 115px;
-    height: 165px;
-    right: -25px;
-  }
   .hero-capture {
     max-width: 240px;
   }
@@ -1638,12 +1630,6 @@ section[id] {
   }
   .hero-capture {
     max-width: 245px;
-  }
-  .balloon-mark {
-    width: 125px;
-    height: 170px;
-    right: -12px;
-    top: 20px;
   }
   .project-facts {
     grid-template-columns: 1fr;

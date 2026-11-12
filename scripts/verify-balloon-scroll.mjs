@@ -71,6 +71,11 @@ try {
   mobile.on("pageerror", (error) => errors.push(String(error)));
   await mobile.goto(base);
   await mobile.locator(".balloon-mark").waitFor({ state: "attached" });
+  for (const width of [390, 844, 1366]) {
+    await mobile.setViewportSize({ width, height: 844 });
+    assert.equal(await mobile.locator(".balloon-mark").isVisible(), false);
+  }
+  await mobile.setViewportSize({ width: 390, height: 844 });
   const cdp = await mobile.context().newCDPSession(mobile);
   await cdp.send("Input.dispatchTouchEvent", {
     type: "touchStart", touchPoints: [{ x: 195, y: 720 }],
@@ -84,10 +89,10 @@ try {
   }
   await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
   assert(await mobile.evaluate(() => scrollY > 120));
-  await checkProgress(mobile);
+  assert.equal(await mobile.locator(".balloon-mark").isVisible(), false);
   assert(await mobile.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
   assert.deepEqual(errors, []);
-  console.log("Balloon fill follows scrolling, reverse scrolling, content changes, resize and touch; reduced motion stays still.");
+  console.log("Desktop balloon fill and reduced motion verified; balloon hidden on mobile and tablet, touch scrolling works.");
 } finally {
   await browser.close();
 }

@@ -54,7 +54,7 @@ DEMO_URL=https://recht-papier-portfolio.vercel.app node scripts/verify-mobile-sc
 
 ## Visuelle Prüfung
 
-Die Ballonfigur begleitet auf breiten Ansichten den Lesefortschritt am rechten Rand: Eine blasse Grundansicht bleibt sichtbar, während die kräftige Fassung von unten nach oben aufgefüllt wird. Auf schmalen Ansichten bleibt sie beim Einstiegsbild. Reduzierte Bewegung deaktiviert das Pendeln; die Fortschrittsanzeige bleibt nutzbar. `verify-balloon-scroll.mjs` prüft Vorwärts-/Rückwärtsscrollen, Inhaltsänderungen, Fenstergrößen und echte Chromium-Touch-Eingabe.
+Die Ballonfigur begleitet auf breiten Desktop-Ansichten den Lesefortschritt am rechten Rand: Eine blasse Grundansicht bleibt sichtbar, während die kräftige Fassung von unten nach oben aufgefüllt wird. Auf mobilen Geräten und schmalen Ansichten ist die zusätzliche Figur samt Scrollanzeige ausgeblendet. Reduzierte Bewegung deaktiviert das Pendeln; die Fortschrittsanzeige bleibt nutzbar. `verify-balloon-scroll.mjs` prüft Vorwärts-/Rückwärtsscrollen, Inhaltsänderungen, Fenstergrößen, die mobile Ausblendung und echte Chromium-Touch-Eingabe.
 
 Am 12.11.2026 wurde die Startansicht im Einstieg und im ersten Schritt der App-Tour auf Nutzerwunsch durch die bereitgestellte Datei `docs/screenshots/startseite-2026-11-12.png` ersetzt (863 × 1822 Pixel). Die öffentliche Kopie heißt `00-startseite.png`; die bisherigen Simulatoraufnahmen bleiben als historische Nachweise erhalten. Die neue Startansicht wird nicht als erneut geprüfte Simulatoraufnahme bezeichnet.
 
