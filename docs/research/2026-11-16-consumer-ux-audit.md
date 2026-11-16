@@ -1,6 +1,6 @@
 # Verbraucherablauf, Bericht und Übergabe: Sichtprüfung vom 16.11.2026
 
-> Historischer Ausgangsaudit vor der anschließenden Fehlerbehebung. Befunde, Quellstände und ursprüngliche Ausgaben unten beziehen sich auf diesen Vorher-Zustand. Aktuelle Korrekturen, Prüfungen und verbleibende Grenzen stehen im [Korrekturbericht](2026-11-16-remediation.md). Neue Runtime-Korrekturen sind noch nicht gehostet installiert.
+> Historischer Ausgangsaudit vor der anschließenden Fehlerbehebung. Befunde, Quellstände und ursprüngliche Ausgaben unten beziehen sich auf diesen Vorher-Zustand. Aktuelle Korrekturen, Prüfungen und verbleibende Grenzen stehen im [Korrekturbericht](2026-11-16-remediation.md). Der spätere [isolierte gehostete und native Rollout](2026-11-16-isolated-rollout.md) ist separat geprüft; das bestehende Backend wurde nicht migriert.
 
 ## Prüfgegenstand und Methode
 

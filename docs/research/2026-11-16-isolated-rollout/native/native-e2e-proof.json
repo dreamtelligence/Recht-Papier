@@ -1,0 +1,51 @@
+{
+  "executed_at": "2026-11-16T16:41:56.478990+00:00",
+  "device": "exclusive new iPhone 17 Pro simulator",
+  "runtime": "iOS 26.5",
+  "build_configuration": "Release; embedded native JS; no Metro",
+  "test_data": "dedicated fictional account and dev-01 PDF; no real persons",
+  "ui_flow": [
+    "Password login",
+    "Native Files picker",
+    "New case plus PDF upload",
+    "Server PDF extraction",
+    "11 confirmed source-linked facts",
+    "Controlled background analysis",
+    "16 cited sources and two deterministic calculations",
+    "Create report",
+    "Confirm report text",
+    "Native Print to PDF",
+    "Native share sheet and Save to Files"
+  ],
+  "native_server_reads": "Actual simulator auth session used read-only to verify native-created rows; no injected app state",
+  "pdf": "2026-11-16-native-export.pdf",
+  "pdf_body_comparison": "Complete approved body matches Poppler layout/raw text after whitespace and Unicode normalization; export footer additional",
+  "limits": [
+    "Simulator only; no physical device run",
+    "Password test login; mail/OTP delivery not tested",
+    "Controlled 16-source path; no paid model call",
+    "Compiler warnings remain; no warning-free build claim",
+    "PDF is US Letter; paragraphs/source entries may continue across page boundaries"
+  ],
+  "cleanup": {
+    "native_resources": "exclusive simulator deleted; owned DerivedData, build and private temporary state removed",
+    "backend_account": "dedicated native user removed; Auth404, empty Storage prefix and no owner cases independently verified by app agent",
+    "native_resources_completed_at": "2026-11-16T16:43:17.660290+00:00",
+    "backend_account_completed_at": "2026-11-16T16:43:59.089041+00:00",
+    "private_session_file": "removed by app agent",
+    "computer_use_credential_memory": "reset after proof"
+  },
+  "files": {
+    "2026-11-16-05-calculated-legal-sources.png": "108ba267aec9f64530c2ca6c1098c7c6c934ddd9b283be74a6c8e9f0084ffabf",
+    "2026-11-16-04-confirmed-source-facts.png": "ef52d8fbf87f59c640a08e7d09df8961f37259b0d9e8cc02263870f9974b0888",
+    "2026-11-16-03-native-upload-selected.png": "9986265e6aec202d2716d123943e9bc57de7d3299bb9ffb7deec960c4b26bd70",
+    "native-server-proof.json": "95810b53ba629c26e4dbebc0ca0b4417131082f9d547d1d2dd41d6fd81b136a5",
+    "native-pdf-proof.json": "43679b414b36dfdab6bf7d33576be8f02cc39aa20d8c2771c267e6cabe0baaf4",
+    "2026-11-16-01-release-start.png": "39de41835e42ffd78033032b25b348ec4d5ac5d87f13aae8aacbbdcacea3e69e",
+    "2026-11-16-07-native-pdf-share.png": "d6ba96c283261d2ee1040fd6e7d0c0b3f143e3aecbcb8f178c965367fdb79c6e",
+    "2026-11-16-02-signed-in-empty-cases.png": "a8e176a6a8c84fcf6aa1d27d2f06158e66296b66a62020f062947dac1e1132cd",
+    "2026-11-16-06-native-report-draft.png": "9a4de54c498de5b814febf0743c46d5cee7e7c007ee03da90dec0bd1f07a6572",
+    "2026-11-16-native-export.pdf": "635823bcf53f836b9fb5f92d8ec167683757811971404125f7f46045e122cff8",
+    "build-proof.json": "70f48453837259357133ccdb3a6d20e547a99c6f92340c2fbfb5ed5dafdf045c"
+  }
+}

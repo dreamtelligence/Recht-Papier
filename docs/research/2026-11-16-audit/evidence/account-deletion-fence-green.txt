@@ -1,0 +1,18 @@
+
+> recht-und-papier-mobile@1.0.0 test:casefile-boundaries
+> node scripts/test-casefile-boundaries.mjs
+
+PASS all seven overview reads surface errors instead of empty sections
+PASS historical approval and running analysis are visible as stale
+PASS failed upload compensation preserves the case until cleanup can succeed
+PASS successful originals survive parsing failure and retries reject HTTP200 failure statuses
+PASS native print/share is never invoked before fresh server authorization
+PASS case deletion removes original without metadata and keeps case on storage failure
+PASS account deletion paginates folders and files before mutations; errors stop auth deletion
+PASS account deletion fences writes before cleanup and allows retry after storage failure
+PASS consumer legal client suppresses failed, unknown, incomplete and old Edge payloads
+PASS Edge sends private questions in POST JSON and follows only same-request Modal result URLs
+PASS intake refresh synchronizes untouched facts, preserves edits and recovers from failed reread reload
+11 isolated case-file boundary groups passed; no hosted network, print or share.
+
+Exit status: 0

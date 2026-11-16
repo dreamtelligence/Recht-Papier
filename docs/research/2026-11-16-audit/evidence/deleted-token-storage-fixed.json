@@ -1,0 +1,27 @@
+{
+  "executed_at": "2026-11-16T16:27:48.298230+00:00",
+  "project_ref": "mwhfppbwkfwcbkyyxdxr",
+  "isolated": true,
+  "synthetic_only": true,
+  "analysis_requests": 0,
+  "paid_model_requests": 0,
+  "proof": {
+    "live_user_storage_upload_status": 200,
+    "delete_account_status": 200,
+    "initial_auth_cases_storage_absence_confirmed": true,
+    "old_jwt_get_user_status": 403,
+    "old_jwt_edge_status": 401,
+    "old_jwt_storage_upload_status": 400,
+    "post_delete_object_exists_admin_verified": false,
+    "stale_jwt_upload_accepted": false
+  },
+  "error": null,
+  "cleanup": {
+    "passed": true,
+    "complete": true,
+    "synthetic_users_tracked": 1,
+    "retained_native_users": 0,
+    "errors": []
+  },
+  "passed": true
+}

@@ -5,7 +5,9 @@
 **Aktuelle Gegenprüfung, 16.11.2026:** [Verbraucher- und Kanzleiaudit mit priorisiertem Arbeitsplan](research/2026-11-16-product-and-kanzlei-review.md).
 Die [anschließenden Korrekturen und Regressionen](research/2026-11-16-remediation.md)
 schließen die reproduzierten Codefehler im unterstützten Umfang. Historische
-Release-Nachweise bleiben erhalten; der neue Code ist noch nicht gehostet installiert.
+Release-Nachweise bleiben erhalten. Der [isolierte gehostete Rollout](research/2026-11-16-isolated-rollout.md)
+prüft nun den kontrollierten Ablauf mit echten Diensten; Produktionsinstallation
+und fachliche Freigabe bleiben getrennt.
 
 1. [Produkt, Screenshots und reproduzierbare Checks](../README.md).
 2. [Aktuelle Architektur und tatsächliche Datenflüsse](architecture.md).
@@ -16,6 +18,7 @@ Release-Nachweise bleiben erhalten; der neue Code ist noch nicht gehostet instal
 
 | Thema | Dokument |
 | --- | --- |
+| Echter Auth-/Storage-/Worker-/Exportlauf, sichere Kontolöschung und vollständiger nativer PDF-Ablauf | [Isolierter gehosteter Rollout](research/2026-11-16-isolated-rollout.md) |
 | Behobene Codefehler, Regressionen, Migrationen und verbleibende Rolloutabnahme | [Korrekturen vom 16.11.2026](research/2026-11-16-remediation.md) |
 | Zusammengeführte Verbraucher-/Kanzleiprüfung und nächste Abnahmen | [Systemaudit vom 16.11.2026](research/2026-11-16-product-and-kanzlei-review.md) |
 | Aktuell bediente öffentliche Abläufe, sechs Screenshots und PDF-Prüfung | [Sichtprüfung](research/2026-11-16-consumer-ux-audit.md) |

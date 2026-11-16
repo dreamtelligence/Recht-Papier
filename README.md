@@ -15,8 +15,13 @@ führte zu Regressionen für Wert-/Beleg-Konsistenz, aktuelle Exportrevision,
 Ladefehler, vollständigen Dokumenteingang und sichere Dateibereinigung.
 Der allgemeine LEX-Pfad hat nun eine gemeinsame technische Antwortsperre und
 sicheres Rendering. [Änderungen, reproduzierbare Prüfungen und Rolloutgrenzen](docs/research/2026-11-16-remediation.md).
-Die Korrekturen sind Quellcodeänderungen; eine neue gehostete Installation wurde
-nicht vorgenommen. Die Kanzlei-Prüfmappe bleibt ein Zielbild.
+Der kontrollierte Pfad wurde anschließend in einem eigenen Supabase-/Modal-Ziel
+mit echten Auth-, Storage-, Worker- und Exportaufrufen geprüft: **22 Prüfschritte
+bestanden**, einschließlich neu entdeckter und behobener Rest-JWT-Schreibrechte
+nach Kontolöschung. Ein frischer nativer Release-Build besteht den gesamten
+Bedienablauf bis zum geprüften vierseitigen PDF.
+[Isolierter Rollout und Grenzen](docs/research/2026-11-16-isolated-rollout.md).
+Das bisherige Produktivbackend wurde dabei nicht aktualisiert. Die Kanzlei-Prüfmappe bleibt ein Zielbild.
 
 Für den Einstieg in den Code: [Dokumentationsindex](docs/README.md), [Schnittstellenvertrag](packages/shared/contract.schema.json), [kontrollierte Berechnung](packages/shared/termination.ts) und [Berichtsrendervorgang](packages/shared/report.ts). Ältere Architektur- und Agentenaufzeichnungen sind dort ausdrücklich als historisch eingeordnet.
 
@@ -71,8 +76,10 @@ Der kontrollierte Portfolio-Korpus bleibt unverändert bei 16 Normtexten; die
 ist jetzt auf GitHub veröffentlicht und anhand aller 38 archivierten Dateien
 abgeglichen. Das gemeinsame serverseitige
 [Antwort-Gate für den allgemeinen LEX-Pfad](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md)
-ist inzwischen im Quellcode implementiert; die isolierte Installation und echte
-Ende-zu-Ende-Abnahme folgen getrennt. Formale Quellenprüfung ist keine Rechtsfreigabe.
+ist inzwischen isoliert installiert: 21/21 HTTP-Suchverträge sowie tatsächliche
+JSON-/SSE-Ausfallpfade ohne Textmodell-Zugangsdaten sind geprüft.
+[Neuer Nachweis und Grenzen](docs/research/2026-11-16-isolated-rollout.md).
+Freie juristische Modellantworten und der Produktionswechsel sind damit nicht freigegeben.
 
 ## Wiederherstellung geprüft
 

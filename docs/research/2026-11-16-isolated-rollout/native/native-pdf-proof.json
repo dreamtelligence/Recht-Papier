@@ -1,0 +1,16 @@
+{
+  "full_approved_body_present": true,
+  "expected_body_characters": 5410,
+  "pdf_extracted_characters": 5467,
+  "source_urls_in_pdf": 16,
+  "has_claim_deadline": true,
+  "has_notice_comparison": true,
+  "has_legal_disclaimer": true,
+  "pages": 4,
+  "page_format": "US Letter (612 x 792 pt)",
+  "native_system_producer": "iOS 26.5 Quartz PDFContext",
+  "comparison_method": "Poppler layout extraction; Unicode NFKC and whitespace normalization; footer is additional",
+  "native_saved_pdf_bytes": 42343,
+  "visual_pages_checked": 4,
+  "no_clipped_or_overlapping_text_observed": true
+}

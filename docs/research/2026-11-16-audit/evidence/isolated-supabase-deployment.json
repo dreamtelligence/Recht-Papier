@@ -1,0 +1,88 @@
+{
+  "isolated": true,
+  "project_ref": "mwhfppbwkfwcbkyyxdxr",
+  "checked_at": "2026-11-16T17:29:34.448708+00:00",
+  "functions": [
+    {
+      "created_at": 1794845488858,
+      "entrypoint_path": "file:///tmp/user_fn_mwhfppbwkfwcbkyyxdxr_e8b073e5-bdf6-492b-8f64-1eda1f4bd597_1/source/supabase/functions/dokument-lesen/index.ts",
+      "ezbr_sha256": "f65a010345da2aa36e085435e51e1a52b6d95bd0def44c616511c7f041c57f50",
+      "id": "e8b073e5-bdf6-492b-8f64-1eda1f4bd597",
+      "import_map": false,
+      "name": "dokument-lesen",
+      "slug": "dokument-lesen",
+      "status": "ACTIVE",
+      "updated_at": 1794845488858,
+      "verify_jwt": true,
+      "version": 4
+    },
+    {
+      "created_at": 1794845488858,
+      "entrypoint_path": "file:///tmp/user_fn_mwhfppbwkfwcbkyyxdxr_c4e72c80-b043-4c65-915c-6538f99b6dc8_1/source/supabase/functions/dokument-erstellen/index.ts",
+      "ezbr_sha256": "fad26b4da8c7981021218fe2ebbf2475f59b5d7658d1f84174fd50860df86a1d",
+      "id": "c4e72c80-b043-4c65-915c-6538f99b6dc8",
+      "import_map": false,
+      "name": "dokument-erstellen",
+      "slug": "dokument-erstellen",
+      "status": "ACTIVE",
+      "updated_at": 1794845488858,
+      "verify_jwt": true,
+      "version": 4
+    },
+    {
+      "created_at": 1794845488858,
+      "entrypoint_path": "file:///tmp/user_fn_mwhfppbwkfwcbkyyxdxr_e0af955d-e0fe-45eb-8a4c-e3f22f56b2da_1/source/supabase/functions/fall-einordnen/index.ts",
+      "ezbr_sha256": "ba75d80cc272c6596b1f8de1bd792e3b153a1e69f0993d558b41f4fdd156aca9",
+      "id": "e0af955d-e0fe-45eb-8a4c-e3f22f56b2da",
+      "import_map": false,
+      "name": "fall-einordnen",
+      "slug": "fall-einordnen",
+      "status": "ACTIVE",
+      "updated_at": 1794845488858,
+      "verify_jwt": true,
+      "version": 4
+    },
+    {
+      "created_at": 1794845488858,
+      "entrypoint_path": "file:///tmp/user_fn_mwhfppbwkfwcbkyyxdxr_1dce0ee4-2a35-45fd-9d8c-634c134b469d_1/source/supabase/functions/case-analysis-worker/index.ts",
+      "ezbr_sha256": "20e22fec7393e66577bdd52b2f369108e406a314b681b21c2f46436fc1e181c9",
+      "id": "1dce0ee4-2a35-45fd-9d8c-634c134b469d",
+      "import_map": false,
+      "name": "case-analysis-worker",
+      "slug": "case-analysis-worker",
+      "status": "ACTIVE",
+      "updated_at": 1794845488858,
+      "verify_jwt": false,
+      "version": 4
+    },
+    {
+      "created_at": 1794845488858,
+      "entrypoint_path": "file:///tmp/user_fn_mwhfppbwkfwcbkyyxdxr_cd8631e2-e170-456e-af8d-dc9e61da575e_3/source/supabase/functions/delete-account/index.ts",
+      "ezbr_sha256": "9de774ec6bff49fd07eb80800e94abb515f636efbea0f3343689f3fbb2218cf9",
+      "id": "cd8631e2-e170-456e-af8d-dc9e61da575e",
+      "import_map": false,
+      "name": "delete-account",
+      "slug": "delete-account",
+      "status": "ACTIVE",
+      "updated_at": 1794846404626,
+      "verify_jwt": true,
+      "version": 5
+    },
+    {
+      "created_at": 1794845488858,
+      "entrypoint_path": "file:///tmp/user_fn_mwhfppbwkfwcbkyyxdxr_bb4f3d8a-0cf3-4f06-bfc4-2a5e2d976c6b_1/source/supabase/functions/recht-nachschlagen/index.ts",
+      "ezbr_sha256": "cc5bf3596686bb449143ef45282ccf74df1122de69f768c9383600e141ec6d85",
+      "id": "bb4f3d8a-0cf3-4f06-bfc4-2a5e2d976c6b",
+      "import_map": false,
+      "name": "recht-nachschlagen",
+      "slug": "recht-nachschlagen",
+      "status": "ACTIVE",
+      "updated_at": 1794845488858,
+      "verify_jwt": true,
+      "version": 4
+    }
+  ],
+  "migrations": {
+    "listing": "\n  \n   Local            | Remote           | Time (UTC)            \n  ------------------|------------------|-----------------------\n   `20260905095138` | `20260905095138` | `2026-09-05 09:51:38` \n   `20260905130446` | `20260905130446` | `2026-09-05 13:04:46` \n   `20260905214025` | `20260905214025` | `2026-09-05 21:40:25` \n   `20260906054106` | `20260906054106` | `2026-09-06 05:41:06` \n   `20260906055357` | `20260906055357` | `2026-09-06 05:53:57` \n   `20260906060321` | `20260906060321` | `2026-09-06 06:03:21` \n   `20261110091822` | `20261110091822` | `2026-11-10 09:18:22` \n   `20261110113220` | `20261110113220` | `2026-11-10 11:32:20` \n   `20261116152927` | `20261116152927` | `2026-11-16 15:29:27` \n   `20261116153053` | `20261116153053` | `2026-11-16 15:30:53` \n   `20261116161300` | `20261116161300` | `2026-11-16 16:13:00` \n   `20261116162158` | `20261116162158` | `2026-11-16 16:21:58` \n\n"
+  }
+}

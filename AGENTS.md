@@ -36,8 +36,10 @@ für tatsächliche Datenflüsse gilt `docs/architecture.md`.
 mit App-/Engine-Gegenproben und vorgeschlagener Prüfmappe sowie die anschließende
 [Fehlerbehebung](docs/research/2026-11-16-remediation.md) lesen. Quellcode enthält
 jetzt Wert-/Label-Prüfung, servereigene Extraktion, aktuelle Exportprüfung und
-weitere Grenzen mit Regressionen. Installation/Migration/Live-Abnahme sind
-getrennt und noch ausstehend. Kanzleimodus bleibt Zielbild; beliebige Prosa,
+weitere Grenzen mit Regressionen. Der anschließende
+[isolierte gehostete Rollout](docs/research/2026-11-16-isolated-rollout.md) prüft
+den kontrollierten Auth-/Storage-/Worker-/Berichtspfad. Produktionsinstallation
+und fachliche Abnahme bleiben getrennt. Kanzleimodus bleibt Zielbild; beliebige Prosa,
 Echtheit eines Dokuments und anwaltliche Freigabe werden nicht versprochen.
 
 Projektwissen liegt im Semantica-MCP und ist dort verbindlich. Relevante Knoten:
@@ -118,6 +120,7 @@ Aktuelle Datenflüsse stehen in [docs/architecture.md](docs/architecture.md), di
 - Identität kommt aus dem validierten Nutzertoken, nicht aus einer Benutzer-ID im Request-Body. Privilegierte Worker-RPCs prüfen Eigentum, Laufbesitz und Eingaberevision selbst.
 - Rechtliche Aussagen, Herkunft, Quellen und Ergebnisfreigabe schreibt der Server. Der Client bestätigt eigene Angaben und liest; er stellt sich kein bestandenes Prüfergebnis aus.
 - Bei der Kontolöschung zuerst private Dateien entfernen, dann das Konto. Bei Storage-Fehlern abbrechen, damit keine verwaisten Dokumente zurückbleiben.
+- Vor Dateibereinigung `begin_account_deletion` serverseitig committen. Storage verlangt ein aktives Profil und hält dessen Zeilensperre; alte JWTs dürfen nach Löschung keine neuen Objekte erzeugen. `deletion_pending` bleibt bei Fehlern bis zum erneuten Löschversuch gesetzt und ist nicht clientseitig rücksetzbar.
 - Keine stillen Anbieterwechsel und keine Lockerung des kontrollierten Freigabeguards für freie Modellantworten. Die privaten Datenflüsse nicht aus älteren Diagrammen ableiten.
 
 ## Prüfen und lokal starten

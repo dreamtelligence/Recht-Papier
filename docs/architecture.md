@@ -9,7 +9,8 @@ Der folgende technische Nachweis beschreibt den kontrolliert geprüften Teil: ei
 **Gegenprüfung vom 16.11.2026:** Die folgenden Datenflüsse beschreiben
 Implementierung, keine vollständige Fehlerfreiheit. Auf den [Ausgangsaudit](research/2026-11-16-product-and-kanzlei-review.md)
 folgen [Korrekturen und neue Regressionen](research/2026-11-16-remediation.md).
-Dieser Quellstand ist noch nicht neu gehostet installiert.
+Der kontrollierte Quellstand wurde im [isolierten gehosteten Rollout](research/2026-11-16-isolated-rollout.md)
+ausgeführt; das bisherige Produktivbackend wurde nicht aktualisiert.
 Technische Freigabe, Nutzerbestätigung und anwaltlicher Review sind
 getrennte Aussagen; ein professioneller Kanzleireview ist noch nicht implementiert.
 
@@ -115,7 +116,27 @@ für JSON, Streaming und freie Fallpfade. Modelltext bleibt bis zur formalen
 Abschlussentscheidung gepuffert; die native Edge-Grenze prüft den Vertrag erneut.
 Fehlende/fehlerhafte Audits sperren Text. Technische Freigabe verlangt weiterhin
 anwaltlichen Review und ersetzt nicht die kontrollierten Portfolio-Regeln.
-Eine neue gehostete Installation dieses Gates steht aus.
+Der neue Stand ist inzwischen in einem getrennten Dienst gehostet geprüft:
+21/21 HTTP-Suchverträge sowie tatsächliche JSON-/SSE-Anfragen ohne
+Modellzugangsdaten. Beide Antwortpfade liefern sicher `unavailable` ohne
+Antworttext oder Tokenereignis. Das prüft den Ausfallpfad; freie juristische
+Modellantworten und die Produktionsinstallation stehen weiterhin aus.
+[Nachweis](research/2026-11-16-isolated-rollout.md).
+
+## Kontolöschung und verbleibende Tokens
+
+Die isolierte Cloudprüfung zeigte eine weitere Grenze: Auth-Löschung allein
+widerruft nicht sofort den signierten JWT; die frühere Storage-Policy erlaubte
+damit neue verwaiste Uploads. Storage verlangt jetzt zusätzlich ein vorhandenes,
+nicht zur Löschung gesperrtes Profil. Dessen Sperre ist ausschließlich serverseitig
+schreibbar. Eine private, auf die Tokenidentität begrenzte Funktion hält die
+Profilzeile während der Storage-Transaktion mit `FOR SHARE`; der Löschungsbeginn
+wartet laufende Zugriffe ab und setzt die Sperre vor dem Listen der Dateien.
+Erst nach deren Entfernung wird Auth gelöscht. Ein Aufräumfehler behält Konto
+und Sperre für einen erneuten Löschversuch. Service-Role-Bypass bleibt Serverrecht.
+Normale Clients können die Sperre nicht durch Profil-DELETE/INSERT zurücksetzen.
+Der alte Token ist damit im Storage-Pfad unwirksam, ohne zu behaupten, sein
+Signaturdatum oder seine kryptografische Gültigkeit seien verändert worden.
 
 ## Belegter Vorher-/Nachher-Nachweis
 

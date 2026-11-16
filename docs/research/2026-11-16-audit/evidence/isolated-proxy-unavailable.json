@@ -1,0 +1,31 @@
+{
+  "executed_at": "2026-11-16T17:28:10.421859+00:00",
+  "project_ref": "mwhfppbwkfwcbkyyxdxr",
+  "isolated": true,
+  "synthetic_only": true,
+  "paid_model_requests": 0,
+  "proof": {
+    "anonymous_proxy_status": 401,
+    "authenticated_proxy_status": 200,
+    "released": false,
+    "release_status": "unavailable",
+    "answer_length": 0,
+    "citations_count": 0,
+    "audit_status": "blocked",
+    "review_required": true,
+    "audit_scope": "formal_source_checks",
+    "report_without_analysis_status": 404,
+    "unknown_report_export_status": 409,
+    "no_analysis_or_report_persisted": true
+  },
+  "error": null,
+  "cleanup": {
+    "passed": true,
+    "complete": true,
+    "synthetic_users_tracked": 1,
+    "retained_native_users": 0,
+    "errors": []
+  },
+  "passed": true,
+  "scope": "Real authenticated proxy and safe unavailable output; no successful model answer or legal validation"
+}

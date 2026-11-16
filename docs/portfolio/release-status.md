@@ -5,11 +5,15 @@ Die [anschließende Fehlerbehebung](../research/2026-11-16-remediation.md) ergä
 Wert-/Beleg-Prüfung, Serverrechte für Extraktion, aktuelle Exportautorisierung,
 Ladefehler, Dokumentvollständigkeit, Retry und paginierte Bereinigung.
 Der allgemeine LEX-Code sperrt beanstandeten Text vor JSON/SSE-Ausgabe.
-Diese Änderungen sind noch nicht als gehostetes Backend oder nativer Build
-installiert. Die nachfolgenden älteren Messungen bleiben historische Nachweise.
+Der [isolierte gehostete Rollout](../research/2026-11-16-isolated-rollout.md)
+besteht inzwischen 22 API-Prüfschritte und den vollständigen nativen iOS-Ablauf
+bis zum vierseitigen PDF. Eine zusätzlich gefundene Storage-Lücke bei gelöschten
+Konten ist behoben und mit alten Tokens sowie parallelen Uploads nachgeprüft.
+Testkonten und native Testressourcen sind entfernt. Das bisherige Backend wurde
+nicht migriert. Die nachfolgenden älteren Messungen bleiben historische Nachweise.
 Kanzleiportal, bearbeitbarer Schriftsatz und anwaltliche Freigabe fehlen weiterhin.
 
-Lokale Abschlussprüfung: 366 Python-Tests, 32 Deno-Tests, zehn Appgruppen und
+Lokale Abschlussprüfung der vorausgegangenen Korrekturphase: 366 Python-Tests, 32 Deno-Tests, zehn Appgruppen und
 PostgreSQL-/Build-Prüfungen bestanden. Code auf beiden `main`-Branches gepusht.
 Der [neue CI-Lauf vom 16.11.](https://github.com/dreamtelligence/Recht-Papier/actions/runs/43901162891)
 startete wegen der weiterhin bestehenden Abrechnungssperre keinen Job.

@@ -47,6 +47,10 @@ Deno.serve(async (req) => {
   const userId = userData.user.id;
   const admin = createClient(url, serviceKey, { auth: { persistSession: false } });
 
+  // Commit the write fence before listing files; a still-valid JWT must not add an orphan during cleanup.
+  const { data: fenced, error: fenceError } = await admin.rpc("begin_account_deletion", { p_owner: userId });
+  if (fenceError || fenced !== true) return json({ error: "Die Kontolöschung konnte nicht sicher begonnen werden. Bitte erneut versuchen." }, 500);
+
   // Zuerst die Dateien. storage.objects haengt an keinem Fremdschluessel und
   // ueberlebt jede Cascade - ohne diesen Schritt bleiben die Originaldokumente
   // im Bucket liegen, waehrend das Konto verschwunden ist.

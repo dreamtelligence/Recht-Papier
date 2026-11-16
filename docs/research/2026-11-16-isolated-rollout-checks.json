@@ -1,0 +1,98 @@
+{
+  "checked_on": "2026-11-16T17:32:22.232603+00:00",
+  "scope": "Isolated hosted synthetic services and fresh simulator; production unchanged",
+  "checks": {
+    "deno_tests": 32,
+    "mobile_runtime_groups": 11,
+    "isolated_harness_tests": 6,
+    "typescript": "pass",
+    "delete_account_edge_typecheck": "pass",
+    "postgres17_sql_files": 6,
+    "postgres_real_two_connection_delete_fence": "pass",
+    "hosted_api_steps": 22,
+    "stale_deleted_token_storage": "pass after observed red case",
+    "hosted_six_upload_delete_race": "pass, bounded sample",
+    "native_release": "pass,209.2seconds,0errors,3744warninglines",
+    "native_full_flow_and_pdf": "pass,4pages,5410approvedcharacters,16URLs",
+    "native_artifact_hashes": "all11pass",
+    "synthetic_accounts_cleanup": "complete; separate native cleanup evidence",
+    "search_core": {
+      "vector_payload_identities": 17132,
+      "passed_contracts": 21,
+      "validator_seconds": 757.092,
+      "case_seconds": 679.68,
+      "cuda_available": false,
+      "region": "eu-west",
+      "text_model_calls": 0
+    },
+    "independent_rollout_review": "Cleanup refuses forged lists before any external mutation;37 runtime hashes identical after deployment-only fixes;23 focused tests pass",
+    "jura_python_tests": 384,
+    "jura_python_test_limit": "Excludes external-index/ML test_retrieval_quality.py; actual ML source contracts verified separately",
+    "search_http": {
+      "passed_contracts": 21,
+      "case_seconds": 663.259,
+      "rag_region": "eu-south",
+      "web_region": "eu-west",
+      "cuda_available": false,
+      "provider_credentials_present": false
+    },
+    "edge_functions_actually_called": 6,
+    "proxy_unavailable_and_report_export_block": "pass",
+    "local_document_links": 157,
+    "disposable_supabase_project": "deleted; fresh listing absent; predelete Auth/profiles/cases/Storage/jobs each0; private credentials removed",
+    "secret_scan": "RP staged scan0findings; Jura3fingerprints independently verified as actual src/api/auth.py SHA256, exact baseline then0findings",
+    "modal_cleanup": "8 owned apps stopped/tasks0;20 independent own Secret/Callback/Volume/Dict lookups NotFound;5 new local credentials removed"
+  },
+  "limits": [
+    "No production migration or deployment",
+    "No physical device, OTP delivery or lawyer acceptance",
+    "No general legal-model approval",
+    "GitHub billing lock prevented previous hosted CI execution"
+  ],
+  "source_sha256": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "4c30ed55a0e315639a14ba8d92dddfa3d50d676641c399c734c4773a1efe5bfe"
+    },
+    {
+      "path": "apps/mobile/scripts/test-casefile-boundaries.mjs",
+      "sha256": "5affdce8cffc8980c6603d5b3822917770f44c39bf2968060dd492fd118c674d"
+    },
+    {
+      "path": "scripts/test-database-boundaries.sh",
+      "sha256": "c4ce3528ddb0f115b99aa167f2e337eb017af876b46771ea8bb5fe133fcb5dfa"
+    },
+    {
+      "path": "scripts/test-isolated-rollout.py",
+      "sha256": "ef6867bb0ff7e71bc353d88ec1dc96f35ad4689909b55cbcc19eb86adc0486e7"
+    },
+    {
+      "path": "scripts/test-storage-deletion-concurrency.py",
+      "sha256": "8c7be5a28e99e26dc0103195d3bdb60fdf04c6adbc7b392aba48643536b0c543"
+    },
+    {
+      "path": "scripts/verify-isolated-rollout.py",
+      "sha256": "d174ac0cacd15a8742f281f622f82fcd48797e13f1aa6803cd6896151426b7bb"
+    },
+    {
+      "path": "supabase/functions/delete-account/index.ts",
+      "sha256": "c2cb57da1ee2cbd794ea622ddb2b9dae02fccc6b083478279138fbc0fea86435"
+    },
+    {
+      "path": "supabase/migrations/20261116161300_harden_rls_helper_paths.sql",
+      "sha256": "db359edbaf2efee3ca84aaabbcdee1bc6f9dbd4884bb8155ec747e37ccd3e2da"
+    },
+    {
+      "path": "supabase/migrations/20261116162158_serialize_account_storage_deletion.sql",
+      "sha256": "72c0ea2af23519bf3b32cb8ae3596499523fa637e276fddb547a23bfda76cd63"
+    },
+    {
+      "path": "supabase/tests/account_storage_deletion.sql",
+      "sha256": "eaa8d4e743fccb61ec9975602db6b7fe8a34473a9080d2820524592bef0ffb07"
+    },
+    {
+      "path": "supabase/tests/rls_helpers.sql",
+      "sha256": "f46727bb196a350f4e9ab08c299e2bc4d9e2a4da14261751d4b282f1b87b4b5f"
+    }
+  ]
+}

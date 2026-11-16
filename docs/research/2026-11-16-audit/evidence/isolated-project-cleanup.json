@@ -1,0 +1,19 @@
+{
+  "project_ref": "mwhfppbwkfwcbkyyxdxr",
+  "isolated": true,
+  "created_by_this_run": true,
+  "organization": "Dreamtelligence",
+  "project_name_verified": "recht-papier-rollout-20261116-8102f6",
+  "checked_at": "2026-11-16T17:29:34.448708+00:00",
+  "before_delete_counts": {
+    "auth_users": 0,
+    "cases": 0,
+    "jobs": 0,
+    "profiles": 0,
+    "storage_objects": 0
+  },
+  "project_deleted": true,
+  "project_absent_from_fresh_listing": true,
+  "deleted_at": "2026-11-16T17:29:53.504096+00:00",
+  "private_credentials_and_temp_directory_removed": true
+}

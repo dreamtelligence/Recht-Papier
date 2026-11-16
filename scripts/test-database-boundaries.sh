@@ -58,7 +58,8 @@ done
 sql <<'SQL'
 insert into auth.users(id) values('00000000-0000-0000-0000-000000000001');
 SQL
-for check in supabase/tests/document_evidence_permissions.sql supabase/tests/export_revision.sql supabase/tests/portfolio_contract.sql supabase/tests/async_analysis_job.sql; do
+for check in supabase/tests/document_evidence_permissions.sql supabase/tests/export_revision.sql supabase/tests/portfolio_contract.sql supabase/tests/async_analysis_job.sql supabase/tests/rls_helpers.sql supabase/tests/account_storage_deletion.sql; do
   sql < "$check"
 done
+python3 scripts/test-storage-deletion-concurrency.py "$container"
 echo 'Postgres 17: migrations, extraction privileges, revision and job RPC checks passed (Auth/Storage adapters; no hosted API).'

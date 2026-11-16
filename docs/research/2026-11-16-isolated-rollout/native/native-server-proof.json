@@ -1,0 +1,16 @@
+{
+  "actual_native_session_verified": true,
+  "native_created_cases": 1,
+  "native_upload_extracted_pages": 1,
+  "confirmed_source_linked_facts": 11,
+  "analysis_completed": true,
+  "model": "controlled-termination/1.0",
+  "sources": 16,
+  "calculations": {
+    "claim_deadline": "2026-12-01",
+    "notice_end": "2027-02-28"
+  },
+  "report_created": true,
+  "report_approved": true,
+  "report_revision_current": true
+}

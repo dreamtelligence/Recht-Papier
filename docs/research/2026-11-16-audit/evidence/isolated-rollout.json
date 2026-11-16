@@ -1,0 +1,134 @@
+{
+  "executed_at": "2026-11-16T16:28:53.282868+00:00",
+  "project_ref": "mwhfppbwkfwcbkyyxdxr",
+  "isolated": true,
+  "synthetic_only": true,
+  "paid_model_requests": 0,
+  "expected_model": "controlled-termination/1.0",
+  "passed": true,
+  "checks": [
+    {
+      "check": "synthetic_auth_create_and_login",
+      "passed": true
+    },
+    {
+      "check": "ownership_helper_is_caller_scoped_and_anonymous_denied",
+      "passed": true
+    },
+    {
+      "check": "original_private_pdf_uploaded_and_server_extracted",
+      "passed": true,
+      "owner_download_status": 200,
+      "signed_url_download_status": 200
+    },
+    {
+      "check": "server_owned_extraction_permissions",
+      "passed": true,
+      "client_write_status": 403
+    },
+    {
+      "check": "anonymous_and_foreign_case_document_storage_access_denied",
+      "passed": true
+    },
+    {
+      "check": "invalid_fact_value_cannot_create_analysis_or_dates",
+      "passed": true,
+      "start_status": 422
+    },
+    {
+      "check": "additional_unread_document_blocks_until_read",
+      "passed": true,
+      "blocked_start_status": 422
+    },
+    {
+      "check": "new_auth_session_resumes_accepted_background_job",
+      "passed": true
+    },
+    {
+      "check": "real_controlled_worker_completion",
+      "passed": true,
+      "model": "controlled-termination/1.0",
+      "source_count": 16,
+      "calculation_count": 2,
+      "start_status": 202,
+      "start_latency_seconds": 5.208,
+      "total_seconds": 12.556
+    },
+    {
+      "check": "failed_case_resumed_in_new_login_with_expected_fixture_dates",
+      "passed": true
+    },
+    {
+      "check": "approved_report_export_exact_text",
+      "passed": true,
+      "unapproved_status": 409,
+      "approved_export_status": 200,
+      "body_sha256": "37b89e4f0d4d13eac04c433b9a2d944be373e25929ccde0b88ddbe648c88aa9b"
+    },
+    {
+      "check": "populated_analysis_sources_deadlines_reports_private_to_owner",
+      "passed": true
+    },
+    {
+      "check": "anonymous_and_foreign_report_actions_denied",
+      "passed": true
+    },
+    {
+      "check": "input_revision_invalidates_prior_approved_export",
+      "passed": true,
+      "export_status": 409
+    },
+    {
+      "check": "new_auth_session_resumes_accepted_background_job",
+      "passed": true
+    },
+    {
+      "check": "real_controlled_worker_completion",
+      "passed": true,
+      "model": "controlled-termination/1.0",
+      "source_count": 16,
+      "calculation_count": 2,
+      "start_status": 202,
+      "start_latency_seconds": 0.88,
+      "total_seconds": 3.609
+    },
+    {
+      "check": "approved_report_export_exact_text",
+      "passed": true,
+      "unapproved_status": 409,
+      "approved_export_status": 200,
+      "body_sha256": "3f0b03bbef9fa7ed7f97d3a5df47403c3186576ad49e18cbced2892210cde10b"
+    },
+    {
+      "check": "reanalysis_and_current_report_resume_after_revision",
+      "passed": true
+    },
+    {
+      "check": "account_deletion_uses_token_identity_and_removes_originals",
+      "passed": true
+    },
+    {
+      "check": "owner_account_auth_storage_and_cases_removed",
+      "passed": true
+    },
+    {
+      "check": "deleted_account_old_jwt_cannot_authenticate_call_edge_or_upload",
+      "passed": true,
+      "storage_status": 400
+    },
+    {
+      "check": "dedicated_synthetic_native_session_retained_privately",
+      "passed": true
+    }
+  ],
+  "error": null,
+  "cleanup": {
+    "passed": true,
+    "complete": false,
+    "synthetic_users_tracked": 3,
+    "retained_native_users": 1,
+    "errors": []
+  },
+  "native_pdf_print_tested": false,
+  "scope": "Auth/Storage/Edge/controlled-worker/server-export; no legal, production or native release"
+}

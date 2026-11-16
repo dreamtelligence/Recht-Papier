@@ -4,7 +4,13 @@ Stand: 16.11.2026. Die reproduzierten Codefehler aus dem
 [Ausgangsaudit](2026-11-16-product-and-kanzlei-review.md) werden durch gezielte
 Korrekturen und Regressionen abgesichert. Quellcodeprüfung, GitHub-Veröffentlichung
 und produktive Installation sind getrennte Nachweise. Dieser Stand enthält
-keinen neuen Live-Backend- oder anwaltlichen Abnahmelauf.
+keinen neuen Live-Backend- oder anwaltlichen Abnahmelauf in dieser ersten Phase.
+
+**Nachfolgender isolierter Rollout:** [22 echte API-Prüfschritte, frischer iOS-Release-Build und nativer PDF-Export](2026-11-16-isolated-rollout.md)
+sind inzwischen bestanden. Der dort neu entdeckte Zugriff mit gelöschten
+Storage-Tokens ist zusätzlich korrigiert. Die untenstehenden Zahlen dokumentieren
+den früheren lokalen Abschluss; Produktionsmigration und anwaltliche Abnahme
+bleiben getrennte Schritte.
 
 **Abschlussprüfung:** 366 Python-Tests, 32 Deno-Tests, zehn App-Regressionsgruppen,
 Dokumentleser-Handler, vier PostgreSQL-Prüfdateien, Mobile-Typecheck, sechs

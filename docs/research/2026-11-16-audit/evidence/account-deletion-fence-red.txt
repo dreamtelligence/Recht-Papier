@@ -1,0 +1,41 @@
+
+> recht-und-papier-mobile@1.0.0 test:casefile-boundaries
+> node scripts/test-casefile-boundaries.mjs
+
+PASS all seven overview reads surface errors instead of empty sections
+PASS historical approval and running analysis are visible as stale
+PASS failed upload compensation preserves the case until cleanup can succeed
+PASS successful originals survive parsing failure and retries reject HTTP200 failure statuses
+PASS native print/share is never invoked before fresh server authorization
+PASS case deletion removes original without metadata and keeps case on storage failure
+PASS account deletion paginates folders and files before mutations; errors stop auth deletion
+FAIL account deletion fences writes before cleanup and allows retry after storage failure
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+200 !== 500
+
+    at file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:127:12
+    at async file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:212:36
+PASS consumer legal client suppresses failed, unknown, incomplete and old Edge payloads
+PASS Edge sends private questions in POST JSON and follows only same-request Modal result URLs
+PASS intake refresh synchronizes untouched facts, preserves edits and recovers from failed reread reload
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: 1 case-file boundary regression(s)
+
+1 !== 0
+
+    at file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:213:8 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.8.2
+
+Exit status: 1

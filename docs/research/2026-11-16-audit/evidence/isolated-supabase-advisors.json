@@ -1,0 +1,27 @@
+{
+  "project_ref": "mwhfppbwkfwcbkyyxdxr",
+  "isolated": true,
+  "warnings": [
+    {
+      "name": "authenticated_security_definer_function_executable",
+      "title": "Signed-In Users Can Execute SECURITY DEFINER Function",
+      "level": "WARN",
+      "facing": "EXTERNAL",
+      "categories": [
+        "SECURITY"
+      ],
+      "description": "Detects `SECURITY DEFINER` functions that are callable by signed-in users. Revoke `EXECUTE`, switch the function to `SECURITY INVOKER`, or move it out of your exposed API schema if signed-in users should not call it.",
+      "detail": "Function `public.owns_case(target_case uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/owns_case`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable",
+      "metadata": {
+        "name": "owns_case",
+        "schema": "public"
+      },
+      "cache_key": "authenticated_security_definer_function_executable_public_owns_case_target_case uuid"
+    }
+  ],
+  "intentional": {
+    "authenticated_security_definer_function_executable": "owns_case is an intentionally callable caller-identity-scoped boolean used by child RLS; live foreign/anonymous checks in isolated-rollout.json"
+  },
+  "checked_at": "2026-11-16T17:29:34.448708+00:00"
+}

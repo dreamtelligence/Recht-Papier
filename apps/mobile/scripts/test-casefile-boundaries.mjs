@@ -99,7 +99,7 @@ test('account deletion paginates folders and files before mutations; errors stop
     const adapter=storageAdapter(files,mode==='remove-failure',mode==='late-upload');
     let authDeleted=false,handler;
     const userClient={auth:{getUser:async()=>({data:{user:{id:'owner'}},error:null})}};
-    const adminClient={storage:{from:()=>adapter},auth:{admin:{deleteUser:async id=>{
+    const adminClient={rpc:async(name,args)=>{assert.equal(name,'begin_account_deletion');assert.deepEqual(args,{p_owner:'owner'});return{data:true,error:null}},storage:{from:()=>adapter},auth:{admin:{deleteUser:async id=>{
       assert.equal(id,'owner');assert.equal(files.size,0);authDeleted=true;return{error:null};
     }}}};
     load('supabase/functions/delete-account/index.ts',{
@@ -109,6 +109,28 @@ test('account deletion paginates folders and files before mutations; errors stop
     assert.equal(response.status,mode==='normal'?200:mode==='late-upload'?409:500);
     assert.equal(authDeleted,mode==='normal');
     if(mode==='normal')assert.equal((await response.json()).files_removed,3006);
+  }
+});
+test('account deletion fences writes before cleanup and allows retry after storage failure',async()=>{
+  for(const mode of ['rpc-error','rpc-false','retry']) {
+    let handler,authDeleted=false,attempt=0;const calls=[];
+    const userClient={auth:{getUser:async()=>({data:{user:{id:'owner'}},error:null})}};
+    const adminClient={
+      rpc:async(name,args)=>{calls.push('fence');assert.equal(name,'begin_account_deletion');assert.deepEqual(args,{p_owner:'owner'});return{data:mode!=='rpc-false',error:mode==='rpc-error'?Error('fence'):null}},
+      storage:{from:()=>({list:async()=>{calls.push('list');return{data:[],error:mode==='retry'&&attempt===0?Error('temporary'):null}},remove:async()=>{throw Error('unexpected remove')}})},
+      auth:{admin:{deleteUser:async()=>{calls.push('auth-delete');authDeleted=true;return{error:null}}}},
+    };
+    load('supabase/functions/delete-account/index.ts',{'jsr:@supabase/supabase-js@2':{createClient:(_url,key)=>key==='anon'?userClient:adminClient}},
+      {Deno:{env:{get:key=>({SUPABASE_URL:'isolated',SUPABASE_ANON_KEY:'anon',SUPABASE_SERVICE_ROLE_KEY:'service'})[key]},serve:fn=>{handler=fn}}});
+    const request=()=>new Request('https://isolated.invalid',{method:'POST',body:JSON.stringify({owner_id:'foreign'})});
+    const first=await handler(request());
+    assert.equal(first.status,500);assert.equal(authDeleted,false);assert.equal(calls[0],'fence');
+    if(mode!=='retry')assert.deepEqual(calls,['fence']);
+    else {
+      attempt++;calls.length=0;const second=await handler(request());
+      assert.equal(second.status,200);assert.equal(authDeleted,true);assert.equal(calls[0],'fence');
+      assert(calls.indexOf('auth-delete')>calls.indexOf('list'));
+    }
   }
 });
 test('consumer legal client suppresses failed, unknown, incomplete and old Edge payloads',async()=>{

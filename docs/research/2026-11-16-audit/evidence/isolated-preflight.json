@@ -1,0 +1,50 @@
+{
+  "executed_at": "2026-11-16T16:18:17.243710+00:00",
+  "project_ref": "mwhfppbwkfwcbkyyxdxr",
+  "isolated": true,
+  "synthetic_only": true,
+  "analysis_requests": 0,
+  "paid_model_requests": 0,
+  "checks": [
+    {
+      "check": "two_synthetic_auth_users_created_and_authenticated",
+      "passed": true
+    },
+    {
+      "check": "synthetic_case_original_and_metadata_uploaded",
+      "passed": true
+    },
+    {
+      "check": "real_server_extraction_persisted",
+      "passed": true,
+      "pages": 1
+    },
+    {
+      "check": "owner_download_byteexact",
+      "passed": true,
+      "sha256": "2791f29604575b659fb637281c2bd9690ff9e1aa02f483b889be13f692a97839"
+    },
+    {
+      "check": "client_extraction_update_denied",
+      "passed": true,
+      "status": 403
+    },
+    {
+      "check": "ownership_helper_boolean_scoped_and_anonymous_denied",
+      "passed": true
+    },
+    {
+      "check": "anonymous_and_foreign_case_document_storage_reader_access_denied",
+      "passed": true
+    }
+  ],
+  "error": null,
+  "cleanup": {
+    "passed": true,
+    "complete": true,
+    "synthetic_users_tracked": 2,
+    "retained_native_users": 0,
+    "errors": []
+  },
+  "passed": true
+}
