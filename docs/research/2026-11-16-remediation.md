@@ -12,6 +12,12 @@ Edge-Typechecks, Schema-Drift, Web-Build und Bundle-Isolation bestanden.
 24 Referenzfälle/40 Ausführungen weiterhin ohne Abweichung.
 [Maschinenlesbarer Nachweis und geprüfte Runtime-Hashes](2026-11-16-remediation-checks.json).
 
+**Veröffentlichung:** Recht-Papier `6f56fe3` und Jura `8f8d6f8` auf GitHub `main`
+gepusht; Remote-SHAs geprüft. Der [GitHub-CI-Lauf](https://github.com/dreamtelligence/Recht-Papier/actions/runs/43901162891)
+startete keinen der drei Jobs: Kontosperre wegen Abrechnungsproblem, laut
+Annotation. Deshalb kein grüner gehosteter CI-Nachweis.
+[Publikations- und CI-Protokoll](2026-11-16-publication.json).
+
 ## App und kontrollierter Rechner
 
 | Befund | Korrektur | Nachweis |

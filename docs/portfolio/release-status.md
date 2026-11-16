@@ -9,6 +9,12 @@ Diese Änderungen sind noch nicht als gehostetes Backend oder nativer Build
 installiert. Die nachfolgenden älteren Messungen bleiben historische Nachweise.
 Kanzleiportal, bearbeitbarer Schriftsatz und anwaltliche Freigabe fehlen weiterhin.
 
+Lokale Abschlussprüfung: 366 Python-Tests, 32 Deno-Tests, zehn Appgruppen und
+PostgreSQL-/Build-Prüfungen bestanden. Code auf beiden `main`-Branches gepusht.
+Der [neue CI-Lauf vom 16.11.](https://github.com/dreamtelligence/Recht-Papier/actions/runs/43901162891)
+startete wegen der weiterhin bestehenden Abrechnungssperre keinen Job.
+[Publikationsprotokoll](../research/2026-11-16-publication.json).
+
 Stand 11.11.2026; Nachweise vom 10.11. sind unten zeitlich eingeordnet. Auftrag: `docs/portfolio-release-plan.md`. Nutzerentscheidungen: vorhandenes Qwen/Gemini, erkennbare Anbieter-Platzhalter, native Dokumentation mit Screenshots.
 
 Aktueller Suchdienst-Stand: [Live-Index und Guard](#ergänzung-11112026-suchindex-und-guard-live).

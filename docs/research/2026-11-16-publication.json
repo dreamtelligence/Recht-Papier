@@ -1,0 +1,30 @@
+{
+  "published_on": "2026-11-16",
+  "branches": "main, verified using git ls-remote",
+  "code_commits": {
+    "recht_papier": "6f56fe31650cdf76cbdf62059a54dad010e5f774",
+    "jura": "8f8d6f89e65d1ad6c455e52daa2a3a4c1196be58"
+  },
+  "worktrees_after_code_push": "clean",
+  "hosted_ci": {
+    "run": "https://github.com/dreamtelligence/Recht-Papier/actions/runs/43901162891",
+    "head_sha": "6f56fe31650cdf76cbdf62059a54dad010e5f774",
+    "status": "completed",
+    "conclusion": "failure",
+    "all_jobs_started": false,
+    "jobs": [
+      "mobile-types",
+      "edge-checks",
+      "database-boundaries"
+    ],
+    "annotation": "The job was not started because your account is locked due to a billing issue.",
+    "meaning": "No hosted test execution; local successful checks are documented separately."
+  },
+  "deployments": {
+    "supabase_migrations": false,
+    "supabase_edge": false,
+    "modal": false,
+    "native_build": false,
+    "note": "Git publication only; no backend deployment performed."
+  }
+}
