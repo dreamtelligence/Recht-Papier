@@ -1,0 +1,65 @@
+{
+  "published_at": "2026-11-16T17:37:44.550144+00:00",
+  "code_commits": [
+    {
+      "repository": "dreamtelligence/Recht-Papier",
+      "commit_sha": "8fce84e605abca2295bf5e4f7784da992a89086a",
+      "remote_main_verified": true
+    },
+    {
+      "repository": "dreamtelligence/Jura",
+      "commit_sha": "6d148df5bf4d372c8abf2126191d2932638a511b",
+      "remote_main_verified": true
+    }
+  ],
+  "worktrees_after_code_push": "clean",
+  "hosted_ci": {
+    "checked_at": "2026-11-16T17:33:06.264501+00:00",
+    "head_sha": "8fce84e605abca2295bf5e4f7784da992a89086a",
+    "run_id": 43919496346,
+    "run_url": "https://github.com/dreamtelligence/Recht-Papier/actions/runs/43919496346",
+    "status": "completed",
+    "conclusion": "failure",
+    "jobs": [
+      {
+        "name": "database-boundaries",
+        "status": "completed",
+        "conclusion": "failure",
+        "steps": 0,
+        "annotations": [
+          "The job was not started because your account is locked due to a billing issue.",
+          "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\""
+        ]
+      },
+      {
+        "name": "mobile-types",
+        "status": "completed",
+        "conclusion": "failure",
+        "steps": 0,
+        "annotations": [
+          "The job was not started because your account is locked due to a billing issue.",
+          "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\""
+        ]
+      },
+      {
+        "name": "edge-checks",
+        "status": "completed",
+        "conclusion": "failure",
+        "steps": 0,
+        "annotations": [
+          "The job was not started because your account is locked due to a billing issue.",
+          "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\""
+        ]
+      }
+    ]
+  },
+  "checks": "384Python,32Deno,11appgroups,6harness,6PG17SQL+concurrency;22hostedAPI;21CPU+21HTTPsourcecontracts;fullnativePDF;6actualEdgepaths",
+  "temporary_resources": "Supabaseprojectdeleted;8Modalappsstopped/tasks0;ownsecrets/volumes/DictNotFound;ownsimulatorandnewlocalcredentialsremoved",
+  "production_updated": false,
+  "limits": [
+    "No lawyer validation or free model approval",
+    "No physical device/OTP delivery or full Supabase disaster recovery",
+    "CI jobs not started due to account billing lock"
+  ],
+  "documentation_note": "This manifest records verified code publication; its own later documentation commit is intentionally not self-referenced."
+}

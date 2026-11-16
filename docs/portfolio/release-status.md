@@ -13,6 +13,12 @@ Testkonten und native Testressourcen sind entfernt. Das bisherige Backend wurde
 nicht migriert. Die nachfolgenden älteren Messungen bleiben historische Nachweise.
 Kanzleiportal, bearbeitbarer Schriftsatz und anwaltliche Freigabe fehlen weiterhin.
 
+Der [abschließende Rollout-/Publikationsnachweis](../research/2026-11-16-isolated-rollout-publication.json)
+verzeichnet zusätzlich 384 Python-Tests, 21/21 echte HTTP-Suchverträge und
+vollständige Entfernung der eigenen Testressourcen. Auch der neueste
+[GitHub-CI-Lauf](https://github.com/dreamtelligence/Recht-Papier/actions/runs/43919496346)
+startete wegen der Kontosperre keinen Job.
+
 Lokale Abschlussprüfung der vorausgegangenen Korrekturphase: 366 Python-Tests, 32 Deno-Tests, zehn Appgruppen und
 PostgreSQL-/Build-Prüfungen bestanden. Code auf beiden `main`-Branches gepusht.
 Der [neue CI-Lauf vom 16.11.](https://github.com/dreamtelligence/Recht-Papier/actions/runs/43901162891)

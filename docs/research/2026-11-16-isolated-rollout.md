@@ -194,3 +194,14 @@ und müssen erneut gelesen werden. Produktive Daten wurden hier nicht migriert.
 Offen bleiben anwaltliche Abnahme, Provider-/Datenschutzverträge, physische
 Geräte und vollständige Supabase-Wiederherstellung. Kanzleimodus, DOCX,
 Mandatsannahme und beA bleiben geplante Erweiterungen.
+
+## Veröffentlichung und CI
+
+Recht-Papier `8fce84e` und Jura `6d148df` sind auf GitHub `main` gepusht;
+Remote-SHAs und saubere Arbeitsverzeichnisse sind geprüft.
+[Publikationsprotokoll](2026-11-16-isolated-rollout-publication.json).
+Der [frische GitHub-CI-Lauf](https://github.com/dreamtelligence/Recht-Papier/actions/runs/43919496346)
+startete erneut keinen der drei Jobs: Das Konto ist wegen eines
+Abrechnungsproblems gesperrt, laut jeweiliger Annotation. Das ist kein
+ausgeführter fehlgeschlagener Test und kein grüner CI-Nachweis. Die lokalen
+und separat gehosteten Prüfungen oben sind davon unabhängig.
