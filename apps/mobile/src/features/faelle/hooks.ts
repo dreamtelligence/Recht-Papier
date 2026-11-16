@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { analyseLaeuft } from "./analyse-status";
+import { analyseLaeuft, dokumentLesenAusstehend } from "./analyse-status";
 import { deleteCase, loadCaseOverview, loadCases } from "./api";
 import { KEIN_NETZ, istNetzfehler } from "@/lib/fehler";
 import type { CaseOverview, CaseSummary } from "./typen";
@@ -37,9 +37,10 @@ function useLadeVorgang<T>(laden: () => Promise<T>, fehlertext: string) {
   const abrufen = useCallback(async () => {
     try {
       const wert = await laden();
-      if (!montiert.current) return;
+      if (!montiert.current) return false;
       setDaten(wert);
       setFehler("");
+      return true;
     } catch (ausnahme) {
       // Kein Durchreichen der Rohmeldung: bei einer fremden ID antwortet die
       // Datenbank wegen RLS mit "nicht gefunden", und genau so soll es auch
@@ -49,6 +50,7 @@ function useLadeVorgang<T>(laden: () => Promise<T>, fehlertext: string) {
       // verfügbar" liest sich wie gelöscht oder gesperrt; ohne Empfang ist das
       // schlicht die falsche Auskunft.
       if (montiert.current) setFehler(istNetzfehler(ausnahme) ? KEIN_NETZ : fehlertext);
+      return false;
     } finally {
       if (montiert.current) {
         setLaedt(false);
@@ -62,9 +64,9 @@ function useLadeVorgang<T>(laden: () => Promise<T>, fehlertext: string) {
     abrufen();
   }, [abrufen]);
 
-  const aktualisieren = useCallback(() => {
+  const aktualisieren = useCallback(async () => {
     setAktualisiert(true);
-    abrufen();
+    return await abrufen();
   }, [abrufen]);
 
   return { daten, setDaten, fehler, laedt, aktualisiert, aktualisieren };
@@ -103,7 +105,7 @@ export function useFall(caseId: string) {
     "Diese Fallakte ist nicht verfügbar.",
   );
   useEffect(() => {
-    if (!daten || !analyseLaeuft(daten.fall)) return;
+    if (!daten || (!analyseLaeuft(daten.fall) && !dokumentLesenAusstehend(daten.dokumente))) return;
     const timer = setTimeout(rest.aktualisieren, 3000);
     return () => clearTimeout(timer);
   }, [daten, rest.aktualisieren]);

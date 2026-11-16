@@ -141,6 +141,8 @@ export type GeneratedDocument = {
   template_version: string;
   created_at: string;
   approved_at: string | null;
+  /** Historisch oder während einer neuen Prüfung nicht als aktuelle Fassung exportieren. */
+  veraltet?: boolean;
 };
 
 export const DOKUMENT_TEXT: Record<GeneratedDocument["kind"], string> = {

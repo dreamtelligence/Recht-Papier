@@ -6,6 +6,13 @@ Der folgende technische Nachweis beschreibt den kontrolliert geprüften Teil: ei
 
 ## Zwei Wege mit demselben Ergebnisvertrag
 
+**Gegenprüfung vom 16.11.2026:** Die folgenden Datenflüsse beschreiben
+Implementierung, keine vollständige Fehlerfreiheit. Auf den [Ausgangsaudit](research/2026-11-16-product-and-kanzlei-review.md)
+folgen [Korrekturen und neue Regressionen](research/2026-11-16-remediation.md).
+Dieser Quellstand ist noch nicht neu gehostet installiert.
+Technische Freigabe, Nutzerbestätigung und anwaltlicher Review sind
+getrennte Aussagen; ein professioneller Kanzleireview ist noch nicht implementiert.
+
 ```mermaid
 flowchart LR
   subgraph Public[Öffentliche statische Demo]
@@ -34,9 +41,26 @@ Die native App behält den vorhandenen asynchronen Analysepfad: Start mit HTTP 2
 
 `packages/shared/contract.schema.json` ist die gemeinsame Quelle. `scripts/generate-contract.py` erzeugt die TypeScript-Typen; ein Drift-Check prüft sie. Die Edge Functions validieren Ein- und Ausgabe gegen dasselbe JSON Schema mit fest gepinnter Ajv-Version.
 
-Ein Berechnungsfakt trägt Schlüssel, Wert, Bestätigung und Dokument-ID, Seite sowie wörtliches Zitat. Nur bestätigte, vorhandene Belegstellen werden berücksichtigt. Die Bestätigung ist eine Nutzeraussage, kein Echtheitsnachweis und keine fachliche Prüfung. Die kuratierten PDFs verwenden eindeutige Feldbezeichnungen. Andere Dokumentformulierungen erfordern manuelle Zuordnung; eine allgemeine semantische Dokumentextraktion wird nicht behauptet.
+Ein Berechnungsfakt trägt Schlüssel, Wert, Bestätigung und Dokument-ID, Seite sowie wörtliches Zitat. Nur bestätigte, vorhandene und zum beschrifteten Wert passende Belegstellen werden berücksichtigt. Die Bestätigung ist eine Nutzeraussage, kein Echtheitsnachweis und keine fachliche Prüfung. Die kuratierten PDFs verwenden eindeutige Feldbezeichnungen. Andere Dokumentformulierungen werden nicht als belegte Rechengrundlage freigegeben; eine allgemeine semantische Dokumentextraktion wird nicht behauptet.
+
+Die Belegprüfung kontrolliert Zitatvorkommen sowie exakte Schlüssel-/Wertzuordnung
+in Zitat und ganzer Seite. Normale Clients dürfen ausschließlich Uploadmetadaten
+anlegen; Extraktion und Verarbeitungsstatus schreibt der Dokumentleser nach
+RLS-Eigentumsprüfung und nutzergebundenem Storage-Download mit Serverrechten.
+Die Migration invalidiert ältere ungesicherte Caches und erhöht dadurch die
+Fallrevision. Originale bleiben erhalten und müssen erneut gelesen werden.
+Ein noch referenzierter Storagepfad kann nicht unter dem alten Beleg neu befüllt
+werden. Diese technischen Grenzen beweisen keine Echtheit hochgeladener Originale.
 
 Bestehende Freitextangaben bleiben erhalten und werden nicht automatisch als Berechnungsgrundlage übernommen. Änderungen an strukturierten Angaben erhöhen `input_revision`; ein alter oder zwischenzeitlich veränderter Lauf darf keine aktuelle Analyse oder freigebbare Datei erzeugen.
+
+Die Revisionssperre schützt Ergebnisse, Freigaben und nun auch den PDF-Export.
+Unmittelbar vor Print/Share lädt die App über den authentifizierten Edge-Pfad
+die vom Server autorisierte Fassung. Die RPC prüft Eigentum, Freigabe, Revision,
+freigegebene Analyse und fehlenden aktiven Lauf unter einer Fallzeilensperre.
+Historische Fassungen bleiben lesbar und sind als veraltet gekennzeichnet.
+Der Export belegt Aktualität zum Zeitpunkt der Autorisierung; eine bereits
+exportierte Datei kann spätere Änderungen naturgemäß nicht widerspiegeln.
 
 ## Unterstützte Regeln und Grenzen
 
@@ -85,11 +109,13 @@ Die neue Datenbankfreigabe verlangt den kontrollierten Modellkennzeichner, den v
 
 Der Nutzer ersetzte am 10.11.2026 den geplanten Mistral-Vergleich ausdrücklich durch die bereits vorhandenen Modal-Zugänge: **Qwen/Qwen3.8-27B-FP8 und gemini-2.5-flash-lite**. Es gibt keinen stillen Anbieterwechsel im Produktpfad. Methodik, reale Antworten, Betriebsfehler und Kosten stehen im [Evaluationsnachweis](https://github.com/dreamtelligence/Recht-Papier/blob/main/docs/portfolio/evaluation.md). Der Versuch ist wegen Kapazität und Quote unvollständig; keine der freien Modellvarianten erhielt eine Freigabe.
 
-Im allgemeinen LEX-Pfad des getrennten Jura-Dienstes ist die Sperre noch nicht
-vereinheitlicht: Modelltext kann dort vor der abschließenden Auditentscheidung
-übertragen werden. Das nächste [serverseitige Antwort-Gate](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md)
-soll JSON, Streaming und Fallpfade erreichen. Eine bloße Anzeige des Audits stellt
-keine Freigabe dar und darf die kontrollierten Portfolio-Regeln nicht ersetzen.
+Der allgemeine LEX-Code nutzt jetzt ein gemeinsames
+[serverseitiges Antwort-Gate](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md)
+für JSON, Streaming und freie Fallpfade. Modelltext bleibt bis zur formalen
+Abschlussentscheidung gepuffert; die native Edge-Grenze prüft den Vertrag erneut.
+Fehlende/fehlerhafte Audits sperren Text. Technische Freigabe verlangt weiterhin
+anwaltlichen Review und ersetzt nicht die kontrollierten Portfolio-Regeln.
+Eine neue gehostete Installation dieses Gates steht aus.
 
 ## Belegter Vorher-/Nachher-Nachweis
 
@@ -111,7 +137,10 @@ npm --prefix apps/mobile ci
 npm --prefix apps/mobile run typecheck
 npm --prefix apps/mobile run test:analysis-status
 python3 scripts/generate-contract.py --check
-deno test --allow-read --config supabase/functions/deno.json supabase/tests/case_analysis_test.ts supabase/tests/portfolio_test.ts
+npm run test:portfolio
+npm --prefix apps/mobile run test:casefile-boundaries
+node scripts/test-document-extraction.cjs
+npm run test:database
 deno run --allow-read --allow-write --config supabase/functions/deno.json scripts/evaluate-portfolio.ts
 deno run --allow-read --allow-write --allow-run --config supabase/functions/deno.json scripts/compare-regression.ts
 cd apps/mobile

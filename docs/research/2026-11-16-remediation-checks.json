@@ -1,0 +1,334 @@
+{
+  "checked_on": "2026-11-16",
+  "scope": "Local source and isolated adapters; no production backend mutation, paid inference or new full-index test",
+  "checks": {
+    "python": {
+      "passed": 366,
+      "excluded": "tests/test_retrieval_quality.py requires external full index and ML models",
+      "warnings": "pytest asyncio fixture-scope and Starlette/anyio deprecation"
+    },
+    "deno": {
+      "passed": 32
+    },
+    "app_runtime_groups": 10,
+    "document_reader_handler": "passed, RLS-before-privilege, failed write returns500",
+    "postgres17": {
+      "migrations": "all applied to disposable network-isolated container",
+      "tests": [
+        "document_evidence_permissions.sql",
+        "export_revision.sql",
+        "portfolio_contract.sql",
+        "async_analysis_job.sql"
+      ],
+      "legacy_cache_invalidated": true,
+      "original_preserved": true,
+      "limitation": "Minimal Auth/Storage schema adapters, not hosted Supabase services"
+    },
+    "typescript": "passed",
+    "contract_drift": "passed",
+    "edge_typechecks": 6,
+    "reference_cases": 24,
+    "reference_executions": 40,
+    "reference_mismatches": 0,
+    "public_web_build": "passed",
+    "public_bundle_isolated": true,
+    "lex_actual_renderer": "passed",
+    "lex_isolated_brave": {
+      "passed": true,
+      "case_characters": 2025,
+      "post_body_bytes_in_303_probe": 2278,
+      "sse_and_json_303": true,
+      "private_context_only_in_post_body": true,
+      "backend": "controlled test responses"
+    },
+    "new_public_screenshots": 6,
+    "secret_scan": "Staged diffs scanned with Gitleaks; initial matches were commit/content hashes, no credentials. Hash evidence uses explicit path/digest records."
+  },
+  "base_commits": [
+    {
+      "project": "recht_papier",
+      "commit_sha": "2aa167d20f8f4bfa9f977850b30823b73265d109"
+    },
+    {
+      "project": "jura",
+      "commit_sha": "eb32db93de3f60bd89d6ab74b51ee9b808136920"
+    }
+  ],
+  "runtime_sha256": [
+    {
+      "project": "recht_papier",
+      "path": ".github/workflows/ci.yml",
+      "sha256": "abec65dd02057eec9569789954635b0b0b768e355f7baa14a497eaf85ac9e12a"
+    },
+    {
+      "project": "recht_papier",
+      "path": "apps/mobile/app/(app)/fall/[id].tsx",
+      "sha256": "93aa170a554154803532145de23c22d99aafbecf313ba83f8c08fec4d435f473"
+    },
+    {
+      "project": "recht_papier",
+      "path": "apps/mobile/app/(app)/fall/neu.tsx",
+      "sha256": "52bd709ab2c8b86a3e83b144144e3a3646f4b15d2f687f9e8e409b23fe231173"
+    },
+    {
+      "project": "recht_papier",
+      "path": "apps/mobile/app/(app)/nachschlagen.tsx",
+      "sha256": "ff0016c11e3294324deeae6523e84926dbbcec462be4af11e05b7e48f44b8ace"
+    },
+    {
+      "project": "recht_papier",
+      "path": "apps/mobile/app/(app)/schreiben/[id].tsx",
+      "sha256": "752b320165bdbca071eade83c557bf4fd20ec175a9bae785feb84178fe210c40"
+    },
+    {
+      "project": "recht_papier",
+      "path": "apps/mobile/package.json",
+      "sha256": "615363e140e04eb2d6f4fb29cedaea9f356ac89eb01cb5d717026bdf9d9dc8e9"
+    },
+    {
+      "project": "recht_papier",
+      "path": "apps/mobile/scripts/test-analysis-status.mjs",
+      "sha256": "a379bfb9023cb987de2777cfa4bb920afcad4e8b83de8f98c93faa2867a731a8"
+    },
+    {
+      "project": "recht_papier",
+      "path": "apps/mobile/scripts/test-casefile-boundaries.mjs",
+      "sha256": "041b14fd0abea83c9dfed19f8746b68dddf2ee395bfe830531fb04d55ab60302"
+    },
+    {
+      "project": "recht_papier",
+      "path": "apps/mobile/src/features/faelle/TerminationInput.tsx",
+      "sha256": "fe0cc63fb6e34789b42168d92a362c311bdb78bc6d7571eaa1c481ae1c711e6d"
+    },
+    {
+      "project": "recht_papier",
+      "path": "apps/mobile/src/features/faelle/analyse-status.ts",
+      "sha256": "8dc47880708f75d62e75c8e99a4318c5145772062e0fb8d027c48c8909cefe93"
+    },
+    {
+      "project": "recht_papier",
+      "path": "apps/mobile/src/features/faelle/api.ts",
+      "sha256": "72ef2c788afa46cfce550fb3bd639742994cdba6c7c5a1cf8a12fd9be3d5cc28"
+    },
+    {
+      "project": "recht_papier",
+      "path": "apps/mobile/src/features/faelle/export.ts",
+      "sha256": "7cb2cfc120d71e30a61227d98995b10f1b8a2d276ade939249593b183b20971c"
+    },
+    {
+      "project": "recht_papier",
+      "path": "apps/mobile/src/features/faelle/hooks.ts",
+      "sha256": "5a656736d7cef5159da165372d282b43840abce2a31c9eca82397d59242cd765"
+    },
+    {
+      "project": "recht_papier",
+      "path": "apps/mobile/src/features/faelle/typen.ts",
+      "sha256": "bdeb38fd63ccf20fb3d2ac202657deeb76efc02c1238752b7a642239cf1219a5"
+    },
+    {
+      "project": "recht_papier",
+      "path": "apps/mobile/src/features/legal/client.ts",
+      "sha256": "3f2a4160c960c5c8868468efc0d8603c851761939724f8cffc27039046001a6c"
+    },
+    {
+      "project": "recht_papier",
+      "path": "package.json",
+      "sha256": "c4c79f1c160075175142887a6063de4b6e453a51e1f50a4d59cd30dd9b38b79b"
+    },
+    {
+      "project": "recht_papier",
+      "path": "packages/shared/termination.ts",
+      "sha256": "2a00fbd9e33eb0f50aac8e83a983de20905177c0e936703c4392f376c7ff86ed"
+    },
+    {
+      "project": "recht_papier",
+      "path": "scripts/test-database-boundaries.sh",
+      "sha256": "7ddc6449410c622d7abb6dc2445c7944759839a8e303771aa888046645f194ad"
+    },
+    {
+      "project": "recht_papier",
+      "path": "scripts/test-document-extraction.cjs",
+      "sha256": "3c49985f61ef5a039472ad755884cb5c24700bd93d3f07fd34177f30aa3f4be8"
+    },
+    {
+      "project": "recht_papier",
+      "path": "supabase/functions/_shared/case-analysis.ts",
+      "sha256": "8dae3491f8d0394dae317731f90fdff9c4c7d76e42428eb1c6c4fea0abd0acdd"
+    },
+    {
+      "project": "recht_papier",
+      "path": "supabase/functions/_shared/legal-answer.ts",
+      "sha256": "f03dc1b0ed9025943b6b1856ba6a0ab5a9ce5e1e9e9585c581a010c44bcc7885"
+    },
+    {
+      "project": "recht_papier",
+      "path": "supabase/functions/delete-account/index.ts",
+      "sha256": "e19d70385243d94a19b855f25de8c9d060dde143fc73d669e7a884e7b73fcb88"
+    },
+    {
+      "project": "recht_papier",
+      "path": "supabase/functions/dokument-erstellen/index.ts",
+      "sha256": "3994d55f51ecd8ea8d1fd953adf2a7d5bb5eaf1b9a9dfca3f67bba0231eda768"
+    },
+    {
+      "project": "recht_papier",
+      "path": "supabase/functions/dokument-lesen/index.ts",
+      "sha256": "ac1cdc15907e1cb0f57d442c3866cceb10d4272b6a7bb0ebfc63ad7e9a673cf5"
+    },
+    {
+      "project": "recht_papier",
+      "path": "supabase/functions/recht-nachschlagen/index.ts",
+      "sha256": "42d0247c5c1912f0c5b7249e3c86a949efc99f61465b3cf197a58475b8339aad"
+    },
+    {
+      "project": "recht_papier",
+      "path": "supabase/migrations/20261116152927_audit_case_boundaries.sql",
+      "sha256": "cf41d49fe3435ab451468e737e3d7de5cbf99ebe5b13f0de0f4efe3e89c40ed7"
+    },
+    {
+      "project": "recht_papier",
+      "path": "supabase/migrations/20261116153053_protect_document_extraction.sql",
+      "sha256": "2040e434ccba79090159ea9e9a4d0070848e99d91956aa98ccc40dc271028ae1"
+    },
+    {
+      "project": "recht_papier",
+      "path": "supabase/tests/document_evidence_permissions.sql",
+      "sha256": "6eb4e8a2ec282bf6fb75f9ef8cbdd7dc32853acb2364ee70ff083058f0ef2425"
+    },
+    {
+      "project": "recht_papier",
+      "path": "supabase/tests/export_revision.sql",
+      "sha256": "3afb4b2c519ef7a73e29322fc90b835f1ee1a96070977c6f85bae5636ffa68e4"
+    },
+    {
+      "project": "recht_papier",
+      "path": "supabase/tests/legal_answer_test.ts",
+      "sha256": "f86046164f10987d73dc0c3295d944dc5090756c68569eb60e207e79a73c75f1"
+    },
+    {
+      "project": "recht_papier",
+      "path": "supabase/tests/portfolio_test.ts",
+      "sha256": "78c786701fb84c10edc37b36db5e5319536b94e28118383a6815c318e4cbce02"
+    },
+    {
+      "project": "recht_papier",
+      "path": "supabase/tests/termination_evidence_test.ts",
+      "sha256": "7aa5e98caf1efbe35e50655d6b49896f4d86d1acfe12d3af6d0fa362cc01f4a9"
+    },
+    {
+      "project": "jura",
+      "path": "modal_case_jobs.py",
+      "sha256": "bd8b9ad8c43fed4a6a3dfdd1988e1ca7878eef999ee79ae49d126747b747c74d"
+    },
+    {
+      "project": "jura",
+      "path": "modal_deploy.py",
+      "sha256": "f3fe6b42cc32c916c0af2463fa552a6512731322e363f6ed0e1b85f4571959ac"
+    },
+    {
+      "project": "jura",
+      "path": "src/api/answering.py",
+      "sha256": "6f51d7f9879f7d097649703798dff9c2a02a417cf113f96bb146cca8014405bc"
+    },
+    {
+      "project": "jura",
+      "path": "src/api/app.py",
+      "sha256": "834f286d43102bc74b423f331c16d3bd13142a00efbd455b83447767e09fcbf2"
+    },
+    {
+      "project": "jura",
+      "path": "src/api/case_jobs.py",
+      "sha256": "4c4b423ef46271894cfd28dec2fb2c5c144c9dbb636f1074cb8dd1a347355b6d"
+    },
+    {
+      "project": "jura",
+      "path": "src/api/engine.py",
+      "sha256": "904caafa0217e283cd67867541dabb319ea636edead156a3d6693fa591c9d8c8"
+    },
+    {
+      "project": "jura",
+      "path": "src/api/sachverhalt.py",
+      "sha256": "1e86ef9685050c8b84afaa629be217e42c9ce2d908e9ca8d9963187f01206f03"
+    },
+    {
+      "project": "jura",
+      "path": "src/deployment.py",
+      "sha256": "c92fe157d8028e340e99aa1f2f551ecd48a0485e7fda0d0a8424682b3fd05815"
+    },
+    {
+      "project": "jura",
+      "path": "src/ingestion/rag_pipeline.py",
+      "sha256": "3080d953dbabc44bbf94a54a5bb98cca4ebe8dc7ee5481b747dbad97e7239588"
+    },
+    {
+      "project": "jura",
+      "path": "src/processors/metadata_extractor.py",
+      "sha256": "688e79addc3ba62d0c12e0f6fbe09dca8aee57658ac6513cf5ee4ba90e492b09"
+    },
+    {
+      "project": "jura",
+      "path": "src/retrieval/answer_audit.py",
+      "sha256": "d7d6c3b137299025cf7f30678fd6d6520676cd47aabf5576a514a4e98754480c"
+    },
+    {
+      "project": "jura",
+      "path": "src/retrieval/enhanced_search.py",
+      "sha256": "7c3f45dc6de2d88109cd6f7a2324a7eb5f5f63240b6d45aa1dc15d99a073e542"
+    },
+    {
+      "project": "jura",
+      "path": "src/scrapers/eurlex_scraper.py",
+      "sha256": "40b93dfdfa5610e3241671cbebf7681b3464014ce8745f74f4a3ab2ddab29ba1"
+    },
+    {
+      "project": "jura",
+      "path": "src/scrapers/gesetze_scraper.py",
+      "sha256": "760e2dc989248db3fe9138783034615d45ea3d3f70fef827fc509836df95dc3c"
+    },
+    {
+      "project": "jura",
+      "path": "src/scrapers/urteile_scraper.py",
+      "sha256": "ca106d98765859d7dad1bd5c4d5d653346decba1744864a62cae7daffb4254a7"
+    },
+    {
+      "project": "jura",
+      "path": "src/static/demo_ui.html",
+      "sha256": "75009f100a2095f37bfe995c42a7b336b0a5f360d1a4c33fe8ada7774cbb8ab5"
+    },
+    {
+      "project": "jura",
+      "path": "tests/demo_ui_regression.cjs",
+      "sha256": "48610a6aea35b81e67d97f54705c8315927596cd0722b806f5271fcbfd214bd6"
+    },
+    {
+      "project": "jura",
+      "path": "tests/test_answer_release.py",
+      "sha256": "68f7e9e42ed889ac83db8f13d0830705674abae5afa983cbc1384ccf532cf8b1"
+    },
+    {
+      "project": "jura",
+      "path": "tests/test_case_job_outbox.py",
+      "sha256": "45aeda62b6a868ecc75919770cc810ee058abf843b30e86d15aeaefa5a7b57b4"
+    },
+    {
+      "project": "jura",
+      "path": "tests/test_case_jobs.py",
+      "sha256": "26d70efc0c3863a2fb950d4af01db5d4b49b7c03e8268d57c5d53f0505b5e6f6"
+    },
+    {
+      "project": "jura",
+      "path": "tests/test_demo_ui.py",
+      "sha256": "672800099ded6276cc27a3ceabcb2334437ccbb63e98956062be1473f19cfd0a"
+    },
+    {
+      "project": "jura",
+      "path": "tests/test_processors.py",
+      "sha256": "cfd5cc7e783766ce2fa947cf2d7dcccd7a6bb5e18edd96c9a660d011b7cadf12"
+    },
+    {
+      "project": "jura",
+      "path": "tests/test_rag_quality_regressions.py",
+      "sha256": "ec69dd9c86af21a898cbcc9a9eb722e302871f3221fd057dab1246a6b700e7c2"
+    }
+  ]
+}

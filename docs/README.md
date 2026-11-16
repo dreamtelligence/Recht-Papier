@@ -2,6 +2,11 @@
 
 ## Einstieg für technische Reviewer
 
+**Aktuelle Gegenprüfung, 16.11.2026:** [Verbraucher- und Kanzleiaudit mit priorisiertem Arbeitsplan](research/2026-11-16-product-and-kanzlei-review.md).
+Die [anschließenden Korrekturen und Regressionen](research/2026-11-16-remediation.md)
+schließen die reproduzierten Codefehler im unterstützten Umfang. Historische
+Release-Nachweise bleiben erhalten; der neue Code ist noch nicht gehostet installiert.
+
 1. [Produkt, Screenshots und reproduzierbare Checks](../README.md).
 2. [Aktuelle Architektur und tatsächliche Datenflüsse](architecture.md).
 3. [JSON-Schema](../packages/shared/contract.schema.json), [kontrollierte Berechnung](../packages/shared/termination.ts) und [Berichtsrendervorgang](../packages/shared/report.ts).
@@ -11,6 +16,11 @@
 
 | Thema | Dokument |
 | --- | --- |
+| Behobene Codefehler, Regressionen, Migrationen und verbleibende Rolloutabnahme | [Korrekturen vom 16.11.2026](research/2026-11-16-remediation.md) |
+| Zusammengeführte Verbraucher-/Kanzleiprüfung und nächste Abnahmen | [Systemaudit vom 16.11.2026](research/2026-11-16-product-and-kanzlei-review.md) |
+| Aktuell bediente öffentliche Abläufe, sechs Screenshots und PDF-Prüfung | [Sichtprüfung](research/2026-11-16-consumer-ux-audit.md) |
+| Tatsächliche App-/Fallaktenfehler mit reproduzierbaren Gegenproben | [App-Audit](research/2026-11-16-app-casefile-audit.md) |
+| Elf Vergleichsangebote, Primärquellen und konkreter Kanzleizielablauf | [Markt- und Workflow-Recherche](research/2026-11-16-kanzlei-market-research.md) |
 | Öffentlicher Umfang und bewusste Abgrenzungen | [Portfolio-Auftrag](portfolio-release-plan.md) |
 | Native iPhone-Oberfläche und PDF-Export | [Native Aufnahmen](portfolio/native/README.md) |
 | Produkt-Fallstudie, responsive Darstellung und Scrollregression | [Präsentation](portfolio/presentation/README.md) |
@@ -31,7 +41,7 @@
 - [Hintergrundaufträge, Lease, Callback und Rollback](analysis-jobs.md).
 - [Jura: Wiederaufbau-Anleitung](https://github.com/dreamtelligence/Jura/blob/main/docs/recovery.md).
 - [Jura: veröffentlichter Runtime-Code und Quellabgleich](https://github.com/dreamtelligence/Jura/blob/main/docs/runtime-source-publication.md).
-- [Jura: Live-Wechsel und Datenrückweg](https://github.com/dreamtelligence/Jura/blob/main/docs/live-index-release.md) sowie [nächstes serverseitiges Antwort-Gate](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md). Das getrennte Jura-Repository kann eine Zugangsberechtigung erfordern; die kompakten Prüfnachweise oben liegen auch in diesem Repository.
+- [Jura: Live-Wechsel und Datenrückweg](https://github.com/dreamtelligence/Jura/blob/main/docs/live-index-release.md) sowie [implementiertes Antwort-Gate und nächste Abnahme](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md). Das getrennte Jura-Repository kann eine Zugangsberechtigung erfordern; die kompakten Prüfnachweise oben liegen auch in diesem Repository.
 - [Datiertes Apple-Review-Readiness-Dokument](apple-app-review-readiness.md): offene Voraussetzungen, keine Store-Freigabe.
 - [Migrationen](../supabase/migrations/), [Edge Functions](../supabase/functions/) und [Backend-Integrationstests](../supabase/tests/).
 - [Mobile Paketkonfiguration](../apps/mobile/package.json) und [gemeinsamer Vertrag](../packages/shared/).

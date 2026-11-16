@@ -115,8 +115,6 @@ Deno.test("worker receives only a public version; callback rechecks the corpus a
 
 Deno.test("report escapes document text and separates technical checks from legal review", () => {
   const f = fixture("dev-01");
-  f.input.facts[0].evidence.quote = "<script>alert(1)</script>";
-  f.documents[0].extracted_pages[0] += "\n<script>alert(1)</script>";
   const result = buildPortfolioResult({
     description: "fictional",
     revision: 1,
@@ -124,9 +122,25 @@ Deno.test("report escapes document text and separates technical checks from lega
     documents: f.documents,
     termination_input: f.input,
   });
+  // Rendering must escape even untrusted display data; evidence validation is tested separately.
+  result.facts[0].evidence.quote = "<script>alert(1)</script>";
   const html = reportHtml(result);
   assert(!html.includes("<script>"));
   assert(html.includes("Technische Prüfungen") && html.includes("keine anwaltliche Freigabe"));
+});
+
+Deno.test("every uploaded document must be readable before controlled analysis", () => {
+  const f = fixture("dev-01");
+  const snapshot = { description: "fictional", revision: 1, facts: [], documents: f.documents, termination_input: f.input };
+  assert.equal(buildPortfolioResult(snapshot).technical_status, "pass");
+  for (const document of [
+    { id: "unread", file_name: "scan.pdf" },
+    { id: "failed", file_name: "scan.pdf", extracted_text: "old", extracted_pages: ["old"], processing_error: "No text layer" },
+    { id: "no-pages", file_name: "text.pdf", extracted_text: "text", extracted_pages: [] },
+  ]) {
+    assert.throws(() => buildPortfolioResult({ ...snapshot, documents: [...f.documents, document] }), /vollständig gelesen/);
+  }
+  assert.throws(() => buildPortfolioResult({ ...snapshot, documents: [] }), /vollständig gelesen/);
 });
 
 Deno.test("curated PDF labels also extract from flattened page text, without confirming them", () => {

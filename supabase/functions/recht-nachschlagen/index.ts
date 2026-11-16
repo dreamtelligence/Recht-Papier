@@ -1,4 +1,5 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { legalAnswer } from "../_shared/legal-answer.ts";
 
 /**
  * Rechtsfrage nachschlagen — der einzige Weg der App zur Legal-Engine.
@@ -26,7 +27,7 @@ const cors = {
 function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { ...cors, "Content-Type": "application/json" },
+    headers: { ...cors, "Content-Type": "application/json", "Cache-Control": "private, no-store" },
   });
 }
 
@@ -73,34 +74,32 @@ Deno.serve(async (req) => {
     return json({ error: `Die Frage darf höchstens ${MAX_FRAGE} Zeichen lang sein.` }, 400);
   }
 
-  const ziel = new URL(`${engineUrl}/api/legal/ask/enhanced`);
-  ziel.searchParams.set("q", frage);
-  ziel.searchParams.set("top_k", "5");
+  const ziel = new URL(`${engineUrl}/api/legal/analyze`);
 
   const abbruch = new AbortController();
   const uhr = setTimeout(() => abbruch.abort(), ZEITLIMIT_MS);
   try {
-    const antwort = await fetch(ziel, {
-      headers: {
-        Accept: "application/json",
-        // Der Schlüssel wird nur gesetzt, wenn er konfiguriert ist. Die
-        // Engine entscheidet, ob sie ihn verlangt — nicht diese Funktion.
-        ...(engineKey ? { "X-Engine-Key": engineKey } : {}),
-      },
-      // Ausdrücklich, obwohl es der Standard ist: Modal beantwortet
-      // langlaufende Anfragen mit `303 See Other` und einer Location auf
-      // dieselbe URL plus `__modal_attempt_token`. Der erste Aufruf gegen
-      // einen kalten Container läuft immer über diesen Weg, weil Modell und
-      // Index erst geladen werden. Wer der Weiterleitung nicht folgt, bekommt
-      // einen leeren Rumpf — und hält ihn womöglich für eine Antwort.
-      //
-      // Die Weiterleitung zeigt auf denselben Host, deshalb überlebt der
-      // Schlüssel sie. Bei einem Wechsel auf einen anderen Host wäre das
-      // anders: `fetch` entfernt Autorisierungs-Kopfzeilen bei
-      // Host-Wechseln, und der zweite Aufruf käme unberechtigt an.
-      redirect: "follow",
+    const headers = { Accept: "application/json", ...(engineKey ? { "X-Engine-Key": engineKey } : {}) };
+    let antwort = await fetch(ziel, {
+      method: "POST",
+      headers: { ...headers, "Content-Type": "application/json" },
+      body: JSON.stringify({ sachverhalt: frage, frage, top_k: 5 }),
+      redirect: "manual",
       signal: abbruch.signal,
     });
+    // Modal's 303 points to the result of this request, not a new analysis.
+    // Follow only that same-origin/path result URL; never forward private text or keys elsewhere.
+    for (let redirects = 0; antwort.status === 303 && redirects < 3; redirects++) {
+      const location = antwort.headers.get("Location");
+      if (!location) throw new Error("Missing result URL");
+      const resultUrl = new URL(location, ziel);
+      if (resultUrl.origin !== ziel.origin || resultUrl.pathname !== ziel.pathname ||
+        !resultUrl.searchParams.has("__modal_attempt_token") ||
+        [...resultUrl.searchParams.keys()].some(key => key !== "__modal_attempt_token")) {
+        throw new Error("Unexpected result URL");
+      }
+      antwort = await fetch(resultUrl, { method: "GET", headers, redirect: "manual", signal: abbruch.signal });
+    }
 
     if (antwort.status === 401) {
       return json({ error: "Die Rechtsdatenbank weist uns ab." }, 502);
@@ -124,23 +123,8 @@ Deno.serve(async (req) => {
       return json({ error: "Die Rechtsdatenbank antwortete unverständlich." }, 502);
     }
 
-    // Nur weitergeben, was die App zeigt. Die Engine liefert zusätzlich
-    // `retrieval_plan` und `source_audit` — interne Diagnose, die auf einem
-    // Verbrauchergerät nichts zu suchen hat und nur Bandbreite kostet.
-    return json({
-      answer: (daten.answer as string) ?? "",
-      citations: (daten.citations as unknown[]) ?? [],
-      model: (daten.model as string) ?? "",
-      rechtsgebiet: (daten.rechtsgebiet as string | null) ?? null,
-      // Der Audit bleibt drin, aber reduziert: die App muss wissen, ob eine
-      // Antwort unbelegte Aussagen enthält. Eine Antwort mit hoher
-      // Beanstandung darf nicht wie eine geprüfte aussehen.
-      audit: {
-        status: (daten.answer_audit as Record<string, unknown> | undefined)?.status ?? "unknown",
-        high_severity_count:
-          (daten.answer_audit as Record<string, unknown> | undefined)?.high_severity_count ?? 0,
-      },
-    });
+    // The consumer boundary independently verifies the complete engine release contract.
+    return json(legalAnswer(daten));
   } catch (fehler) {
     const abgebrochen = fehler instanceof DOMException && fehler.name === "AbortError";
     return json(

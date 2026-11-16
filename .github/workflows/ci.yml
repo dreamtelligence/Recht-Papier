@@ -19,6 +19,8 @@ jobs:
       - run: python3 ../../scripts/generate-contract.py --check
       - run: npm run typecheck
       - run: npm run test:analysis-status
+      - run: npm run test:casefile-boundaries
+      - run: node ../../scripts/test-document-extraction.cjs
       - run: npx expo export --platform web --output-dir dist
         env:
           EXPO_NO_DOTENV: '1'
@@ -31,5 +33,10 @@ jobs:
         with:
           deno-version: '2.9.8'
       - run: deno check --config supabase/functions/deno.json supabase/functions/fall-einordnen/index.ts supabase/functions/case-analysis-worker/index.ts
-      - run: deno test --allow-read --config supabase/functions/deno.json supabase/tests/case_analysis_test.ts supabase/tests/portfolio_test.ts
+      - run: deno test --allow-read --config supabase/functions/deno.json supabase/tests/*_test.ts
       - run: deno run --allow-read --allow-write --config supabase/functions/deno.json scripts/evaluate-portfolio.ts
+  database-boundaries:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - run: bash scripts/test-database-boundaries.sh

@@ -54,22 +54,31 @@ Deno.serve(async (req) => {
   const stack = [userId];
   while (stack.length) {
     const prefix = stack.pop()!;
-    const { data: eintraege, error } = await admin.storage.from(BUCKET).list(prefix, { limit: 1000 });
-    if (error) return json({ error: "Dateien konnten nicht gelesen werden." }, 500);
+    const eintraege: { id: string | null; name: string }[] = [];
+    // Erst vollständig lesen, dann löschen: Offset während des Löschens würde Einträge überspringen.
+    for (let offset = 0;; offset += 1000) {
+      const { data, error } = await admin.storage.from(BUCKET).list(prefix, { limit: 1000, offset });
+      if (error) return json({ error: "Dateien konnten nicht gelesen werden." }, 500);
+      eintraege.push(...(data ?? []));
+      if (!data || data.length < 1000) break;
+    }
     const dateien: string[] = [];
-    for (const eintrag of eintraege ?? []) {
+    for (const eintrag of eintraege) {
       // Ordner melden sich ohne id; alles andere ist eine Datei.
       if (eintrag.id === null) stack.push(`${prefix}/${eintrag.name}`);
       else dateien.push(`${prefix}/${eintrag.name}`);
     }
-    if (dateien.length) {
-      const { error: removeError } = await admin.storage.from(BUCKET).remove(dateien);
+    for (let index = 0; index < dateien.length; index += 1000) {
+      const batch = dateien.slice(index, index + 1000);
+      const { error: removeError } = await admin.storage.from(BUCKET).remove(batch);
       // Bewusster Abbruch: lieber ein noch bestehendes Konto als verwaiste
       // Falldokumente ohne Eigentuemer.
       if (removeError) return json({ error: "Dateien konnten nicht geloescht werden." }, 500);
-      geloeschteDateien.push(...dateien);
+      geloeschteDateien.push(...batch);
     }
   }
+  const { data: rest, error: restError } = await admin.storage.from(BUCKET).list(userId, { limit: 1 });
+  if (restError || rest?.length) return json({ error: "Die Dateien wurden zwischenzeitlich verändert. Bitte Löschung erneut versuchen." }, 409);
 
   // Erst jetzt das Konto. Profil, Faelle, Dokumentzeilen, Fakten, Analysen und
   // Quellen haengen per Fremdschluessel daran und gehen mit.

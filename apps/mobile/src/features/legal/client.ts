@@ -37,6 +37,8 @@ import type { Citation } from "./typen";
  */
 export type RechtAntwort = {
   answer: string;
+  released: boolean;
+  release_status: "released" | "blocked" | "unavailable";
   citations: Citation[];
   model: string;
   rechtsgebiet: string | null;
@@ -62,17 +64,28 @@ export async function rechtNachschlagen(frage: string): Promise<RechtAntwort> {
     body: { frage },
   });
   if (error) throw new RechtFehler("Das Nachschlagen ist zurzeit nicht möglich.");
-  return data as RechtAntwort;
+  const released = data?.released === true && data.release_status === "released" &&
+    data.audit?.status === "pass" && data.audit.high_severity_count === 0 &&
+    typeof data.answer === "string" && data.answer.trim().length > 0 &&
+    Array.isArray(data.citations) && data.citations.length > 0;
+  return {
+    answer: released ? data.answer : "",
+    released,
+    release_status: released ? "released" : data?.release_status === "unavailable" ? "unavailable" : "blocked",
+    citations: released ? data.citations : [],
+    model: typeof data?.model === "string" ? data.model : "",
+    rechtsgebiet: typeof data?.rechtsgebiet === "string" ? data.rechtsgebiet : null,
+    audit: { status: released ? "pass" : "blocked", high_severity_count: Number.isInteger(data?.audit?.high_severity_count) ? data.audit.high_severity_count : 0 },
+  };
 }
 
 /**
  * Die rechtliche Einordnung eines konkreten Falls.
  *
- * Der Client schickt nur die Fall-ID. Alles Weitere — Token prüfen,
- * Eigentümerschaft auflösen, Falltext pseudonymisieren, Engine und Modell
- * befragen, Analyse und Fundstellen in die Akte schreiben — passiert
- * serverseitig. Der Sachverhalt verlässt das Gerät nur in Richtung Supabase,
- * nie in Richtung Engine oder Modellanbieter.
+ * Der Client schickt nur die Fall-ID. Supabase prüft Identität und Eigentum,
+ * speichert den Auftrag und berechnet den kontrollierten Bericht aus dem
+ * bestätigten Eingabestand. Der Worker erhält ausschließlich Portfolio- und
+ * Corpus-Version; Originale, Falldarstellung und Bestätigungen bleiben in der Akte.
  *
  * Der Aufruf dauert lange. Die Engine lädt bei einem Kaltstart ein
  * Einbettungsmodell und einen 211 MB großen Index; gemessen wurden 48 bis 120

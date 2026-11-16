@@ -82,7 +82,9 @@ export async function loadCaseOverview(caseId: string): Promise<CaseOverview> {
       .order("created_at", { ascending: false }),
   ]);
 
-  if (caseResult.error) throw caseResult.error;
+  for (const result of [caseResult, documents, facts, analyses, sources, deadlines, schreiben]) {
+    if (result.error) throw result.error;
+  }
   if (!caseResult.data) throw new Error("Fall nicht gefunden");
 
   return {
@@ -164,11 +166,24 @@ export async function dokumentFreigeben(dokumentId: string): Promise<void> {
 export async function loadSchreiben(dokumentId: string): Promise<GeneratedDocument> {
   const { data, error } = await supabase
     .from("generated_documents")
-    .select("id,kind,title,body,input_revision,template_version,created_at,approved_at")
+    .select("id,kind,title,body,input_revision,template_version,created_at,approved_at,cases!inner(input_revision,active_run)")
     .eq("id", dokumentId)
     .maybeSingle();
   if (error) throw error;
   if (!data) throw new Error("Dieses Dokument ist nicht verfügbar.");
+  const row = data as unknown as GeneratedDocument & { cases: { input_revision: number; active_run: string | null } };
+  return { ...row, veraltet: row.input_revision !== row.cases.input_revision || Boolean(row.cases.active_run) };
+}
+
+/** Der Server prüft unmittelbar vor dem Export Freigabe, Eigentum und aktuellen Eingabestand. */
+export async function dokumentFuerExport(dokumentId: string): Promise<GeneratedDocument> {
+  const { data, error } = await supabase.functions.invoke("dokument-erstellen", {
+    body: { action: "export", document_id: dokumentId },
+  });
+  if (error) throw uebersetzeDokumentFehler(error);
+  if (!data || data.id !== dokumentId || typeof data.body !== "string" || !data.approved_at) {
+    throw new Error("Eine aktuelle freigegebene Fassung fehlt. Bitte die Vorschau neu öffnen.");
+  }
   return data as GeneratedDocument;
 }
 
@@ -219,6 +234,7 @@ export async function createCase(
   const safeName = attachment.name.replace(/[^a-zA-Z0-9._-]/g, "_");
   const storagePath = `${userId}/${newCase.id}/${safeName}`;
   let uploaded = false;
+  let dokumentId = "";
 
   try {
     const bytes = await new File(attachment.uri).arrayBuffer();
@@ -244,19 +260,22 @@ export async function createCase(
       .select("id")
       .single();
     if (documentError) throw documentError;
-
-    // Das Anschreiben lesen lassen, aber nicht darauf warten. Ein Scan ohne
-    // Textebene oder eine zickige Datei darf das Anlegen des Falls nicht
-    // aufhalten — die Akte steht auch ohne gelesenen Text. Was dabei
-    // herauskommt, holt sich die Fallakte beim nächsten Laden.
-    void dokumentLesen(dokument.id).catch(() => {});
-
-    return newCase as CaseSummary;
+    dokumentId = dokument.id;
   } catch (error) {
-    if (uploaded) await supabase.storage.from(BUCKET).remove([storagePath]);
-    await supabase.from("cases").delete().eq("id", newCase.id);
+    if (uploaded) {
+      const { error: cleanupError } = await supabase.storage.from(BUCKET).remove([storagePath]);
+      if (cleanupError) {
+        throw new Error("Die Datei konnte nicht vollständig aufgeräumt werden. Die Fallakte bleibt zur Bereinigung erhalten.");
+      }
+    }
+    const { error: cleanupError } = await supabase.from("cases").delete().eq("id", newCase.id);
+    if (cleanupError) throw new Error("Die unvollständige Fallakte bleibt erhalten. Bitte vor einem neuen Versuch in der Übersicht prüfen.");
     throw error;
   }
+  // Ein Lesefehler löscht kein erfolgreich gespeichertes Original. Die Akte
+  // zeigt den unvollständigen Lesezustand und bietet ausdrücklich einen Retry.
+  try { await dokumentLesen(dokumentId); } catch { /* Dokument bleibt zur erneuten Auslese erhalten. */ }
+  return newCase as CaseSummary;
 }
 
 /**
@@ -267,10 +286,13 @@ export async function createCase(
  * zahlen ließe, das einmal pro Dokument anfällt.
  */
 export async function dokumentLesen(documentId: string): Promise<void> {
-  const { error } = await supabase.functions.invoke("dokument-lesen", {
+  const { data, error } = await supabase.functions.invoke("dokument-lesen", {
     body: { document_id: documentId },
   });
   if (error) throw error;
+  if (!data || !["gelesen", "bereits_gelesen"].includes(data.status)) {
+    throw new Error("Das PDF konnte nicht vollständig gelesen werden. Bitte Dokumentstatus und Textebene prüfen.");
+  }
 }
 
 /**
@@ -278,7 +300,7 @@ export async function dokumentLesen(documentId: string): Promise<void> {
  *
  * Kurzlebig ist hier keine Vorsicht, sondern Vorgabe: ein Falldokument in
  * einer dauerhaft gültigen URL wäre eine Fallakte, die jeder mit dem Link
- * öffnet. Fünf Minuten reichen zum Anschauen und überleben kein Teilen.
+ * öffnet. Die Adresse ist während dieser fünf Minuten weitergebbar.
  */
 export async function dokumentAdresse(storagePath: string): Promise<string> {
   const { data, error } = await supabase.storage
@@ -305,18 +327,28 @@ export async function dokumentAdresse(storagePath: string): Promise<string> {
  * Datenbank per `on delete cascade` mit.
  */
 export async function deleteCase(caseId: string): Promise<void> {
-  const { data: documents, error: documentError } = await supabase
-    .from("case_documents")
-    .select("storage_path")
-    .eq("case_id", caseId);
-
-  if (documentError) throw documentError;
-
-  const pfade = (documents ?? []).map((eintrag) => eintrag.storage_path);
-  if (pfade.length) {
-    const { error: storageError } = await supabase.storage.from(BUCKET).remove(pfade);
-    if (storageError) throw storageError;
+  const { data: fall, error: caseError } = await supabase.from("cases").select("owner_id").eq("id", caseId).single();
+  if (caseError || !fall) throw caseError ?? new Error("Fall nicht gefunden");
+  // Auch ein Upload ohne Metadatenzeile (fehlgeschlagene Kompensation) gehört zum Fallpräfix.
+  const stack = [`${fall.owner_id}/${caseId}`];
+  while (stack.length) {
+    const prefix = stack.pop()!;
+    const entries: { id: string | null; name: string }[] = [];
+    for (let offset = 0;; offset += 1000) {
+      const { data, error } = await supabase.storage.from(BUCKET).list(prefix, { limit: 1000, offset });
+      if (error) throw error;
+      entries.push(...(data ?? []));
+      if (!data || data.length < 1000) break;
+    }
+    stack.push(...entries.filter(entry => entry.id === null).map(entry => `${prefix}/${entry.name}`));
+    const paths = entries.filter(entry => entry.id !== null).map(entry => `${prefix}/${entry.name}`);
+    for (let index = 0; index < paths.length; index += 1000) {
+      const { error } = await supabase.storage.from(BUCKET).remove(paths.slice(index, index + 1000));
+      if (error) throw error;
+    }
   }
+  const { data: remaining, error: storageError } = await supabase.storage.from(BUCKET).list(`${fall.owner_id}/${caseId}`, { limit: 1 });
+  if (storageError || remaining?.length) throw storageError ?? new Error("Die Dateien wurden zwischenzeitlich verändert. Bitte Löschung erneut versuchen.");
 
   const { error } = await supabase.from("cases").delete().eq("id", caseId);
   if (error) throw error;

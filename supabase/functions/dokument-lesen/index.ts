@@ -11,10 +11,7 @@
 // nicht mitreissen. Getrennt scheitert das Lesen sichtbar, waehrend die
 // Einordnung mit dem laeuft, was da ist.
 //
-// service_role kommt hier bewusst nicht vor. Der Bucket hat eine
-// Select-Policy auf den UID-Praefix und `case_documents` eine Owner-Policy;
-// mit dem Nutzertoken erzwingt die Datenbank dieselbe Grenze wie sonst auch.
-// Eine Vollmacht, die man nicht braucht, holt man sich nicht.
+// Lesen bleibt RLS-geschützt. Nur der Server schreibt den extrahierten Belegtext.
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { extractText, getDocumentProxy } from "npm:unpdf@0.12.1";
@@ -26,8 +23,7 @@ const BUCKET = "case-documents";
 // ein zerlegtes PDF ein Vielfaches seiner Dateigroesse belegt.
 const MAX_BYTES = 20 * 1024 * 1024;
 
-// Mehr braucht keine Einordnung, und mehr passt auch nicht sinnvoll in einen
-// Prompt. Ein abgeschnittener Text ist ehrlicher als ein abgelehntes Dokument.
+// Überlange Dokumente werden vollständig abgelehnt; keine gekürzten Belege.
 const MAX_TEXT = 40_000;
 
 const cors = {
@@ -55,7 +51,7 @@ function aufraeumen(roh: string): string {
     .trim();
 }
 
-Deno.serve(async (req) => {
+async function handle(req: Request): Promise<Response> {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
   if (req.method !== "POST") return json({ error: "Nur POST." }, 405);
 
@@ -90,6 +86,12 @@ Deno.serve(async (req) => {
   if (leseFehler) return json({ error: "Das Dokument konnte nicht geladen werden." }, 500);
   if (!dokument) return json({ error: "Dokument nicht gefunden." }, 404);
 
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (!serviceKey) return json({ error: "Dokumentverarbeitung ist nicht verfügbar." }, 503);
+  const admin = createClient(url, serviceKey, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+
   if (dokument.processed_at && dokument.extracted_pages) {
     // Schon gelesen. Ein zweiter Lauf kostet nur Zeit und wuerde denselben Text
     // erzeugen; das Dokument im Bucket aendert sich nicht (es gibt keine
@@ -98,10 +100,14 @@ Deno.serve(async (req) => {
   }
 
   async function vermerke(felder: Record<string, unknown>) {
-    await asUser
+    const { error } = await admin
       .from("case_documents")
       .update({ processed_at: new Date().toISOString(), ...felder })
-      .eq("id", dokument!.id);
+      .eq("id", dokument!.id)
+      .eq("case_id", dokument!.case_id)
+      .select("id")
+      .single();
+    if (error) throw new Error("Dokumentstatus konnte nicht gespeichert werden.");
   }
 
   const typ = (dokument.mime_type ?? "").toLowerCase();
@@ -137,8 +143,8 @@ Deno.serve(async (req) => {
     const { text: roh } = await extractText(pdf, { mergePages: false });
     pages = (typeof roh === "string" ? [roh] : roh).map(aufraeumen);
     text = pages.join("\n\n");
-  } catch (fehler) {
-    await vermerke({ processing_error: `PDF nicht lesbar: ${fehler}` });
+  } catch {
+    await vermerke({ processing_error: "PDF nicht lesbar." });
     return json({ status: "nicht_lesbar" }, 200);
   }
 
@@ -154,17 +160,11 @@ Deno.serve(async (req) => {
     await vermerke({ extracted_text: null, processing_error: `Dokument überschreitet ${MAX_TEXT} Zeichen; es wurde nichts gekürzt.` });
     return json({ error: "Das Dokument ist für die vollständige Verarbeitung zu lang." }, 413);
   }
-  const { error: schreibFehler } = await asUser
-    .from("case_documents")
-    .update({
+  await vermerke({
       extracted_text: text,
       extracted_pages: pages,
-      processed_at: new Date().toISOString(),
       processing_error: null,
-    })
-    .eq("id", dokument.id);
-
-  if (schreibFehler) return json({ error: "Der Text konnte nicht gespeichert werden." }, 500);
+    });
 
   return json({
     status: "gelesen",
@@ -173,4 +173,12 @@ Deno.serve(async (req) => {
     characters: text.length,
     truncated: false,
   });
+}
+
+Deno.serve(async (req) => {
+  try {
+    return await handle(req);
+  } catch {
+    return json({ error: "Der Dokumentstatus konnte nicht gespeichert werden. Bitte erneut versuchen." }, 500);
+  }
 });

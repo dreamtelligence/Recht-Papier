@@ -77,7 +77,7 @@ export default function NeuerFall() {
       router.back();
       router.push(`/fall/${angelegt.id}`);
     } catch {
-      setMeldung("Der Fall konnte nicht sicher gespeichert werden. Bitte erneut versuchen.");
+      setMeldung("Der Fall konnte nicht vollständig gespeichert werden. Bitte vor einem neuen Versuch die Fallübersicht auf eine erhaltene Akte prüfen.");
     } finally {
       setBeschaeftigt(false);
     }

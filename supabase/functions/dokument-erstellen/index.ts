@@ -20,6 +20,12 @@ Deno.serve(async (req) => {
   try { input=await req.json(); } catch { return json({error:"Ungültige Anfrage."},400); }
   if (!input || typeof input !== "object") return json({error:"Ungültige Anfrage."},400);
   const worker=createClient(url,Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+  if (input.action === "export" && /^[0-9a-f-]{36}$/i.test(input.document_id ?? "")) {
+    const {data,error}=await worker.rpc("export_case_document", {
+      p_document:input.document_id,p_owner:auth.user.id,
+    });
+    return error ? json({error:"Eine aktuelle freigegebene Fassung fehlt."},409) : json(data);
+  }
   if (input.action === "approve" && /^[0-9a-f-]{36}$/i.test(input.document_id ?? "")) {
     const {data,error}=await worker.rpc("approve_case_document", {
       p_document:input.document_id,p_owner:auth.user.id,

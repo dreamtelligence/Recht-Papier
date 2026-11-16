@@ -3,6 +3,7 @@ import * as Sharing from "expo-sharing";
 
 import { kurzdatum } from "@/lib/format";
 import type { GeneratedDocument } from "./typen";
+import { dokumentFuerExport } from "./api";
 
 /**
  * Der Weg vom freigegebenen Dokument zur PDF-Datei.
@@ -63,11 +64,16 @@ Vorlagenversion ${escapeHtml(dokument.template_version)} · Ersetzt keine Rechts
  * still nichts zu tun.
  */
 export async function alsPdfTeilen(dokument: GeneratedDocument): Promise<void> {
-  if (!dokument.approved_at) {
+  if (!dokument.approved_at || dokument.veraltet) {
     throw new Error("Bitte geben Sie das Dokument zuerst frei.");
   }
 
-  const { uri } = await Print.printToFileAsync({ html: seite(dokument) });
+  const aktuell = await dokumentFuerExport(dokument.id);
+  if (aktuell.body !== dokument.body || aktuell.template_version !== dokument.template_version) {
+    throw new Error("Die Fassung hat sich geändert. Bitte die Vorschau neu öffnen und prüfen.");
+  }
+
+  const { uri } = await Print.printToFileAsync({ html: seite(aktuell) });
 
   if (!(await Sharing.isAvailableAsync())) {
     throw new Error("Auf diesem Gerät lässt sich die Datei nicht weitergeben.");

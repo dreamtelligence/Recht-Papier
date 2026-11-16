@@ -40,7 +40,8 @@
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
     "test:analysis-status": "node scripts/test-analysis-status.mjs",
-    "build:web": "EXPO_NO_DOTENV=1 expo export --platform web --output-dir dist"
+    "build:web": "EXPO_NO_DOTENV=1 expo export --platform web --output-dir dist",
+    "test:casefile-boundaries": "node scripts/test-casefile-boundaries.mjs"
   },
   "private": true
 }

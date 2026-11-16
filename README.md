@@ -10,11 +10,19 @@ In zwei Minuten: Produkt und Entwicklungsstand verstehen → den nativen Ablauf 
 
 ## Architektur und eigener technischer Beitrag
 
+**Korrekturen vom 16.11.2026:** Der [Verbraucher- und Kanzleiaudit](docs/research/2026-11-16-product-and-kanzlei-review.md)
+führte zu Regressionen für Wert-/Beleg-Konsistenz, aktuelle Exportrevision,
+Ladefehler, vollständigen Dokumenteingang und sichere Dateibereinigung.
+Der allgemeine LEX-Pfad hat nun eine gemeinsame technische Antwortsperre und
+sicheres Rendering. [Änderungen, reproduzierbare Prüfungen und Rolloutgrenzen](docs/research/2026-11-16-remediation.md).
+Die Korrekturen sind Quellcodeänderungen; eine neue gehostete Installation wurde
+nicht vorgenommen. Die Kanzlei-Prüfmappe bleibt ein Zielbild.
+
 Für den Einstieg in den Code: [Dokumentationsindex](docs/README.md), [Schnittstellenvertrag](packages/shared/contract.schema.json), [kontrollierte Berechnung](packages/shared/termination.ts) und [Berichtsrendervorgang](packages/shared/report.ts). Ältere Architektur- und Agentenaufzeichnungen sind dort ausdrücklich als historisch eingeordnet.
 
 Expo SDK 57 / React Native 0.86, TypeScript, Supabase und die bestehende Python-Engine auf Modal bleiben erhalten. [Architektur mit Datenfluss und Grenzen](docs/architecture.md).
 
-- **Verlässliche Berechnungsgrundlage:** typisierte Angaben mit Seite, wörtlichem Zitat und Nutzerbestätigung; bestehender Freitext wird nicht automatisch zur Rechengrundlage.
+- **Strukturierte Berechnungsgrundlage:** typisierte Angaben mit Seite, wörtlichem Zitat und Nutzerbestätigung; Zitat und vollständige Seite müssen denselben beschrifteten Feldwert enthalten. Freie Prosa und eigene Erinnerungen werden nicht als Dokumentbeweis angenommen. Extraktionsfelder schreibt nur der Server; die neue Migration verlangt für ältere Caches erneutes Lesen.
 - **Code statt Datumsübernahme aus Modelltext:** begrenzte Fristregeln, explizite Voraussetzungen und offene Prüfpunkte. Ein passendes Zitat kann eine widersprüchliche Schlussfolgerung nicht freigeben.
 - **Ein Schnittstellenvertrag:** versioniertes JSON Schema, generierte TypeScript-Typen und serverseitige Validierung trennen Fakten, Berechnungen, rechtliche Prüfpunkte und Unsicherheiten.
 - **Vollständiger Quellenstand:** 16 frisch aufgebaute amtliche Normtexte, unveränderliche Version und Text-Hashes. Der getrennte breite Suchdienst verwendet seit 11.11.2026 einen geprüften Fensterindex; der kontrollierte 16-Normen-Korpus bleibt unverändert.
@@ -40,7 +48,7 @@ Der ungültige Datumsvorschlag ist eine isolierte Reproduktion des alten Extrakt
 
 [Gehosteter Ende-zu-Ende-Nachweis](docs/portfolio/backend-e2e.json) · [Browserprüfung](docs/portfolio/browser-verification.json) · [Native Sichtprüfung und PDF](docs/portfolio/native/README.md) · [Release-Status](docs/portfolio/release-status.md)
 
-Die drei veröffentlichten Fälle durchlaufen reale PDF-Textauslese, bestätigte Belege, den Modal-Auftrag, Ergebnisfreigabe und Berichtserstellung. Zusätzlich wurden Zugriffstrennung, atomare Speicherung, veraltete Eingabestände und Dokumentfreigabe gegen das konfigurierte Testprojekt geprüft. Die native Sichtprüfung erfolgte im iPhone-Simulator; sie ist keine Prüfung auf einem physischen Gerät.
+Die drei veröffentlichten Fälle wurden vorab durch reale PDF-Textauslese, bestätigte Belege, den Modal-Auftrag, Ergebnisfreigabe und Berichtserstellung erzeugt. Zusätzlich wurden Zugriffstrennung, atomare Speicherung, veraltete Eingabestände und Dokumentfreigabe gegen das konfigurierte Testprojekt geprüft. Die native Sichtprüfung erfolgte im iPhone-Simulator; sie ist keine Prüfung auf einem physischen Gerät.
 
 Der auf Nutzerwunsch ausgeführte Vergleich verwendet das vorhandene Qwen-Modell und Gemini. Qwen hatte keine verfügbare EU-L40S-Kapazität; Gemini erreichte die Quote vor Abschluss der Wiederholungen. Der vollständige Modellvergleich und der endgültige Kostenabgleich sind **nicht abgeschlossen**. Es gibt keine Modellrangliste oder behauptete fachliche Freigabe. Der Tag `v1.0.0` setzt die offenen Abnahmen voraus.
 
@@ -61,9 +69,10 @@ Der kontrollierte Portfolio-Korpus bleibt unverändert bei 16 Normtexten; die
 öffentliche Fallstudie startet weiterhin keine Modelle. Der zum Live-Snapshot passende
 [Jura-Runtime-Quellstand](https://github.com/dreamtelligence/Jura/blob/main/docs/runtime-source-publication.md)
 ist jetzt auf GitHub veröffentlicht und anhand aller 38 archivierten Dateien
-abgeglichen. Nächster Schritt ist ein gemeinsames serverseitiges
-[Antwort-Gate für den allgemeinen LEX-Pfad](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md):
-Dort darf Modelltext erst nach bestandener Prüfung ausgegeben werden.
+abgeglichen. Das gemeinsame serverseitige
+[Antwort-Gate für den allgemeinen LEX-Pfad](https://github.com/dreamtelligence/Jura/blob/main/docs/next-step-answer-release.md)
+ist inzwischen im Quellcode implementiert; die isolierte Installation und echte
+Ende-zu-Ende-Abnahme folgen getrennt. Formale Quellenprüfung ist keine Rechtsfreigabe.
 
 ## Wiederherstellung geprüft
 
@@ -91,8 +100,11 @@ Node.js 24, Python 3 und Deno 2.9 werden für die öffentlichen Checks benötigt
 npm --prefix apps/mobile ci
 npm --prefix apps/mobile run typecheck
 npm --prefix apps/mobile run test:analysis-status
+npm --prefix apps/mobile run test:casefile-boundaries
+node scripts/test-document-extraction.cjs
 python3 scripts/generate-contract.py --check
 npm run test:portfolio
+npm run test:database
 npm run eval:portfolio
 deno run --allow-read --allow-write --allow-run --config supabase/functions/deno.json scripts/compare-regression.ts
 npm run build:demo

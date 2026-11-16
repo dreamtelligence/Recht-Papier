@@ -132,7 +132,7 @@ export default function Fallakte() {
 
   if (laedt) return <Waiting />;
 
-  if (fehler || !daten) {
+  if (!daten) {
     return (
       <PaperScrollScreen>
         <AppHeader titel="Fallakte" />
@@ -156,7 +156,7 @@ export default function Fallakte() {
   // oder die Akte sich seither geändert hat. Während der Prüfung verhindert
   // der gesperrte Knopf doppelte Jobs.
   const kannEinordnen =
-    !ordnetEin &&
+    !fehler && !ordnetEin &&
     (fall.status === "entwurf" || fall.status === "fehlgeschlagen" || laufAbgelaufen || analyseVeraltet);
 
   // Ein Dokument darf nur aus einer bestandenen, aktuellen Prüfung entstehen —
@@ -164,7 +164,7 @@ export default function Fallakte() {
   // dasselbe noch einmal; hier steht es, damit der Knopf nicht in einen Fehler
   // führt, den man vorher sehen konnte.
   const kannDokument =
-    !erstelltDokument && Boolean(analyse?.released && analyse.structured_result) && !analyseVeraltet && bestaetigteAngaben > 0;
+    !fehler && !erstelltDokument && Boolean(analyse?.released && analyse.structured_result) && !analyseVeraltet && bestaetigteAngaben > 0;
   const dokumentGrund = !analyse
     ? "Dafür muss der Fall zuerst rechtlich eingeordnet werden."
     : !analyse.released
@@ -186,6 +186,7 @@ export default function Fallakte() {
       }
     >
       <AppHeader titel="Fallakte" />
+      {fehler ? <Message>Die letzte Aktualisierung ist fehlgeschlagen. Die angezeigte Akte kann veraltet sein. Bitte erneut laden; Ihre Eingaben bleiben erhalten.</Message> : null}
 
       <View style={styles.kopf}>
         <Title>{fall.title}</Title>
@@ -229,9 +230,9 @@ export default function Fallakte() {
                   {/* Ein Scan ohne Textebene ist kein Fehler des Nutzers, aber
                       er erklärt, warum die Einordnung das Schreiben nicht
                       kennt. Ungesagt bliebe das ein Rätsel. */}
-                  {dokument.processed_at && dokument.processing_error ? (
-                    <Text style={styles.hinweis}>Text nicht lesbar</Text>
-                  ) : null}
+                  {dokument.processing_error ? (
+                    <Text style={styles.hinweis}>Text nicht vollständig gelesen · bitte erneut versuchen oder PDF mit Textebene verwenden</Text>
+                  ) : !dokument.processed_at ? <Text style={styles.hinweis}>Lesen noch ausstehend · unten erneut versuchen</Text> : null}
                 </View>
                 <Text style={styles.zeileNeben}>{dateigroesse(dokument.byte_size)}</Text>
               </Pressable>
@@ -241,7 +242,7 @@ export default function Fallakte() {
       </Section>
 
       <Section titel="Berechnungsrelevante Angaben">
-        <TerminationInput key={`${fall.input_revision}-${dokumente.map(d => d.processed_at).join()}`} caseId={id} input={fall.termination_input} documents={dokumente} onSaved={aktualisieren} />
+        <TerminationInput key={id} caseId={id} input={fall.termination_input} documents={dokumente} onSaved={aktualisieren} />
       </Section>
 
       <Section

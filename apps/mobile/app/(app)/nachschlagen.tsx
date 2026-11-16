@@ -90,22 +90,21 @@ function Ergebnis({ antwort }: { antwort: RechtAntwort }) {
   // Aussagen nur aus dem geprüften Quellenbestand. Beanstandet der Audit die
   // Antwort, wird das gezeigt statt verschwiegen — eine unbelegte Aussage
   // darf nicht aussehen wie eine belegte.
-  const beanstandet = antwort.audit.high_severity_count > 0;
+  const beanstandet = !antwort.released;
 
   return (
     <>
       {beanstandet ? (
         <View style={styles.warnung}>
           <Text style={styles.warnungText}>
-            Diese Antwort enthält Aussagen ohne Fundstelle. Bitte nur als Hinweis lesen,
-            nicht als geprüfte Auskunft.
+            Die Antwort hat die technische Quellenprüfung nicht bestanden und wird deshalb nicht angezeigt. Bitte später erneut versuchen.
           </Text>
         </View>
       ) : null}
 
-      <Section titel="Antwort">
+      {antwort.released ? <Section titel="Antwort">
         <Body>{antwort.answer}</Body>
-      </Section>
+      </Section> : null}
 
       <Section
         titel={`Rechtsgrundlagen${antwort.citations.length ? ` · ${antwort.citations.length}` : ""}`}
@@ -143,7 +142,7 @@ function Ergebnis({ antwort }: { antwort: RechtAntwort }) {
           {antwort.model ? `Modell ${antwort.model}` : "Modell unbekannt"}
           {antwort.rechtsgebiet ? ` · erkanntes Rechtsgebiet ${antwort.rechtsgebiet}` : ""}
         </Muted>
-        <Muted>Ersetzt keine Rechtsberatung.</Muted>
+        <Muted>Technische Quellenprüfung, keine anwaltliche Freigabe. Ersetzt keine Rechtsberatung.</Muted>
       </View>
     </>
   );

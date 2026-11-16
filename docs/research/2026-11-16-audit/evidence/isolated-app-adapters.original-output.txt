@@ -1,0 +1,5 @@
+REPRO A: 6 failed child reads => loadCaseOverview resolves empty sections, no error
+REPRO B: uploaded object cleanup fails => case row deletion still attempted
+REPRO C: approved document from old revision reaches print/share without current-case revision check (mocked print/share, no actual file/transmission)
+REPRO D: changed confirmed receipt 2026-08-31 -> 2026-09-01 with unchanged original quote accepted; dates 2026-09-21,2026-11-30 -> 2026-09-22,2026-12-31
+Evidence quote unchanged: Zugang am: 2026-08-31

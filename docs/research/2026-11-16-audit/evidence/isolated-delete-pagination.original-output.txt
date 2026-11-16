@@ -1,0 +1,1 @@
+{"status":200,"reported":{"deleted":true,"files_removed":1000},"synthetic_files":1001,"unvisited_files":1,"list_calls":1,"user_deleted":true}

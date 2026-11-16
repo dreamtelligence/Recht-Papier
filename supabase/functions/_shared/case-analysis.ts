@@ -144,6 +144,11 @@ export function buildAnalysisInput(snapshot: Snapshot): string {
 }
 
 export function buildPortfolioResult(snapshot: Snapshot): Result {
+  if (!snapshot.documents.length || snapshot.documents.some(d =>
+    d.processing_error || !d.extracted_text?.trim() || !d.extracted_pages?.length
+  )) {
+    throw new Error("Mindestens ein Dokument wurde noch nicht vollständig gelesen. Bitte die Dokumente prüfen und erneut lesen.");
+  }
   validateInput(snapshot.termination_input);
   const result = analyzeTermination(
     snapshot.termination_input,

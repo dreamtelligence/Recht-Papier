@@ -32,6 +32,14 @@ für tatsächliche Datenflüsse gilt `docs/architecture.md`.
 
 ## Vor jeder nicht-trivialen Änderung: Semantica
 
+**Aktueller Audit vom 16.11.2026:** [Verbraucher- und Kanzleiprüfung](docs/research/2026-11-16-product-and-kanzlei-review.md)
+mit App-/Engine-Gegenproben und vorgeschlagener Prüfmappe sowie die anschließende
+[Fehlerbehebung](docs/research/2026-11-16-remediation.md) lesen. Quellcode enthält
+jetzt Wert-/Label-Prüfung, servereigene Extraktion, aktuelle Exportprüfung und
+weitere Grenzen mit Regressionen. Installation/Migration/Live-Abnahme sind
+getrennt und noch ausstehend. Kanzleimodus bleibt Zielbild; beliebige Prosa,
+Echtheit eines Dokuments und anwaltliche Freigabe werden nicht versprochen.
+
 Projektwissen liegt im Semantica-MCP und ist dort verbindlich. Relevante Knoten:
 
 | Knoten | Inhalt |
@@ -48,6 +56,12 @@ Projektwissen liegt im Semantica-MCP und ist dort verbindlich. Relevante Knoten:
 
 Neue Erkenntnisse und Architekturentscheidungen werden dort festgehalten, veraltetes Wissen
 wird korrigiert statt ergänzt.
+
+Die oben genannten alten Projekt-/Domain-/Architektur-/Compliance-IDs lieferten
+am 16.11.2026 beim direkten Abruf keinen Knoten. Dann relevante Kategorien und
+`recht-papier-gap-review-2026-11-11` gezielt durchsuchen; den aktuellen Auditknoten
+`research:recht-papier-consumer-kanzlei-audit-2026-11-16` verwenden. Keine fehlende
+Implementierung aus einem fehlenden Graphknoten ableiten.
 
 ## Aktueller Analysepfad (10.11.2026)
 

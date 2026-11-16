@@ -8,8 +8,9 @@
     "stack:down": "infra/stack.sh down",
     "stack:reset": "infra/stack.sh reset",
     "stack:status": "infra/stack.sh status",
-    "test:portfolio": "deno test --allow-read --config supabase/functions/deno.json supabase/tests/case_analysis_test.ts supabase/tests/portfolio_test.ts",
+    "test:portfolio": "deno test --allow-read --config supabase/functions/deno.json supabase/tests/*_test.ts",
     "eval:portfolio": "deno run --allow-read --allow-write --config supabase/functions/deno.json scripts/evaluate-portfolio.ts",
+    "test:database": "bash scripts/test-database-boundaries.sh",
     "build:demo": "npm --prefix apps/mobile run build:web"
   }
 }

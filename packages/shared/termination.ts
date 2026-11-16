@@ -187,6 +187,13 @@ export function analyzeTermination(
     if (allowed[fact.key] && !allowed[fact.key]!.includes(fact.value)) {
       throw new Error(`Ungültiger Wert für ${fact.key}`);
     }
+    // shortcut: only explicit field labels are supported; free prose needs a separately reviewed evidence contract.
+    const supports = (text: string) => extractTerminationFacts([{
+      id: doc.id, extracted_text: text, extracted_pages: [text],
+    }]).some((candidate) => candidate.key === fact.key && candidate.value === fact.value);
+    if (!supports(fact.evidence.quote) || !supports(page)) {
+      throw new Error(`Wert für „${FACT_LABELS[fact.key]}“ stimmt nicht mit dem beschrifteten Beleg überein. Freie Textstellen werden noch nicht unterstützt.`);
+    }
     if (values.has(fact.key) && values.get(fact.key) !== fact.value) conflicts.add(fact.key);
     values.set(fact.key, fact.value);
   }
@@ -235,6 +242,18 @@ export function analyzeTermination(
     uncertainties.push(
       "An welchem Tag ist das Kündigungsschreiben tatsächlich zugegangen? Datum auf dem Schreiben genügt nicht.",
     );
+  }
+  const missingQuestions: Partial<Record<Fact["key"], string>> = {
+    employment_started_on: "Wann war der Beschäftigungsbeginn? Vertragsbeginn anhand der Unterlagen bestätigen.",
+    notice_regime: "Gilt eine abweichende Vertrags- oder Tarifregel? Vertrag und Tarifbindung prüfen.",
+    probation: "Besteht noch eine Probezeit? Vereinbarung und Zeitraum prüfen.",
+    written_notice: "Wurde ein unterschriebenes schriftliches Original erhalten? Dokument und Zugang prüfen.",
+    special_protection: "Kommt Sonderkündigungsschutz oder eine behördliche Zustimmung in Betracht? Anwaltlich klären.",
+    court_state: "In welchem Bundesland liegt das zuständige Arbeitsgericht? Der Rechner unterstützt NRW.",
+  };
+  for (const [key, question] of Object.entries(missingQuestions)) {
+    const value = get(key as Fact["key"]);
+    if (!value || value === "unknown") uncertainties.push(question);
   }
   const chronological = !!receipt && receipt <= input.as_of && (!start || start <= receipt);
   if (receipt && !chronological) {

@@ -105,7 +105,7 @@ export default function SchreibenVorschau() {
 
       <View style={styles.kopf}>
         <Text style={styles.meta}>
-          {dokument.approved_at
+          {dokument.veraltet ? "Historische Fassung · aktuelle Akte erneut prüfen" : dokument.approved_at
             ? `Freigegeben am ${datum(dokument.approved_at)}`
             : "Entwurf · noch nicht freigegeben"}
           {` · erstellt am ${datum(dokument.created_at)}`}
@@ -120,7 +120,7 @@ export default function SchreibenVorschau() {
       </Text>
 
       <View style={styles.aktion}>
-        {dokument.approved_at ? (
+        {dokument.veraltet ? <Muted>Die Akte hat sich geändert oder eine neue Prüfung läuft. Diese Fassung bleibt lesbar; erstellen und prüfen Sie einen aktuellen Bericht vor der Weitergabe.</Muted> : dokument.approved_at ? (
           <>
             <PrimaryAction
               label={arbeitet ? "Wird vorbereitet …" : "Als PDF weitergeben"}

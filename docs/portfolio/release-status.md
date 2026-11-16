@@ -1,5 +1,14 @@
 # Portfolio: überprüfter Stand
 
+**Neue Gegenprüfung vom 16.11.2026:** [Systemaudit aus Verbraucher- und Kanzleisicht](../research/2026-11-16-product-and-kanzlei-review.md).
+Die [anschließende Fehlerbehebung](../research/2026-11-16-remediation.md) ergänzt
+Wert-/Beleg-Prüfung, Serverrechte für Extraktion, aktuelle Exportautorisierung,
+Ladefehler, Dokumentvollständigkeit, Retry und paginierte Bereinigung.
+Der allgemeine LEX-Code sperrt beanstandeten Text vor JSON/SSE-Ausgabe.
+Diese Änderungen sind noch nicht als gehostetes Backend oder nativer Build
+installiert. Die nachfolgenden älteren Messungen bleiben historische Nachweise.
+Kanzleiportal, bearbeitbarer Schriftsatz und anwaltliche Freigabe fehlen weiterhin.
+
 Stand 11.11.2026; Nachweise vom 10.11. sind unten zeitlich eingeordnet. Auftrag: `docs/portfolio-release-plan.md`. Nutzerentscheidungen: vorhandenes Qwen/Gemini, erkennbare Anbieter-Platzhalter, native Dokumentation mit Screenshots.
 
 Aktueller Suchdienst-Stand: [Live-Index und Guard](#ergänzung-11112026-suchindex-und-guard-live).

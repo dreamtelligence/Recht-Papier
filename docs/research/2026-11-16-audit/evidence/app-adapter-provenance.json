@@ -1,0 +1,23 @@
+{
+  "checked_at": "2026-11-16",
+  "records": [
+    {
+      "script": "isolated-app-adapters.sh",
+      "captured_from": "executed session CommandExecution, verbatim shell body; not reconstructed",
+      "executed_at": "2026-11-16T14:45:57.404Z",
+      "source_event_line": 371,
+      "script_sha256": "a269a30562ba0ae8ed9e0d8fd99ec203165b0ef5e7556888386ddd3ec92cd319",
+      "original_exit_code": 0,
+      "scope": "All Supabase, Storage, Print and Share calls use synthetic adapters; no real requests or files. A7 mock Auth deletion success does not prove actual service would allow deletion with remaining objects."
+    },
+    {
+      "script": "isolated-delete-pagination.sh",
+      "captured_from": "executed session CommandExecution, verbatim shell body; not reconstructed",
+      "executed_at": "2026-11-16T14:47:39.854Z",
+      "source_event_line": 406,
+      "script_sha256": "f581b8fcc094d891b508a6bddd3e30f67486eb4039447945eed7357431ebdda2",
+      "original_exit_code": 0,
+      "scope": "All Supabase, Storage, Print and Share calls use synthetic adapters; no real requests or files. A7 mock Auth deletion success does not prove actual service would allow deletion with remaining objects."
+    }
+  ]
+}

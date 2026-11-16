@@ -1,0 +1,81 @@
+Baseline runtime sources: 2aa167d20f8f4bfa9f977850b30823b73265d109
+Run: node docs/research/2026-11-16-audit/evidence/casefile-regression-baseline.mjs
+Expected nonzero failure; five original runtime files and current regression assertions with isolated adapters. UI adapter remains current (not part of baseline substitution).
+FAIL all seven overview reads surface errors instead of empty sections
+AssertionError [ERR_ASSERTION]: Missing expected rejection.
+    at async file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:27:5
+    at async file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:190:36
+FAIL historical approval and running analysis are visible as stale
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ undefined
+- true
+
+    at file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:33:12
+    at async file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:190:36
+FAIL failed upload compensation preserves the case until cleanup can succeed
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+true !== false
+
+    at file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:41:12
+    at async file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:190:36
+FAIL successful originals survive parsing failure and retries reject HTTP200 failure statuses
+AssertionError [ERR_ASSERTION]: Missing expected rejection.
+    at async file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:49:3
+    at async file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:190:36
+FAIL native print/share is never invoked before fresh server authorization
+AssertionError [ERR_ASSERTION]: Missing expected rejection.
+    at async file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:64:3
+    at async file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:190:36
+FAIL case deletion removes original without metadata and keeps case on storage failure
+AssertionError [ERR_ASSERTION]: Missing expected rejection.
+    at async file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:91:14
+    at async file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:190:36
+FAIL account deletion paginates folders and files before mutations; errors stop auth deletion
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+2006 !== 0
+
+    at Object.deleteUser (file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:103:39)
+    at eval (eval at load (file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:13:3), <anonymous>:77:59)
+    at async file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:108:20
+    at async file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:190:36
+FAIL consumer legal client suppresses failed, unknown, incomplete and old Edge payloads
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'released answer'
+- ''
+
+    at file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:119:55
+    at async file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:190:36
+FAIL Edge sends private questions in POST JSON and follows only same-request Modal result URLs
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+504 !== 200
+
+    at file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:153:12
+    at async file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:190:36
+PASS intake refresh synchronizes untouched facts, preserves edits and recovers from failed reread reload
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: 9 case-file boundary regression(s)
+
+9 !== 0
+
+    at file:///Users/ozi/Recht-Papier/apps/mobile/scripts/test-casefile-boundaries.mjs:191:8 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 9,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.8.2
+
+Exit status: 1
