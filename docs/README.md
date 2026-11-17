@@ -9,7 +9,7 @@ Release-Nachweise bleiben erhalten. Der [isolierte gehostete Rollout](research/2
 prüft nun den kontrollierten Ablauf mit echten Diensten; Produktionsinstallation
 und fachliche Freigabe bleiben getrennt.
 
-1. [Produkt, Screenshots und reproduzierbare Checks](../README.md).
+1. [Projektvorstellung und Schnellstart](../README.md); [vollständige lokale Einrichtung und Prüfkommandos](development.md).
 2. [Aktuelle Architektur und tatsächliche Datenflüsse](architecture.md).
 3. [JSON-Schema](../packages/shared/contract.schema.json), [kontrollierte Berechnung](../packages/shared/termination.ts) und [Berichtsrendervorgang](../packages/shared/report.ts).
 4. [Release-Status mit bestandenen Prüfungen und offenen Abnahmen](portfolio/release-status.md).
@@ -40,6 +40,8 @@ und fachliche Freigabe bleiben getrennt.
 
 ## Entwicklung und Betrieb
 
+- [Lokale Einrichtung, vollständige Prüfkommandos, Metro und Browserchecks](development.md).
+- [Technische Prüfstände, allgemeine Rechtssuche, Modellversuch und Engine-Wiederherstellung](technical-notes.md).
 - [Arbeitsregeln und aktueller Aufbau](../AGENTS.md).
 - [Hintergrundaufträge, Lease, Callback und Rollback](analysis-jobs.md).
 - [Jura: Wiederaufbau-Anleitung](https://github.com/dreamtelligence/Jura/blob/main/docs/recovery.md).
