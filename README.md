@@ -2,69 +2,75 @@
 
 **[Produkt-Fallstudie öffnen](https://recht-papier-portfolio.vercel.app)** · **[Beispielbericht als PDF](apps/mobile/public/portfolio/dev-01-report.pdf)** · **[Nativer iPhone-Ablauf in Screenshots](docs/portfolio/native/README.md)**
 
-Recht & Papier ist als **digitale Rechtsassistenz** konzipiert: eine mobile App, die Sachverhalt, Dokumente, rechtliche Orientierung und nächste Schritte in einer Fallakte verbindet. Die Fallstudie zeigt die echte iOS-Oberfläche, UI/UX-Entscheidungen, Full-Stack-Implementierung und den tatsächlichen Entwicklungsstand. Der aktuell kontrolliert geprüfte Teil ist die **ordentliche Arbeitgeberkündigung aus Arbeitnehmersicht**; die umfassendere Assistenz bleibt eine Produktvision.
+Recht & Papier ist eine mobile App für rechtliche Anliegen. Sie sammelt die Schilderung, Dokumente und bestätigte Angaben in einer Fallakte. Daraus entsteht ein Bericht zur Vorbereitung auf ein anwaltliches Gespräch.
 
-In zwei Minuten: Produkt und Entwicklungsstand verstehen → den nativen Ablauf ansehen → Gestaltung und technische Beiträge nachvollziehen. Der nachgelagerte Abschnitt **Technische Demo** erhält drei fiktive Fälle mit Bestätigung, Quellen, Rechenweg und Bericht. Er zeigt gespeicherte Ergebnisse der echten gehosteten Pipeline, ohne Anmeldung, persönliche Uploads oder Modellkosten pro Besucher. Keine Rechtsberatung.
+Das Projekt umfasst Produktkonzept, UI/UX, die App und das Backend. Ein erster Ablauf ist für die **ordentliche Kündigung durch den Arbeitgeber aus Sicht des Arbeitnehmers** umgesetzt und technisch geprüft. Weitere Fallarten sind geplant. Eine anwaltliche Prüfung steht noch aus.
 
-<a href="https://recht-papier-portfolio.vercel.app"><img src="docs/portfolio/presentation/after-1440.png" alt="Produkt-Fallstudie mit echter iOS-App, Produktvision und Entwicklungsbeiträgen"></a>
+Die [Website](https://recht-papier-portfolio.vercel.app) zeigt die iOS-App, ihre Gestaltung und die technische Umsetzung. In der **interaktiven Demo** lassen sich drei fiktive Fälle durchgehen: Dokument lesen, Angaben bestätigen, Ergebnis und Bericht ansehen. Die Ergebnisse wurden vorab mit dem gehosteten Backend erstellt. Besucher brauchen weder ein Konto noch eigene Unterlagen; beim Durchklicken startet keine KI-Analyse. Das Projekt bietet keine Rechtsberatung.
 
-## Architektur und eigener technischer Beitrag
+<a href="https://recht-papier-portfolio.vercel.app"><img src="docs/portfolio/presentation/after-1440.png" alt="Recht & Papier: Projektvorstellung mit Screenshot der iOS-App"></a>
 
-**Korrekturen vom 16.11.2026:** Der [Verbraucher- und Kanzleiaudit](docs/research/2026-11-16-product-and-kanzlei-review.md)
-führte zu Regressionen für Wert-/Beleg-Konsistenz, aktuelle Exportrevision,
-Ladefehler, vollständigen Dokumenteingang und sichere Dateibereinigung.
-Der allgemeine LEX-Pfad hat nun eine gemeinsame technische Antwortsperre und
-sicheres Rendering. [Änderungen, reproduzierbare Prüfungen und Rolloutgrenzen](docs/research/2026-11-16-remediation.md).
-Der kontrollierte Pfad wurde anschließend in einem eigenen Supabase-/Modal-Ziel
-mit echten Auth-, Storage-, Worker- und Exportaufrufen geprüft: **22 Prüfschritte
-bestanden**, einschließlich neu entdeckter und behobener Rest-JWT-Schreibrechte
-nach Kontolöschung. Ein frischer nativer Release-Build besteht den gesamten
-Bedienablauf bis zum geprüften vierseitigen PDF.
-[Isolierter Rollout und Grenzen](docs/research/2026-11-16-isolated-rollout.md).
-Das bisherige Produktivbackend wurde dabei nicht aktualisiert. Die Kanzlei-Prüfmappe bleibt ein Zielbild.
+## Technische Umsetzung
 
-Für den Einstieg in den Code: [Dokumentationsindex](docs/README.md), [Schnittstellenvertrag](packages/shared/contract.schema.json), [kontrollierte Berechnung](packages/shared/termination.ts) und [Berichtsrendervorgang](packages/shared/report.ts). Ältere Architektur- und Agentenaufzeichnungen sind dort ausdrücklich als historisch eingeordnet.
+**Zuletzt geprüft am 16.11.2026:** Bei der [Prüfung aus Verbraucher- und Kanzleisicht](docs/research/2026-11-16-product-and-kanzlei-review.md)
+fielen unter anderem widersprüchliche Belege, veraltete Exportfreigaben und
+Lücken bei der Dateibereinigung auf. Die Korrekturen sind durch Regressionstests
+abgesichert. Auch der allgemeine LEX-Dienst prüft Antworten jetzt zentral vor
+der Ausgabe und rendert sie abgesichert.
+[Änderungen und Prüfungen](docs/research/2026-11-16-remediation.md).
 
-Expo SDK 57 / React Native 0.86, TypeScript, Supabase und die bestehende Python-Engine auf Modal bleiben erhalten. [Architektur mit Datenfluss und Grenzen](docs/architecture.md).
+Anschließend wurde der Kündigungsablauf in einer getrennten Supabase-/Modal-Umgebung
+vom Login bis zum Export geprüft: **22 Prüfschritte bestanden**. Dabei fiel auf,
+dass ein alter Token nach der Kontolöschung noch Dateien hochladen konnte; auch
+dieser Fehler wurde behoben und erneut geprüft. Ein neuer nativer Release-Build
+lief im iPhone-Simulator bis zum vierseitigen PDF durch.
+[Versuchsaufbau, Ergebnisse und Grenzen](docs/research/2026-11-16-isolated-rollout.md).
+Das bisherige Produktivbackend wurde dabei nicht aktualisiert. Eine Prüfmappe
+für Kanzleien ist noch geplant.
 
-- **Strukturierte Berechnungsgrundlage:** typisierte Angaben mit Seite, wörtlichem Zitat und Nutzerbestätigung; Zitat und vollständige Seite müssen denselben beschrifteten Feldwert enthalten. Freie Prosa und eigene Erinnerungen werden nicht als Dokumentbeweis angenommen. Extraktionsfelder schreibt nur der Server; die neue Migration verlangt für ältere Caches erneutes Lesen.
-- **Code statt Datumsübernahme aus Modelltext:** begrenzte Fristregeln, explizite Voraussetzungen und offene Prüfpunkte. Ein passendes Zitat kann eine widersprüchliche Schlussfolgerung nicht freigeben.
-- **Ein Schnittstellenvertrag:** versioniertes JSON Schema, generierte TypeScript-Typen und serverseitige Validierung trennen Fakten, Berechnungen, rechtliche Prüfpunkte und Unsicherheiten.
-- **Vollständiger Quellenstand:** 16 frisch aufgebaute amtliche Normtexte, unveränderliche Version und Text-Hashes. Der getrennte breite Suchdienst verwendet seit 11.11.2026 einen geprüften Fensterindex; der kontrollierte 16-Normen-Korpus bleibt unverändert.
-- **Echter privater Backend-Pfad:** private PDFs, Textauslese, eingefrorener Eingabestand, asynchroner Auftrag, authentifizierter Callback und atomare Analyse-/Quellen-/Fristspeicherung. Der kontrollierte Modal-Worker erhält nur öffentliche Versionskennungen.
-- **Öffentliche und private Daten getrennt:** ein eigener Web-Einstieg enthält ausschließlich kuratierte Beispiele. Der native Ablauf nutzt weiterhin Supabase Auth und Eigentümer-RLS.
+Für den Einstieg in den Code: [Dokumentationsindex](docs/README.md), [Schnittstellenvertrag](packages/shared/contract.schema.json), [kontrollierte Berechnung](packages/shared/termination.ts) und [Berichtserstellung](packages/shared/report.ts). Ältere Architektur- und Agentenaufzeichnungen sind dort ausdrücklich als historisch eingeordnet.
+
+Die App verwendet Expo SDK 57 / React Native 0.86 und TypeScript. Das Backend besteht aus Supabase und einer Python-Engine auf Modal. [Architektur mit Datenfluss und Grenzen](docs/architecture.md).
+
+- **Angaben mit Belegen:** Jeder Wert verweist auf eine Seite und ein wörtliches Zitat und muss bestätigt werden. Zitat und Seite müssen denselben beschrifteten Feldwert enthalten. Freie Prosa und eigene Erinnerungen gelten nicht als Dokumentbeweis. Nur der Server speichert extrahierte Texte; ältere zwischengespeicherte Texte müssen nach der Migration neu eingelesen werden.
+- **Fristberechnung:** Feste Regeln berechnen Termine aus bestätigten Angaben. Voraussetzungen und offene Fragen stehen beim Ergebnis. Widersprüchliche Modellantworten bleiben auch dann gesperrt, wenn sie ein passendes Zitat enthalten.
+- **Gemeinsames Ergebnisformat:** Ein versioniertes JSON Schema und daraus generierte TypeScript-Typen beschreiben Fakten, Berechnungen, rechtliche Prüfpunkte und Unsicherheiten. Der Server validiert die Ergebnisse gegen diesen Vertrag.
+- **Versionierte Quellen:** Der Kündigungsablauf verwendet 16 amtliche Normtexte mit festen Versionen und Text-Hashes. Die allgemeine Rechtssuche läuft getrennt davon und verwendet seit dem 11.11.2026 einen geprüften Index aus Textabschnitten.
+- **Verarbeitung im Hintergrund:** Der Server liest private PDFs und hält den Eingabestand für den Analyseauftrag fest. Die Rückmeldung des Workers wird authentifiziert; Analyse, Quellen und Fristen werden gemeinsam gespeichert. Der kontrollierte Modal-Worker erhält nur öffentliche Versionskennungen.
+- **Zugriffsschutz:** Die öffentliche Website enthält nur fiktive Beispiele. In der nativen App sichern Supabase Auth und Eigentümer-RLS den Zugriff auf private Fallakten.
 
 Die Python-Engine liegt im separaten, zugangsbeschränkten Repository [Jura](https://github.com/dreamtelligence/Jura). Dieses Repository enthält den öffentlichen Demo-Pfad und die Supabase-Integration, nicht den gesamten allgemeinen RAG-Dienst.
 
-## Vorher → Regression → Korrektur → Messung
+## Fehler und ihre Korrekturen
 
 | Ursprünglicher Fehler | Nachweis und Korrektur |
 | --- | --- |
-| XML-Text ohne Elementnachtexte verloren | Derselbe amtliche § 622 BGB: alter Parser **1.931**, vollständiger Parser **2.308 Zeichen**; Vertragsausnahme und Teilzeitzählung wieder enthalten. [Messung](docs/portfolio/corpus-before-after.json) |
+| Beim XML-Einlesen gehen Texte nach Unterelementen verloren | Derselbe amtliche § 622 BGB: alter Parser **1.931**, vollständiger Parser **2.308 Zeichen**; Vertragsausnahme und Teilzeitzählung wieder enthalten. [Messung](docs/portfolio/corpus-before-after.json) |
 | Bestehende Dokument-ID überspringt geänderten Text | Regression prüft neues Embedding, dieselbe Punkt-ID, Persistenz und Wiederladen; unterbrochene Versionen werden gesperrt. Implementierung und Tests im Jura-Repository. |
-| Zitierte Datumszeichenfolge gilt als Berechnung | Der echte alte Extraktor liefert `2026-11-31`; die neue Kalenderprüfung weist das zurück. Für den Referenzfall berechnet der Code `2026-11-30` und blockiert die beobachtete widersprüchliche Modellformulierung. [Reproduktion](docs/portfolio/before-after.json) |
-| Quellenprüfung genügt für freie Schlussfolgerungen | Der reale Gemini-Versuch enthält in **15 von 17 auswertbaren Antworten** abweichende Termine. Keine Modellfreigabe; kontrollierte Regeln und offene Fragen bleiben der Produktpfad. [Auswertung und Grenzen](docs/portfolio/evaluation.md) |
+| Ein Datum aus dem Modelltext wird ungeprüft übernommen | Der echte alte Extraktor liefert `2026-11-31`; die neue Kalenderprüfung weist das zurück. Für den Referenzfall berechnet der Code `2026-11-30` und blockiert die beobachtete widersprüchliche Modellformulierung. [Reproduktion](docs/portfolio/before-after.json) |
+| Eine Quellenprüfung erkennt falsche Schlussfolgerungen nicht | Der reale Gemini-Versuch enthält in **15 von 17 auswertbaren Antworten** abweichende Termine. Deshalb bleiben freie Modellantworten gesperrt; der Kündigungsablauf verwendet feste Regeln. [Auswertung und Grenzen](docs/portfolio/evaluation.md) |
 
 Der ungültige Datumsvorschlag ist eine isolierte Reproduktion des alten Extraktors; die alte Datenbank hat ihn damit nicht nachweislich gespeichert. Alte freie Modellantworten und neue kontrollierte Ergebnisse sind unterschiedliche Arbeitslasten, kein vergleichbarer Geschwindigkeitsbenchmark.
 
-## Überprüfbarer Stand
+## Tests und Nachweise
 
-24 fiktive Referenzfälle: 16 Entwicklungsfälle und acht getrennte Abnahmefälle, letztere dreimal ausgeführt. **40 deterministische Ausführungen, keine Referenzabweichung.** Die Erwartungen sind kein unabhängiger anwaltlicher Goldstandard.
+Die dokumentierte Referenzauswertung umfasst 24 fiktive Fälle: 16 Entwicklungsfälle und acht separate Abnahmefälle. Die Abnahmefälle wurden jeweils dreimal ausgeführt. **Alle 40 Testläufe entsprachen den hinterlegten Erwartungen.** Diese Erwartungen wurden nicht unabhängig anwaltlich geprüft.
 
 [Gehosteter Ende-zu-Ende-Nachweis](docs/portfolio/backend-e2e.json) · [Browserprüfung](docs/portfolio/browser-verification.json) · [Native Sichtprüfung und PDF](docs/portfolio/native/README.md) · [Release-Status](docs/portfolio/release-status.md)
 
 Die drei veröffentlichten Fälle wurden vorab durch reale PDF-Textauslese, bestätigte Belege, den Modal-Auftrag, Ergebnisfreigabe und Berichtserstellung erzeugt. Zusätzlich wurden Zugriffstrennung, atomare Speicherung, veraltete Eingabestände und Dokumentfreigabe gegen das konfigurierte Testprojekt geprüft. Die native Sichtprüfung erfolgte im iPhone-Simulator; sie ist keine Prüfung auf einem physischen Gerät.
 
-Der auf Nutzerwunsch ausgeführte Vergleich verwendet das vorhandene Qwen-Modell und Gemini. Qwen hatte keine verfügbare EU-L40S-Kapazität; Gemini erreichte die Quote vor Abschluss der Wiederholungen. Der vollständige Modellvergleich und der endgültige Kostenabgleich sind **nicht abgeschlossen**. Es gibt keine Modellrangliste oder behauptete fachliche Freigabe. Der Tag `v1.0.0` setzt die offenen Abnahmen voraus.
+Für den Modellvergleich wurden Qwen und Gemini verwendet. Qwen hatte keine verfügbare EU-L40S-Kapazität; Gemini erreichte die Quote vor Abschluss der Wiederholungen. Der vollständige Modellvergleich und der endgültige Kostenabgleich sind **nicht abgeschlossen**. Aus diesem Versuch lässt sich weder eine belastbare Rangliste noch eine fachliche Freigabe ableiten. Der Tag `v1.0.0` setzt die offenen Abnahmen voraus.
 
-## Suchdienst: Live-Stand vom 11.11.2026
+## Allgemeine Rechtssuche: Messung vom 11.11.2026
 
 Der getrennte Suchdienst `legal-rag` **v41** enthält **17.132 Indexeinträge aus
 17.060 vollständigen Quellen**; der Analyse-Worker **v5** enthält den Guard gegen
 die beobachtete KSchG-Bedeutungsumkehr. Alle **21 Live-Suchverträge** bestehen.
-Der Median der kleinen sequenziellen Probe nach Kaltstart beträgt **2,004 Sekunden**;
-bei einem Profilfall enthält die Messung zusätzlich den kontrollierten Suchaufruf.
-Dies ist kein Lastversprechen und keine juristische Antwortfreigabe.
+In einer kleinen sequenziellen Messreihe nach dem Kaltstart lag der Median bei
+**2,004 Sekunden**. Ein Profilfall enthält zusätzlich den kontrollierten
+Suchaufruf. Die Messung sagt noch nichts über das Verhalten unter Last oder
+die juristische Qualität der Antworten aus.
 
 [Live-Nachweis mit Hashes und geprüftem Datenrückweg](docs/portfolio/live-index-release-2026-11-11.json) ·
 [Textfenster und Latenzvergleich](docs/portfolio/candidate-hardening-2026-11-11.json) ·
@@ -81,7 +87,7 @@ JSON-/SSE-Ausfallpfade ohne Textmodell-Zugangsdaten sind geprüft.
 [Neuer Nachweis und Grenzen](docs/research/2026-11-16-isolated-rollout.md).
 Freie juristische Modellantworten und der Produktionswechsel sind damit nicht freigegeben.
 
-## Wiederherstellung geprüft
+## Wiederherstellung der Python-Engine
 
 Der Jura-Kern wurde aus einem frischen GitHub-Klon und dem unabhängig
 heruntergeladenen Index-Backup in einem neuen Volume mit neuem Modell-Image und
@@ -129,8 +135,8 @@ Der iOS-Simulator-Entwicklungsbuild benötigt einen laufenden Metro-Server. Stan
 
 Unterstützt werden PDFs mit Textebene und ausdrücklich bestätigte gesetzliche Grundfälle. Der gerichtliche Feiertagskalender ist auf **NRW 2026/2027** begrenzt. Unbekannter Zugang, widersprüchliche Angaben, Tarifabweichungen und Sonderfälle bleiben offen. Scans benötigen künftig OCR. Kündigungsgrund, Sozialauswahl und Gesamtwirksamkeit werden nicht abschließend beurteilt.
 
-„Technische Prüfungen bestanden“, Nutzerbestätigung und anwaltliche Prüfung sind verschiedene Aussagen. Eine anwaltliche Prüfung ist nicht bestätigt; eine pauschale Validierungsbehauptung wird nicht verwendet. Impressum und Datenschutz enthalten auf Nutzerwunsch erkennbare Portfolio-Platzhalter. Das ist keine Store-Einreichung oder Freigabe für echte Rechtsberatung.
+Die technischen Tests und die Bestätigung durch den Nutzer ersetzen keine anwaltliche Prüfung. Diese steht noch aus. Impressum und Datenschutz enthalten erkennbare Portfolio-Platzhalter. Das Projekt ist weder für den App Store eingereicht noch für echte Rechtsberatung freigegeben.
 
 ## Ausblick für echte Fälle
 
-Ein echter Pilot gehört nicht zu diesem Release. Vor einer Nutzung mit realen Fällen wären ein bestätigtes fachliches Leistungsbild und Review, vollständige Anbieter- und Datenschutzangaben, belastbare Aufbewahrungs-/Löschregeln, Vertrags- und Datenflussprüfung, Betriebsüberwachung, Backup-/Wiederherstellungsnachweise sowie die offenen Store-Voraussetzungen zu erfüllen. Ein Anwalt-Prüferportal, Abrechnung, ein allgemeiner Rechtsassistent und weitere Rechtsgebiete werden hier nicht gebaut.
+Dieses Release dient als Portfolio. Vor einem Pilotbetrieb mit realen Fällen müssen der fachliche Umfang und die Ergebnisse juristisch geprüft werden. Außerdem fehlen vollständige Anbieter- und Datenschutzangaben, geprüfte Verträge und Datenflüsse, verbindliche Aufbewahrungs- und Löschregeln sowie Nachweise für Betriebsüberwachung und Wiederherstellung. Auch die offenen Store-Voraussetzungen bleiben zu erfüllen. Ein Kanzleiportal, Abrechnung und weitere Rechtsgebiete gehören nicht zu diesem Release.

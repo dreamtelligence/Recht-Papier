@@ -110,24 +110,24 @@ export default function PublicDemo() {
               <h2 id="demo-heading">Technische Demo.</h2>
             </div>
             <p className="section-caption">
-              Die Produktvision ist umfassender. Diese drei fiktiven Fälle
-              zeigen den aktuell geprüften Teil: die ordentliche
-              Arbeitgeberkündigung aus Arbeitnehmersicht.
+              An drei fiktiven Fällen lässt sich der technisch geprüfte Ablauf
+              ausprobieren: eine ordentliche Kündigung durch den Arbeitgeber,
+              betrachtet aus Sicht des Arbeitnehmers.
             </p>
           </div>
           <div className="disclosure">
-            <strong>Eine ehrliche Demo.</strong>{" "}
-            Alle Fälle sind erfunden. Sie sehen gespeicherte Ergebnisse der
-            kontrollierten Analysepipeline. Hier findet keine Live-Modellanalyse
-            statt; persönliche Uploads sind nicht vorgesehen.
+            <strong>So funktioniert die Demo.</strong>{" "}
+            Die Ergebnisse wurden vorab mit dem Backend erzeugt und gespeichert.
+            Beim Durchklicken startet keine neue KI-Analyse. Eigene Dokumente
+            lassen sich hier nicht hochladen.
           </div>
           <section id="faelle" className="cases-section">
             <div className="section-top">
               <div>
                 <p className="eyebrow">FALL AUSWÄHLEN</p>
-                <h2>Drei Fälle. Drei unterschiedliche Grenzen.</h2>
+                <h2>Wählen Sie einen Beispielfall.</h2>
               </div>
-              <span className="small">Welchen möchten Sie nachvollziehen?</span>
+              <span className="small">Unterlagen, Angaben und Ergebnis ansehen.</span>
             </div>
             <div
               className="case-grid"
@@ -419,7 +419,7 @@ export default function PublicDemo() {
             <div>
               <p className="eyebrow">06 / NACHWEISE & GRENZEN</p>
               <h2 id="evidence-heading">
-                Was geprüft ist.<br />Und was offen bleibt.
+                Tests und offene Punkte.
               </h2>
             </div>
             <a href="https://github.com/dreamtelligence/Recht-Papier/blob/main/docs/portfolio/release-status.md">
@@ -446,9 +446,10 @@ export default function PublicDemo() {
           </div>
           <p className="evidence-context">
             Stand der dokumentierten Prüfungen: 10. November 2026. 16
-            Entwicklungsfälle und acht getrennte Abnahmefälle, letztere je
-            dreimal ausgeführt – ohne Referenzabweichung. Das prüft die
-            unterstützten Regeln, keine allgemeine juristische Qualität.
+            Entwicklungsfälle und acht separate Abnahmefälle wurden geprüft,
+            die Abnahmefälle jeweils dreimal. Alle Ergebnisse entsprachen den
+            hinterlegten Erwartungen. Diese Tests decken die eingebauten Regeln
+            ab; sie ersetzen keine juristische Prüfung.
           </p>
           <div className="evidence-links">
             <a href="https://github.com/dreamtelligence/Recht-Papier/blob/main/docs/portfolio/backend-e2e.json">
@@ -572,7 +573,7 @@ export default function PublicDemo() {
         <div className="wordmark">
           Recht <i>&amp;</i> Papier
         </div>
-        <p>Fiktive Fälle. Sichtbare Grenzen. Keine Rechtsberatung.</p>
+        <p>Ein Entwicklungsprojekt mit fiktiven Beispielfällen. Keine Rechtsberatung.</p>
         <div>
           <a href="#rechtliches" onClick={() => setLegal("impressum")}>
             Impressum

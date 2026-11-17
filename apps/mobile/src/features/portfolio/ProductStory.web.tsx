@@ -7,9 +7,9 @@ const screens = [
     width: 863,
     height: 1822,
     title: "Ankommen",
-    label: "Ein ruhiger Einstieg",
+    label: "Der Einstieg in die App",
     text:
-      "Ein klares Versprechen, drei verständliche Schritte und eine Hauptaktion. Der Startbildschirm führt zur Anmeldung; die Fallakten liegen hinter der geschützten Navigation.",
+      "Der Startbildschirm erklärt den Ablauf in drei Schritten. Über die Anmeldung geht es zu den eigenen Fallakten.",
     detail: "Startansicht · vom Nutzer bereitgestellt",
   },
   {
@@ -23,23 +23,23 @@ const screens = [
   {
     file: "01-fallakte.png",
     title: "Dokumente ordnen",
-    label: "Eine Akte als gemeinsame Grundlage",
+    label: "Unterlagen und Bearbeitungsstand",
     text:
-      "Die Fallakte hält Sachverhalt, private Dokumente und den Bearbeitungsstand zusammen. Hochgeladene PDFs werden serverseitig ausgelesen; die Ergebnisse bleiben dem jeweiligen Konto zugeordnet.",
+      "In der Fallakte liegen die Schilderung, hochgeladene Dokumente und der aktuelle Bearbeitungsstand. Der Server liest die PDF-Texte aus. Dokumente und Ergebnisse sind nur für das zugehörige Konto zugänglich.",
     detail: "Gespeicherte Fallakte · fiktiver Testfall",
   },
   {
     file: "02-bestaetigte-belegstellen.png",
     title: "Angaben bestätigen",
-    label: "Jede wichtige Angabe hat einen Beleg",
+    label: "Angaben am Original prüfen",
     text:
-      "Seite und wörtliches Zitat bleiben sichtbar. Berechnungsrelevante Angaben werden ausdrücklich bestätigt. Ändert sich die Grundlage, darf ein früheres Ergebnis nicht als aktuell weiterverwendet werden.",
+      "Zu jeder Angabe sind die Seite und das Zitat aus dem Dokument sichtbar. Angaben für die Berechnung müssen bestätigt werden. Werden sie später geändert, ist das bisherige Ergebnis nicht mehr aktuell.",
     detail: "Typisierte Angaben · Seite und Zitat",
   },
   {
     file: "03-fristen-mit-rechenweg.png",
     title: "Einordnung verstehen",
-    label: "Ein Ergebnis mit sichtbaren Grenzen",
+    label: "Rechenwege und offene Fragen",
     text:
       "Der geprüfte Kündigungsablauf zeigt Rechenwege, Voraussetzungen, Rechtsquellen und offene Fragen. Fehlende oder widersprüchliche Angaben führen zu Rückfragen. Freie Modellschlussfolgerungen bleiben gesperrt.",
     detail: "Kontrollierter Teilablauf · keine juristische Validierung",
@@ -47,9 +47,9 @@ const screens = [
   {
     file: "07-nativer-pdf-export.png",
     title: "Bericht mitnehmen",
-    label: "Vom Ergebnis zum Dokument",
+    label: "Vorschau und PDF-Export",
     text:
-      "Ein strukturierter Bericht bündelt bestätigte Tatsachen, Chronologie und Prüfpunkte. Nach der Vorschau und Nutzerbestätigung wird er als PDF erzeugt und über den nativen iOS-Dialog weitergegeben.",
+      "Der Bericht fasst bestätigte Angaben, den zeitlichen Ablauf und offene Prüfpunkte zusammen. Nach der Vorschau und Bestätigung lässt er sich als PDF über den Teilen-Dialog von iOS weitergeben.",
     detail: "Tatsächlicher PDF-Export · kein Versand an Dritte",
   },
 ];
@@ -110,10 +110,10 @@ export default function ProductStory() {
             <em>Besser reagieren.</em>
           </h1>
           <p className="hero-description">
-            Recht &amp; Papier ist als digitale Rechtsassistenz konzipiert. Die
-            mobile App verbindet Sachverhalt, Dokumente und rechtliche
-            Orientierung in einer Fallakte – mit einem Bericht für das
-            anwaltliche Gespräch.
+            Mit Recht &amp; Papier lassen sich rechtliche Anliegen und die
+            zugehörigen Unterlagen in einer mobilen Fallakte sammeln.
+            Daraus entsteht ein Bericht zur Vorbereitung auf ein
+            anwaltliches Gespräch.
           </p>
           <div className="hero-actions">
             <a className="button" href="#ios-app">
@@ -125,7 +125,7 @@ export default function ProductStory() {
             <span
               className="status-dot"
               aria-hidden="true"
-            />Entwicklungsprojekt · geprüfter Teilablauf · keine Rechtsberatung
+            />In Entwicklung · technisch geprüfte Beispielfälle · keine Rechtsberatung
           </p>
         </div>
         <div className="hero-visual">
@@ -190,13 +190,13 @@ export default function ProductStory() {
         <div className="section-intro">
           <p className="eyebrow">01 / DAS PRODUKT</p>
           <h2 id="product-heading">
-            Ein rechtliches Anliegen.<br />Eine gemeinsame Fallakte.
+            Was ist passiert?<br />Was steht in den Unterlagen?
           </h2>
           <p>
-            Gedacht für Menschen, die rechtliche Schreiben und ihre eigene
-            Situation besser verstehen möchten. Die Vision verbindet Dokumente,
-            rechtliche Orientierung und nächste Schritte in einer mobilen
-            Anwendung.
+            Ein rechtliches Schreiben wirft oft Fragen auf. Die App soll helfen,
+            die Unterlagen zu sortieren, wichtige Angaben zu prüfen und offene
+            Fragen für ein Beratungsgespräch festzuhalten. Ein erster Ablauf
+            ist für Kündigungen durch den Arbeitgeber umgesetzt.
           </p>
         </div>
         <div className="product-register">
@@ -216,19 +216,19 @@ export default function ProductStory() {
           </div>
         </div>
         <div className="status-heading">
-          <h3>Was heute tatsächlich vorhanden ist</h3>
+          <h3>Der aktuelle Stand</h3>
           <p>
-            Implementiert bedeutet hier: im Projekt vorhanden. Es bedeutet keine
-            fachliche oder betriebliche Produktionsfreigabe.
+            Die folgenden Funktionen sind entwickelt. Die fachliche Prüfung
+            und die Freigabe für den regulären Betrieb stehen noch aus.
           </p>
         </div>
         <div className="project-status">
           <article className="status-column implemented">
             <p className="status-label">Umgesetzt</p>
-            <h3>Die mobile Grundlage</h3>
+            <h3>Konto, Fallakte und Bericht</h3>
             <ul>
               <li>Konto, Sitzungen und geschützte Navigation.</li>
-              <li>Persistente Fallakten und private PDF-Ablage.</li>
+              <li>Gespeicherte Fallakten und private PDF-Ablage.</li>
               <li>Textauslese mit seitenweisen Belegstellen.</li>
               <li>Hintergrundaufträge, Quellenansicht und Statusanzeige.</li>
               <li>Berichtsvorschau, Nutzerbestätigung und PDF-Export.</li>
@@ -254,9 +254,9 @@ export default function ProductStory() {
           </article>
           <article className="status-column planned">
             <p className="status-label">Geplant</p>
-            <h3>Die umfassendere Assistenz</h3>
+            <h3>Nächste Entwicklungsschritte</h3>
             <ul>
-              <li>Weitere Fallarten und fachlicher Review.</li>
+              <li>Weitere Fallarten und juristische Prüfung.</li>
               <li>OCR für Scans und weitere Dokumenttypen.</li>
               <li>Erweiterte Schreibenvorlagen und Fristerinnerungen.</li>
               <li>
@@ -281,8 +281,7 @@ export default function ProductStory() {
             </h2>
           </div>
           <p className="section-caption">
-            Originalaufnahmen der bestehenden iOS-App. Kein generiertes UI,
-            keine nachgebaute Bildschirmgrafik.
+            Die folgenden Screenshots zeigen den Ablauf in der iOS-App.
           </p>
         </div>
         <div className="native-walkthrough">
@@ -351,10 +350,10 @@ export default function ProductStory() {
           </figure>
         </div>
         <p className="capture-note">
-          Startansicht vom Nutzer bereitgestellt am 12. November 2026. Weitere
-          Aufnahmen aus mehreren fiktiven Testfällen im iPhone-Simulator, 10.
-          November 2026. Sie dokumentieren die vorhandenen Oberflächen; der
-          Browser startet keine private Fallanalyse.
+          Die Startansicht stammt vom 12. November 2026. Die übrigen Aufnahmen
+          zeigen fiktive Testfälle im iPhone-Simulator vom 10. November 2026.
+          Auf dieser Website lassen sich die Screenshots ansehen; eigene Fälle
+          können hier nicht analysiert werden.
         </p>
         <details className="more-captures">
           <summary>
@@ -394,13 +393,13 @@ export default function ProductStory() {
         <div className="section-intro">
           <p className="eyebrow">03 / UI·UX & FRONTEND</p>
           <h2 id="design-heading">
-            So ruhig wie Papier.<br />So klar wie eine gute Oberfläche.
+            Wie die App gestaltet ist.
           </h2>
           <p>
-            Die Gestaltung übersetzt ein komplexes Thema in einen geführten
-            Ablauf. Papiertextur, Serifentypografie, Haarlinien und die
-            bestehende Ballonillustration bilden eine gemeinsame visuelle
-            Sprache.
+            Die Oberfläche greift das Aussehen von Papier auf: ein heller
+            Hintergrund mit feiner Textur, Serifenschrift und dünne Linien.
+            Der Ballon taucht als wiederkehrendes Motiv auf. Pro Bildschirm
+            steht der nächste Bearbeitungsschritt im Vordergrund.
           </p>
           <div
             className="design-palette"
@@ -427,29 +426,29 @@ export default function ProductStory() {
           <article>
             <span>01</span>
             <div>
-              <h3>Ein nächster Schritt</h3>
+              <h3>Ein Schritt nach dem anderen</h3>
               <p>
-                Eine Hauptaktion pro Phase, Sachverhalt und Dokument im selben
-                Formular, verständliche Fehler- und Leerzustände. Die Fallakte
-                hält den Ablauf zusammen.
+                Die Schilderung und das Dokument werden im selben Formular
+                erfasst. Fehlen Angaben oder tritt ein Fehler auf, erklärt die
+                App, was noch nötig ist.
               </p>
             </div>
           </article>
           <article>
             <span>02</span>
             <div>
-              <h3>Native Details, bewusst umgesetzt</h3>
+              <h3>Bedienung auf dem Smartphone</h3>
               <p>
-                Geschützte Routen, Rücknavigation, Safe Areas und
-                tastaturgerechte Formulare. Wiederverwendbare Papier-, Text- und
-                Aktionsbausteine halten die Oberfläche konsistent.
+                Die Formulare berücksichtigen die Bildschirmtastatur und die
+                freien Ränder des Displays. Gemeinsame Komponenten für Text,
+                Flächen und Schaltflächen sorgen für eine einheitliche Bedienung.
               </p>
             </div>
           </article>
           <article>
             <span>03</span>
             <div>
-              <h3>Verständlichkeit bis zum Fehlerfall</h3>
+              <h3>Den Bearbeitungsstand erkennen</h3>
               <p>
                 Belegstellen bleiben sichtbar. Lade-, Prüf- und Freigabestatus
                 werden getrennt dargestellt. Bestätigung und PDF-Export sind
@@ -460,12 +459,12 @@ export default function ProductStory() {
           <article>
             <span>04</span>
             <div>
-              <h3>Zugänglichkeit als Implementierungsdetail</h3>
+              <h3>Tastaturbedienung und Beschriftungen</h3>
               <p>
-                Beschriftete Bedienelemente und Statusmeldungen in der App;
-                reduzierte Bewegung wird berücksichtigt. Die Web-Fallstudie
-                ergänzt Tastaturbedienung und sichtbare Fokuszustände. Eine
-                vollständige Accessibility-Abnahme wird nicht behauptet.
+                Bedienelemente und Statusmeldungen sind beschriftet. Die
+                Website lässt sich per Tastatur bedienen und zeigt den Fokus
+                an. Die Einstellung für reduzierte Bewegung wird berücksichtigt.
+                Eine vollständige Prüfung der Barrierefreiheit steht noch aus.
               </p>
             </div>
           </article>
@@ -481,7 +480,7 @@ export default function ProductStory() {
           <div>
             <p className="eyebrow">04 / ENTWICKLUNGSARBEIT</p>
             <h2 id="engineering-heading">
-              Eine Oberfläche.<br />Ein durchgängiger technischer Weg.
+              Die Technik hinter der App.
             </h2>
           </div>
           <a className="source-link" href={repo}>
@@ -491,7 +490,7 @@ export default function ProductStory() {
         <div className="contribution-grid">
           <article>
             <span>Frontend & Mobile</span>
-            <h3>Vom Design zum nutzbaren Ablauf</h3>
+            <h3>Oberfläche und Navigation</h3>
             <p>
               Expo Router, React Native und TypeScript: wiederverwendbare
               UI-Bausteine, Formzustände, persistente Sitzungen und das
@@ -503,7 +502,7 @@ export default function ProductStory() {
           </article>
           <article>
             <span>Backend & Datenmodell</span>
-            <h3>Die Fallakte als gemeinsame Grundlage</h3>
+            <h3>Private Fallakten speichern</h3>
             <p>
               Supabase Auth, private Storage-Dateien und Eigentümer-RLS.
               Revisionen und atomare Schreibvorgänge verhindern Ergebnisse aus
@@ -515,11 +514,12 @@ export default function ProductStory() {
           </article>
           <article>
             <span>KI-Integration & Qualität</span>
-            <h3>Berechnen, belegen, begrenzen</h3>
+            <h3>Fristen anhand fester Regeln berechnen</h3>
             <p>
-              Python-Engine, versionierter Quellenbestand und ein gemeinsames
-              JSON Schema. Fristen werden aus bestätigten Angaben berechnet. Ein
-              Zitat gibt eine falsche Modellschlussfolgerung nicht frei.
+              Eine Python-Engine liefert versionierte Rechtsquellen; ein
+              gemeinsames JSON Schema legt das Ergebnisformat fest. Die
+              Fristberechnung folgt festen Regeln und bestätigten Angaben.
+              Freie Schlussfolgerungen eines Sprachmodells sind dafür gesperrt.
             </p>
             <a href={`${repo}/tree/main/packages/shared`}>
               Vertrag und Berechnungsregeln ↗
@@ -553,17 +553,17 @@ export default function ProductStory() {
         </div>
         <div className="architecture-notes">
           <p>
-            <strong>Öffentlich und privat getrennt.</strong>{" "}
-            Diese Fallstudie ist ein statischer Web-Einstieg. Nur fiktive
-            Beispieldaten gelangen ins öffentliche Bundle. Die native App
-            verwendet den authentifizierten Backend-Pfad.
+            <strong>Website und native App.</strong>{" "}
+            Diese Website enthält ausschließlich fiktive Beispieldaten.
+            Die native App greift nach der Anmeldung auf die privaten
+            Fallakten im Backend zu.
           </p>
           <p>
-            <strong>Bewusste Begrenzung.</strong>{" "}
-            Der kontrollierte Worker erhält öffentliche Versionskennungen.
-            Private Belege und Berechnungen werden an der Supabase-Grenze
-            geprüft. Der breitere RAG-Dienst bleibt ein separater, fachlich
-            nicht freigegebener Pfad.
+            <strong>Verarbeitung und Prüfung.</strong>{" "}
+            Der Worker erhält öffentliche Versionskennungen. Private Belege
+            und Berechnungen werden serverseitig in Supabase geprüft. Die
+            allgemeine Rechtssuche läuft getrennt davon und ist fachlich noch
+            nicht freigegeben.
           </p>
         </div>
         <a
